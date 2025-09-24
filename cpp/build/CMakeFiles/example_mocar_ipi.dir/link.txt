@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/example_mocar_ipi.dir/examples/mocar_ipi_demo.c.o -o example_mocar_ipi   -L/media/william/blueicedrive/Github/IPI/cpp/../third_party/mocar/libs  -Wl,-rpath,/media/william/blueicedrive/Github/IPI/cpp/../third_party/mocar/libs -lmocarv2x -lpthread -lm 
