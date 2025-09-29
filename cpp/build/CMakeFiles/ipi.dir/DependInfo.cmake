@@ -8,6 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/media/william/blueicedrive/Github/IPI/cpp/src/api/receiver.cpp" "CMakeFiles/ipi.dir/src/api/receiver.cpp.o" "gcc" "CMakeFiles/ipi.dir/src/api/receiver.cpp.o.d"
+  "/media/william/blueicedrive/Github/IPI/cpp/src/api/sender.cpp" "CMakeFiles/ipi.dir/src/api/sender.cpp.o" "gcc" "CMakeFiles/ipi.dir/src/api/sender.cpp.o.d"
+  "/media/william/blueicedrive/Github/IPI/cpp/src/api/shared_state.cpp" "CMakeFiles/ipi.dir/src/api/shared_state.cpp.o" "gcc" "CMakeFiles/ipi.dir/src/api/shared_state.cpp.o.d"
   "/media/william/blueicedrive/Github/IPI/cpp/src/core/ipi_cooperative_service.cpp" "CMakeFiles/ipi.dir/src/core/ipi_cooperative_service.cpp.o" "gcc" "CMakeFiles/ipi.dir/src/core/ipi_cooperative_service.cpp.o.d"
   "/media/william/blueicedrive/Github/IPI/cpp/src/core/ipi_service_request.cpp" "CMakeFiles/ipi.dir/src/core/ipi_service_request.cpp.o" "gcc" "CMakeFiles/ipi.dir/src/core/ipi_service_request.cpp.o.d"
   "/media/william/blueicedrive/Github/IPI/cpp/src/core/message_frame.cpp" "CMakeFiles/ipi.dir/src/core/message_frame.cpp.o" "gcc" "CMakeFiles/ipi.dir/src/core/message_frame.cpp.o.d"

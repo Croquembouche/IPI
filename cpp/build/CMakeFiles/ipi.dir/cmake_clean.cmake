@@ -1,4 +1,10 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/ipi.dir/src/api/receiver.cpp.o"
+  "CMakeFiles/ipi.dir/src/api/receiver.cpp.o.d"
+  "CMakeFiles/ipi.dir/src/api/sender.cpp.o"
+  "CMakeFiles/ipi.dir/src/api/sender.cpp.o.d"
+  "CMakeFiles/ipi.dir/src/api/shared_state.cpp.o"
+  "CMakeFiles/ipi.dir/src/api/shared_state.cpp.o.d"
   "CMakeFiles/ipi.dir/src/core/ipi_cooperative_service.cpp.o"
   "CMakeFiles/ipi.dir/src/core/ipi_cooperative_service.cpp.o.d"
   "CMakeFiles/ipi.dir/src/core/ipi_service_request.cpp.o"

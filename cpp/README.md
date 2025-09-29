@@ -28,6 +28,9 @@ cpp/
 - Optional ROS 2 bridge helpers (`IPI_ENABLE_ROS2_BRIDGE=ON`) that translate
   between the lightweight models and the `v2x_msg` ROS message types used on the
   MQTT/ROS buses.
+- `ipi::api::ReceiverApi` / `ipi::api::SenderApi` interfaces that implement the
+  HTTP/MQTT semantics described in `api/README.md`, with in-memory reference
+  implementations for rapid prototyping.
 - Canonical byte-level encoders/decoders (non-ASN.1) suitable for early
   integration testing.
 - Validation helpers that enforce the bounds and cardinality constraints

@@ -153,6 +153,48 @@ CMakeFiles/ipi.dir/src/v2x/uper_codec.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ipi.dir/src/v2x/uper_codec.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/william/blueicedrive/Github/IPI/cpp/src/v2x/uper_codec.cpp -o CMakeFiles/ipi.dir/src/v2x/uper_codec.cpp.s
 
+CMakeFiles/ipi.dir/src/api/receiver.cpp.o: CMakeFiles/ipi.dir/flags.make
+CMakeFiles/ipi.dir/src/api/receiver.cpp.o: ../src/api/receiver.cpp
+CMakeFiles/ipi.dir/src/api/receiver.cpp.o: CMakeFiles/ipi.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/william/blueicedrive/Github/IPI/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/ipi.dir/src/api/receiver.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ipi.dir/src/api/receiver.cpp.o -MF CMakeFiles/ipi.dir/src/api/receiver.cpp.o.d -o CMakeFiles/ipi.dir/src/api/receiver.cpp.o -c /media/william/blueicedrive/Github/IPI/cpp/src/api/receiver.cpp
+
+CMakeFiles/ipi.dir/src/api/receiver.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ipi.dir/src/api/receiver.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/william/blueicedrive/Github/IPI/cpp/src/api/receiver.cpp > CMakeFiles/ipi.dir/src/api/receiver.cpp.i
+
+CMakeFiles/ipi.dir/src/api/receiver.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ipi.dir/src/api/receiver.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/william/blueicedrive/Github/IPI/cpp/src/api/receiver.cpp -o CMakeFiles/ipi.dir/src/api/receiver.cpp.s
+
+CMakeFiles/ipi.dir/src/api/sender.cpp.o: CMakeFiles/ipi.dir/flags.make
+CMakeFiles/ipi.dir/src/api/sender.cpp.o: ../src/api/sender.cpp
+CMakeFiles/ipi.dir/src/api/sender.cpp.o: CMakeFiles/ipi.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/william/blueicedrive/Github/IPI/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/ipi.dir/src/api/sender.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ipi.dir/src/api/sender.cpp.o -MF CMakeFiles/ipi.dir/src/api/sender.cpp.o.d -o CMakeFiles/ipi.dir/src/api/sender.cpp.o -c /media/william/blueicedrive/Github/IPI/cpp/src/api/sender.cpp
+
+CMakeFiles/ipi.dir/src/api/sender.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ipi.dir/src/api/sender.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/william/blueicedrive/Github/IPI/cpp/src/api/sender.cpp > CMakeFiles/ipi.dir/src/api/sender.cpp.i
+
+CMakeFiles/ipi.dir/src/api/sender.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ipi.dir/src/api/sender.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/william/blueicedrive/Github/IPI/cpp/src/api/sender.cpp -o CMakeFiles/ipi.dir/src/api/sender.cpp.s
+
+CMakeFiles/ipi.dir/src/api/shared_state.cpp.o: CMakeFiles/ipi.dir/flags.make
+CMakeFiles/ipi.dir/src/api/shared_state.cpp.o: ../src/api/shared_state.cpp
+CMakeFiles/ipi.dir/src/api/shared_state.cpp.o: CMakeFiles/ipi.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/william/blueicedrive/Github/IPI/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ipi.dir/src/api/shared_state.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ipi.dir/src/api/shared_state.cpp.o -MF CMakeFiles/ipi.dir/src/api/shared_state.cpp.o.d -o CMakeFiles/ipi.dir/src/api/shared_state.cpp.o -c /media/william/blueicedrive/Github/IPI/cpp/src/api/shared_state.cpp
+
+CMakeFiles/ipi.dir/src/api/shared_state.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ipi.dir/src/api/shared_state.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/william/blueicedrive/Github/IPI/cpp/src/api/shared_state.cpp > CMakeFiles/ipi.dir/src/api/shared_state.cpp.i
+
+CMakeFiles/ipi.dir/src/api/shared_state.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ipi.dir/src/api/shared_state.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/william/blueicedrive/Github/IPI/cpp/src/api/shared_state.cpp -o CMakeFiles/ipi.dir/src/api/shared_state.cpp.s
+
 # Object files for target ipi
 ipi_OBJECTS = \
 "CMakeFiles/ipi.dir/src/core/ipi_service_request.cpp.o" \
@@ -160,7 +202,10 @@ ipi_OBJECTS = \
 "CMakeFiles/ipi.dir/src/core/message_frame.cpp.o" \
 "CMakeFiles/ipi.dir/src/core/validation.cpp.o" \
 "CMakeFiles/ipi.dir/src/v2x/j2735_messages.cpp.o" \
-"CMakeFiles/ipi.dir/src/v2x/uper_codec.cpp.o"
+"CMakeFiles/ipi.dir/src/v2x/uper_codec.cpp.o" \
+"CMakeFiles/ipi.dir/src/api/receiver.cpp.o" \
+"CMakeFiles/ipi.dir/src/api/sender.cpp.o" \
+"CMakeFiles/ipi.dir/src/api/shared_state.cpp.o"
 
 # External object files for target ipi
 ipi_EXTERNAL_OBJECTS =
@@ -171,9 +216,12 @@ libipi.a: CMakeFiles/ipi.dir/src/core/message_frame.cpp.o
 libipi.a: CMakeFiles/ipi.dir/src/core/validation.cpp.o
 libipi.a: CMakeFiles/ipi.dir/src/v2x/j2735_messages.cpp.o
 libipi.a: CMakeFiles/ipi.dir/src/v2x/uper_codec.cpp.o
+libipi.a: CMakeFiles/ipi.dir/src/api/receiver.cpp.o
+libipi.a: CMakeFiles/ipi.dir/src/api/sender.cpp.o
+libipi.a: CMakeFiles/ipi.dir/src/api/shared_state.cpp.o
 libipi.a: CMakeFiles/ipi.dir/build.make
 libipi.a: CMakeFiles/ipi.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/william/blueicedrive/Github/IPI/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX static library libipi.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/william/blueicedrive/Github/IPI/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX static library libipi.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/ipi.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ipi.dir/link.txt --verbose=$(VERBOSE)
 

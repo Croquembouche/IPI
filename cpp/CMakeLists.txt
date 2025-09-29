@@ -26,9 +26,16 @@ set(IPI_V2X_SOURCES
     src/v2x/uper_codec.cpp
 )
 
+set(IPI_API_SOURCES
+    src/api/receiver.cpp
+    src/api/sender.cpp
+    src/api/shared_state.cpp
+)
+
 add_library(ipi STATIC
     ${IPI_CORE_SOURCES}
     ${IPI_V2X_SOURCES}
+    ${IPI_API_SOURCES}
 )
 
 target_include_directories(ipi

@@ -248,6 +248,78 @@ examples/v2x_roundtrip.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/example_v2x_roundtrip.dir/build.make CMakeFiles/example_v2x_roundtrip.dir/examples/v2x_roundtrip.cpp.s
 .PHONY : examples/v2x_roundtrip.cpp.s
 
+src/api/receiver.o: src/api/receiver.cpp.o
+.PHONY : src/api/receiver.o
+
+# target to build an object file
+src/api/receiver.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ipi.dir/build.make CMakeFiles/ipi.dir/src/api/receiver.cpp.o
+.PHONY : src/api/receiver.cpp.o
+
+src/api/receiver.i: src/api/receiver.cpp.i
+.PHONY : src/api/receiver.i
+
+# target to preprocess a source file
+src/api/receiver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ipi.dir/build.make CMakeFiles/ipi.dir/src/api/receiver.cpp.i
+.PHONY : src/api/receiver.cpp.i
+
+src/api/receiver.s: src/api/receiver.cpp.s
+.PHONY : src/api/receiver.s
+
+# target to generate assembly for a file
+src/api/receiver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ipi.dir/build.make CMakeFiles/ipi.dir/src/api/receiver.cpp.s
+.PHONY : src/api/receiver.cpp.s
+
+src/api/sender.o: src/api/sender.cpp.o
+.PHONY : src/api/sender.o
+
+# target to build an object file
+src/api/sender.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ipi.dir/build.make CMakeFiles/ipi.dir/src/api/sender.cpp.o
+.PHONY : src/api/sender.cpp.o
+
+src/api/sender.i: src/api/sender.cpp.i
+.PHONY : src/api/sender.i
+
+# target to preprocess a source file
+src/api/sender.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ipi.dir/build.make CMakeFiles/ipi.dir/src/api/sender.cpp.i
+.PHONY : src/api/sender.cpp.i
+
+src/api/sender.s: src/api/sender.cpp.s
+.PHONY : src/api/sender.s
+
+# target to generate assembly for a file
+src/api/sender.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ipi.dir/build.make CMakeFiles/ipi.dir/src/api/sender.cpp.s
+.PHONY : src/api/sender.cpp.s
+
+src/api/shared_state.o: src/api/shared_state.cpp.o
+.PHONY : src/api/shared_state.o
+
+# target to build an object file
+src/api/shared_state.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ipi.dir/build.make CMakeFiles/ipi.dir/src/api/shared_state.cpp.o
+.PHONY : src/api/shared_state.cpp.o
+
+src/api/shared_state.i: src/api/shared_state.cpp.i
+.PHONY : src/api/shared_state.i
+
+# target to preprocess a source file
+src/api/shared_state.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ipi.dir/build.make CMakeFiles/ipi.dir/src/api/shared_state.cpp.i
+.PHONY : src/api/shared_state.cpp.i
+
+src/api/shared_state.s: src/api/shared_state.cpp.s
+.PHONY : src/api/shared_state.s
+
+# target to generate assembly for a file
+src/api/shared_state.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ipi.dir/build.make CMakeFiles/ipi.dir/src/api/shared_state.cpp.s
+.PHONY : src/api/shared_state.cpp.s
+
 src/core/ipi_cooperative_service.o: src/core/ipi_cooperative_service.cpp.o
 .PHONY : src/core/ipi_cooperative_service.o
 
@@ -413,6 +485,15 @@ help:
 	@echo "... examples/v2x_roundtrip.o"
 	@echo "... examples/v2x_roundtrip.i"
 	@echo "... examples/v2x_roundtrip.s"
+	@echo "... src/api/receiver.o"
+	@echo "... src/api/receiver.i"
+	@echo "... src/api/receiver.s"
+	@echo "... src/api/sender.o"
+	@echo "... src/api/sender.i"
+	@echo "... src/api/sender.s"
+	@echo "... src/api/shared_state.o"
+	@echo "... src/api/shared_state.i"
+	@echo "... src/api/shared_state.s"
 	@echo "... src/core/ipi_cooperative_service.o"
 	@echo "... src/core/ipi_cooperative_service.i"
 	@echo "... src/core/ipi_cooperative_service.s"
