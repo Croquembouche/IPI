@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/example_v2x_roundtrip.dir/examples/v2x_roundtrip.cpp.o"
-  "CMakeFiles/example_v2x_roundtrip.dir/examples/v2x_roundtrip.cpp.o.d"
+  "CMakeFiles/example_v2x_roundtrip.dir/examples/library/v2x_roundtrip.cpp.o"
   "example_v2x_roundtrip"
   "example_v2x_roundtrip.pdb"
 )

@@ -1,5 +1,7 @@
 #include "ipi/v2x/j2735_messages.hpp"
 
+#include "ipi/common/debug.hpp"
+
 #include <algorithm>
 #include <cstring>
 #include <iomanip>
@@ -139,12 +141,19 @@ std::vector<std::uint8_t> BasicSafetyMessage::to_bytes() const {
     if (laneId) {
         write_uint16(buffer, *laneId);
     }
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[BSM] encode ", to_string(), " bytes=", buffer.size(),
+                        " hex=", ipi::debug::hex(buffer));
+    }
     return buffer;
 }
 
 BasicSafetyMessage BasicSafetyMessage::from_bytes(const std::vector<std::uint8_t>& buffer) {
     if (buffer.size() < 4 + 8 + 8 + 4 + 4 + 1) {
         throw std::runtime_error("Buffer too small for BasicSafetyMessage");
+    }
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[BSM] decode bytes=", buffer.size(), " hex=", ipi::debug::hex(buffer));
     }
     BasicSafetyMessage msg;
     std::size_t offset = 0;
@@ -161,6 +170,13 @@ BasicSafetyMessage BasicSafetyMessage::from_bytes(const std::vector<std::uint8_t
         msg.laneId = read_uint16(buffer, offset);
     }
     msg.validate();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[BSM] decoded ", msg.to_string());
+        auto roundtrip = msg.to_bytes();
+        if (roundtrip != buffer) {
+            ipi::debug::log("[BSM] round-trip differs hex=", ipi::debug::hex(roundtrip));
+        }
+    }
     return msg;
 }
 
@@ -204,12 +220,19 @@ std::vector<std::uint8_t> MapMessage::to_bytes() const {
         write_uint16(buffer, lane.laneId);
         buffer.push_back(lane.ingress ? 1 : 0);
     }
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[MAP] encode ", to_string(), " bytes=", buffer.size(),
+                        " hex=", ipi::debug::hex(buffer));
+    }
     return buffer;
 }
 
 MapMessage MapMessage::from_bytes(const std::vector<std::uint8_t>& buffer) {
     if (buffer.size() < 4) {
         throw std::runtime_error("Buffer too small for MAP");
+    }
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[MAP] decode bytes=", buffer.size(), " hex=", ipi::debug::hex(buffer));
     }
     MapMessage map;
     std::size_t offset = 0;
@@ -233,6 +256,13 @@ MapMessage MapMessage::from_bytes(const std::vector<std::uint8_t>& buffer) {
         map.lanes.push_back(MapLane{laneId, ingress});
     }
     map.validate();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[MAP] decoded ", map.to_string());
+        auto roundtrip = map.to_bytes();
+        if (roundtrip != buffer) {
+            ipi::debug::log("[MAP] round-trip differs hex=", ipi::debug::hex(roundtrip));
+        }
+    }
     return map;
 }
 
@@ -271,12 +301,19 @@ std::vector<std::uint8_t> SpatMessage::to_bytes() const {
             write_uint16(buffer, *phase.timeToChangeMs);
         }
     }
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[SPaT] encode ", to_string(), " bytes=", buffer.size(),
+                        " hex=", ipi::debug::hex(buffer));
+    }
     return buffer;
 }
 
 SpatMessage SpatMessage::from_bytes(const std::vector<std::uint8_t>& buffer) {
     if (buffer.size() < 7) {
         throw std::runtime_error("Buffer too small for SPaT");
+    }
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[SPaT] decode bytes=", buffer.size(), " hex=", ipi::debug::hex(buffer));
     }
     SpatMessage spat;
     std::size_t offset = 0;
@@ -301,6 +338,13 @@ SpatMessage SpatMessage::from_bytes(const std::vector<std::uint8_t>& buffer) {
         spat.phases.push_back(std::move(phase));
     }
     spat.validate();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[SPaT] decoded ", spat.to_string());
+        auto roundtrip = spat.to_bytes();
+        if (roundtrip != buffer) {
+            ipi::debug::log("[SPaT] round-trip differs hex=", ipi::debug::hex(roundtrip));
+        }
+    }
     return spat;
 }
 
@@ -337,12 +381,19 @@ std::vector<std::uint8_t> SignalRequestMessage::to_bytes() const {
     if (priorityLevel) {
         buffer.push_back(*priorityLevel);
     }
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[SRM] encode ", to_string(), " bytes=", buffer.size(),
+                        " hex=", ipi::debug::hex(buffer));
+    }
     return buffer;
 }
 
 SignalRequestMessage SignalRequestMessage::from_bytes(const std::vector<std::uint8_t>& buffer) {
     if (buffer.size() < 2 + 4 + 2 + 1 + 1) {
         throw std::runtime_error("Buffer too small for SRM");
+    }
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[SRM] decode bytes=", buffer.size(), " hex=", ipi::debug::hex(buffer));
     }
     SignalRequestMessage msg;
     std::size_t offset = 0;
@@ -361,6 +412,13 @@ SignalRequestMessage SignalRequestMessage::from_bytes(const std::vector<std::uin
         msg.priorityLevel = buffer[offset++];
     }
     msg.validate();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[SRM] decoded ", msg.to_string());
+        auto roundtrip = msg.to_bytes();
+        if (roundtrip != buffer) {
+            ipi::debug::log("[SRM] round-trip differs hex=", ipi::debug::hex(roundtrip));
+        }
+    }
     return msg;
 }
 
@@ -398,12 +456,19 @@ std::vector<std::uint8_t> SignalStatusMessage::to_bytes() const {
     } else {
         buffer.push_back(0);
     }
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[SSM] encode ", to_string(), " bytes=", buffer.size(),
+                        " hex=", ipi::debug::hex(buffer));
+    }
     return buffer;
 }
 
 SignalStatusMessage SignalStatusMessage::from_bytes(const std::vector<std::uint8_t>& buffer) {
     if (buffer.size() < 2 + 2 + 1 + 1 + 1) {
         throw std::runtime_error("Buffer too small for SSM");
+    }
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[SSM] decode bytes=", buffer.size(), " hex=", ipi::debug::hex(buffer));
     }
     SignalStatusMessage msg;
     std::size_t offset = 0;
@@ -416,6 +481,13 @@ SignalStatusMessage SignalStatusMessage::from_bytes(const std::vector<std::uint8
         msg.estimatedServedTimeMs = read_uint16(buffer, offset);
     }
     msg.validate();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[SSM] decoded ", msg.to_string());
+        auto roundtrip = msg.to_bytes();
+        if (roundtrip != buffer) {
+            ipi::debug::log("[SSM] round-trip differs hex=", ipi::debug::hex(roundtrip));
+        }
+    }
     return msg;
 }
 

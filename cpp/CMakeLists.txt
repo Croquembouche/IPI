@@ -10,9 +10,14 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(MOCAR_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/mocar)
-set(MOCAR_INCLUDE_DIR ${MOCAR_ROOT}/libs/includes)
-set(MOCAR_LIB_DIR ${MOCAR_ROOT}/libs)
+# Mocar SDK layout (defaults to new_V2X_64bit drop). Override with
+# -DMOCAR_SDK_ROOT=/path/to/new_V2X_64bit if staged elsewhere.
+set(MOCAR_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/mocar/new_V2X_64bit)
+if(DEFINED MOCAR_SDK_ROOT)
+    set(MOCAR_ROOT ${MOCAR_SDK_ROOT})
+endif()
+set(MOCAR_INCLUDE_DIR ${MOCAR_ROOT}/code/mde_64cv2x/location/include)
+set(MOCAR_LIB_DIR ${MOCAR_ROOT}/aarch64_libs)
 
 set(IPI_CORE_SOURCES
     src/core/ipi_service_request.cpp
@@ -62,18 +67,26 @@ if(IPI_ENABLE_ROS2_BRIDGE)
 endif()
 
 if(IPI_BUILD_EXAMPLES)
-    add_executable(example_build_service_request examples/build_service_request.cpp)
+    add_executable(example_build_service_request examples/library/build_service_request.cpp)
     target_link_libraries(example_build_service_request PRIVATE ipi)
 
-    add_executable(example_v2x_roundtrip examples/v2x_roundtrip.cpp)
+    add_executable(example_v2x_roundtrip examples/library/v2x_roundtrip.cpp)
     target_link_libraries(example_v2x_roundtrip PRIVATE ipi)
+
+    add_executable(example_spat_tcp_sender examples/library/spat_tcp_sender.cpp)
+    target_link_libraries(example_spat_tcp_sender PRIVATE ipi)
 
     if(IPI_ENABLE_MOCAR_EXAMPLES)
         if(EXISTS ${MOCAR_LIB_DIR}/libmocarv2x.so)
-            add_executable(example_mocar_ipi examples/mocar_ipi_demo.c)
+            add_executable(example_mocar_ipi examples/device/mocar_ipi_demo.c)
             target_include_directories(example_mocar_ipi PRIVATE ${MOCAR_INCLUDE_DIR})
             target_link_libraries(example_mocar_ipi PRIVATE ${MOCAR_LIB_DIR}/libmocarv2x.so pthread m)
             set_target_properties(example_mocar_ipi PROPERTIES BUILD_RPATH "${MOCAR_LIB_DIR}" LINKER_LANGUAGE C)
+
+            add_executable(example_spat_tcp_bridge examples/device/spat_tcp_bridge.cpp)
+            target_include_directories(example_spat_tcp_bridge PRIVATE ${MOCAR_INCLUDE_DIR})
+            target_link_libraries(example_spat_tcp_bridge PRIVATE ipi ${MOCAR_LIB_DIR}/libmocarv2x.so pthread m)
+            set_target_properties(example_spat_tcp_bridge PROPERTIES BUILD_RPATH "${MOCAR_LIB_DIR}")
         else()
             message(WARNING "Mocar SDK library not found at ${MOCAR_LIB_DIR}/libmocarv2x.so; skipping example_mocar_ipi")
         endif()
@@ -83,7 +96,7 @@ if(IPI_BUILD_EXAMPLES)
         find_package(rclcpp QUIET)
         find_package(v2x_msg QUIET)
         if(rclcpp_FOUND AND v2x_msg_FOUND AND EXISTS ${MOCAR_LIB_DIR}/libmocarv2x.so)
-            add_executable(example_ros2_bsm_broadcaster examples/ros2_bsm_broadcaster.cpp)
+            add_executable(example_ros2_bsm_broadcaster examples/device/ros2_bsm_broadcaster.cpp)
             target_include_directories(example_ros2_bsm_broadcaster PRIVATE ${MOCAR_INCLUDE_DIR})
             target_compile_definitions(example_ros2_bsm_broadcaster PRIVATE IPI_ENABLE_ROS2)
             target_link_libraries(example_ros2_bsm_broadcaster

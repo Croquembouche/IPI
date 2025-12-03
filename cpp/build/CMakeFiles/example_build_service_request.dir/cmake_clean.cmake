@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/example_build_service_request.dir/examples/build_service_request.cpp.o"
-  "CMakeFiles/example_build_service_request.dir/examples/build_service_request.cpp.o.d"
+  "CMakeFiles/example_build_service_request.dir/examples/library/build_service_request.cpp.o"
   "example_build_service_request"
   "example_build_service_request.pdb"
 )

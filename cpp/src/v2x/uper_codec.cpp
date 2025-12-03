@@ -1,5 +1,7 @@
 #include "ipi/v2x/uper_codec.hpp"
 
+#include "ipi/common/debug.hpp"
+
 #include <cmath>
 #include <stdexcept>
 
@@ -168,10 +170,18 @@ std::vector<std::uint8_t> UperCodec::encode(const j2735::BasicSafetyMessage& msg
     if (msg.laneId) {
         writer.write_uint(*msg.laneId, 16);
     }
-    return writer.finish();
+    auto out = writer.finish();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][BSM] encode ", msg.to_string(), " bytes=", out.size(),
+                        " hex=", ipi::debug::hex(out));
+    }
+    return out;
 }
 
 j2735::BasicSafetyMessage UperCodec::decode_bsm(const std::vector<std::uint8_t>& buffer) const {
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][BSM] decode bytes=", buffer.size(), " hex=", ipi::debug::hex(buffer));
+    }
     BitReader reader(buffer);
     j2735::BasicSafetyMessage msg;
     msg.vehicleId = static_cast<std::uint32_t>(reader.read_uint(32));
@@ -186,6 +196,9 @@ j2735::BasicSafetyMessage UperCodec::decode_bsm(const std::vector<std::uint8_t>&
         msg.laneId = static_cast<std::uint16_t>(reader.read_uint(16));
     }
     msg.validate();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][BSM] decoded ", msg.to_string());
+    }
     return msg;
 }
 
@@ -207,10 +220,18 @@ std::vector<std::uint8_t> UperCodec::encode(const j2735::MapMessage& msg) const 
         writer.write_uint(lane.laneId, 16);
         writer.write_bool(lane.ingress);
     }
-    return writer.finish();
+    auto out = writer.finish();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][MAP] encode ", msg.to_string(), " bytes=", out.size(),
+                        " hex=", ipi::debug::hex(out));
+    }
+    return out;
 }
 
 j2735::MapMessage UperCodec::decode_map(const std::vector<std::uint8_t>& buffer) const {
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][MAP] decode bytes=", buffer.size(), " hex=", ipi::debug::hex(buffer));
+    }
     BitReader reader(buffer);
     j2735::MapMessage msg;
     msg.intersectionId = static_cast<std::uint16_t>(reader.read_uint(16));
@@ -233,6 +254,9 @@ j2735::MapMessage UperCodec::decode_map(const std::vector<std::uint8_t>& buffer)
         msg.lanes.push_back(lane);
     }
     msg.validate();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][MAP] decoded ", msg.to_string());
+    }
     return msg;
 }
 
@@ -251,10 +275,18 @@ std::vector<std::uint8_t> UperCodec::encode(const j2735::SpatMessage& msg) const
             writer.write_uint(scale_time_ms(*phase.timeToChangeMs), 16);
         }
     }
-    return writer.finish();
+    auto out = writer.finish();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][SPaT] encode ", msg.to_string(), " bytes=", out.size(),
+                        " hex=", ipi::debug::hex(out));
+    }
+    return out;
 }
 
 j2735::SpatMessage UperCodec::decode_spat(const std::vector<std::uint8_t>& buffer) const {
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][SPaT] decode bytes=", buffer.size(), " hex=", ipi::debug::hex(buffer));
+    }
     BitReader reader(buffer);
     j2735::SpatMessage msg;
     msg.intersectionId = static_cast<std::uint16_t>(reader.read_uint(16));
@@ -271,6 +303,9 @@ j2735::SpatMessage UperCodec::decode_spat(const std::vector<std::uint8_t>& buffe
         msg.phases.push_back(phase);
     }
     msg.validate();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][SPaT] decoded ", msg.to_string());
+    }
     return msg;
 }
 
@@ -290,10 +325,18 @@ std::vector<std::uint8_t> UperCodec::encode(const j2735::SignalRequestMessage& m
     if (msg.priorityLevel) {
         writer.write_uint(*msg.priorityLevel, 3);
     }
-    return writer.finish();
+    auto out = writer.finish();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][SRM] encode ", msg.to_string(), " bytes=", out.size(),
+                        " hex=", ipi::debug::hex(out));
+    }
+    return out;
 }
 
 j2735::SignalRequestMessage UperCodec::decode_srm(const std::vector<std::uint8_t>& buffer) const {
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][SRM] decode bytes=", buffer.size(), " hex=", ipi::debug::hex(buffer));
+    }
     BitReader reader(buffer);
     j2735::SignalRequestMessage msg;
     msg.requestId = static_cast<std::uint16_t>(reader.read_uint(16));
@@ -307,6 +350,9 @@ j2735::SignalRequestMessage UperCodec::decode_srm(const std::vector<std::uint8_t
         msg.priorityLevel = static_cast<std::uint8_t>(reader.read_uint(3));
     }
     msg.validate();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][SRM] decoded ", msg.to_string());
+    }
     return msg;
 }
 
@@ -322,10 +368,18 @@ std::vector<std::uint8_t> UperCodec::encode(const j2735::SignalStatusMessage& ms
     if (msg.estimatedServedTimeMs) {
         writer.write_uint(*msg.estimatedServedTimeMs, 16);
     }
-    return writer.finish();
+    auto out = writer.finish();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][SSM] encode ", msg.to_string(), " bytes=", out.size(),
+                        " hex=", ipi::debug::hex(out));
+    }
+    return out;
 }
 
 j2735::SignalStatusMessage UperCodec::decode_ssm(const std::vector<std::uint8_t>& buffer) const {
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][SSM] decode bytes=", buffer.size(), " hex=", ipi::debug::hex(buffer));
+    }
     BitReader reader(buffer);
     j2735::SignalStatusMessage msg;
     msg.requestId = static_cast<std::uint16_t>(reader.read_uint(16));
@@ -336,6 +390,9 @@ j2735::SignalStatusMessage UperCodec::decode_ssm(const std::vector<std::uint8_t>
         msg.estimatedServedTimeMs = static_cast<std::uint16_t>(reader.read_uint(16));
     }
     msg.validate();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][SSM] decoded ", msg.to_string());
+    }
     return msg;
 }
 

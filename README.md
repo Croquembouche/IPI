@@ -72,6 +72,46 @@ integrations can be toggled via CMake flags.
   hardware); requires `third_party/mocar/libs/libmocarv2x.so`.
 - Enabling both flags adds the ROS→Mocar BSM broadcaster sample described above.
 
+## Demo: Edge→Device SPaT over TCP
+
+This demo uses the host-built TCP sender and the J2735-2020 bridge on the
+Mocar device.
+
+### Build the pieces
+
+1) Edge sender (host/Orin):
+```bash
+cmake -S cpp -B cpp/build
+cmake --build cpp/build --target example_spat_tcp_sender
+```
+
+2) Device bridge (J2735-2020 SDK, cross-compile on host):
+```bash
+cd third_party/mocar/J2735-2020/samples/ipi_spat_bridge
+make clean && make   # produces ipi_spat_bridge (aarch64)
+```
+
+### Run the demo
+
+On the Mocar broadcasting device (with `libmocarcv2x.so` and `libzlog.so`
+available at `../lib` relative to the binary):
+```bash
+./ipi_spat_bridge            # listens on TCP port 35555 by default
+```
+
+On the edge device (replace IP with the broadcaster’s address):
+```bash
+./cpp/build/example_spat_tcp_sender 192.168.253.40 35555
+```
+
+Override phases/states/timing if needed:
+```bash
+./cpp/build/example_spat_tcp_sender 192.168.253.40 35555 1 3 5000 2 1 5000
+# state map: 0=dark,1=stopAndRemain,2=stopThenProceed,3=proceed,4=flashing
+```
+
+Enable debug hex dumps in the sender with `IPI_DEBUG=1` when troubleshooting.
+
 ## Working with the Design
 
 Start with `api/README.md` to understand the overall architecture,
