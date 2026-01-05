@@ -140,6 +140,39 @@ This design keeps the mesh behavior consistent with the rest of IPI: same J2735
 frame family, same IPI extensions, but with peers acting as both senders and
 receivers when infrastructure is unavailable.
 
+## Cooperative Task Offloading Function
+
+In addition to the mesh mode, the C++ stack now exposes a *task offloading*
+function that lets a vehicle or intersection offload compute-heavy workloads
+to nearby peers or to the edge/cloud when resources are constrained:
+
+- **Trigger** – any participant detects a degraded compute budget (CPU thermal
+  throttling, inference backlog, perception stack failure, etc.) and emits an
+  `IPI-ServiceRequest` with `serviceType=computationAid`. The request may flow
+  over RSU broadcast, 5G MQTT, or—when in mesh mode—directly between vehicles.
+- **Negotiation** – infrastructure or mesh peers respond with an
+  `IPI-CooperativeService` message whose `serviceClass=GuidedControl /
+  GuidedPerception / GuidedPlanning` and includes a `GuidedPlanningPayload` or
+  `GuidedPerceptionPayload` describing the work they will assume. When the
+  request targets pure compute (e.g., re-running a perception model), the
+  payload’s `additionalData` field carries the serialized task descriptor
+  (sensor frames, HD map delta, etc.).
+- **Data movement** – the requester streams supporting telemetry frames (BSM,
+  cooperative perception slices, etc.) through the same plane used for the
+  negotiation. When only a subset of data is required, the `CooperativeService`
+  payload may include `requestedHorizonMs` and `expirationTime` fields to scope
+  how long offloading remains valid.
+- **Completion** – once the assisting node finishes the offloaded computation,
+  it emits an `IPI-CooperativeService` with `guidanceStatus=Complete` (or
+  `Reject` if it could not honor the request). Both parties log the outcome in
+  session state for auditability.
+
+The offloading helper builds on existing message families, so no additional
+J2735 types are necessary. Vehicles can use the same `ipi::mesh::MeshManager`
+or `ipi::api::ReceiverApi` pathways to route the requests; the only difference
+is the `serviceType` advertised and the richer cooperative payload that flows
+back when another node accepts the task.
+
 ## Building
 
 ```bash

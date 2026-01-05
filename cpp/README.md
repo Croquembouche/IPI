@@ -45,6 +45,6 @@ After building as above, the example binaries live in `cpp/build`:
   SPaT frames; see the top-level `README.md` “Edge→Device SPaT over TCP” section
   for a full end-to-end walkthrough.
 - `example_mesh_demo` exercises `ipi::mesh::MeshManager` by feeding it a local
-  vehicle pose and a synthetic neighbor, then simulating loss of SPaT/MAP/5G
-  heartbeats so the mesh mode activates and starts broadcasting cooperative
-  guidance frames.
+  vehicle pose and a synthetic neighbor, simulating loss of SPaT/MAP/5G
+  heartbeats so the mesh mode activates, and showcasing the
+  `ipi::mesh::TaskOffloader` helper sending/receiving computation-aid payloads.

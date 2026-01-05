@@ -84,6 +84,8 @@ struct CooperativeServiceMessage {
     std::optional<GuidedPlanningPayload> planning{};
     std::optional<GuidedPerceptionPayload> perception{};
     std::optional<GuidedControlPayload> control{};
+    std::optional<std::vector<std::uint8_t>> offloadPayload{};
+    std::optional<std::string> offloadTaskId{};
     std::optional<std::uint8_t> confidence{}; ///< 0..100 percent.
     std::optional<std::uint32_t> expirationTimeDs{}; ///< Tenths of a second since epoch (J2735 DTime).
 

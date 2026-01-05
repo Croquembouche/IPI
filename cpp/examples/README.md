@@ -2,7 +2,7 @@
 
 - `library/` – developer utilities and sanity checks that exercise the core IPI
   library without hardware: `build_service_request`, `v2x_roundtrip`,
-  `spat_tcp_sender`, `mesh_demo`.
+  `spat_tcp_sender`, `mesh_demo` (which now covers both mesh mode and cooperative task offloading).
 - `device/` – binaries that interface with V2X hardware/ROS2: `mocar_ipi_demo`
   (Mocar SDK), `ros2_bsm_broadcaster` (ROS2→Mocar rebroadcast),
   `spat_tcp_bridge` (device-side SPaT TCP listener).
@@ -48,8 +48,9 @@ After building, run from the repo root:
   section for full instructions and parameter examples.
 - `example_mesh_demo` simulates the Vehicle–Vehicle Local Mesh Mode: it feeds
   `ipi::mesh::MeshManager` local telemetry plus a synthetic neighbor, waits for
-  infrastructure heartbeats to lapse, and logs the cooperative frames it would
-  broadcast over a V2V link.
+  infrastructure heartbeats to lapse, and logs both the cooperative frames it
+  would broadcast over a V2V link and the lifecycle of a mocked computation
+  offload handled by `ipi::mesh::TaskOffloader`.
 
 ## Running the device examples
 

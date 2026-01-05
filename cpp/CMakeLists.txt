@@ -33,6 +33,7 @@ set(IPI_V2X_SOURCES
 
 set(IPI_MESH_SOURCES
     src/mesh/mesh_manager.cpp
+    src/mesh/task_offloader.cpp
 )
 
 set(IPI_API_SOURCES

@@ -298,7 +298,8 @@ prototype against this design:
   - `ipi::api` – `ReceiverApi` and `SenderApi` mirror the HTTP/MQTT planes.
   - `ipi::core` – `CooperativeServiceMessage` and related payloads.
   - `ipi::v2x` – lightweight J2735 message models (BSM, MAP, SPaT, SRM, SSM).
-  - `ipi::mesh` – `MeshManager` for the Vehicle–Vehicle Local Mesh Mode.
+  - `ipi::mesh` – `MeshManager` for the Vehicle–Vehicle Local Mesh Mode and
+    `TaskOffloader` for packaging `computationAid` requests/responses.
 
 As a simple example, an edge-side process that ingests a BSM over V2X and
 rebroadcasts it over 5G MQTT could:

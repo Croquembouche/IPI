@@ -76,6 +76,12 @@ void CooperativeServiceMessage::validate() const {
     if (confidence && *confidence > 100) {
         throw std::invalid_argument("confidence must be between 0 and 100");
     }
+    if (offloadTaskId && offloadTaskId->size() > 65535) {
+        throw std::invalid_argument("offloadTaskId exceeds 65535 bytes");
+    }
+    if (offloadPayload && offloadPayload->size() > 65535) {
+        throw std::invalid_argument("offloadPayload exceeds 65535 bytes");
+    }
 
     if (planning) {
         if (planning->waypoints.empty()) {
@@ -138,6 +144,8 @@ std::vector<std::uint8_t> CooperativeServiceMessage::to_canonical_encoding() con
     if (planning) flags |= 0x08;
     if (perception) flags |= 0x10;
     if (control) flags |= 0x20;
+    if (offloadPayload) flags |= 0x40;
+    if (offloadTaskId) flags |= 0x80;
     buffer.push_back(flags);
 
     if (requestedHorizonMs) {
@@ -214,6 +222,17 @@ std::vector<std::uint8_t> CooperativeServiceMessage::to_canonical_encoding() con
             auto encodedValue = static_cast<std::int32_t>(cmd.valuePermille) + 32768;
             write_uint16(section, static_cast<std::uint16_t>(encodedValue & 0xFFFF));
         }
+        write_section(section);
+    }
+
+    if (offloadPayload) {
+        write_section(*offloadPayload);
+    }
+
+    if (offloadTaskId) {
+        std::vector<std::uint8_t> section;
+        section.reserve(offloadTaskId->size());
+        section.insert(section.end(), offloadTaskId->begin(), offloadTaskId->end());
         write_section(section);
     }
 
@@ -370,6 +389,18 @@ CooperativeServiceMessage CooperativeServiceMessage::from_canonical_encoding(con
         msg.control = std::move(payload);
     }
 
+    if (flags & 0x40) {
+        std::vector<std::uint8_t> section;
+        read_section(section);
+        msg.offloadPayload = std::move(section);
+    }
+
+    if (flags & 0x80) {
+        std::vector<std::uint8_t> section;
+        read_section(section);
+        msg.offloadTaskId = std::string(section.begin(), section.end());
+    }
+
     msg.validate();
     return msg;
 }
@@ -397,6 +428,12 @@ std::string CooperativeServiceMessage::to_string() const {
     }
     if (control) {
         oss << ", control.commands=" << control->commands.size();
+    }
+    if (offloadTaskId) {
+        oss << ", offloadTaskId=" << *offloadTaskId;
+    }
+    if (offloadPayload) {
+        oss << ", offloadPayload=" << offloadPayload->size() << " bytes";
     }
     oss << "}";
     return oss.str();
