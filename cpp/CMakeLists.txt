@@ -31,6 +31,10 @@ set(IPI_V2X_SOURCES
     src/v2x/uper_codec.cpp
 )
 
+set(IPI_MESH_SOURCES
+    src/mesh/mesh_manager.cpp
+)
+
 set(IPI_API_SOURCES
     src/api/receiver.cpp
     src/api/sender.cpp
@@ -40,6 +44,7 @@ set(IPI_API_SOURCES
 add_library(ipi STATIC
     ${IPI_CORE_SOURCES}
     ${IPI_V2X_SOURCES}
+    ${IPI_MESH_SOURCES}
     ${IPI_API_SOURCES}
 )
 
@@ -75,6 +80,9 @@ if(IPI_BUILD_EXAMPLES)
 
     add_executable(example_spat_tcp_sender examples/library/spat_tcp_sender.cpp)
     target_link_libraries(example_spat_tcp_sender PRIVATE ipi)
+
+    add_executable(example_mesh_demo examples/library/mesh_demo.cpp)
+    target_link_libraries(example_mesh_demo PRIVATE ipi)
 
     if(IPI_ENABLE_MOCAR_EXAMPLES)
         if(EXISTS ${MOCAR_LIB_DIR}/libmocarv2x.so)

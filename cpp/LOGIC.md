@@ -87,6 +87,59 @@ struct LinkHeader {
   wrap the socket with TLS + client certs or require a pre-shared key HMAC on
   the header if the link leaves the trusted domain.
 
+## Vehicle–Vehicle Local Mesh Mode (Power Outage Scenario)
+
+Recent events highlighted that some AVs rely heavily on external SPaT/MAP and
+cloud guidance. In a city‑wide power outage where intersections and backhaul
+may be offline, we want vehicles within proximity to form a local mesh so they
+can continue exchanging safety and perception data.
+
+High‑level goals:
+
+- Allow AVs/CVs within a configurable radius to discover one another and
+  establish an ad‑hoc local area network (LAN) without relying on powered
+  infrastructure.
+- Reuse the existing J2735 + IPI encodings (BSM + `IPI-ServiceRequest` and
+  `IPI-CooperativeService`) so vendors do not need new message families.
+- Keep the mesh logic orthogonal to the RSU/edge logic so vehicle software can
+  reuse it in any environment.
+
+Planned design sketch:
+
+- **Transport** – use whatever direct V2V link is available on the platform
+  (C‑V2X sidelink, 802.11p/DSRC OBU‑to‑OBU, or Wi‑Fi Direct). From the IPI
+  library’s perspective this is abstracted behind a small "mesh link" adapter
+  that exposes `send(MessageFrame)` / subscription callbacks.
+
+- **Discovery** – vehicles periodically emit a BSM with an
+  `IPI-ServiceRequest` extension indicating "mesh_capable" and their desired
+  mesh radius. Peers that receive compatible advertisements add each other to
+  an in‑memory neighbor table keyed by `temp_id`/`vehicleId`.
+
+- **Mesh session** – peers use the existing `IPI-CooperativeService` payload
+  as their shared data frame for:
+  - minimal cooperative planning hints (e.g., reserved gap, planned stop line),
+  - perception overlays (e.g., pedestrian or obstacle detections),
+  - control hints (only for advisory, never hard override).
+
+- **Failure mode switch** – when a vehicle detects loss of upstream SPaT/MAP
+  (e.g., no valid intersection broadcasts for N seconds) and cannot establish
+  a 5G session, it enters **mesh mode**:
+  - keep emitting BSM as usual for basic V2X compatibility,
+  - additionally publish periodic `IPI-CooperativeService` frames to neighbors
+    over the mesh link with local perception summaries and intent.
+
+- **Integration with IPI C++ library** – a future `ipi::mesh` module will wrap
+  this behavior so vehicle applications can:
+  - pass decoded BSMs (from Mocar or other OBUs) into a mesh manager,
+  - register callbacks for neighbor updates and cooperative guidance,
+  - send `CooperativeServiceMessage` instances out over the selected mesh
+    transport.
+
+This design keeps the mesh behavior consistent with the rest of IPI: same J2735
+frame family, same IPI extensions, but with peers acting as both senders and
+receivers when infrastructure is unavailable.
+
 ## Building
 
 ```bash

@@ -6,6 +6,8 @@ IPI links intelligent intersections with personal connected vehicles (PCVs), con
 2. **5G Session Plane (Infrastructure ↔ CAV/advanced PCV)** – tunneled SAE J2735 `MessageFrame` objects carried over MQTT 5.0/TLS 1.3 on a 5G data channel. This delivers authenticated, stateful exchanges for service requests, acknowledgements, and telemetry (supports F01-0000..F02-0001, F04-0000..F04-0001, A01-0000..A06-0000).
 3. **Backhaul Control Plane (Infrastructure ↔ Cloud / Control Center)** – persistent HTTP/2 (REST or gRPC) sessions that exchange SAE J2735 payloads encapsulated in JSON or binary envelopes for configuration, analytics exports, and inter-intersection coordination (supports F05-0000, A05-0000, A06-0000).
 
+In addition, IPI defines an optional **Vehicle–Vehicle Local Mesh Mode** used when infrastructure and backhaul are unavailable (for example, city-wide power outages). In this mode, nearby AVs and CVs form an ad‑hoc mesh and continue exchanging safety and cooperative guidance data using the same J2735 + IPI extensions described below.
+
 Adapters MAY expose additional internal protocols (e.g., AMQP, Kafka), but the external contracts above are normative for IPI deployments. Receivers MUST ignore unknown or unrecognized fields when decoding messages. This permissive parsing rule applies to all planes and allows different vendors or newer versions to introduce additional data without breaking interoperability.
 
 ---
@@ -34,6 +36,24 @@ The result: legacy vehicles can interpret broadcasts as before, 5G-connected veh
 | MAP/SPaT dissemination | `MAP`, `SPAT` | Standard V2X broadcasts. |
 | Cloud data backlog | `DataReceipt` (TIM variant) | Encoded TIM with metadata referencing cloud export job IDs. |
 | Cooperative CAV services | `IPI-CooperativeService` (J2735 regional extension) | New schema detailed below. |
+| Vehicle–vehicle mesh guidance | `IPI-CooperativeService` (J2735 regional extension over V2V link) | Same payload as above, but exchanged directly between vehicles when infrastructure is unavailable. |
+
+---
+
+## Vehicle–Vehicle Local Mesh Mode (Power Outage Scenario)
+
+Some AVs depend heavily on external SPaT/MAP and cloud guidance. In a city‑wide power outage where intersections and backhaul may be offline, IPI enables nearby vehicles to continue cooperating by forming a local mesh network:
+
+- **Discovery** – Vehicles periodically emit BSMs that include an `IPI-ServiceRequest` extension flagging `mesh_capable` and their preferred mesh radius. Peers that decode these advertisements add each other to an in‑memory neighbor table keyed by `temp_id`/`vehicleId`. Receivers MUST ignore unknown fields and unrecognized mesh extensions, so older software continues operating on the core BSM even if it does not participate in mesh.
+- **Mesh session** – When infrastructure heartbeats (SPaT, MAP, 5G MQTT) are missing beyond a configurable timeout, a vehicle enters mesh mode. It continues to emit standard BSMs for basic V2X compatibility, and additionally exchanges `IPI-CooperativeService` messages with neighbors over whatever V2V link is available (C‑V2X sidelink, DSRC OBU‑to‑OBU, Wi‑Fi Direct).
+- **Payload reuse** – The same `IPI-CooperativeService` payload used in the infrastructure‑backed 5G plane (guided planning, perception, control) is reused over the mesh, transported inside J2735 `MessageFrame` `regional` extensions. No new message families are required.
+- **Implementation guidance** – The C++ reference library exposes an `ipi::mesh::MeshManager` helper that:
+  - accepts decoded BSMs and infrastructure “heartbeat” events,
+  - tracks neighbors and automatically switches into mesh mode when infrastructure is lost,
+  - and periodically builds and broadcasts `IPI-CooperativeService` frames over an abstract mesh link.
+
+This design keeps mesh behavior aligned with the rest of IPI: same J2735 frame family, same IPI extensions, permissive parsing of unknown fields, but with vehicles acting as both senders and receivers when infrastructure is unavailable.
+| Vehicle–vehicle mesh guidance | `IPI-CooperativeService` (J2735 regional extension over V2V link) | Same payload as above, but exchanged directly between vehicles when infrastructure is unavailable. |
 
 ### Supplemental Extension for Service Requests
 
@@ -257,3 +277,45 @@ These extensions exist solely for advanced CAV cooperation. All other flows reus
 ---
 
 By standardizing on SAE J2735 encodings for all routine exchanges, embracing permissive parsing, and establishing strong tooling, certification, safety, observability, and scalability practices, the IPI minimizes integration overhead while enabling advanced guidance capabilities for CAVs.
+
+---
+
+## Using the C++ reference implementation
+
+This document defines the functional and message-level API. The repository also
+ships a C++17 reference implementation under `cpp/` that you can use to
+prototype against this design:
+
+- Build the library and examples:
+
+  ```bash
+  cmake -S cpp -B cpp/build
+  cmake --build cpp/build
+  ```
+
+- Link your application against `cpp/build/libipi.a` and include headers from
+  `cpp/include`. The key namespaces mirror the concepts in this document:
+  - `ipi::api` – `ReceiverApi` and `SenderApi` mirror the HTTP/MQTT planes.
+  - `ipi::core` – `CooperativeServiceMessage` and related payloads.
+  - `ipi::v2x` – lightweight J2735 message models (BSM, MAP, SPaT, SRM, SSM).
+  - `ipi::mesh` – `MeshManager` for the Vehicle–Vehicle Local Mesh Mode.
+
+As a simple example, an edge-side process that ingests a BSM over V2X and
+rebroadcasts it over 5G MQTT could:
+
+1. Decode the raw bytes into `ipi::j2735::BasicSafetyMessage`.
+2. Pack it into an `ipi::api::J2735Payload` and wrap it in an
+   `ipi::api::Envelope`.
+3. Call `ipi::api::ReceiverApi::ingestV2xMessage` on the in-memory API
+   implementation returned by `make_in_memory_receiver_api()`.
+
+For vehicle-side mesh experiments, the `example_mesh_demo` executable in
+`cpp/build` shows how to:
+
+```bash
+./cpp/build/example_mesh_demo
+```
+
+It constructs a `MeshManager`, feeds it local telemetry and synthetic BSMs from
+neighbors, simulates loss of infrastructure heartbeats, and logs the
+`IPI-CooperativeService` frames it would broadcast over a V2V mesh.

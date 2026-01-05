@@ -1,4 +1,4 @@
-# Install script for directory: /home/d1/Documents/Github/IPI/cpp
+# Install script for directory: /media/william/blueicedrive/Github/IPI/cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -37,19 +37,24 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/d1/Documents/Github/IPI/cpp/build/libipi.a")
+# Set default install directory permissions.
+if(NOT DEFINED CMAKE_OBJDUMP)
+  set(CMAKE_OBJDUMP "/usr/bin/objdump")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/d1/Documents/Github/IPI/cpp/include/")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/media/william/blueicedrive/Github/IPI/cpp/build/libipi.a")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/media/william/blueicedrive/Github/IPI/cpp/include/")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/ipi/IpiTargets.cmake")
     file(DIFFERENT EXPORT_FILE_CHANGED FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/ipi/IpiTargets.cmake"
-         "/home/d1/Documents/Github/IPI/cpp/build/CMakeFiles/Export/lib/cmake/ipi/IpiTargets.cmake")
+         "/media/william/blueicedrive/Github/IPI/cpp/build/CMakeFiles/Export/lib/cmake/ipi/IpiTargets.cmake")
     if(EXPORT_FILE_CHANGED)
       file(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/ipi/IpiTargets-*.cmake")
       if(OLD_CONFIG_FILES)
@@ -58,9 +63,9 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
       endif()
     endif()
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/ipi" TYPE FILE FILES "/home/d1/Documents/Github/IPI/cpp/build/CMakeFiles/Export/lib/cmake/ipi/IpiTargets.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/ipi" TYPE FILE FILES "/media/william/blueicedrive/Github/IPI/cpp/build/CMakeFiles/Export/lib/cmake/ipi/IpiTargets.cmake")
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^()$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/ipi" TYPE FILE FILES "/home/d1/Documents/Github/IPI/cpp/build/CMakeFiles/Export/lib/cmake/ipi/IpiTargets-noconfig.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/ipi" TYPE FILE FILES "/media/william/blueicedrive/Github/IPI/cpp/build/CMakeFiles/Export/lib/cmake/ipi/IpiTargets-noconfig.cmake")
   endif()
 endif()
 
@@ -72,5 +77,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/d1/Documents/Github/IPI/cpp/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/media/william/blueicedrive/Github/IPI/cpp/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
