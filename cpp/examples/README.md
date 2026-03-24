@@ -2,7 +2,8 @@
 
 - `library/` – developer utilities and sanity checks that exercise the core IPI
   library without hardware: `build_service_request`, `v2x_roundtrip`,
-  `spat_tcp_sender`, `mesh_demo` (which now covers both mesh mode and cooperative task offloading).
+  `spat_tcp_sender`, `private_5g_latency_sender`, `private_5g_latency_receiver`,
+  `mesh_demo` (which now covers both mesh mode and cooperative task offloading).
 - `device/` – binaries that interface with V2X hardware/ROS2: `mocar_ipi_demo`
   (Mocar SDK), `ros2_bsm_broadcaster` (ROS2→Mocar rebroadcast),
   `spat_tcp_bridge` (device-side SPaT TCP listener).
@@ -35,6 +36,10 @@ After building, run from the repo root:
 ./cpp/build/example_build_service_request
 ./cpp/build/example_v2x_roundtrip
 ./cpp/build/example_spat_tcp_sender <rsu_ip> <port>
+./cpp/build/example_private_5g_latency_receiver --transport tcp --port 36666
+./cpp/build/example_private_5g_latency_sender --transport tcp --host <infra_ip> --port 36666 --message service
+./cpp/build/example_private_5g_latency_receiver --transport mqtt --host <broker_ip> --port 1883 --intersection-id intersection-101 --source-id veh-01
+./cpp/build/example_private_5g_latency_sender --transport mqtt --host <broker_ip> --port 1883 --message service --intersection-id intersection-101 --source-id veh-01
 ./cpp/build/example_mesh_demo
 ```
 
@@ -46,6 +51,14 @@ After building, run from the repo root:
 - `example_spat_tcp_sender` connects to a remote RSU or bridge process over TCP
   and sends SPaT frames; see the root `README.md` “Edge→Device SPaT over TCP”
   section for full instructions and parameter examples.
+- `example_private_5g_latency_receiver` listens for framed latency probes over a
+  plain TCP session or subscribes to an MQTT request topic. It validates
+  incoming IPI payloads and returns an acknowledgement containing server
+  receive/send timestamps.
+- `example_private_5g_latency_sender` opens either a TCP session to the receiver
+  or publishes to the MQTT request topic, then reports RTT plus one-way
+  uplink/downlink latency estimates for either `IPI-CooperativeService` or SPaT
+  probes. Use `--csv` for per-probe logging.
 - `example_mesh_demo` simulates the Vehicle–Vehicle Local Mesh Mode: it feeds
   `ipi::mesh::MeshManager` local telemetry plus a synthetic neighbor, waits for
   infrastructure heartbeats to lapse, and logs both the cooperative frames it

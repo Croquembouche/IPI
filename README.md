@@ -10,7 +10,9 @@ the architecture end-to-end.
 
 | Path | Description |
 | --- | --- |
-| `api/README.md` | Human-readable API design covering transport planes, topic/end-point contracts, payload schemas, rate limits, and operational guidance. |
+| `references/README.md` | Human-readable API design covering transport planes, topic/end-point contracts, payload schemas, rate limits, and operational guidance. |
+| `instructions.md` | Operator runbook for running radio and private 5G latency measurements across dedicated device roles. |
+| `setup.md` | Deployment guide for building, staging, and bringing up the current IPI reference implementation. |
 | `cpp/` | C++17 reference library implementing the data models, UPER encoding helpers, optional ROS 2/Mocar adapters, vehicle–vehicle mesh helpers, and in-memory receiver/sender APIs. |
 | `third_party/mocar/` | Vendor SDK artifacts and samples for Mocar RSU/OBU devices (used by the optional hardware demos). |
 | `v2x_msg/` | ROS 2 message definitions for V2X (required when building the ROS integration). |
@@ -30,8 +32,13 @@ The `cpp/` tree exposes several reusable components:
 - `ipi::api` – interfaces (`ReceiverApi`, `SenderApi`) that mirror the HTTP and
   MQTT semantics in the spec. Factory helpers produce thread-safe in-memory
   implementations so you can prototype against the contract without deploying a
-  backend.
- - `ipi::mesh` – a vehicle–vehicle mesh manager plus a cooperative task offloader used in power‑outage or degraded-compute scenarios. `MeshManager` tracks nearby vehicles from BSMs and exchanges `IPI-CooperativeService` guidance frames over V2V links, while `TaskOffloader` packages computation-aid requests/responses on top of the same payload.
+  backend, and the private 5G latency probe helpers provide a concrete
+  request/ack wire format for timing experiments over an IP path.
+- `ipi::mesh` – a vehicle–vehicle mesh manager plus a cooperative task offloader
+  used in power-outage or degraded-compute scenarios. `MeshManager` tracks
+  nearby vehicles from BSMs and exchanges `IPI-CooperativeService` guidance
+  frames over V2V links, while `TaskOffloader` packages computation-aid
+  requests/responses on top of the same payload.
 
 ### Building
 
@@ -54,6 +61,14 @@ integrations can be toggled via CMake flags.
   Exercises the J2735 helpers and the `UperCodec` by encoding/decoding synthetic
   BSM, MAP, SPaT, SRM, and SSM frames. Replace the synthetic values with live
   sensor input to simulate RSU broadcasts.
+
+- `example_private_5g_latency_receiver` and `example_private_5g_latency_sender`
+  Form a concrete measurement harness for the private connected-V2X route. The
+  sender can use either a raw TCP session or MQTT over the 5G IP path, sends
+  framed IPI payloads, and reports RTT plus one-way uplink/downlink latency
+  when the endpoints are time-synchronized. The receiver validates and
+  acknowledges SPaT or
+  `IPI-CooperativeService` probes.
 
 - `example_mocar_ipi` *(requires `IPI_ENABLE_MOCAR_EXAMPLES=ON`)*
   Wraps the Mocar SDK so RSU/OBU devices can broadcast the core message types.
@@ -115,9 +130,110 @@ Override phases/states/timing if needed:
 
 Enable debug hex dumps in the sender with `IPI_DEBUG=1` when troubleshooting.
 
+## Demo: Private 5G Route Latency over TCP or MQTT
+
+This pair is intended for your private 5G IP path. Run the receiver on the RSU,
+edge node, or infrastructure host reachable over 5G, then run the sender from
+the vehicle-side machine or modem host. The same binaries support both direct
+TCP and MQTT transport.
+
+### Build the pieces
+
+```bash
+cmake -S cpp -B cpp/build -DIPI_ENABLE_TESTS=ON
+cmake --build cpp/build --target example_private_5g_latency_receiver example_private_5g_latency_sender
+```
+
+### Run the receiver over TCP
+
+```bash
+./cpp/build/example_private_5g_latency_receiver --transport tcp --port 36666
+```
+
+### Run service-plane probes over TCP
+
+```bash
+./cpp/build/example_private_5g_latency_sender \
+  --transport tcp \
+  --host 192.168.253.40 \
+  --port 36666 \
+  --count 50 \
+  --interval-ms 1000 \
+  --message service \
+  --payload-bytes 256
+```
+
+### Run SPaT probes over the same TCP path
+
+```bash
+./cpp/build/example_private_5g_latency_sender \
+  --transport tcp \
+  --host 192.168.253.40 \
+  --port 36666 \
+  --count 50 \
+  --interval-ms 1000 \
+  --message spat
+```
+
+### Run the receiver against an MQTT broker
+
+Use any MQTT 3.1.1-compatible broker reachable over the 5G path.
+
+```bash
+./cpp/build/example_private_5g_latency_receiver \
+  --transport mqtt \
+  --host 192.168.253.40 \
+  --port 1883 \
+  --intersection-id intersection-101 \
+  --source-id veh-01
+```
+
+### Run service-plane probes over MQTT
+
+```bash
+./cpp/build/example_private_5g_latency_sender \
+  --transport mqtt \
+  --host 192.168.253.40 \
+  --port 1883 \
+  --count 50 \
+  --interval-ms 1000 \
+  --message service \
+  --payload-bytes 256 \
+  --intersection-id intersection-101 \
+  --source-id veh-01
+```
+
+### Run SPaT probes over MQTT
+
+```bash
+./cpp/build/example_private_5g_latency_sender \
+  --transport mqtt \
+  --host 192.168.253.40 \
+  --port 1883 \
+  --count 50 \
+  --interval-ms 1000 \
+  --message spat \
+  --intersection-id intersection-101 \
+  --source-id veh-01
+```
+
+Notes:
+
+- `--message service` sends an `IPI-CooperativeService` request frame and is the
+  closest match to the private-session control plane.
+- `--message spat` sends a J2735 SPaT frame over the same selected transport path so you can
+  compare radio SPaT timing against the private 5G route.
+- `--transport mqtt` uses request and ack topics under
+  `ipi/{intersectionId}/latency/{sourceId}/...`.
+- The sender prints per-probe timing plus summary `p50/p95/p99` RTT. One-way
+  uplink/downlink numbers assume the endpoints are clock-synchronized.
+- Use `--csv` if you want per-probe rows for later plotting.
+- The MQTT path is a dependency-free MQTT 3.1.1 implementation over plain TCP.
+  It does not add TLS by itself.
+
 ## Working with the Design
 
-Start with `api/README.md` to understand the overall architecture,
+Start with `references/README.md` to understand the overall architecture,
 communication planes, and payload contracts. The C++ APIs mirror the same
 nomenclature so you can stub or back the interfaces with your infrastructure of
 choice. The mesh behaviour, power‑outage scenario, and cooperative task
@@ -125,7 +241,7 @@ offloading are documented in `cpp/LOGIC.md` and implemented in
 `ipi::mesh::MeshManager` and `ipi::mesh::TaskOffloader`. For hardware-in-the-loop
 experiments, reuse the optional Mocar helpers; for ROS-based perception systems,
 publish detected vehicles as BSM messages and forward them using the provided
-broacaster and mesh/offload samples.
+broadcaster and mesh/offload samples.
 
 Contributions are welcome—open issues or PRs when expanding the spec, porting
 encoders, or wiring production backends to the `ReceiverApi`/`SenderApi`

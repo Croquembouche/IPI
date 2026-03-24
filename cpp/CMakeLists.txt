@@ -37,6 +37,10 @@ set(IPI_MESH_SOURCES
 )
 
 set(IPI_API_SOURCES
+    src/api/edge4av_interface.cpp
+    src/api/minimal_mqtt_client.cpp
+    src/api/private_5g_latency_probe.cpp
+    src/api/private_session_transport.cpp
     src/api/receiver.cpp
     src/api/sender.cpp
     src/api/shared_state.cpp
@@ -82,8 +86,17 @@ if(IPI_BUILD_EXAMPLES)
     add_executable(example_spat_tcp_sender examples/library/spat_tcp_sender.cpp)
     target_link_libraries(example_spat_tcp_sender PRIVATE ipi)
 
+    add_executable(example_private_5g_latency_sender examples/library/private_5g_latency_sender.cpp)
+    target_link_libraries(example_private_5g_latency_sender PRIVATE ipi)
+
+    add_executable(example_private_5g_latency_receiver examples/library/private_5g_latency_receiver.cpp)
+    target_link_libraries(example_private_5g_latency_receiver PRIVATE ipi)
+
     add_executable(example_mesh_demo examples/library/mesh_demo.cpp)
     target_link_libraries(example_mesh_demo PRIVATE ipi)
+
+    add_executable(example_edge4av_dual_plane examples/library/edge4av_dual_plane.cpp)
+    target_link_libraries(example_edge4av_dual_plane PRIVATE ipi)
 
     if(IPI_ENABLE_MOCAR_EXAMPLES)
         if(EXISTS ${MOCAR_LIB_DIR}/libmocarv2x.so)
@@ -125,7 +138,27 @@ endif()
 
 if(IPI_ENABLE_TESTS)
     enable_testing()
-    # Placeholder for future tests
+    find_package(Threads REQUIRED)
+
+    add_executable(test_edge4av_interface tests/edge4av_interface_test.cpp)
+    target_link_libraries(test_edge4av_interface PRIVATE ipi)
+    add_test(NAME edge4av_interface COMMAND test_edge4av_interface)
+
+    add_executable(test_private_session_transport tests/private_session_transport_test.cpp)
+    target_link_libraries(test_private_session_transport PRIVATE ipi)
+    add_test(NAME private_session_transport COMMAND test_private_session_transport)
+
+    add_executable(test_private_5g_latency_probe tests/private_5g_latency_probe_test.cpp)
+    target_link_libraries(test_private_5g_latency_probe PRIVATE ipi)
+    add_test(NAME private_5g_latency_probe COMMAND test_private_5g_latency_probe)
+
+    add_executable(test_private_5g_latency_loopback tests/private_5g_latency_loopback_test.cpp)
+    target_link_libraries(test_private_5g_latency_loopback PRIVATE ipi Threads::Threads)
+    add_test(NAME private_5g_latency_loopback COMMAND test_private_5g_latency_loopback)
+
+    add_executable(test_private_5g_latency_mqtt_loopback tests/private_5g_latency_mqtt_loopback_test.cpp)
+    target_link_libraries(test_private_5g_latency_mqtt_loopback PRIVATE ipi Threads::Threads)
+    add_test(NAME private_5g_latency_mqtt_loopback COMMAND test_private_5g_latency_mqtt_loopback)
 endif()
 
 install(TARGETS ipi EXPORT IpiTargets ARCHIVE DESTINATION lib LIBRARY DESTINATION lib RUNTIME DESTINATION bin)
