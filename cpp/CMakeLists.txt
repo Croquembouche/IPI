@@ -152,6 +152,10 @@ if(IPI_ENABLE_TESTS)
     target_link_libraries(test_private_5g_latency_probe PRIVATE ipi)
     add_test(NAME private_5g_latency_probe COMMAND test_private_5g_latency_probe)
 
+    add_executable(test_experiment_logging tests/experiment_logging_test.cpp)
+    target_link_libraries(test_experiment_logging PRIVATE ipi)
+    add_test(NAME experiment_logging COMMAND test_experiment_logging)
+
     add_executable(test_private_5g_latency_loopback tests/private_5g_latency_loopback_test.cpp)
     target_link_libraries(test_private_5g_latency_loopback PRIVATE ipi Threads::Threads)
     add_test(NAME private_5g_latency_loopback COMMAND test_private_5g_latency_loopback)

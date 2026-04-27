@@ -1,3 +1,4 @@
+#include "ipi/api/experiment_logging.hpp"
 #include "ipi/api/minimal_mqtt_client.hpp"
 #include "ipi/api/private_5g_latency_probe.hpp"
 
@@ -50,22 +51,27 @@ struct Args {
     std::uint16_t spatIntersectionId{101};
     std::uint16_t horizonMs{2500};
     std::size_t payloadBytes{0};
+    ipi::api::ExperimentContext context{};
     bool csv{false};
 };
 
 struct ProbeStats {
+    std::size_t attempted{0};
+    std::size_t accepted{0};
+    std::size_t rejected{0};
+    std::size_t failed{0};
     std::vector<std::int64_t> rtts{};
     std::vector<std::int64_t> uplinks{};
     std::vector<std::int64_t> downlinks{};
 };
 
-std::string_view message_kind_name(ProbeMessageKind kind) {
+std::string_view service_type_name(ProbeMessageKind kind) {
     switch (kind) {
         case ProbeMessageKind::Spat:
-            return "spat";
+            return "intersection-state";
         case ProbeMessageKind::CooperativeService:
         default:
-            return "service";
+            return "guided-planning";
     }
 }
 
@@ -81,15 +87,6 @@ std::string_view transport_name(TransportKind kind) {
 
 double ns_to_ms(std::int64_t ns) {
     return static_cast<double>(ns) / 1000000.0;
-}
-
-std::string optional_ns_to_ms_text(const std::optional<std::int64_t>& value) {
-    if (!value) {
-        return "n/a";
-    }
-    std::ostringstream oss;
-    oss << std::fixed << std::setprecision(3) << ns_to_ms(*value);
-    return oss.str();
 }
 
 ipi::SessionId session_id_from_text(const std::string& text) {
@@ -113,6 +110,26 @@ std::string make_mqtt_client_id(const Args& args) {
     return oss.str();
 }
 
+std::string make_request_id(const Args& args, std::uint64_t sequence) {
+    if (args.count <= 1U) {
+        return args.context.requestIdBase;
+    }
+    return args.context.requestIdBase + "-" + std::to_string(sequence);
+}
+
+void apply_context_defaults(Args& args) {
+    if (args.context.conditionLabel.empty()) {
+        args.context.conditionLabel =
+            ipi::api::default_condition_label(transport_name(args.transport), args.context.networkLoadLevel);
+    }
+    if (args.context.avId.empty()) {
+        args.context.avId = args.sourceId;
+    }
+    if (args.context.obuId.empty()) {
+        args.context.obuId = args.sourceId;
+    }
+}
+
 Args parse_args(int argc, char** argv) {
     Args args;
     for (int i = 1; i < argc; ++i) {
@@ -120,20 +137,35 @@ Args parse_args(int argc, char** argv) {
         if (arg == "--help" || arg == "-h") {
             std::cout
                 << "Usage: " << argv[0] << " [options]\n"
-                << "  --transport <tcp|mqtt>     Network path to use (default tcp)\n"
-                << "  --host <ip>                Receiver host or MQTT broker host (default 127.0.0.1)\n"
-                << "  --port <port>              Receiver port or MQTT broker port (default 36666)\n"
-                << "  --count <n>                Number of probes to send (default 10)\n"
-                << "  --interval-ms <ms>         Delay between probes (default 1000)\n"
-                << "  --timeout-ms <ms>          Ack wait timeout for MQTT mode (default 5000)\n"
-                << "  --message <service|spat>   Payload kind (default service)\n"
-                << "  --intersection-id <id>     Logical intersection id string\n"
-                << "  --session-id <id>          Session id text for service probes\n"
-                << "  --source-id <id>           Vehicle/source id text\n"
-                << "  --payload-bytes <n>        Extra service payload bytes for sizing tests\n"
-                << "  --spat-intersection <id>   Numeric SPaT intersection id (default 101)\n"
-                << "  --horizon-ms <ms>          Requested service horizon (default 2500)\n"
-                << "  --csv                      Emit per-probe CSV rows\n";
+                << "  --transport <tcp|mqtt>       Network path to use (default tcp)\n"
+                << "  --host <ip>                  Receiver host or MQTT broker host (default 127.0.0.1)\n"
+                << "  --port <port>                Receiver port or MQTT broker port (default 36666)\n"
+                << "  --count <n>                  Number of probes to send (default 10)\n"
+                << "  --interval-ms <ms>           Delay between probes (default 1000)\n"
+                << "  --timeout-ms <ms>            Ack wait timeout for MQTT mode (default 5000)\n"
+                << "  --message <service|spat>     Payload kind (default service)\n"
+                << "  --intersection-id <id>       Logical intersection id string\n"
+                << "  --session-id <id>            Session id text for service probes\n"
+                << "  --source-id <id>             Vehicle/source id text\n"
+                << "  --payload-bytes <n>          Extra service payload bytes for sizing tests\n"
+                << "  --spat-intersection <id>     Numeric SPaT intersection id (default 101)\n"
+                << "  --horizon-ms <ms>            Requested service horizon (default 2500)\n"
+                << "  --run-id <id>                Shared experiment run identifier\n"
+                << "  --condition-id <id>          Shared condition identifier\n"
+                << "  --condition-label <label>    Run class such as private-5g-baseline\n"
+                << "  --request-id <id>            Request id base used in logs and probe metadata\n"
+                << "  --av-id <id>                Local AV identifier for logging\n"
+                << "  --obu-id <id>               Local OBU identifier for logging\n"
+                << "  --rsu-id <id>               Target RSU identifier for logging\n"
+                << "  --network-load-level <id>   idle|moderate|heavy|near-saturation\n"
+                << "  --qos-profile <id>          FIFO, default, 5qi-mapped, etc.\n"
+                << "  --mobility-state <id>       stationary, moving, handover, etc.\n"
+                << "  --clock-sync-state <id>     ptp-synced, ntp-synced, unsynced\n"
+                << "  --service-success <bool>    AV/service success annotation for this run\n"
+                << "  --vehicle-outcome-name <s>  Driving metric name\n"
+                << "  --vehicle-outcome-value <v> Driving metric value\n"
+                << "  --vehicle-outcome-unit <u>  Driving metric unit\n"
+                << "  --csv                       Emit structured CSV rows\n";
             std::exit(0);
         }
         if (arg == "--transport" && i + 1 < argc) {
@@ -178,6 +210,8 @@ Args parse_args(int argc, char** argv) {
             args.horizonMs = static_cast<std::uint16_t>(std::stoul(argv[++i]));
         } else if (arg == "--csv") {
             args.csv = true;
+        } else if (ipi::api::consume_experiment_context_arg(args.context, arg, i, argc, argv)) {
+            continue;
         } else {
             throw std::invalid_argument("unknown argument: " + std::string(arg));
         }
@@ -185,6 +219,7 @@ Args parse_args(int argc, char** argv) {
     if (args.count == 0) {
         throw std::invalid_argument("--count must be greater than zero");
     }
+    apply_context_defaults(args);
     return args;
 }
 
@@ -263,11 +298,20 @@ ipi::api::Private5gProbeRequest build_request(const Args& args,
     ipi::api::Private5gProbeRequest request;
     request.sequence = sequence;
     request.clientSendTimeNs = ipi::api::current_unix_time_ns();
+    request.runId = args.context.runId;
+    request.conditionId = args.context.conditionId;
+    request.conditionLabel = args.context.conditionLabel;
+    request.requestId = make_request_id(args, sequence);
+    request.serviceType = std::string(service_type_name(args.messageKind));
     request.intersectionId = args.intersectionId;
     request.sourceId = args.sourceId;
     if (args.messageKind == ProbeMessageKind::CooperativeService) {
         request.sessionId = args.sessionId;
     }
+    request.networkLoadLevel = args.context.networkLoadLevel;
+    request.qosProfile = args.context.qosProfile;
+    request.mobilityState = args.context.mobilityState;
+    request.clockSyncState = args.context.clockSyncState;
     request.frame = build_frame(args, request.sequence, codec);
     return request;
 }
@@ -282,38 +326,81 @@ std::int64_t percentile_ns(std::vector<std::int64_t> values, double percentile) 
 }
 
 void print_csv_header() {
-    std::cout << "transport,sequence,message,payload_bytes,accepted,client_send_ns,server_receive_ns,server_send_ns,"
-                 "client_receive_ns,rtt_ms,uplink_ms,server_ms,downlink_ms,detail\n";
+    std::cout << ipi::api::experiment_log_csv_header() << '\n';
+}
+
+ipi::api::ExperimentLogRecord make_base_record(const Args& args,
+                                               const ipi::api::Private5gProbeRequest& request,
+                                               std::uint64_t emitTimeNs) {
+    ipi::api::ExperimentLogRecord record;
+    record.emitterRole = "5g-sender";
+    record.emitTimeNs = emitTimeNs;
+    record.runId = request.runId;
+    record.conditionId = request.conditionId;
+    record.conditionLabel = request.conditionLabel;
+    record.serviceType = request.serviceType;
+    record.transport = std::string(transport_name(args.transport));
+    record.avId = args.context.avId;
+    record.obuId = args.context.obuId;
+    record.rsuId = args.context.rsuId;
+    record.requestId = request.requestId;
+    record.sessionId = request.sessionId.value_or(std::string{});
+    record.intersectionId = request.intersectionId;
+    record.sourceId = request.sourceId;
+    record.sequence = request.sequence;
+    record.networkLoadLevel = request.networkLoadLevel;
+    record.qosProfile = request.qosProfile;
+    record.mobilityState = request.mobilityState;
+    record.clockSyncState = request.clockSyncState;
+    record.serviceSuccess = args.context.serviceSuccess;
+    record.vehicleOutcomeName = args.context.vehicleOutcomeName;
+    record.vehicleOutcomeValue = args.context.vehicleOutcomeValue;
+    record.vehicleOutcomeUnit = args.context.vehicleOutcomeUnit;
+    record.clientSendTimeNs = request.clientSendTimeNs;
+    record.frameType = ipi::to_string(request.frame.type);
+    record.payloadBytes = static_cast<std::uint32_t>(request.frame.payload.size());
+    return record;
+}
+
+void emit_record(const Args& args, const ipi::api::ExperimentLogRecord& record) {
+    if (args.csv) {
+        std::cout << ipi::api::experiment_log_to_csv(record) << '\n';
+    } else {
+        std::cout << ipi::api::experiment_log_to_text(record) << '\n';
+    }
 }
 
 void record_probe_result(const Args& args,
+                         const ipi::api::Private5gProbeRequest& request,
                          const ipi::api::Private5gProbeAck& ack,
                          std::uint64_t clientReceiveTimeNs,
                          ProbeStats& stats) {
-    const auto metrics = ipi::api::compute_private_5g_latency_metrics(ack, clientReceiveTimeNs);
-
-    if (args.csv) {
-        std::cout << transport_name(args.transport) << ',' << ack.sequence << ','
-                  << message_kind_name(args.messageKind) << ',' << ack.payloadSize << ','
-                  << (ack.accepted ? "true" : "false") << ',' << ack.clientSendTimeNs << ','
-                  << ack.serverReceiveTimeNs << ',' << ack.serverSendTimeNs << ',' << clientReceiveTimeNs << ','
-                  << std::fixed << std::setprecision(3) << ns_to_ms(metrics.roundTripNs) << ','
-                  << optional_ns_to_ms_text(metrics.uplinkNs) << ','
-                  << ns_to_ms(metrics.serverProcessingNs) << ','
-                  << optional_ns_to_ms_text(metrics.downlinkNs) << ','
-                  << '"' << ack.detail << '"' << '\n';
+    ++stats.attempted;
+    if (ack.accepted) {
+        ++stats.accepted;
     } else {
-        std::cout << "transport=" << transport_name(args.transport)
-                  << " seq=" << ack.sequence
-                  << " message=" << message_kind_name(args.messageKind)
-                  << " bytes=" << ack.payloadSize
-                  << " accepted=" << std::boolalpha << ack.accepted
-                  << " rtt_ms=" << std::fixed << std::setprecision(3) << ns_to_ms(metrics.roundTripNs)
-                  << " uplink_ms=" << optional_ns_to_ms_text(metrics.uplinkNs)
-                  << " server_ms=" << ns_to_ms(metrics.serverProcessingNs)
-                  << " downlink_ms=" << optional_ns_to_ms_text(metrics.downlinkNs)
-                  << " detail=\"" << ack.detail << "\"\n";
+        ++stats.rejected;
     }
+
+    const auto metrics = ipi::api::compute_private_5g_latency_metrics(ack, clientReceiveTimeNs);
+    auto record = make_base_record(args, request, clientReceiveTimeNs);
+    record.accepted = ack.accepted;
+    record.serviceSuccess = ack.accepted && args.context.serviceSuccess;
+    record.frameType = ipi::to_string(ack.frameType);
+    record.payloadBytes = ack.payloadSize;
+    record.serverReceiveTimeNs = ack.serverReceiveTimeNs;
+    record.serverSendTimeNs = ack.serverSendTimeNs;
+    record.clientReceiveTimeNs = clientReceiveTimeNs;
+    record.roundTripMs = ns_to_ms(metrics.roundTripNs);
+    if (metrics.uplinkNs) {
+        record.uplinkMs = ns_to_ms(*metrics.uplinkNs);
+    }
+    record.serverMs = ns_to_ms(metrics.serverProcessingNs);
+    if (metrics.downlinkNs) {
+        record.downlinkMs = ns_to_ms(*metrics.downlinkNs);
+    }
+    record.detail = ack.detail;
+    emit_record(args, record);
 
     if (ack.accepted) {
         stats.rtts.push_back(metrics.roundTripNs);
@@ -326,54 +413,88 @@ void record_probe_result(const Args& args,
     }
 }
 
-void print_summary(const ProbeStats& stats) {
+void record_probe_failure(const Args& args,
+                          const ipi::api::Private5gProbeRequest& request,
+                          std::string detail,
+                          std::uint64_t emitTimeNs,
+                          ProbeStats& stats) {
+    ++stats.attempted;
+    ++stats.failed;
+
+    auto record = make_base_record(args, request, emitTimeNs);
+    record.accepted = false;
+    record.serviceSuccess = false;
+    record.clientReceiveTimeNs = emitTimeNs;
+    record.detail = std::move(detail);
+    emit_record(args, record);
+}
+
+void print_summary(const ProbeStats& stats, bool csv) {
+    std::ostream& out = csv ? std::cerr : std::cout;
+    const auto total = stats.attempted;
+    const auto successRate = total == 0 ? 0.0 : (100.0 * static_cast<double>(stats.accepted) / static_cast<double>(total));
+
+    out << "summary attempts=" << total
+        << " accepted=" << stats.accepted
+        << " rejected=" << stats.rejected
+        << " failed=" << stats.failed
+        << " success_rate_pct=" << std::fixed << std::setprecision(2) << successRate << '\n';
+
     if (stats.rtts.empty()) {
-        std::cout << "no successful probes recorded\n";
+        out << "summary rtt_ms unavailable (no successful probes)\n";
+        out << "summary uplink_ms unavailable (no successful probes)\n";
+        out << "summary downlink_ms unavailable (no successful probes)\n";
         return;
     }
 
-    std::cout << "summary rtt_ms"
-              << " p50=" << std::fixed << std::setprecision(3) << ns_to_ms(percentile_ns(stats.rtts, 0.50))
-              << " p95=" << ns_to_ms(percentile_ns(stats.rtts, 0.95))
-              << " p99=" << ns_to_ms(percentile_ns(stats.rtts, 0.99))
-              << " count=" << stats.rtts.size() << '\n';
+    out << "summary rtt_ms"
+        << " p50=" << std::fixed << std::setprecision(3) << ns_to_ms(percentile_ns(stats.rtts, 0.50))
+        << " p95=" << ns_to_ms(percentile_ns(stats.rtts, 0.95))
+        << " p99=" << ns_to_ms(percentile_ns(stats.rtts, 0.99))
+        << " count=" << stats.rtts.size() << '\n';
 
     if (!stats.uplinks.empty()) {
-        std::cout << "summary uplink_ms"
-                  << " p50=" << ns_to_ms(percentile_ns(stats.uplinks, 0.50))
-                  << " p95=" << ns_to_ms(percentile_ns(stats.uplinks, 0.95))
-                  << " p99=" << ns_to_ms(percentile_ns(stats.uplinks, 0.99))
-                  << " count=" << stats.uplinks.size() << '\n';
+        out << "summary uplink_ms"
+            << " p50=" << ns_to_ms(percentile_ns(stats.uplinks, 0.50))
+            << " p95=" << ns_to_ms(percentile_ns(stats.uplinks, 0.95))
+            << " p99=" << ns_to_ms(percentile_ns(stats.uplinks, 0.99))
+            << " count=" << stats.uplinks.size() << '\n';
     } else {
-        std::cout << "summary uplink_ms unavailable (clocks not synchronized or negative one-way samples)\n";
+        out << "summary uplink_ms unavailable (clocks not synchronized or negative one-way samples)\n";
     }
 
     if (!stats.downlinks.empty()) {
-        std::cout << "summary downlink_ms"
-                  << " p50=" << ns_to_ms(percentile_ns(stats.downlinks, 0.50))
-                  << " p95=" << ns_to_ms(percentile_ns(stats.downlinks, 0.95))
-                  << " p99=" << ns_to_ms(percentile_ns(stats.downlinks, 0.99))
-                  << " count=" << stats.downlinks.size() << '\n';
+        out << "summary downlink_ms"
+            << " p50=" << ns_to_ms(percentile_ns(stats.downlinks, 0.50))
+            << " p95=" << ns_to_ms(percentile_ns(stats.downlinks, 0.95))
+            << " p99=" << ns_to_ms(percentile_ns(stats.downlinks, 0.99))
+            << " count=" << stats.downlinks.size() << '\n';
     } else {
-        std::cout << "summary downlink_ms unavailable (clocks not synchronized or negative one-way samples)\n";
+        out << "summary downlink_ms unavailable (clocks not synchronized or negative one-way samples)\n";
     }
 }
 
 ProbeStats run_tcp_sender(const Args& args) {
-    const int socketFd = connect_socket(args);
-    ipi::v2x::UperCodec codec;
     ProbeStats stats;
     stats.rtts.reserve(args.count);
 
+    const int socketFd = connect_socket(args);
+    ipi::v2x::UperCodec codec;
+
     for (std::size_t i = 0; i < args.count; ++i) {
         const auto request = build_request(args, i + 1U, codec);
-        const auto encodedRequest = ipi::api::encode_private_5g_probe_request(request);
-        ipi::api::send_private_5g_probe_packet(socketFd, encodedRequest);
+        try {
+            const auto encodedRequest = ipi::api::encode_private_5g_probe_request(request);
+            ipi::api::send_private_5g_probe_packet(socketFd, encodedRequest);
 
-        const auto encodedAck = ipi::api::recv_private_5g_probe_packet(socketFd);
-        const auto clientReceiveTimeNs = ipi::api::current_unix_time_ns();
-        const auto ack = ipi::api::decode_private_5g_probe_ack(encodedAck);
-        record_probe_result(args, ack, clientReceiveTimeNs, stats);
+            const auto encodedAck = ipi::api::recv_private_5g_probe_packet(socketFd);
+            const auto clientReceiveTimeNs = ipi::api::current_unix_time_ns();
+            const auto ack = ipi::api::decode_private_5g_probe_ack(encodedAck);
+            record_probe_result(args, request, ack, clientReceiveTimeNs, stats);
+        } catch (const std::exception& ex) {
+            record_probe_failure(args, request, ex.what(), ipi::api::current_unix_time_ns(), stats);
+            break;
+        }
 
         if (i + 1U < args.count) {
             std::this_thread::sleep_for(std::chrono::milliseconds(args.intervalMs));
@@ -385,25 +506,30 @@ ProbeStats run_tcp_sender(const Args& args) {
 }
 
 ProbeStats run_mqtt_sender(const Args& args) {
+    ProbeStats stats;
+    stats.rtts.reserve(args.count);
+
     ipi::v2x::UperCodec codec;
     ipi::api::MinimalMqttClient client(make_mqtt_client_id(args));
     client.connect(args.host, args.port);
     client.subscribe(make_ack_topic(args));
 
-    ProbeStats stats;
-    stats.rtts.reserve(args.count);
-
     for (std::size_t i = 0; i < args.count; ++i) {
         const auto request = build_request(args, i + 1U, codec);
-        client.publish(make_request_topic(args), ipi::api::encode_private_5g_probe_request(request));
-
-        const auto message = client.receive(std::chrono::milliseconds(args.timeoutMs));
-        if (!message) {
-            throw std::runtime_error("mqtt ack timeout");
+        try {
+            client.publish(make_request_topic(args), ipi::api::encode_private_5g_probe_request(request));
+            const auto message = client.receive(std::chrono::milliseconds(args.timeoutMs));
+            if (!message) {
+                record_probe_failure(args, request, "mqtt ack timeout", ipi::api::current_unix_time_ns(), stats);
+            } else {
+                const auto clientReceiveTimeNs = ipi::api::current_unix_time_ns();
+                const auto ack = ipi::api::decode_private_5g_probe_ack(message->payload);
+                record_probe_result(args, request, ack, clientReceiveTimeNs, stats);
+            }
+        } catch (const std::exception& ex) {
+            record_probe_failure(args, request, ex.what(), ipi::api::current_unix_time_ns(), stats);
+            break;
         }
-        const auto clientReceiveTimeNs = ipi::api::current_unix_time_ns();
-        const auto ack = ipi::api::decode_private_5g_probe_ack(message->payload);
-        record_probe_result(args, ack, clientReceiveTimeNs, stats);
 
         if (i + 1U < args.count) {
             std::this_thread::sleep_for(std::chrono::milliseconds(args.intervalMs));
@@ -426,7 +552,7 @@ int main(int argc, char** argv) {
         const auto stats = args.transport == TransportKind::Mqtt
                                ? run_mqtt_sender(args)
                                : run_tcp_sender(args);
-        print_summary(stats);
+        print_summary(stats, args.csv);
         return 0;
     } catch (const std::exception& ex) {
         std::cerr << "Error: " << ex.what() << '\n';

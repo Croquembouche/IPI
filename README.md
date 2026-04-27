@@ -13,6 +13,8 @@ the architecture end-to-end.
 | `references/README.md` | Human-readable API design covering transport planes, topic/end-point contracts, payload schemas, rate limits, and operational guidance. |
 | `instructions.md` | Operator runbook for running radio and private 5G latency measurements across dedicated device roles. |
 | `setup.md` | Deployment guide for building, staging, and bringing up the current IPI reference implementation. |
+| `experiment.md` | Edge4AV experiment tracker for recording run IDs, condition IDs, metrics, and paper-ready results. |
+| `web/experiment-tracker/` | Dependency-free browser UI for entering experiment results, tracking readiness, and exporting JSON or Markdown snapshots. |
 | `cpp/` | C++17 reference library implementing the data models, UPER encoding helpers, optional ROS 2/Mocar adapters, vehicle–vehicle mesh helpers, and in-memory receiver/sender APIs. |
 | `third_party/mocar/` | Vendor SDK artifacts and samples for Mocar RSU/OBU devices (used by the optional hardware demos). |
 | `v2x_msg/` | ROS 2 message definitions for V2X (required when building the ROS integration). |
@@ -50,6 +52,36 @@ cmake --build cpp/build
 This produces `libipi.a` and the example executables described below. Optional
 integrations can be toggled via CMake flags.
 
+## Web Experiment Tracker
+
+The repo also ships a static browser UI for the `Edge4AV` experiment campaign at
+`web/experiment-tracker/`. It mirrors the structure in `experiment.md`, stores
+edits locally in the browser, and can export either JSON or Markdown snapshots.
+
+Run it from a lightweight local server:
+
+```bash
+python3 -m http.server
+```
+
+Then open:
+
+```text
+http://localhost:8000/web/experiment-tracker/
+```
+
+If you would rather use a shorter entry point from the repo root, open:
+
+```text
+http://localhost:8000/experiment-tracker.html
+```
+
+If you started the server from inside `web/` instead of the repo root, use:
+
+```text
+http://localhost:8000/experiment-tracker/
+```
+
 ### Example Programs
 
 - `example_build_service_request`
@@ -68,7 +100,10 @@ integrations can be toggled via CMake flags.
   framed IPI payloads, and reports RTT plus one-way uplink/downlink latency
   when the endpoints are time-synchronized. The receiver validates and
   acknowledges SPaT or
-  `IPI-CooperativeService` probes.
+  `IPI-CooperativeService` probes. Both ends now support shared experiment
+  metadata (`--run-id`, `--condition-id`, `--condition-label`, `--request-id`,
+  `--network-load-level`, `--qos-profile`, `--mobility-state`,
+  `--clock-sync-state`) so logs can be joined directly into Edge4AV figures.
 
 - `example_mocar_ipi` *(requires `IPI_ENABLE_MOCAR_EXAMPLES=ON`)*
   Wraps the Mocar SDK so RSU/OBU devices can broadcast the core message types.
@@ -147,7 +182,17 @@ cmake --build cpp/build --target example_private_5g_latency_receiver example_pri
 ### Run the receiver over TCP
 
 ```bash
-./cpp/build/example_private_5g_latency_receiver --transport tcp --port 36666
+./cpp/build/example_private_5g_latency_receiver \
+  --transport tcp \
+  --port 36666 \
+  --run-id edge4av-run-001 \
+  --condition-id p5g-tcp-baseline \
+  --condition-label private-5g-baseline \
+  --rsu-id rsu-1 \
+  --network-load-level idle \
+  --qos-profile default \
+  --clock-sync-state ptp-synced \
+  --csv > tcp_receiver.csv
 ```
 
 ### Run service-plane probes over TCP
@@ -160,7 +205,18 @@ cmake --build cpp/build --target example_private_5g_latency_receiver example_pri
   --count 50 \
   --interval-ms 1000 \
   --message service \
-  --payload-bytes 256
+  --payload-bytes 256 \
+  --run-id edge4av-run-001 \
+  --condition-id p5g-tcp-baseline \
+  --condition-label private-5g-baseline \
+  --request-id p5g-tcp-baseline \
+  --av-id av-1 \
+  --obu-id obu-1 \
+  --rsu-id rsu-1 \
+  --network-load-level idle \
+  --qos-profile default \
+  --clock-sync-state ptp-synced \
+  --csv > tcp_service_baseline.csv
 ```
 
 ### Run SPaT probes over the same TCP path
@@ -185,7 +241,15 @@ Use any MQTT 3.1.1-compatible broker reachable over the 5G path.
   --host 192.168.253.40 \
   --port 1883 \
   --intersection-id intersection-101 \
-  --source-id veh-01
+  --source-id veh-01 \
+  --run-id edge4av-run-001 \
+  --condition-id p5g-mqtt-baseline \
+  --condition-label private-5g-baseline \
+  --rsu-id rsu-1 \
+  --network-load-level idle \
+  --qos-profile default \
+  --clock-sync-state ptp-synced \
+  --csv > mqtt_receiver.csv
 ```
 
 ### Run service-plane probes over MQTT

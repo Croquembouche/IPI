@@ -26,17 +26,39 @@ int main() {
         Private5gProbeRequest request;
         request.sequence = 7;
         request.clientSendTimeNs = 1000;
+        request.runId = "run-42";
+        request.conditionId = "cond-baseline";
+        request.conditionLabel = "private-5g-baseline";
+        request.requestId = "req-7";
+        request.serviceType = "guided-planning";
         request.intersectionId = "int-1";
         request.sourceId = "veh-1";
         request.sessionId = "sess-7";
+        request.networkLoadLevel = "idle";
+        request.qosProfile = "default";
+        request.mobilityState = "stationary";
+        request.clockSyncState = "ptp-synced";
         request.frame = ipi::api::make_private_5g_probe_frame(message);
 
         const auto encodedRequest = ipi::api::encode_private_5g_probe_request(request);
         const auto decodedRequest = ipi::api::decode_private_5g_probe_request(encodedRequest);
         ipi::tests::expect(decodedRequest.sequence == request.sequence, "sequence should round-trip");
+        ipi::tests::expect(decodedRequest.runId == request.runId, "runId should round-trip");
+        ipi::tests::expect(decodedRequest.conditionId == request.conditionId, "conditionId should round-trip");
+        ipi::tests::expect(decodedRequest.conditionLabel == request.conditionLabel,
+                           "conditionLabel should round-trip");
+        ipi::tests::expect(decodedRequest.requestId == request.requestId, "requestId should round-trip");
+        ipi::tests::expect(decodedRequest.serviceType == request.serviceType, "serviceType should round-trip");
         ipi::tests::expect(decodedRequest.intersectionId == request.intersectionId,
                            "intersectionId should round-trip");
         ipi::tests::expect(decodedRequest.sessionId == request.sessionId, "sessionId should round-trip");
+        ipi::tests::expect(decodedRequest.networkLoadLevel == request.networkLoadLevel,
+                           "networkLoadLevel should round-trip");
+        ipi::tests::expect(decodedRequest.qosProfile == request.qosProfile, "qosProfile should round-trip");
+        ipi::tests::expect(decodedRequest.mobilityState == request.mobilityState,
+                           "mobilityState should round-trip");
+        ipi::tests::expect(decodedRequest.clockSyncState == request.clockSyncState,
+                           "clockSyncState should round-trip");
         ipi::tests::expect(decodedRequest.frame.type == request.frame.type, "frame type should round-trip");
         ipi::tests::expect(decodedRequest.frame.payload == request.frame.payload,
                            "frame payload should round-trip");

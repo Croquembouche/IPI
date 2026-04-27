@@ -252,9 +252,18 @@ std::vector<std::uint8_t> encode_private_5g_probe_request(const Private5gProbeRe
     buffer.push_back(kRequestRecord);
     append_uint64(buffer, request.sequence);
     append_uint64(buffer, request.clientSendTimeNs);
+    append_string(buffer, request.runId);
+    append_string(buffer, request.conditionId);
+    append_string(buffer, request.conditionLabel);
+    append_string(buffer, request.requestId);
+    append_string(buffer, request.serviceType);
     append_string(buffer, request.intersectionId);
     append_string(buffer, request.sourceId);
     append_optional_string(buffer, request.sessionId);
+    append_string(buffer, request.networkLoadLevel);
+    append_string(buffer, request.qosProfile);
+    append_string(buffer, request.mobilityState);
+    append_string(buffer, request.clockSyncState);
     append_frame(buffer, request.frame);
     return buffer;
 }
@@ -266,9 +275,18 @@ Private5gProbeRequest decode_private_5g_probe_request(const std::vector<std::uin
     Private5gProbeRequest request;
     request.sequence = read_uint64(buffer, offset);
     request.clientSendTimeNs = read_uint64(buffer, offset);
+    request.runId = read_string(buffer, offset);
+    request.conditionId = read_string(buffer, offset);
+    request.conditionLabel = read_string(buffer, offset);
+    request.requestId = read_string(buffer, offset);
+    request.serviceType = read_string(buffer, offset);
     request.intersectionId = read_string(buffer, offset);
     request.sourceId = read_string(buffer, offset);
     request.sessionId = read_optional_string(buffer, offset);
+    request.networkLoadLevel = read_string(buffer, offset);
+    request.qosProfile = read_string(buffer, offset);
+    request.mobilityState = read_string(buffer, offset);
+    request.clockSyncState = read_string(buffer, offset);
     request.frame = read_frame(buffer, offset);
 
     if (offset != buffer.size()) {
@@ -315,12 +333,13 @@ Private5gProbeAck decode_private_5g_probe_ack(const std::vector<std::uint8_t>& b
 }
 
 void send_private_5g_probe_packet(int socketFd, const std::vector<std::uint8_t>& packet) {
+    if (packet.empty() || packet.size() > 0xFFFFFFFFULL) {
+        throw std::runtime_error("invalid probe packet length");
+    }
     const auto packetSize = static_cast<std::uint32_t>(packet.size());
     const auto packetSizeBe = htonl(packetSize);
     send_exact(socketFd, &packetSizeBe, sizeof(packetSizeBe));
-    if (!packet.empty()) {
-        send_exact(socketFd, packet.data(), packet.size());
-    }
+    send_exact(socketFd, packet.data(), packet.size());
 }
 
 std::vector<std::uint8_t> recv_private_5g_probe_packet(int socketFd, std::size_t maxPayloadBytes) {

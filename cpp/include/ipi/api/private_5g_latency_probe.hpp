@@ -16,9 +16,18 @@ namespace ipi::api {
 struct Private5gProbeRequest {
     std::uint64_t sequence{0};
     std::uint64_t clientSendTimeNs{0};
+    std::string runId{};
+    std::string conditionId{};
+    std::string conditionLabel{};
+    std::string requestId{};
+    std::string serviceType{};
     std::string intersectionId{};
     std::string sourceId{};
     std::optional<std::string> sessionId{};
+    std::string networkLoadLevel{};
+    std::string qosProfile{};
+    std::string mobilityState{};
+    std::string clockSyncState{};
     MessageFrame frame{};
 };
 

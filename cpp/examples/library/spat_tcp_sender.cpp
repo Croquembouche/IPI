@@ -1,3 +1,4 @@
+#include "ipi/api/experiment_logging.hpp"
 #include "ipi/common/debug.hpp"
 #include "ipi/v2x/j2735_messages.hpp"
 #include "ipi/v2x/uper_codec.hpp"
@@ -14,6 +15,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace {
@@ -23,7 +25,9 @@ constexpr std::uint16_t kDefaultPort = 35555;
 struct Args {
     std::string host{"127.0.0.1"};
     std::uint16_t port{kDefaultPort};
-    // Two-phase default: SG1 proceed, SG2 stop.
+    std::uint16_t intersectionId{101};
+    ipi::api::ExperimentContext context{};
+    bool csv{false};
     std::vector<ipi::j2735::SpatPhaseState> phases{
         {1, ipi::j2735::MovementPhaseState::Proceed, static_cast<std::uint16_t>(5000)},
         {2, ipi::j2735::MovementPhaseState::StopAndRemain, static_cast<std::uint16_t>(5000)}};
@@ -40,67 +44,131 @@ ipi::j2735::MovementPhaseState parse_state(int v) {
     }
 }
 
+void apply_context_defaults(Args& args) {
+    if (args.context.conditionLabel.empty()) {
+        args.context.conditionLabel = ipi::api::default_condition_label("radio", args.context.networkLoadLevel);
+    }
+}
+
 Args parse_args(int argc, char** argv) {
     Args args;
+    bool hostProvided = false;
+    bool portProvided = false;
+    std::vector<std::string> positional;
+
     for (int i = 1; i < argc; ++i) {
-        std::string_view v(argv[i]);
+        const std::string_view v(argv[i]);
         if (v == "--help" || v == "-h") {
             std::cout << "Usage: " << argv[0]
-                      << " [--host <ip>] [--port <p>] [sg1 state1 time1 [sg2 state2 time2]]\n"
+                      << " [--host <ip>] [--port <p>] [--intersection-id <id>] "
+                         "[--run-id <id>] [--condition-id <id>] [--condition-label <label>] "
+                         "[--request-id <id>] [--av-id <id>] [--obu-id <id>] [--rsu-id <id>] "
+                         "[--network-load-level <id>] [--qos-profile <id>] [--mobility-state <id>] "
+                         "[--clock-sync-state <id>] [--service-success <bool>] "
+                         "[--vehicle-outcome-name <s>] [--vehicle-outcome-value <v>] [--vehicle-outcome-unit <u>] "
+                         "[--csv] [host] [port] [sg1 state1 time1 [sg2 state2 time2]]\n"
                       << "State: 0=dark,1=stopAndRemain,2=stopThenProceed,3=proceed,4=flashing\n";
             std::exit(0);
         } else if ((v == "--host" || v == "-H") && i + 1 < argc) {
             args.host = argv[++i];
+            hostProvided = true;
         } else if ((v == "--port" || v == "-P") && i + 1 < argc) {
-            args.port = static_cast<std::uint16_t>(std::stoi(argv[++i]));
+            args.port = static_cast<std::uint16_t>(std::stoul(argv[++i]));
+            portProvided = true;
+        } else if (v == "--intersection-id" && i + 1 < argc) {
+            args.intersectionId = static_cast<std::uint16_t>(std::stoul(argv[++i]));
+        } else if (v == "--csv") {
+            args.csv = true;
+        } else if (ipi::api::consume_experiment_context_arg(args.context, v, i, argc, argv)) {
+            continue;
+        } else if (!v.empty() && v.front() != '-') {
+            positional.emplace_back(argv[i]);
+        } else {
+            throw std::invalid_argument("unknown argument: " + std::string(v));
         }
     }
-    // Also support bare positional host/port for simplicity.
-    if (argc >= 2 && argv[1][0] != '-') {
-        args.host = argv[1];
+
+    std::size_t offset = 0;
+    if (!hostProvided && positional.size() > offset) {
+        args.host = positional[offset++];
     }
-    if (argc >= 3 && argv[2][0] != '-') {
-        args.port = static_cast<std::uint16_t>(std::stoi(argv[2]));
+    if (!portProvided && positional.size() > offset) {
+        args.port = static_cast<std::uint16_t>(std::stoul(positional[offset++]));
     }
-    if (argc >= 6) {
-        // Allow overriding the two default phases via CLI:
-        // host port sg1 state1 time1 [sg2 state2 time2]
+
+    const auto remaining = positional.size() - offset;
+    if (remaining == 3 || remaining == 6) {
         args.phases.clear();
-        ipi::j2735::SpatPhaseState p1{};
-        p1.signalGroup = static_cast<std::uint8_t>(std::stoi(argv[argc - 3]));
-        p1.state = parse_state(std::stoi(argv[argc - 2]));
-        p1.timeToChangeMs = static_cast<std::uint16_t>(std::stoi(argv[argc - 1]));
-        args.phases.push_back(p1);
-        if (argc >= 9) {
+        if (remaining == 6) {
             ipi::j2735::SpatPhaseState p0{};
-            p0.signalGroup = static_cast<std::uint8_t>(std::stoi(argv[argc - 6]));
-            p0.state = parse_state(std::stoi(argv[argc - 5]));
-            p0.timeToChangeMs = static_cast<std::uint16_t>(std::stoi(argv[argc - 4]));
-            args.phases.insert(args.phases.begin(), p0);
+            p0.signalGroup = static_cast<std::uint8_t>(std::stoi(positional[offset + 0]));
+            p0.state = parse_state(std::stoi(positional[offset + 1]));
+            p0.timeToChangeMs = static_cast<std::uint16_t>(std::stoi(positional[offset + 2]));
+            args.phases.push_back(p0);
+            offset += 3;
         }
+        ipi::j2735::SpatPhaseState p1{};
+        p1.signalGroup = static_cast<std::uint8_t>(std::stoi(positional[offset + 0]));
+        p1.state = parse_state(std::stoi(positional[offset + 1]));
+        p1.timeToChangeMs = static_cast<std::uint16_t>(std::stoi(positional[offset + 2]));
+        args.phases.push_back(p1);
+    } else if (remaining != 0) {
+        throw std::invalid_argument("phase override expects 3 or 6 positional values");
     }
+
+    apply_context_defaults(args);
     return args;
 }
 
 std::vector<std::uint8_t> build_spat_frame(const Args& args) {
     ipi::j2735::SpatMessage spat;
-    spat.intersectionId = 101; // demo id; adjust as needed
+    spat.intersectionId = args.intersectionId;
     auto now_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
                       std::chrono::system_clock::now().time_since_epoch())
                       .count();
     spat.timestampMs = static_cast<std::uint32_t>(now_ms & 0xFFFFFFFF);
     spat.phases = args.phases;
 
-    std::cout << "[edge] building SPaT intersection=" << spat.intersectionId
-              << " phases=" << spat.phases.size() << "\n";
-    for (const auto& p : spat.phases) {
-        std::cout << "        sg=" << static_cast<int>(p.signalGroup)
-                  << " state=" << static_cast<int>(p.state)
-                  << " ttcMs=" << (p.timeToChangeMs ? std::to_string(*p.timeToChangeMs) : "n/a") << "\n";
-    }
-
     ipi::v2x::UperCodec codec;
     return codec.encode(spat);
+}
+
+void log_send_result(const Args& args,
+                     std::uint64_t requestTimeNs,
+                     std::size_t payloadBytes) {
+    ipi::api::ExperimentLogRecord record;
+    record.emitterRole = "radio-sender";
+    record.emitTimeNs = requestTimeNs;
+    record.runId = args.context.runId;
+    record.conditionId = args.context.conditionId;
+    record.conditionLabel = args.context.conditionLabel;
+    record.serviceType = "intersection-state";
+    record.transport = "radio";
+    record.avId = args.context.avId;
+    record.obuId = args.context.obuId;
+    record.rsuId = args.context.rsuId;
+    record.requestId = args.context.requestIdBase;
+    record.intersectionId = std::to_string(args.intersectionId);
+    record.networkLoadLevel = args.context.networkLoadLevel;
+    record.qosProfile = args.context.qosProfile;
+    record.mobilityState = args.context.mobilityState;
+    record.clockSyncState = args.context.clockSyncState;
+    record.accepted = true;
+    record.serviceSuccess = args.context.serviceSuccess;
+    record.vehicleOutcomeName = args.context.vehicleOutcomeName;
+    record.vehicleOutcomeValue = args.context.vehicleOutcomeValue;
+    record.vehicleOutcomeUnit = args.context.vehicleOutcomeUnit;
+    record.frameType = "SPAT";
+    record.payloadBytes = static_cast<std::uint32_t>(payloadBytes);
+    record.clientSendTimeNs = requestTimeNs;
+    record.detail = "spat payload transmitted to bridge";
+
+    if (args.csv) {
+        std::cout << ipi::api::experiment_log_csv_header() << '\n'
+                  << ipi::api::experiment_log_to_csv(record) << '\n';
+    } else {
+        std::cout << ipi::api::experiment_log_to_text(record) << '\n';
+    }
 }
 
 void send_payload(const Args& args, const std::vector<std::uint8_t>& payload) {
@@ -127,27 +195,32 @@ void send_payload(const Args& args, const std::vector<std::uint8_t>& payload) {
     std::memcpy(frame.data(), &len, sizeof(len));
     std::memcpy(frame.data() + sizeof(len), payload.data(), payload.size());
 
-    std::cout << "[edge] payload bytes=" << payload.size();
     if (ipi::debug::enabled()) {
-        std::cout << " hex=" << ipi::debug::hex(payload);
+        std::cerr << "[edge] payload bytes=" << payload.size()
+                  << " hex=" << ipi::debug::hex(payload) << "\n";
     }
-    std::cout << "\n";
 
-    ssize_t sent = ::send(sock, frame.data(), frame.size(), 0);
+    const auto requestTimeNs = static_cast<std::uint64_t>(
+        std::chrono::duration_cast<std::chrono::nanoseconds>(
+            std::chrono::system_clock::now().time_since_epoch())
+            .count());
+
+    const ssize_t sent = ::send(sock, frame.data(), frame.size(), 0);
     if (sent < 0 || static_cast<std::size_t>(sent) != frame.size()) {
         ::close(sock);
         throw std::runtime_error("send() failed");
     }
-    std::cout << "[edge] sent SPaT payload bytes=" << payload.size() << "\n";
     ::close(sock);
+
+    log_send_result(args, requestTimeNs, payload.size());
 }
 
 } // namespace
 
 int main(int argc, char** argv) {
     try {
-        Args args = parse_args(argc, argv);
-        auto payload = build_spat_frame(args);
+        const Args args = parse_args(argc, argv);
+        const auto payload = build_spat_frame(args);
         send_payload(args, payload);
         return 0;
     } catch (const std::exception& ex) {

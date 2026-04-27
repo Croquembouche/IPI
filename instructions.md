@@ -60,6 +60,29 @@ Recommended:
 Without synchronized clocks, the scripts still give valid RTT, but uplink and
 downlink one-way numbers are not trustworthy.
 
+## 2.1 Shared experiment metadata
+
+The current sender, receiver, and bridge tools support a common logging schema.
+Use the same identifiers for all processes participating in one condition:
+
+- `--run-id`: one campaign or paper run
+- `--condition-id`: one concrete baseline, scaling, or stress condition
+- `--condition-label`: recommended values are `radio-baseline`,
+  `private-5g-baseline`, or `private-5g-stressed`
+- `--request-id`: request id or request-id base used in logs
+- `--network-load-level`: for example `idle`, `moderate`, `heavy`,
+  `near-saturation`
+- `--qos-profile`: for example `default`, `fifo`, `5qi-mapped`
+- `--mobility-state`: for example `stationary`, `moving`
+- `--clock-sync-state`: for example `ptp-synced`, `ntp-synced`, `unsynced`
+- `--csv`: emit structured CSV rows
+
+Recommended condition labels for the paper:
+
+- `radio-baseline`
+- `private-5g-baseline`
+- `private-5g-stressed`
+
 ## 3. Radio Path: 2 V2X devices
 
 This path measures SPaT latency using the existing TCP-to-Mocar bridge.
@@ -98,7 +121,14 @@ On the transmitting Mocar device:
 
 ```bash
 cd /path/to/ipi_spat_bridge
-./ipi_spat_bridge
+./ipi_spat_bridge \
+  --run-id edge4av-run-001 \
+  --condition-id radio-spat-baseline \
+  --condition-label radio-baseline \
+  --request-id radio-spat-baseline \
+  --rsu-id rsu-1 \
+  --clock-sync-state ptp-synced \
+  --csv > radio_bridge.csv
 ```
 
 Default listen port is `35555`.
@@ -121,13 +151,33 @@ logging.
 ### 3.4 Start the sender on `TX-EDGE`
 
 ```bash
-./example_spat_tcp_sender <V2X-TX-RADIO_IP> 35555
+./example_spat_tcp_sender \
+  --run-id edge4av-run-001 \
+  --condition-id radio-spat-baseline \
+  --condition-label radio-baseline \
+  --request-id radio-spat-baseline \
+  --av-id av-1 \
+  --obu-id obu-1 \
+  --rsu-id rsu-1 \
+  --clock-sync-state ptp-synced \
+  --csv \
+  <V2X-TX-RADIO_IP> 35555 > radio_sender.csv
 ```
 
 Example:
 
 ```bash
-./example_spat_tcp_sender 192.168.253.40 35555
+./example_spat_tcp_sender \
+  --run-id edge4av-run-001 \
+  --condition-id radio-spat-baseline \
+  --condition-label radio-baseline \
+  --request-id radio-spat-baseline \
+  --av-id av-1 \
+  --obu-id obu-1 \
+  --rsu-id rsu-1 \
+  --clock-sync-state ptp-synced \
+  --csv \
+  192.168.253.40 35555 > radio_sender.csv
 ```
 
 Optional custom phases:
@@ -155,7 +205,17 @@ This path uses the IPI latency probe pair directly over the private 5G IP path.
 ### 4.1 Start the receiver on `5G-2`
 
 ```bash
-./example_private_5g_latency_receiver --transport tcp --port 36666
+./example_private_5g_latency_receiver \
+  --transport tcp \
+  --port 36666 \
+  --run-id edge4av-run-001 \
+  --condition-id p5g-tcp-baseline \
+  --condition-label private-5g-baseline \
+  --rsu-id rsu-1 \
+  --network-load-level idle \
+  --qos-profile default \
+  --clock-sync-state ptp-synced \
+  --csv > tcp_receiver.csv
 ```
 
 ### 4.2 Run service-plane latency from `5G-1`
@@ -168,7 +228,18 @@ This path uses the IPI latency probe pair directly over the private 5G IP path.
   --count 100 \
   --interval-ms 1000 \
   --message service \
-  --payload-bytes 256
+  --payload-bytes 256 \
+  --run-id edge4av-run-001 \
+  --condition-id p5g-tcp-baseline \
+  --condition-label private-5g-baseline \
+  --request-id p5g-tcp-baseline \
+  --av-id av-1 \
+  --obu-id obu-1 \
+  --rsu-id rsu-1 \
+  --network-load-level idle \
+  --qos-profile default \
+  --clock-sync-state ptp-synced \
+  --csv > tcp_service_baseline.csv
 ```
 
 ### 4.3 Run SPaT latency over the same 5G TCP path
@@ -180,10 +251,21 @@ This path uses the IPI latency probe pair directly over the private 5G IP path.
   --port 36666 \
   --count 100 \
   --interval-ms 1000 \
-  --message spat
+  --message spat \
+  --run-id edge4av-run-001 \
+  --condition-id p5g-tcp-spat-baseline \
+  --condition-label private-5g-baseline \
+  --request-id p5g-tcp-spat-baseline \
+  --av-id av-1 \
+  --obu-id obu-1 \
+  --rsu-id rsu-1 \
+  --network-load-level idle \
+  --qos-profile default \
+  --clock-sync-state ptp-synced \
+  --csv > tcp_spat_baseline.csv
 ```
 
-### 4.4 Capture CSV-friendly output
+### 4.4 Capture a stressed TCP condition
 
 ```bash
 ./example_private_5g_latency_sender \
@@ -194,14 +276,18 @@ This path uses the IPI latency probe pair directly over the private 5G IP path.
   --interval-ms 1000 \
   --message service \
   --payload-bytes 256 \
-  --csv | tee tcp_service_latency.log
-
-grep -E '^(transport,|tcp,|mqtt,)' tcp_service_latency.log > tcp_service_latency.csv
+  --run-id edge4av-run-001 \
+  --condition-id p5g-tcp-heavy-qos \
+  --condition-label private-5g-stressed \
+  --request-id p5g-tcp-heavy-qos \
+  --av-id av-1 \
+  --obu-id obu-1 \
+  --rsu-id rsu-1 \
+  --network-load-level heavy \
+  --qos-profile 5qi-mapped \
+  --clock-sync-state ptp-synced \
+  --csv > tcp_service_heavy_qos.csv
 ```
-
-The current sender writes CSV rows first and then prints human-readable summary
-lines to stdout. Capture the full log, then extract only the CSV rows if you
-need a clean `.csv` file.
 
 ## 5. Private 5G Path over MQTT: the same 2 5G devices
 
@@ -224,7 +310,15 @@ broker such as Mosquitto.
   --host <BROKER_IP> \
   --port 1883 \
   --intersection-id intersection-101 \
-  --source-id veh-01
+  --source-id veh-01 \
+  --run-id edge4av-run-001 \
+  --condition-id p5g-mqtt-baseline \
+  --condition-label private-5g-baseline \
+  --rsu-id rsu-1 \
+  --network-load-level idle \
+  --qos-profile default \
+  --clock-sync-state ptp-synced \
+  --csv > mqtt_receiver.csv
 ```
 
 ### 5.2 Run service-plane latency from `5G-1`
@@ -239,7 +333,18 @@ broker such as Mosquitto.
   --message service \
   --payload-bytes 256 \
   --intersection-id intersection-101 \
-  --source-id veh-01
+  --source-id veh-01 \
+  --run-id edge4av-run-001 \
+  --condition-id p5g-mqtt-baseline \
+  --condition-label private-5g-baseline \
+  --request-id p5g-mqtt-baseline \
+  --av-id av-1 \
+  --obu-id obu-1 \
+  --rsu-id rsu-1 \
+  --network-load-level idle \
+  --qos-profile default \
+  --clock-sync-state ptp-synced \
+  --csv > mqtt_service_baseline.csv
 ```
 
 ### 5.3 Run SPaT latency over MQTT
@@ -253,10 +358,21 @@ broker such as Mosquitto.
   --interval-ms 1000 \
   --message spat \
   --intersection-id intersection-101 \
-  --source-id veh-01
+  --source-id veh-01 \
+  --run-id edge4av-run-001 \
+  --condition-id p5g-mqtt-spat-baseline \
+  --condition-label private-5g-baseline \
+  --request-id p5g-mqtt-spat-baseline \
+  --av-id av-1 \
+  --obu-id obu-1 \
+  --rsu-id rsu-1 \
+  --network-load-level idle \
+  --qos-profile default \
+  --clock-sync-state ptp-synced \
+  --csv > mqtt_spat_baseline.csv
 ```
 
-### 5.4 Capture CSV-friendly output
+### 5.4 Capture a stressed MQTT condition
 
 ```bash
 ./example_private_5g_latency_sender \
@@ -269,20 +385,29 @@ broker such as Mosquitto.
   --payload-bytes 256 \
   --intersection-id intersection-101 \
   --source-id veh-01 \
-  --csv | tee mqtt_service_latency.log
-
-grep -E '^(transport,|tcp,|mqtt,)' mqtt_service_latency.log > mqtt_service_latency.csv
+  --run-id edge4av-run-001 \
+  --condition-id p5g-mqtt-near-sat \
+  --condition-label private-5g-stressed \
+  --request-id p5g-mqtt-near-sat \
+  --av-id av-1 \
+  --obu-id obu-1 \
+  --rsu-id rsu-1 \
+  --network-load-level near-saturation \
+  --qos-profile fifo \
+  --clock-sync-state ptp-synced \
+  --csv > mqtt_service_near_sat.csv
 ```
 
 ## 6. Result interpretation
 
 Each sender run prints:
 
-- per-probe RTT
+- per-probe CSV or structured text rows with shared condition metadata
+- RTT
 - uplink latency
 - receiver processing time
 - downlink latency
-- summary `p50`, `p95`, and `p99`
+- summary `p50`, `p95`, `p99`, and success rate
 
 Use these comparisons:
 

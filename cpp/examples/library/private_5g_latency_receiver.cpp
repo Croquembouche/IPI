@@ -1,3 +1,4 @@
+#include "ipi/api/experiment_logging.hpp"
 #include "ipi/api/minimal_mqtt_client.hpp"
 #include "ipi/api/private_5g_latency_probe.hpp"
 
@@ -30,8 +31,10 @@ struct Args {
     TransportKind transport{TransportKind::Tcp};
     std::string intersectionId{"intersection-101"};
     std::string sourceId{"veh-01"};
+    ipi::api::ExperimentContext context{};
     bool once{false};
     bool quiet{false};
+    bool csv{false};
 };
 
 std::string_view transport_name(TransportKind kind) {
@@ -56,6 +59,16 @@ std::string make_mqtt_client_id(const Args& args) {
     return "ipi-latency-receiver-" + args.sourceId + '-' + std::to_string(ipi::api::current_unix_time_ns());
 }
 
+void apply_context_defaults(Args& args) {
+    if (args.context.conditionLabel.empty()) {
+        args.context.conditionLabel =
+            ipi::api::default_condition_label(transport_name(args.transport), args.context.networkLoadLevel);
+    }
+    if (args.context.rsuId.empty()) {
+        args.context.rsuId = args.intersectionId;
+    }
+}
+
 Args parse_args(int argc, char** argv) {
     Args args;
     for (int i = 1; i < argc; ++i) {
@@ -63,13 +76,28 @@ Args parse_args(int argc, char** argv) {
         if (arg == "--help" || arg == "-h") {
             std::cout
                 << "Usage: " << argv[0] << " [options]\n"
-                << "  --transport <tcp|mqtt>     Network path to use (default tcp)\n"
-                << "  --host <ip>                MQTT broker host in mqtt mode (default 127.0.0.1)\n"
-                << "  --port <port>              Listen port or MQTT broker port (default 36666)\n"
-                << "  --intersection-id <id>     Logical intersection id string\n"
-                << "  --source-id <id>           Vehicle/source id to bind the probe topic\n"
-                << "  --once                     Exit after one successful probe\n"
-                << "  --quiet                    Suppress per-probe logging\n";
+                << "  --transport <tcp|mqtt>       Network path to use (default tcp)\n"
+                << "  --host <ip>                  MQTT broker host in mqtt mode (default 127.0.0.1)\n"
+                << "  --port <port>                Listen port or MQTT broker port (default 36666)\n"
+                << "  --intersection-id <id>       Logical intersection id string\n"
+                << "  --source-id <id>             Vehicle/source id to bind the probe topic\n"
+                << "  --run-id <id>                Receiver-side default run id if request metadata is absent\n"
+                << "  --condition-id <id>          Receiver-side default condition id if request metadata is absent\n"
+                << "  --condition-label <label>    Receiver-side default condition label\n"
+                << "  --av-id <id>                AV identifier override for logging\n"
+                << "  --obu-id <id>               OBU identifier override for logging\n"
+                << "  --rsu-id <id>               RSU identifier for logging\n"
+                << "  --network-load-level <id>   idle|moderate|heavy|near-saturation\n"
+                << "  --qos-profile <id>          FIFO, default, 5qi-mapped, etc.\n"
+                << "  --mobility-state <id>       stationary, moving, handover, etc.\n"
+                << "  --clock-sync-state <id>     ptp-synced, ntp-synced, unsynced\n"
+                << "  --service-success <bool>    Infrastructure-side service success annotation\n"
+                << "  --vehicle-outcome-name <s>  Driving metric name\n"
+                << "  --vehicle-outcome-value <v> Driving metric value\n"
+                << "  --vehicle-outcome-unit <u>  Driving metric unit\n"
+                << "  --once                      Exit after one successful probe\n"
+                << "  --quiet                     Suppress per-probe logging\n"
+                << "  --csv                       Emit structured CSV rows\n";
             std::exit(0);
         }
         if (arg == "--transport" && i + 1 < argc) {
@@ -93,10 +121,15 @@ Args parse_args(int argc, char** argv) {
             args.once = true;
         } else if (arg == "--quiet") {
             args.quiet = true;
+        } else if (arg == "--csv") {
+            args.csv = true;
+        } else if (ipi::api::consume_experiment_context_arg(args.context, arg, i, argc, argv)) {
+            continue;
         } else {
             throw std::invalid_argument("unknown argument: " + std::string(arg));
         }
     }
+    apply_context_defaults(args);
     return args;
 }
 
@@ -149,21 +182,54 @@ ipi::api::Private5gProbeAck handle_request(const ipi::api::Private5gProbeRequest
     return ack;
 }
 
+void print_csv_header() {
+    std::cout << ipi::api::experiment_log_csv_header() << '\n';
+}
+
 void log_ack(const Args& args,
              const ipi::api::Private5gProbeRequest& request,
              const ipi::api::Private5gProbeAck& ack) {
     if (args.quiet) {
         return;
     }
-    std::cout << "transport=" << transport_name(args.transport)
-              << " seq=" << ack.sequence
-              << " intersection=" << request.intersectionId
-              << " source=" << request.sourceId
-              << " session=" << (request.sessionId ? *request.sessionId : "n/a")
-              << " type=" << ipi::to_string(ack.frameType)
-              << " bytes=" << ack.payloadSize
-              << " accepted=" << std::boolalpha << ack.accepted
-              << " detail=\"" << ack.detail << "\"\n";
+
+    ipi::api::ExperimentLogRecord record;
+    record.emitterRole = "5g-receiver";
+    record.emitTimeNs = ack.serverSendTimeNs;
+    record.runId = request.runId.empty() ? args.context.runId : request.runId;
+    record.conditionId = request.conditionId.empty() ? args.context.conditionId : request.conditionId;
+    record.conditionLabel = request.conditionLabel.empty() ? args.context.conditionLabel : request.conditionLabel;
+    record.serviceType = request.serviceType.empty() ? "unknown" : request.serviceType;
+    record.transport = std::string(transport_name(args.transport));
+    record.avId = args.context.avId;
+    record.obuId = args.context.obuId.empty() ? request.sourceId : args.context.obuId;
+    record.rsuId = args.context.rsuId;
+    record.requestId = request.requestId;
+    record.sessionId = request.sessionId.value_or(std::string{});
+    record.intersectionId = request.intersectionId;
+    record.sourceId = request.sourceId;
+    record.sequence = request.sequence;
+    record.networkLoadLevel = request.networkLoadLevel.empty() ? args.context.networkLoadLevel : request.networkLoadLevel;
+    record.qosProfile = request.qosProfile.empty() ? args.context.qosProfile : request.qosProfile;
+    record.mobilityState = request.mobilityState.empty() ? args.context.mobilityState : request.mobilityState;
+    record.clockSyncState = request.clockSyncState.empty() ? args.context.clockSyncState : request.clockSyncState;
+    record.accepted = ack.accepted;
+    record.serviceSuccess = ack.accepted && args.context.serviceSuccess;
+    record.vehicleOutcomeName = args.context.vehicleOutcomeName;
+    record.vehicleOutcomeValue = args.context.vehicleOutcomeValue;
+    record.vehicleOutcomeUnit = args.context.vehicleOutcomeUnit;
+    record.frameType = ipi::to_string(ack.frameType);
+    record.payloadBytes = ack.payloadSize;
+    record.clientSendTimeNs = request.clientSendTimeNs;
+    record.serverReceiveTimeNs = ack.serverReceiveTimeNs;
+    record.serverSendTimeNs = ack.serverSendTimeNs;
+    record.detail = ack.detail;
+
+    if (args.csv) {
+        std::cout << ipi::api::experiment_log_to_csv(record) << '\n';
+    } else {
+        std::cout << ipi::api::experiment_log_to_text(record) << '\n';
+    }
 }
 
 bool handle_tcp_client(int clientFd, const Args& args, ipi::v2x::UperCodec& codec) {
@@ -189,7 +255,7 @@ bool handle_tcp_client(int clientFd, const Args& args, ipi::v2x::UperCodec& code
 
 void run_tcp_receiver(const Args& args) {
     const int serverFd = create_server_socket(args.port);
-    std::cout << "private 5G latency receiver listening on port " << args.port << " over tcp\n";
+    std::cerr << "private 5G latency receiver listening on port " << args.port << " over tcp\n";
 
     ipi::v2x::UperCodec codec;
     for (;;) {
@@ -209,7 +275,7 @@ void run_tcp_receiver(const Args& args) {
 }
 
 void run_mqtt_receiver(const Args& args) {
-    std::cout << "private 5G latency receiver connected to broker " << args.host << ':' << args.port << " over mqtt\n";
+    std::cerr << "private 5G latency receiver connected to broker " << args.host << ':' << args.port << " over mqtt\n";
     ipi::api::MinimalMqttClient client(make_mqtt_client_id(args));
     client.connect(args.host, args.port);
     client.subscribe(make_request_topic(args));
@@ -237,6 +303,9 @@ void run_mqtt_receiver(const Args& args) {
 int main(int argc, char** argv) {
     try {
         const Args args = parse_args(argc, argv);
+        if (args.csv) {
+            print_csv_header();
+        }
         if (args.transport == TransportKind::Mqtt) {
             run_mqtt_receiver(args);
         } else {

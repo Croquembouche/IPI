@@ -1,2 +1,4 @@
 cpp/build/
+third_party/mocar/J2735-2020/samples/ipi_spat_bridge/.build/
+tmp/
 paper/

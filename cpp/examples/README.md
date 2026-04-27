@@ -50,15 +50,20 @@ After building, run from the repo root:
   encodes them using the J2735 helpers and `UperCodec`, and decodes them again.
 - `example_spat_tcp_sender` connects to a remote RSU or bridge process over TCP
   and sends SPaT frames; see the root `README.md` “Edge→Device SPaT over TCP”
-  section for full instructions and parameter examples.
+  section for full instructions and parameter examples. It now supports shared
+  experiment flags such as `--run-id`, `--condition-id`, `--condition-label`,
+  `--request-id`, and `--csv`.
 - `example_private_5g_latency_receiver` listens for framed latency probes over a
   plain TCP session or subscribes to an MQTT request topic. It validates
-  incoming IPI payloads and returns an acknowledgement containing server
-  receive/send timestamps.
+  incoming IPI payloads, returns an acknowledgement containing server
+  receive/send timestamps, and can emit the same experiment-log schema as the
+  sender.
 - `example_private_5g_latency_sender` opens either a TCP session to the receiver
   or publishes to the MQTT request topic, then reports RTT plus one-way
   uplink/downlink latency estimates for either `IPI-CooperativeService` or SPaT
-  probes. Use `--csv` for per-probe logging.
+  probes. Use `--csv` for per-probe logging and pair it with
+  `--run-id`/`--condition-id`/`--condition-label` so the output maps directly to
+  paper figures and conditions.
 - `example_mesh_demo` simulates the Vehicle–Vehicle Local Mesh Mode: it feeds
   `ipi::mesh::MeshManager` local telemetry plus a synthetic neighbor, waits for
   infrastructure heartbeats to lapse, and logs both the cooperative frames it

@@ -6,6 +6,7 @@ implementation for:
 - radio-path testing with the Mocar V2X SDK
 - private 5G latency testing over TCP and MQTT
 - basic Edge4AV/IPI application bring-up
+- synchronized experiment logging for the Edge4AV paper campaign
 
 ## 1. Deployment model
 
@@ -119,8 +120,10 @@ Suggested contents:
   - Mocar shared libraries when needed
 - `logs/`
   - sender CSV files
+  - receiver CSV files
   - receiver stdout/stderr logs
   - radio receive logs from `V2X-RX-RADIO`
+  - run manifests keyed by `run_id` and `condition_id`
 
 ## 6. Copy artifacts to targets
 
@@ -156,6 +159,25 @@ set:
 export LD_LIBRARY_PATH=/opt/ipi/lib:$LD_LIBRARY_PATH
 ```
 
+For the paper experiments, standardize these runtime flags across sender,
+receiver, and bridge processes:
+
+- `--run-id`
+- `--condition-id`
+- `--condition-label`
+- `--request-id`
+- `--network-load-level`
+- `--qos-profile`
+- `--mobility-state`
+- `--clock-sync-state`
+- `--csv`
+
+Recommended `condition-label` values:
+
+- `radio-baseline`
+- `private-5g-baseline`
+- `private-5g-stressed`
+
 ## 8. Deploy by role
 
 ### 8.1 TX-EDGE
@@ -168,6 +190,7 @@ Responsibilities:
 
 - build or relay the SPaT payload toward `V2X-TX-RADIO`
 - timestamp the sender-side start of the radio-path experiment
+- emit run- and condition-tagged experiment logs
 
 ### 8.2 V2X-TX-RADIO
 
@@ -180,6 +203,7 @@ Responsibilities:
 
 - receive SPaT payloads from `TX-EDGE` over TCP
 - forward them into the Mocar V2X transmit path
+- emit RSU-side bridge logs with the same `run_id` and `condition_id`
 
 ### 8.3 V2X-RX-RADIO
 
@@ -209,6 +233,7 @@ Responsibilities:
 - listen for TCP latency probes
 - subscribe to MQTT latency request topics
 - host or reach the MQTT broker
+- emit infrastructure-side experiment logs with condition metadata
 
 ### 8.5 Vehicle / Sender Nodes
 
@@ -219,7 +244,7 @@ Deploy:
 Responsibilities:
 
 - drive the 5G latency experiments
-- write sender-side logs
+- write sender-side logs and CSV files
 - vary payload size, message type, and interval
 
 ## 9. Bring-up sequence
@@ -237,7 +262,7 @@ Recommended order:
 9. Run the 5G TCP latency sender on `5G-1`.
 10. Bring up the MQTT broker.
 11. Run the 5G MQTT latency test.
-12. Archive logs and extracted CSV output after each run.
+12. Archive CSV logs and stderr summaries after each run.
 
 ## 10. Optional MQTT broker deployment
 
@@ -284,6 +309,8 @@ For MQTT, verify:
 - broker reachable on `host:port`
 - sender and receiver use the same `--intersection-id`
 - sender and receiver use the same `--source-id`
+- all nodes in the same condition use the same `--run-id` and `--condition-id`
+- the receiver or bridge side sets the intended `--rsu-id`
 
 ## 12. Current deployment limits
 
@@ -295,6 +322,8 @@ Be explicit about these when you deploy:
 - The repo does not yet ship a dedicated receive-only Mocar latency collector
   for `V2X-RX-RADIO`.
 - Private 5G latency tooling supports both TCP and MQTT.
+- The current tools standardize experiment logs, but AV-facing outcome metrics
+  still need to be supplied by the operator or higher-level AV stack.
 - MQTT support is minimal MQTT 3.1.1 over plain TCP.
 - The repo provides a measurement harness, not a full production backend.
 - One-way latency is only meaningful if your clocks are synchronized.

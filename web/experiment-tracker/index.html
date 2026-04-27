@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edge4AV Experiment Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <aside class="sidebar">
+      <div class="brand-block">
+        <p class="eyebrow">Edge4AV</p>
+        <h1>Experiment Tracker</h1>
+        <p class="lede">
+          Enter results, track paper readiness, and export the campaign as JSON
+          or Markdown.
+        </p>
+      </div>
+
+      <div class="sidebar-stats" id="sidebar-stats"></div>
+
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+
+      <div class="sidebar-actions">
+        <button id="export-json" class="action-button primary">Export JSON</button>
+        <button id="export-md" class="action-button">Export Markdown</button>
+        <button id="import-json" class="action-button">Import JSON</button>
+        <button id="reset-state" class="action-button danger">Reset Local Data</button>
+        <input id="import-file" type="file" accept="application/json" hidden>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Paper Campaign</p>
+          <h2>Operational Envelope Results Workspace</h2>
+          <p class="hero-copy">
+            This interface mirrors the experiment matrix in <code>experiment.md</code>
+            and stores your edits locally in the browser.
+          </p>
+        </div>
+        <div class="save-chip" id="save-status">Not saved yet</div>
+      </header>
+
+      <section class="panel" id="campaign-summary-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Summary</p>
+            <h3>Campaign Summary</h3>
+          </div>
+        </div>
+        <div id="campaign-summary-form" class="form-grid"></div>
+      </section>
+
+      <section class="panel" id="service-classes-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Scope</p>
+            <h3>Main-Paper Service Classes</h3>
+          </div>
+        </div>
+        <div id="service-classes" class="service-grid"></div>
+      </section>
+
+      <section class="panel" id="figures-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Figures</p>
+            <h3>Main-Paper Figures to Earn</h3>
+          </div>
+        </div>
+        <div id="main-figures" class="figure-grid"></div>
+      </section>
+
+      <section class="panel" id="checklists-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Progress</p>
+            <h3>Experiment Checklists</h3>
+          </div>
+        </div>
+        <div id="checklist-groups" class="checklist-grid"></div>
+      </section>
+
+      <section class="panel" id="experiments-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Data Entry</p>
+            <h3>Experiments</h3>
+          </div>
+        </div>
+        <div id="experiments-container" class="experiment-stack"></div>
+      </section>
+
+      <section class="panel" id="run-log-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Traceability</p>
+            <h3>Run Log Index</h3>
+          </div>
+          <button class="action-button" id="add-run-log-row">Add Row</button>
+        </div>
+        <div id="run-log-table"></div>
+      </section>
+
+      <section class="panel" id="readiness-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Submission</p>
+            <h3>Paper Readiness</h3>
+          </div>
+        </div>
+        <div id="readiness-checklist" class="checklist-grid"></div>
+      </section>
+
+      <section class="panel" id="claim-notes-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Claim</p>
+            <h3>Final Claim Notes</h3>
+          </div>
+        </div>
+        <textarea id="final-claim-notes" class="notes-area" rows="8"
+          placeholder="Write the final paper claim here once the data is in."></textarea>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
