@@ -1,0 +1,37 @@
+/home/d1
+d1-Kabylake-Client-platform
+Linux d1-Kabylake-Client-platform 5.15.0-139-generic #149~20.04.1-Ubuntu SMP Wed Apr 16 08:29:56 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+/usr/bin/cmake
+/usr/bin/g++
+/usr/bin/make
+/usr/bin/ssh
+/usr/bin/scp
+/usr/bin/rsync
+State     Recv-Q    Send-Q       Local Address:Port        Peer Address:Port    Process                                                                         
+LISTEN    0         100                0.0.0.0:4000             0.0.0.0:*                                                                                       
+LISTEN    0         64                 0.0.0.0:2049             0.0.0.0:*                                                                                       
+LISTEN    0         128              127.0.0.1:16067            0.0.0.0:*                                                                                       
+LISTEN    0         4096               0.0.0.0:111              0.0.0.0:*                                                                                       
+LISTEN    0         128                0.0.0.0:22               0.0.0.0:*                                                                                       
+LISTEN    0         100              127.0.0.1:12001            0.0.0.0:*        users:(("nxnode.bin",pid=2329,fd=20))                                          
+LISTEN    0         4096               0.0.0.0:38897            0.0.0.0:*                                                                                       
+LISTEN    0         100              127.0.0.1:25001            0.0.0.0:*        users:(("nxrunner.bin",pid=2351,fd=14))                                        
+LISTEN    0         128              127.0.0.1:7001             0.0.0.0:*        users:(("nxnode.bin",pid=2329,fd=26))                                          
+LISTEN    0         100              127.0.0.1:20804            0.0.0.0:*                                                                                       
+LISTEN    0         4096               0.0.0.0:41477            0.0.0.0:*                                                                                       
+LISTEN    0         128              127.0.0.1:5939             0.0.0.0:*                                                                                       
+LISTEN    0         4096               0.0.0.0:41323            0.0.0.0:*                                                                                       
+LISTEN    0         4096         127.0.0.53%lo:53               0.0.0.0:*                                                                                       
+LISTEN    0         64               127.0.0.1:20202            0.0.0.0:*                                                                                       
+LISTEN    0         5                127.0.0.1:631              0.0.0.0:*                                                                                       
+LISTEN    0         64                 0.0.0.0:45321            0.0.0.0:*                                                                                       
+LISTEN    0         100                   [::]:4000                [::]:*                                                                                       
+LISTEN    0         64                    [::]:35685               [::]:*                                                                                       
+LISTEN    0         4096                  [::]:35455               [::]:*                                                                                       
+LISTEN    0         64                    [::]:2049                [::]:*                                                                                       
+LISTEN    0         4096                  [::]:111                 [::]:*                                                                                       
+LISTEN    0         128                   [::]:22                  [::]:*                                                                                       
+LISTEN    0         4096                  [::]:43253               [::]:*                                                                                       
+LISTEN    0         5                    [::1]:631                 [::]:*                                                                                       
+LISTEN    0         128                  [::1]:7001                [::]:*        users:(("nxnode.bin",pid=2329,fd=25))                                          
+LISTEN    0         4096                  [::]:46589               [::]:*                                                                                       

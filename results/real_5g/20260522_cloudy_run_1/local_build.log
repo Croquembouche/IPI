@@ -1,0 +1,62 @@
+Consolidate compiler generated dependencies of target ipi
+[  2%] Building CXX object CMakeFiles/ipi.dir/src/core/ipi_service_request.cpp.o
+[  4%] Building CXX object CMakeFiles/ipi.dir/src/core/ipi_cooperative_service.cpp.o
+[  7%] Building CXX object CMakeFiles/ipi.dir/src/core/message_frame.cpp.o
+[  9%] Building CXX object CMakeFiles/ipi.dir/src/core/validation.cpp.o
+[ 11%] Building CXX object CMakeFiles/ipi.dir/src/v2x/j2735_messages.cpp.o
+[ 14%] Building CXX object CMakeFiles/ipi.dir/src/v2x/uper_codec.cpp.o
+[ 16%] Building CXX object CMakeFiles/ipi.dir/src/mesh/mesh_manager.cpp.o
+[ 19%] Building CXX object CMakeFiles/ipi.dir/src/mesh/task_offloader.cpp.o
+[ 21%] Building CXX object CMakeFiles/ipi.dir/src/api/edge4av_interface.cpp.o
+[ 23%] Building CXX object CMakeFiles/ipi.dir/src/api/minimal_mqtt_client.cpp.o
+[ 26%] Building CXX object CMakeFiles/ipi.dir/src/api/private_session_transport.cpp.o
+[ 28%] Building CXX object CMakeFiles/ipi.dir/src/api/receiver.cpp.o
+[ 30%] Building CXX object CMakeFiles/ipi.dir/src/api/sender.cpp.o
+[ 33%] Building CXX object CMakeFiles/ipi.dir/src/api/shared_state.cpp.o
+[ 35%] Linking CXX static library libipi.a
+[ 38%] Built target ipi
+Consolidate compiler generated dependencies of target example_build_service_request
+[ 40%] Linking CXX executable example_build_service_request
+[ 42%] Built target example_build_service_request
+Consolidate compiler generated dependencies of target example_v2x_roundtrip
+[ 45%] Building CXX object CMakeFiles/example_v2x_roundtrip.dir/examples/library/v2x_roundtrip.cpp.o
+[ 47%] Linking CXX executable example_v2x_roundtrip
+[ 47%] Built target example_v2x_roundtrip
+Consolidate compiler generated dependencies of target example_spat_tcp_sender
+[ 50%] Building CXX object CMakeFiles/example_spat_tcp_sender.dir/examples/library/spat_tcp_sender.cpp.o
+[ 52%] Linking CXX executable example_spat_tcp_sender
+[ 52%] Built target example_spat_tcp_sender
+Consolidate compiler generated dependencies of target example_private_5g_latency_sender
+[ 54%] Linking CXX executable example_private_5g_latency_sender
+[ 57%] Built target example_private_5g_latency_sender
+Consolidate compiler generated dependencies of target example_private_5g_latency_receiver
+[ 59%] Linking CXX executable example_private_5g_latency_receiver
+[ 61%] Built target example_private_5g_latency_receiver
+Consolidate compiler generated dependencies of target example_mesh_demo
+[ 64%] Linking CXX executable example_mesh_demo
+[ 66%] Built target example_mesh_demo
+Consolidate compiler generated dependencies of target example_edge4av_dual_plane
+[ 69%] Building CXX object CMakeFiles/example_edge4av_dual_plane.dir/examples/library/edge4av_dual_plane.cpp.o
+[ 71%] Linking CXX executable example_edge4av_dual_plane
+[ 71%] Built target example_edge4av_dual_plane
+Consolidate compiler generated dependencies of target test_edge4av_interface
+[ 73%] Building CXX object CMakeFiles/test_edge4av_interface.dir/tests/edge4av_interface_test.cpp.o
+[ 76%] Linking CXX executable test_edge4av_interface
+[ 76%] Built target test_edge4av_interface
+Consolidate compiler generated dependencies of target test_private_session_transport
+[ 78%] Building CXX object CMakeFiles/test_private_session_transport.dir/tests/private_session_transport_test.cpp.o
+[ 80%] Linking CXX executable test_private_session_transport
+[ 80%] Built target test_private_session_transport
+Consolidate compiler generated dependencies of target test_private_5g_latency_probe
+[ 83%] Linking CXX executable test_private_5g_latency_probe
+[ 85%] Built target test_private_5g_latency_probe
+Consolidate compiler generated dependencies of target test_experiment_logging
+[ 88%] Building CXX object CMakeFiles/test_experiment_logging.dir/tests/experiment_logging_test.cpp.o
+[ 90%] Linking CXX executable test_experiment_logging
+[ 90%] Built target test_experiment_logging
+Consolidate compiler generated dependencies of target test_private_5g_latency_loopback
+[ 92%] Linking CXX executable test_private_5g_latency_loopback
+[ 95%] Built target test_private_5g_latency_loopback
+Consolidate compiler generated dependencies of target test_private_5g_latency_mqtt_loopback
+[ 97%] Linking CXX executable test_private_5g_latency_mqtt_loopback
+[100%] Built target test_private_5g_latency_mqtt_loopback

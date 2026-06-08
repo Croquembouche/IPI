@@ -1,0 +1,17 @@
+Generating public/private ed25519 key pair.
+Your identification has been saved in /tmp/ipi-ssh-20260513_sunny_fintechparking_run_1/key
+Your public key has been saved in /tmp/ipi-ssh-20260513_sunny_fintechparking_run_1/key.pub
+The key fingerprint is:
+SHA256:rYtU3mbVFTW/XJ45N28eP7ZZ/L7a5hHC1RTEVDPrriY ipi-20260513_sunny_fintechparking_run_1
+The key's randomart image is:
++--[ED25519 256]--+
+|              +OB|
+|               oO|
+|               o=|
+|         .  ..+o=|
+|        S . .o.Xo|
+|       o o .  o.*|
+|      . o +    +=|
+|     . . + E .o*B|
+|      . .   oo=BO|
++----[SHA256]-----+

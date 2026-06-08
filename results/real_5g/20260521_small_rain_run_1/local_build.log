@@ -1,0 +1,14 @@
+[ 38%] Built target ipi
+[ 42%] Built target example_build_service_request
+[ 47%] Built target example_v2x_roundtrip
+[ 52%] Built target example_spat_tcp_sender
+[ 57%] Built target example_private_5g_latency_sender
+[ 61%] Built target example_private_5g_latency_receiver
+[ 66%] Built target example_mesh_demo
+[ 71%] Built target example_edge4av_dual_plane
+[ 76%] Built target test_edge4av_interface
+[ 80%] Built target test_private_session_transport
+[ 85%] Built target test_private_5g_latency_probe
+[ 90%] Built target test_experiment_logging
+[ 95%] Built target test_private_5g_latency_loopback
+[100%] Built target test_private_5g_latency_mqtt_loopback

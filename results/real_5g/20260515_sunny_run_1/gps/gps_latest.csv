@@ -1,0 +1,2 @@
+system_time_ns,ros_time_sec,sample_topic,position_source,speed_source,latitude_deg,longitude_deg,altitude_m,horizontal_speed_mps,vertical_speed_mps,north_velocity_mps,east_velocity_mps,up_velocity_mps,track_ground_deg,solution_status,position_or_velocity_type
+1778850474574848990,1778850474.547022875,/novatel/oem7/inspva,/novatel/oem7/inspva,/novatel/oem7/inspva,39.662797440,-75.757436640,0.724194499,0.002485044,-0.001365984,-0.001776174,0.001738001,-0.001365984,,novatel_oem7_msgs.msg.InertialSolutionStatus(status=3),

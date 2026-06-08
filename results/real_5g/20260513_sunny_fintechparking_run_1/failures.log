@@ -1,0 +1,4 @@
+2026-05-13T11:03:51-04:00 first trial launch aborted: remote receiver process started but SSH launch did not detach; no sender rows were written.
+2026-05-13T13:37:45-04:00 capped large payload sweep at active 2097152-byte TCP condition per user request; controller paused to prevent 4194304+ byte conditions.
+2026-05-13T14:16:57-04:00 completed capped large payload sweep through 2097152 bytes only; 4194304+ bytes and large MQTT sweep were not run per user request.
+2026-05-13T16:10:57-04:00 MQTT 1048576-byte attempt stalled at 243 rows with sender socket queued; preserving partial and rerunning 1048576/2097152 with threaded broker.

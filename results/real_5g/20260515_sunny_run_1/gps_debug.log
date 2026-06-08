@@ -1,0 +1,436 @@
++ set -euo pipefail
++ '[' results/real_5g/20260515_sunny_run_1/gps_debug = -h ']'
++ '[' results/real_5g/20260515_sunny_run_1/gps_debug = --help ']'
++ '[' 2 -lt 1 ']'
++++ dirname scripts/record_gps_for_experiment.sh
+++ cd scripts/..
+++ pwd
++ REPO_ROOT=/home/hydrau/Documents/Github/IPI
+++ readlink -f results/real_5g/20260515_sunny_run_1/gps_debug
++ RUN_DIR=/home/hydrau/Documents/Github/IPI/results/real_5g/20260515_sunny_run_1/gps_debug
++ DURATION_SEC=5
++ GPS_DIR=/home/hydrau/Documents/Github/IPI/results/real_5g/20260515_sunny_run_1/gps_debug/gps
++ ROS_WS_SETUP=/home/hydrau/Documents/Github/IPI/ros2_ws/install/setup.bash
++ ROS_DISTRO_SETUP=/opt/ros/humble/setup.bash
++ OEM7_IP_ADDR=192.168.3.100
++ OEM7_LAUNCH_PACKAGE=novatel_oem7_driver
++ OEM7_LAUNCH_FILE=oem7_net.launch.py
++ TOPICS=(/novatel/oem7/bestpos /novatel/oem7/bestvel /novatel/oem7/inspva /novatel/oem7/fix /novatel/oem7/gps /novatel/oem7/odom)
++ mkdir -p /home/hydrau/Documents/Github/IPI/results/real_5g/20260515_sunny_run_1/gps_debug/gps
++ set +u
++ '[' -f /opt/ros/humble/setup.bash ']'
++ source /opt/ros/humble/setup.bash
+++ AMENT_SHELL=bash
+++++ dirname /opt/ros/humble/setup.bash
++++ builtin cd /opt/ros/humble
++++ pwd
+++ AMENT_CURRENT_PREFIX=/opt/ros/humble
+++ '[' -n '' ']'
+++ . /opt/ros/humble/setup.sh
++++ : /opt/ros/humble
++++ : bash
++++ _prefix_setup_IFS=' 	
+'
++++ IFS='
+'
++++ _UNIQUE_PREFIX_PATH=
++++ '[' -z SKIP_PARENT_PREFIX_PATH ']'
++++ ament_append_unique_value _UNIQUE_PREFIX_PATH /opt/ros/humble
++++ _listname=_UNIQUE_PREFIX_PATH
++++ _value=/opt/ros/humble
++++ eval '_values=$_UNIQUE_PREFIX_PATH'
+++++ _values=
++++ _duplicate=
++++ _ament_append_unique_value_IFS='
+'
++++ IFS=:
++++ '[' bash = zsh ']'
++++ unset _item
++++ '[' -z '' ']'
++++ '[' -z '' ']'
++++ eval '_UNIQUE_PREFIX_PATH="/opt/ros/humble"'
+++++ _UNIQUE_PREFIX_PATH=/opt/ros/humble
++++ IFS='
+'
++++ unset _ament_append_unique_value_IFS
++++ unset _duplicate
++++ unset _values
++++ unset _value
++++ unset _listname
++++ unset AMENT_CURRENT_PREFIX
++++ _prefix_setup_AMENT_SHELL=bash
++++ IFS=:
++++ '[' bash = zsh ']'
++++ for _path in $_UNIQUE_PREFIX_PATH
++++ '[' -n '' ']'
++++ '[' -f /opt/ros/humble/local_setup.bash ']'
++++ '[' bash = sh ']'
++++ IFS=' 	
+'
++++ . /opt/ros/humble/local_setup.bash
+++++ AMENT_SHELL=bash
+++++++ dirname /opt/ros/humble/local_setup.bash
++++++ builtin cd /opt/ros/humble
++++++ pwd
+++++ AMENT_CURRENT_PREFIX=/opt/ros/humble
+++++ '[' -n '' ']'
+++++ . /opt/ros/humble/local_setup.sh
++++++ _ament_prefix_sh_AMENT_CURRENT_PREFIX=/opt/ros/humble
++++++ '[' -z /opt/ros/humble ']'
++++++ _ament_prefix_sh_AMENT_CURRENT_PREFIX=/opt/ros/humble
++++++ : bash
++++++ _ament_python_executable=/usr/bin/python3
++++++ '[' -n '' ']'
++++++ '[' '!' -f /usr/bin/python3 ']'
++++++ _ament_additional_extension=
++++++ '[' bash '!=' sh ']'
++++++ _ament_additional_extension=bash
+++++++ /usr/bin/python3 /opt/ros/humble/_local_setup_util.py sh bash
++++++ _ament_ordered_commands='AMENT_CURRENT_PREFIX="/opt/ros/humble" _ament_prefix_sh_source_script "/opt/ros/humble/share/ros2cli/environment/ros2-argcomplete.bash"
+AMENT_CURRENT_PREFIX="/opt/ros/humble" _ament_prefix_sh_source_script "/opt/ros/humble/share/ros_environment/environment/0.ros_distro_check.sh"
+export ROS_DISTRO="humble"
+# export ROS_LOCALHOST_ONLY="0"
+export ROS_PYTHON_VERSION="3"
+export ROS_VERSION="2"
+AMENT_CURRENT_PREFIX="/opt/ros/humble" _ament_prefix_sh_source_script "/opt/ros/humble/share/rosidl_cli/environment/rosidl-argcomplete.bash"'
++++++ unset _ament_additional_extension
++++++ unset _ament_python_executable
++++++ '[' -n '' ']'
++++++ eval 'AMENT_CURRENT_PREFIX="/opt/ros/humble" _ament_prefix_sh_source_script "/opt/ros/humble/share/ros2cli/environment/ros2-argcomplete.bash"
+AMENT_CURRENT_PREFIX="/opt/ros/humble" _ament_prefix_sh_source_script "/opt/ros/humble/share/ros_environment/environment/0.ros_distro_check.sh"
+export ROS_DISTRO="humble"
+# export ROS_LOCALHOST_ONLY="0"
+export ROS_PYTHON_VERSION="3"
+export ROS_VERSION="2"
+AMENT_CURRENT_PREFIX="/opt/ros/humble" _ament_prefix_sh_source_script "/opt/ros/humble/share/rosidl_cli/environment/rosidl-argcomplete.bash"'
+++++++ AMENT_CURRENT_PREFIX=/opt/ros/humble
+++++++ _ament_prefix_sh_source_script /opt/ros/humble/share/ros2cli/environment/ros2-argcomplete.bash
+++++++ '[' -f /opt/ros/humble/share/ros2cli/environment/ros2-argcomplete.bash ']'
+++++++ '[' -n '' ']'
+++++++ . /opt/ros/humble/share/ros2cli/environment/ros2-argcomplete.bash
++++++++ type register-python-argcomplete3
+++++++++ register-python-argcomplete3 ros2
++++++++ eval '
+_python_argcomplete() {
+    local IFS=$'\''\013'\''
+    local SUPPRESS_SPACE=0
+    if compopt +o nospace 2> /dev/null; then
+        SUPPRESS_SPACE=1
+    fi
+    COMPREPLY=( $(IFS="$IFS" \
+                  COMP_LINE="$COMP_LINE" \
+                  COMP_POINT="$COMP_POINT" \
+                  COMP_TYPE="$COMP_TYPE" \
+                  _ARGCOMPLETE_COMP_WORDBREAKS="$COMP_WORDBREAKS" \
+                  _ARGCOMPLETE=1 \
+                  _ARGCOMPLETE_SUPPRESS_SPACE=$SUPPRESS_SPACE \
+                  "$1" 8>&1 9>&2 1>/dev/null 2>/dev/null) )
+    if [[ $? != 0 ]]; then
+        unset COMPREPLY
+    elif [[ $SUPPRESS_SPACE == 1 ]] && [[ "$COMPREPLY" =~ [=/:]$ ]]; then
+        compopt -o nospace
+    fi
+}
+complete -o nospace -o default -F _python_argcomplete "ros2"'
+++++++++ complete -o nospace -o default -F _python_argcomplete ros2
+++++++ AMENT_CURRENT_PREFIX=/opt/ros/humble
+++++++ _ament_prefix_sh_source_script /opt/ros/humble/share/ros_environment/environment/0.ros_distro_check.sh
+++++++ '[' -f /opt/ros/humble/share/ros_environment/environment/0.ros_distro_check.sh ']'
+++++++ '[' -n '' ']'
+++++++ . /opt/ros/humble/share/ros_environment/environment/0.ros_distro_check.sh
++++++++ '[' -n humble -a humble '!=' humble ']'
+++++++ export ROS_DISTRO=humble
+++++++ ROS_DISTRO=humble
+++++++ export ROS_PYTHON_VERSION=3
+++++++ ROS_PYTHON_VERSION=3
+++++++ export ROS_VERSION=2
+++++++ ROS_VERSION=2
+++++++ AMENT_CURRENT_PREFIX=/opt/ros/humble
+++++++ _ament_prefix_sh_source_script /opt/ros/humble/share/rosidl_cli/environment/rosidl-argcomplete.bash
+++++++ '[' -f /opt/ros/humble/share/rosidl_cli/environment/rosidl-argcomplete.bash ']'
+++++++ '[' -n '' ']'
+++++++ . /opt/ros/humble/share/rosidl_cli/environment/rosidl-argcomplete.bash
++++++++ type register-python-argcomplete3
+++++++++ register-python-argcomplete3 rosidl
++++++++ eval '
+_python_argcomplete() {
+    local IFS=$'\''\013'\''
+    local SUPPRESS_SPACE=0
+    if compopt +o nospace 2> /dev/null; then
+        SUPPRESS_SPACE=1
+    fi
+    COMPREPLY=( $(IFS="$IFS" \
+                  COMP_LINE="$COMP_LINE" \
+                  COMP_POINT="$COMP_POINT" \
+                  COMP_TYPE="$COMP_TYPE" \
+                  _ARGCOMPLETE_COMP_WORDBREAKS="$COMP_WORDBREAKS" \
+                  _ARGCOMPLETE=1 \
+                  _ARGCOMPLETE_SUPPRESS_SPACE=$SUPPRESS_SPACE \
+                  "$1" 8>&1 9>&2 1>/dev/null 2>/dev/null) )
+    if [[ $? != 0 ]]; then
+        unset COMPREPLY
+    elif [[ $SUPPRESS_SPACE == 1 ]] && [[ "$COMPREPLY" =~ [=/:]$ ]]; then
+        compopt -o nospace
+    fi
+}
+complete -o nospace -o default -F _python_argcomplete "rosidl"'
+++++++++ complete -o nospace -o default -F _python_argcomplete rosidl
++++++ unset _ament_ordered_commands
++++++ unset _ament_prefix_sh_source_script
++++++ unset _ament_prefix_sh_AMENT_CURRENT_PREFIX
++++ AMENT_SHELL=bash
++++ unset _path
++++ IFS=' 	
+'
++++ unset _prefix_setup_IFS
++++ unset _prefix_setup_AMENT_SHELL
++++ unset _UNIQUE_PREFIX_PATH
++++ unset AMENT_SHELL
++ '[' -f /home/hydrau/Documents/Github/IPI/ros2_ws/install/setup.bash ']'
++ source /home/hydrau/Documents/Github/IPI/ros2_ws/install/setup.bash
+++ COLCON_CURRENT_PREFIX=/opt/ros/humble
+++ _colcon_prefix_chain_bash_source_script /opt/ros/humble/local_setup.bash
+++ '[' -f /opt/ros/humble/local_setup.bash ']'
+++ '[' -n '' ']'
+++ . /opt/ros/humble/local_setup.bash
++++ AMENT_SHELL=bash
++++++ dirname /opt/ros/humble/local_setup.bash
+++++ builtin cd /opt/ros/humble
+++++ pwd
++++ AMENT_CURRENT_PREFIX=/opt/ros/humble
++++ '[' -n '' ']'
++++ . /opt/ros/humble/local_setup.sh
+++++ _ament_prefix_sh_AMENT_CURRENT_PREFIX=/opt/ros/humble
+++++ '[' -z /opt/ros/humble ']'
+++++ _ament_prefix_sh_AMENT_CURRENT_PREFIX=/opt/ros/humble
+++++ : bash
+++++ _ament_python_executable=/usr/bin/python3
+++++ '[' -n '' ']'
+++++ '[' '!' -f /usr/bin/python3 ']'
+++++ _ament_additional_extension=
+++++ '[' bash '!=' sh ']'
+++++ _ament_additional_extension=bash
++++++ /usr/bin/python3 /opt/ros/humble/_local_setup_util.py sh bash
+++++ _ament_ordered_commands='AMENT_CURRENT_PREFIX="/opt/ros/humble" _ament_prefix_sh_source_script "/opt/ros/humble/share/ros2cli/environment/ros2-argcomplete.bash"
+AMENT_CURRENT_PREFIX="/opt/ros/humble" _ament_prefix_sh_source_script "/opt/ros/humble/share/ros_environment/environment/0.ros_distro_check.sh"
+export ROS_DISTRO="humble"
+# export ROS_LOCALHOST_ONLY="0"
+export ROS_PYTHON_VERSION="3"
+export ROS_VERSION="2"
+AMENT_CURRENT_PREFIX="/opt/ros/humble" _ament_prefix_sh_source_script "/opt/ros/humble/share/rosidl_cli/environment/rosidl-argcomplete.bash"'
+++++ unset _ament_additional_extension
+++++ unset _ament_python_executable
+++++ '[' -n '' ']'
+++++ eval 'AMENT_CURRENT_PREFIX="/opt/ros/humble" _ament_prefix_sh_source_script "/opt/ros/humble/share/ros2cli/environment/ros2-argcomplete.bash"
+AMENT_CURRENT_PREFIX="/opt/ros/humble" _ament_prefix_sh_source_script "/opt/ros/humble/share/ros_environment/environment/0.ros_distro_check.sh"
+export ROS_DISTRO="humble"
+# export ROS_LOCALHOST_ONLY="0"
+export ROS_PYTHON_VERSION="3"
+export ROS_VERSION="2"
+AMENT_CURRENT_PREFIX="/opt/ros/humble" _ament_prefix_sh_source_script "/opt/ros/humble/share/rosidl_cli/environment/rosidl-argcomplete.bash"'
++++++ AMENT_CURRENT_PREFIX=/opt/ros/humble
++++++ _ament_prefix_sh_source_script /opt/ros/humble/share/ros2cli/environment/ros2-argcomplete.bash
++++++ '[' -f /opt/ros/humble/share/ros2cli/environment/ros2-argcomplete.bash ']'
++++++ '[' -n '' ']'
++++++ . /opt/ros/humble/share/ros2cli/environment/ros2-argcomplete.bash
+++++++ type register-python-argcomplete3
++++++++ register-python-argcomplete3 ros2
+++++++ eval '
+_python_argcomplete() {
+    local IFS=$'\''\013'\''
+    local SUPPRESS_SPACE=0
+    if compopt +o nospace 2> /dev/null; then
+        SUPPRESS_SPACE=1
+    fi
+    COMPREPLY=( $(IFS="$IFS" \
+                  COMP_LINE="$COMP_LINE" \
+                  COMP_POINT="$COMP_POINT" \
+                  COMP_TYPE="$COMP_TYPE" \
+                  _ARGCOMPLETE_COMP_WORDBREAKS="$COMP_WORDBREAKS" \
+                  _ARGCOMPLETE=1 \
+                  _ARGCOMPLETE_SUPPRESS_SPACE=$SUPPRESS_SPACE \
+                  "$1" 8>&1 9>&2 1>/dev/null 2>/dev/null) )
+    if [[ $? != 0 ]]; then
+        unset COMPREPLY
+    elif [[ $SUPPRESS_SPACE == 1 ]] && [[ "$COMPREPLY" =~ [=/:]$ ]]; then
+        compopt -o nospace
+    fi
+}
+complete -o nospace -o default -F _python_argcomplete "ros2"'
++++++++ complete -o nospace -o default -F _python_argcomplete ros2
++++++ AMENT_CURRENT_PREFIX=/opt/ros/humble
++++++ _ament_prefix_sh_source_script /opt/ros/humble/share/ros_environment/environment/0.ros_distro_check.sh
++++++ '[' -f /opt/ros/humble/share/ros_environment/environment/0.ros_distro_check.sh ']'
++++++ '[' -n '' ']'
++++++ . /opt/ros/humble/share/ros_environment/environment/0.ros_distro_check.sh
+++++++ '[' -n humble -a humble '!=' humble ']'
++++++ export ROS_DISTRO=humble
++++++ ROS_DISTRO=humble
++++++ export ROS_PYTHON_VERSION=3
++++++ ROS_PYTHON_VERSION=3
++++++ export ROS_VERSION=2
++++++ ROS_VERSION=2
++++++ AMENT_CURRENT_PREFIX=/opt/ros/humble
++++++ _ament_prefix_sh_source_script /opt/ros/humble/share/rosidl_cli/environment/rosidl-argcomplete.bash
++++++ '[' -f /opt/ros/humble/share/rosidl_cli/environment/rosidl-argcomplete.bash ']'
++++++ '[' -n '' ']'
++++++ . /opt/ros/humble/share/rosidl_cli/environment/rosidl-argcomplete.bash
+++++++ type register-python-argcomplete3
++++++++ register-python-argcomplete3 rosidl
+++++++ eval '
+_python_argcomplete() {
+    local IFS=$'\''\013'\''
+    local SUPPRESS_SPACE=0
+    if compopt +o nospace 2> /dev/null; then
+        SUPPRESS_SPACE=1
+    fi
+    COMPREPLY=( $(IFS="$IFS" \
+                  COMP_LINE="$COMP_LINE" \
+                  COMP_POINT="$COMP_POINT" \
+                  COMP_TYPE="$COMP_TYPE" \
+                  _ARGCOMPLETE_COMP_WORDBREAKS="$COMP_WORDBREAKS" \
+                  _ARGCOMPLETE=1 \
+                  _ARGCOMPLETE_SUPPRESS_SPACE=$SUPPRESS_SPACE \
+                  "$1" 8>&1 9>&2 1>/dev/null 2>/dev/null) )
+    if [[ $? != 0 ]]; then
+        unset COMPREPLY
+    elif [[ $SUPPRESS_SPACE == 1 ]] && [[ "$COMPREPLY" =~ [=/:]$ ]]; then
+        compopt -o nospace
+    fi
+}
+complete -o nospace -o default -F _python_argcomplete "rosidl"'
++++++++ complete -o nospace -o default -F _python_argcomplete rosidl
+++++ unset _ament_ordered_commands
+++++ unset _ament_prefix_sh_source_script
+++++ unset _ament_prefix_sh_AMENT_CURRENT_PREFIX
+++++ dirname /home/hydrau/Documents/Github/IPI/ros2_ws/install/setup.bash
++++ builtin cd /home/hydrau/Documents/Github/IPI/ros2_ws/install
++++ pwd
+++ COLCON_CURRENT_PREFIX=/home/hydrau/Documents/Github/IPI/ros2_ws/install
+++ _colcon_prefix_chain_bash_source_script /home/hydrau/Documents/Github/IPI/ros2_ws/install/local_setup.bash
+++ '[' -f /home/hydrau/Documents/Github/IPI/ros2_ws/install/local_setup.bash ']'
+++ '[' -n '' ']'
+++ . /home/hydrau/Documents/Github/IPI/ros2_ws/install/local_setup.bash
++++ '[' -z /home/hydrau/Documents/Github/IPI/ros2_ws/install ']'
++++ _colcon_prefix_bash_COLCON_CURRENT_PREFIX=/home/hydrau/Documents/Github/IPI/ros2_ws/install
++++ _colcon_prefix_bash_prepend_unique_value COLCON_PREFIX_PATH /home/hydrau/Documents/Github/IPI/ros2_ws/install
++++ _listname=COLCON_PREFIX_PATH
++++ _value=/home/hydrau/Documents/Github/IPI/ros2_ws/install
++++ eval '_values="$COLCON_PREFIX_PATH"'
+++++ _values=
++++ _colcon_prefix_bash_prepend_unique_value_IFS=' 	
+'
++++ IFS=:
++++ _all_values=/home/hydrau/Documents/Github/IPI/ros2_ws/install
++++ _contained_value=
++++ unset _item
++++ '[' -z '' ']'
++++ '[' -n '' ']'
++++ unset _contained_value
++++ IFS=' 	
+'
++++ unset _colcon_prefix_bash_prepend_unique_value_IFS
++++ eval export 'COLCON_PREFIX_PATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install"'
+++++ export COLCON_PREFIX_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install
+++++ COLCON_PREFIX_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install
++++ unset _all_values
++++ unset _values
++++ unset _value
++++ unset _listname
++++ unset _colcon_prefix_bash_prepend_unique_value
++++ '[' -n '' ']'
++++ _colcon_python_executable=/usr/bin/python3
++++ '[' '!' -f /usr/bin/python3 ']'
+++++ /usr/bin/python3 /home/hydrau/Documents/Github/IPI/ros2_ws/install/_local_setup_util_sh.py sh bash
++++ _colcon_ordered_commands='export CMAKE_PREFIX_PATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs/lib:$LD_LIBRARY_PATH"
+export AMENT_PREFIX_PATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:$AMENT_PREFIX_PATH"
+export PYTHONPATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs/local/lib/python3.10/dist-packages:$PYTHONPATH"
+export CMAKE_PREFIX_PATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver/lib:$LD_LIBRARY_PATH"
+export AMENT_PREFIX_PATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver:$AMENT_PREFIX_PATH"
+export PYTHONPATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver/local/lib/python3.10/dist-packages:$PYTHONPATH"
+if [ "$(echo -n $CMAKE_PREFIX_PATH | head -c 1)" = ":" ]; then export CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH#?} ; fi
+if [ "$(echo -n $CMAKE_PREFIX_PATH | tail -c 1)" = ":" ]; then export CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH%?} ; fi'
++++ unset _colcon_python_executable
++++ '[' -n '' ']'
++++ eval 'export CMAKE_PREFIX_PATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs/lib:$LD_LIBRARY_PATH"
+export AMENT_PREFIX_PATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:$AMENT_PREFIX_PATH"
+export PYTHONPATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs/local/lib/python3.10/dist-packages:$PYTHONPATH"
+export CMAKE_PREFIX_PATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver/lib:$LD_LIBRARY_PATH"
+export AMENT_PREFIX_PATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver:$AMENT_PREFIX_PATH"
+export PYTHONPATH="/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver/local/lib/python3.10/dist-packages:$PYTHONPATH"
+if [ "$(echo -n $CMAKE_PREFIX_PATH | head -c 1)" = ":" ]; then export CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH#?} ; fi
+if [ "$(echo -n $CMAKE_PREFIX_PATH | tail -c 1)" = ":" ]; then export CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH%?} ; fi'
+++++ export CMAKE_PREFIX_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:
+++++ CMAKE_PREFIX_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:
+++++ export LD_LIBRARY_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs/lib:/usr/local/cuda-12.2/lib64:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib
+++++ LD_LIBRARY_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs/lib:/usr/local/cuda-12.2/lib64:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib
+++++ export AMENT_PREFIX_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:/opt/ros/humble
+++++ AMENT_PREFIX_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:/opt/ros/humble
+++++ export PYTHONPATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages
+++++ PYTHONPATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages
+++++ export CMAKE_PREFIX_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver:/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:
+++++ CMAKE_PREFIX_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver:/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:
+++++ export LD_LIBRARY_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver/lib:/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs/lib:/usr/local/cuda-12.2/lib64:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib
+++++ LD_LIBRARY_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver/lib:/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs/lib:/usr/local/cuda-12.2/lib64:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib
+++++ export AMENT_PREFIX_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver:/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:/opt/ros/humble
+++++ AMENT_PREFIX_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver:/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:/opt/ros/humble
+++++ export PYTHONPATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver/local/lib/python3.10/dist-packages:/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages
+++++ PYTHONPATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver/local/lib/python3.10/dist-packages:/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages
++++++ head -c 1
++++++ echo -n /home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver:/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:
+++++ '[' / = : ']'
++++++ echo -n /home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver:/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs:
++++++ tail -c 1
+++++ '[' : = : ']'
+++++ export CMAKE_PREFIX_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver:/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs
+++++ CMAKE_PREFIX_PATH=/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_driver:/home/hydrau/Documents/Github/IPI/ros2_ws/install/novatel_oem7_msgs
++++ unset _colcon_ordered_commands
++++ unset _colcon_prefix_sh_source_script
++++ unset _colcon_prefix_bash_COLCON_CURRENT_PREFIX
+++ unset COLCON_CURRENT_PREFIX
+++ unset _colcon_prefix_chain_bash_source_script
++ set -u
++ command -v ros2
++ DRIVER_PID=
++ BAG_PID=
++ CSV_PID=
++ trap cleanup EXIT INT TERM
++ printf '# GPS Recording Metadata\n\n'
+++ date --iso-8601=seconds
++ printf -- '- Start time: `%s`\n' 2026-05-15T12:24:50-04:00
+++ hostname
++ printf -- '- Hostname: `%s`\n' hydrau
++ printf -- '- Run directory: `%s`\n' /home/hydrau/Documents/Github/IPI/results/real_5g/20260515_sunny_run_1/gps_debug
++ printf -- '- Driver command: `ros2 launch %s %s oem7_ip_addr:=%s`\n' novatel_oem7_driver oem7_net.launch.py 192.168.3.100
++ printf -- '- Recorded topics: `%s`\n' '/novatel/oem7/bestpos /novatel/oem7/bestvel /novatel/oem7/inspva /novatel/oem7/fix /novatel/oem7/gps /novatel/oem7/odom'
++ '[' -n 5 ']'
++ printf -- '- Requested duration: `%s` seconds\n' 5
++ DRIVER_PID=27544
++ ros2 launch novatel_oem7_driver oem7_net.launch.py oem7_ip_addr:=192.168.3.100
++ echo 27544
+++ seq 1 20
++ for _ in $(seq 1 20)
++ ros2 topic list
++ grep -Eq '^/novatel/oem7/(bestpos|fix|inspva)$'
++ break
++ BAG_PID=27645
++ echo 27645
++ ros2 bag record -o /home/hydrau/Documents/Github/IPI/results/real_5g/20260515_sunny_run_1/gps_debug/gps/rosbag /novatel/oem7/bestpos /novatel/oem7/bestvel /novatel/oem7/inspva /novatel/oem7/fix /novatel/oem7/gps /novatel/oem7/odom
++ CSV_PID=27646
++ echo 27646
++ python3 /home/hydrau/Documents/Github/IPI/scripts/gps_topic_recorder.py --output /home/hydrau/Documents/Github/IPI/results/real_5g/20260515_sunny_run_1/gps_debug/gps/gps_samples.csv --snapshot /home/hydrau/Documents/Github/IPI/results/real_5g/20260515_sunny_run_1/gps_debug/gps/gps_latest.csv
++ '[' -n 5 ']'
++ sleep 5
++ cleanup
++ set +e
++ '[' -n 27646 ']'
++ kill 27646
++ '[' -n 27645 ']'
++ kill 27645
++ '[' -n 27544 ']'
++ kill 27544
++ wait 27646 27645 27544

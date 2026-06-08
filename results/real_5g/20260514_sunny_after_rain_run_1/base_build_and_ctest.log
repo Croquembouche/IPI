@@ -1,0 +1,113 @@
+-- The C compiler identification is GNU 9.4.0
+-- The CXX compiler identification is GNU 9.4.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE  
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/d1/Documents/Github/IPI/cpp/build
+Scanning dependencies of target ipi
+[  2%] Building CXX object CMakeFiles/ipi.dir/src/core/ipi_service_request.cpp.o
+[  4%] Building CXX object CMakeFiles/ipi.dir/src/core/ipi_cooperative_service.cpp.o
+[  7%] Building CXX object CMakeFiles/ipi.dir/src/core/message_frame.cpp.o
+[  9%] Building CXX object CMakeFiles/ipi.dir/src/core/validation.cpp.o
+[ 11%] Building CXX object CMakeFiles/ipi.dir/src/v2x/j2735_messages.cpp.o
+[ 14%] Building CXX object CMakeFiles/ipi.dir/src/v2x/uper_codec.cpp.o
+[ 16%] Building CXX object CMakeFiles/ipi.dir/src/mesh/mesh_manager.cpp.o
+[ 19%] Building CXX object CMakeFiles/ipi.dir/src/mesh/task_offloader.cpp.o
+[ 21%] Building CXX object CMakeFiles/ipi.dir/src/api/edge4av_interface.cpp.o
+[ 23%] Building CXX object CMakeFiles/ipi.dir/src/api/minimal_mqtt_client.cpp.o
+[ 26%] Building CXX object CMakeFiles/ipi.dir/src/api/private_5g_latency_probe.cpp.o
+[ 28%] Building CXX object CMakeFiles/ipi.dir/src/api/private_session_transport.cpp.o
+[ 30%] Building CXX object CMakeFiles/ipi.dir/src/api/receiver.cpp.o
+[ 33%] Building CXX object CMakeFiles/ipi.dir/src/api/sender.cpp.o
+[ 35%] Building CXX object CMakeFiles/ipi.dir/src/api/shared_state.cpp.o
+[ 38%] Linking CXX static library libipi.a
+[ 38%] Built target ipi
+Scanning dependencies of target example_build_service_request
+[ 40%] Building CXX object CMakeFiles/example_build_service_request.dir/examples/library/build_service_request.cpp.o
+[ 42%] Linking CXX executable example_build_service_request
+[ 42%] Built target example_build_service_request
+Scanning dependencies of target example_mesh_demo
+[ 45%] Building CXX object CMakeFiles/example_mesh_demo.dir/examples/library/mesh_demo.cpp.o
+[ 47%] Linking CXX executable example_mesh_demo
+[ 47%] Built target example_mesh_demo
+Scanning dependencies of target test_private_5g_latency_mqtt_loopback
+[ 50%] Building CXX object CMakeFiles/test_private_5g_latency_mqtt_loopback.dir/tests/private_5g_latency_mqtt_loopback_test.cpp.o
+[ 52%] Linking CXX executable test_private_5g_latency_mqtt_loopback
+[ 52%] Built target test_private_5g_latency_mqtt_loopback
+Scanning dependencies of target example_v2x_roundtrip
+[ 54%] Building CXX object CMakeFiles/example_v2x_roundtrip.dir/examples/library/v2x_roundtrip.cpp.o
+[ 57%] Linking CXX executable example_v2x_roundtrip
+[ 57%] Built target example_v2x_roundtrip
+Scanning dependencies of target example_private_5g_latency_sender
+[ 59%] Building CXX object CMakeFiles/example_private_5g_latency_sender.dir/examples/library/private_5g_latency_sender.cpp.o
+[ 61%] Linking CXX executable example_private_5g_latency_sender
+[ 61%] Built target example_private_5g_latency_sender
+Scanning dependencies of target example_private_5g_latency_receiver
+[ 64%] Building CXX object CMakeFiles/example_private_5g_latency_receiver.dir/examples/library/private_5g_latency_receiver.cpp.o
+[ 66%] Linking CXX executable example_private_5g_latency_receiver
+[ 66%] Built target example_private_5g_latency_receiver
+Scanning dependencies of target test_private_5g_latency_loopback
+[ 69%] Building CXX object CMakeFiles/test_private_5g_latency_loopback.dir/tests/private_5g_latency_loopback_test.cpp.o
+[ 71%] Linking CXX executable test_private_5g_latency_loopback
+[ 71%] Built target test_private_5g_latency_loopback
+Scanning dependencies of target example_edge4av_dual_plane
+[ 73%] Building CXX object CMakeFiles/example_edge4av_dual_plane.dir/examples/library/edge4av_dual_plane.cpp.o
+[ 76%] Linking CXX executable example_edge4av_dual_plane
+[ 76%] Built target example_edge4av_dual_plane
+Scanning dependencies of target example_spat_tcp_sender
+[ 78%] Building CXX object CMakeFiles/example_spat_tcp_sender.dir/examples/library/spat_tcp_sender.cpp.o
+[ 80%] Linking CXX executable example_spat_tcp_sender
+[ 80%] Built target example_spat_tcp_sender
+Scanning dependencies of target test_edge4av_interface
+[ 83%] Building CXX object CMakeFiles/test_edge4av_interface.dir/tests/edge4av_interface_test.cpp.o
+[ 85%] Linking CXX executable test_edge4av_interface
+[ 85%] Built target test_edge4av_interface
+Scanning dependencies of target test_private_session_transport
+[ 88%] Building CXX object CMakeFiles/test_private_session_transport.dir/tests/private_session_transport_test.cpp.o
+[ 90%] Linking CXX executable test_private_session_transport
+[ 90%] Built target test_private_session_transport
+Scanning dependencies of target test_private_5g_latency_probe
+[ 92%] Building CXX object CMakeFiles/test_private_5g_latency_probe.dir/tests/private_5g_latency_probe_test.cpp.o
+[ 95%] Linking CXX executable test_private_5g_latency_probe
+[ 95%] Built target test_private_5g_latency_probe
+Scanning dependencies of target test_experiment_logging
+[ 97%] Building CXX object CMakeFiles/test_experiment_logging.dir/tests/experiment_logging_test.cpp.o
+[100%] Linking CXX executable test_experiment_logging
+[100%] Built target test_experiment_logging
+Test project /home/d1/Documents/Github/IPI/cpp/build
+    Start 1: edge4av_interface
+1/6 Test #1: edge4av_interface ..................   Passed    0.00 sec
+    Start 2: private_session_transport
+2/6 Test #2: private_session_transport ..........   Passed    0.00 sec
+    Start 3: private_5g_latency_probe
+3/6 Test #3: private_5g_latency_probe ...........   Passed    0.00 sec
+    Start 4: experiment_logging
+4/6 Test #4: experiment_logging .................   Passed    0.00 sec
+    Start 5: private_5g_latency_loopback
+5/6 Test #5: private_5g_latency_loopback ........   Passed    0.00 sec
+    Start 6: private_5g_latency_mqtt_loopback
+6/6 Test #6: private_5g_latency_mqtt_loopback ...   Passed    0.05 sec
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =   0.06 sec

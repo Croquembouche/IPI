@@ -1,0 +1,17 @@
+Test project /home/d1/Documents/Github/IPI/cpp/build
+    Start 1: edge4av_interface
+1/6 Test #1: edge4av_interface ..................   Passed    0.00 sec
+    Start 2: private_session_transport
+2/6 Test #2: private_session_transport ..........   Passed    0.00 sec
+    Start 3: private_5g_latency_probe
+3/6 Test #3: private_5g_latency_probe ...........   Passed    0.00 sec
+    Start 4: experiment_logging
+4/6 Test #4: experiment_logging .................   Passed    0.00 sec
+    Start 5: private_5g_latency_loopback
+5/6 Test #5: private_5g_latency_loopback ........   Passed    0.00 sec
+    Start 6: private_5g_latency_mqtt_loopback
+6/6 Test #6: private_5g_latency_mqtt_loopback ...   Passed    0.05 sec
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =   0.07 sec

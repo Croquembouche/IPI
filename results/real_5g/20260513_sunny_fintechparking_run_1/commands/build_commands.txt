@@ -1,0 +1,10 @@
+cmake -S cpp -B cpp/build -DIPI_ENABLE_TESTS=ON
+cmake --build cpp/build
+ctest --test-dir cpp/build --output-on-failure
+rsync -az --delete cpp/ d1@10.100.100.6:/home/d1/Documents/Github/IPI/cpp/
+remote: cmake -S cpp -B cpp/build -DIPI_ENABLE_TESTS=ON
+remote: cmake --build cpp/build
+remote: ctest --test-dir cpp/build --output-on-failure
+rsync -az --delete --exclude build/ cpp/ d1@10.100.100.6:/home/d1/Documents/Github/IPI/cpp/
+remote: rm -rf /home/d1/Documents/Github/IPI/cpp/build
+remote: cmake -S cpp -B cpp/build -DIPI_ENABLE_TESTS=ON && cmake --build cpp/build && ctest --test-dir cpp/build --output-on-failure

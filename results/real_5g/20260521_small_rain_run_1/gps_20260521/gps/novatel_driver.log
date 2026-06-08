@@ -1,0 +1,182 @@
+[INFO] [launch]: All log files can be found below /home/hydrau/.ros/log/2026-05-21-13-37-43-158049-hydrau-6830
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [novatel_oem7_driver_exe-1]: process started with pid [6894]
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.342611454] [novatel.oem7.main]: Oem7RawMsg:  topic [oem7raw]: frame_id: 'gps'; q size: 200
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.348103942] [novatel.oem7.main]: Oem7MessageNode v.; Apr 27 2026 13:27:57
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.438999386] [novatel.oem7.main]: Oem7MessageDecoderLib version: 10.1.0
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.441880738] [novatel.oem7.main]: PPPPOS:  topic [ppppos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.444836492] [novatel.oem7.main]: BESTPOS:  topic [bestpos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.446308598] [novatel.oem7.main]: BESTVEL:  topic [bestvel]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.447148730] [novatel.oem7.main]: BESTUTM:  topic [bestutm]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.448063812] [novatel.oem7.main]: BESTGNSSPOS:  topic [bestgnsspos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.449815528] [novatel.oem7.main]: INSPVA:  topic [inspva]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.451664613] [novatel.oem7.main]: GPSFix:  topic [gps]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.453908495] [novatel.oem7.main]: NavSatFix:  topic [fix]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.458224048] [novatel.oem7.main]: GPSFix position source: BESTPOS or INSPVAS based on quality
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.458681081] [novatel.oem7.main]: IMU:  topic [imu/data]: frame_id: 'imu_link'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.459557827] [novatel.oem7.main]: RAWIMU:  topic [imu/data_raw]: frame_id: 'imu_link'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.460028968] [novatel.oem7.main]: CORRIMU:  topic [corrimu]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.460849003] [novatel.oem7.main]: INSSTDEV:  topic [insstdev]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.461449981] [novatel.oem7.main]: INSPVAX:  topic [inspvax]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.462074286] [novatel.oem7.main]: INSCONFIG:  topic [insconfig]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.462839778] [novatel.oem7.main]: HEADING2:  topic [heading2]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.463571816] [novatel.oem7.main]: RXSTATUS:  topic [rxstatus]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.464241452] [novatel.oem7.main]: TERRASTARINFO:  topic [terrastarinfo]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.464829085] [novatel.oem7.main]: TERRASTARSTATUS:  topic [terrastarstatus]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.465451751] [novatel.oem7.main]: TIME:  topic [time]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [WARN] [1779385063.466081528] [novatel.oem7.main]: Message 'NMEA_Sentence' will not be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.467248350] [novatel.oem7.main]: Odometry:  topic [odom]: frame_id: 'odom'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.472152648] [novatel.oem7.main]: OdometryOrigin:  topic [odom_origin]: frame_id: 'odom'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477489647] [novatel.oem7.main]: Oem7 Raw message '42' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477520967] [novatel.oem7.main]: Oem7 Raw message '99' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477542701] [novatel.oem7.main]: Oem7 Raw message '1429' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477561296] [novatel.oem7.main]: Oem7 Raw message '1538' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477580190] [novatel.oem7.main]: Oem7 Raw message '1465' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477597753] [novatel.oem7.main]: Oem7 Raw message '1825' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477615626] [novatel.oem7.main]: Oem7 Raw message '1462' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477634388] [novatel.oem7.main]: Oem7 Raw message '41' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477652494] [novatel.oem7.main]: Oem7 Raw message '723' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477670289] [novatel.oem7.main]: Oem7 Raw message '1696' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477687726] [novatel.oem7.main]: Oem7 Raw message '1310' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477704471] [novatel.oem7.main]: Oem7 Raw message '1309' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477721023] [novatel.oem7.main]: Oem7 Raw message '43' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477737520] [novatel.oem7.main]: Oem7 Raw message '1335' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477780339] [novatel.oem7.main]: Oem7 Raw message '101' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477803379] [novatel.oem7.main]: Oem7 Raw message '93' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477830704] [novatel.oem7.main]: Oem7 Raw message '1945' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477849637] [novatel.oem7.main]: Oem7 Raw message '1719' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.477867144] [novatel.oem7.main]: Oem7 Raw message '1720' will be published.
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.479178033] [novatel.oem7.main]: Oem7Net TCP['192.168.3.100' : 3001]
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.479950910] [novatel.oem7.main]: Oem7Net socket open: '1; OS error= 0
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.528098161] [novatel.oem7.main]: Standard Receiver Initialization:
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.542030460] [novatel.oem7.main]: AACmd 'UNLOGALL THISPORT' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.551799767] [novatel.oem7.main]: AACmd 'LOG INSCONFIGB ONCE' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.564819450] [novatel.oem7.main]: AACmd 'LOG TERRASTARINFOB ONCE' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.574209022] [novatel.oem7.main]: AACmd 'LOG TERRASTARSTATUSB ONCE' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.584003431] [novatel.oem7.main]: AACmd 'LOG TERRASTARINFOB ONTIME 300' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.592933902] [novatel.oem7.main]: AACmd 'LOG TERRASTARSTATUSB ONTIME 300' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.603498809] [novatel.oem7.main]: AACmd 'LOG INSCONFIGB ONTIME 300' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.612244803] [novatel.oem7.main]: AACmd 'LOG RXSTATUSB ONCHANGED' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.623573740] [novatel.oem7.main]: AACmd 'LOG BESTPOSB ONTIME 0.1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.632611855] [novatel.oem7.main]: AACmd 'LOG BESTVELB ONTIME 0.1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.643223165] [novatel.oem7.main]: AACmd 'LOG BESTUTMB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.658959631] [novatel.oem7.main]: AACmd 'LOG BESTGNSSPOSB ONTIME 0.1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.669233974] [novatel.oem7.main]: AACmd 'LOG PPPPOSB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.679263164] [novatel.oem7.main]: AACmd 'LOG HEADING2B ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.688241355] [novatel.oem7.main]: AACmd 'LOG PSRDOP2B ONCHANGED' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.698297904] [novatel.oem7.main]: AACmd 'LOG INSPVASB ONTIME 0.02' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.716107583] [novatel.oem7.main]: AACmd 'LOG INSPVAXB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.729287829] [novatel.oem7.main]: AACmd 'LOG CORRIMUSB ONTIME 0.01' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.742794776] [novatel.oem7.main]: AACmd 'LOG INSSTDEVB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.753137126] [novatel.oem7.main]: AACmd 'LOG RAWIMUSXB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.768923819] [novatel.oem7.main]: AACmd 'LOG TIMEB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.779176192] [novatel.oem7.main]: AACmd 'LOG INSUPDATESTATUSB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.790712099] [novatel.oem7.main]: AACmd 'LOG RAWEPHEMB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.800230161] [novatel.oem7.main]: AACmd 'LOG GLOEPHEMERISB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.816906289] [novatel.oem7.main]: AACmd 'LOG BDSEPHEMERISB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.828804602] [novatel.oem7.main]: AACmd 'LOG GALFNAVEPHEMERISB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.840071498] [novatel.oem7.main]: AACmd 'LOG GALINAVEPHEMERISB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.851094895] [novatel.oem7.main]: AACmd 'LOG RANGEB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.851136239] [novatel.oem7.main]: Extended Receiver Initialization:
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.851185139] [novatel.oem7.main]: Receiver Initialization completed, errors= 0
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.853010457] [novatel.oem7.main]: GPSFix position source= INSPVA: 0 --> 0 at GPSTime[2419 409080800]
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.853090294] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.854819879] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.856040392] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.856803556] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.857930709] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.858762230] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.859592408] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.860340932] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.862660429] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.863708574] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.864141871] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.864885198] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.865614296] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.866334654] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.866721726] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.867821370] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.868857017] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.870760511] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.871851832] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.872661915] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.873386893] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.874168254] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.874936486] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.875338832] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.876217231] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.877221237] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.879247137] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.880585522] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.881490163] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.882224141] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.882990382] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.883531320] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.884519212] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.885517665] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.886365149] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.887365322] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.888049422] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.888457917] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.889092404] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.889742256] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.890445359] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.891050607] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.891673955] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.892912604] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.893622968] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.894283964] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.894930189] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.895565575] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.896208241] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.896826259] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.897475230] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.898415079] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.899060990] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.899679323] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.900579712] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.901375738] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.902329656] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.903682710] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.904483891] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.905287457] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.906199994] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.907160630] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.907868251] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.909635420] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.910328124] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.911037240] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [INFO] [1779385063.912313141] [novatel.oem7.main]: IMU: 41 'Epson G320N' rate= 125' gyro scale= 1.70442e-11' accel scale= 2.3942e-10
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.914846174] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.915170390] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.916002818] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.916953912] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.917879273] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.918792579] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.919989589] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.920860161] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.921788766] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.922651111] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1779385063.924056051] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [INFO] [1779385064.014702149] [novatel.oem7.main]: UTM new Zone:  -1 --> 18; N: 1 X: 430012 Y: 4.39356e+06
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472198231] [novatel.oem7.main]: Log Statistics:
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472484375] [novatel.oem7.main]: Logs: 10000; unknown: 57; discarded: 57
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472517875] [novatel.oem7.main]: Log[42]:486
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472540765] [novatel.oem7.main]: Log[43]:49
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472562111] [novatel.oem7.main]: Log[93]:2
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472582568] [novatel.oem7.main]: Log[99]:486
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472603038] [novatel.oem7.main]: Log[101]:49
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472623328] [novatel.oem7.main]: Log[508]:2856
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472644445] [novatel.oem7.main]: Log[726]:49
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472664515] [novatel.oem7.main]: Log[813]:418
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472684545] [novatel.oem7.main]: Log[1163]:1
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472704212] [novatel.oem7.main]: Log[1429]:529
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472724285] [novatel.oem7.main]: Log[1430]:42
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472745045] [novatel.oem7.main]: Log[1459]:4
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472764638] [novatel.oem7.main]: Log[1465]:49
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472784848] [novatel.oem7.main]: Log[1538]:49
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472804628] [novatel.oem7.main]: Log[1719]:1
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472824512] [novatel.oem7.main]: Log[1729]:1
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472844318] [novatel.oem7.main]: Log[1945]:1
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472864042] [novatel.oem7.main]: Log[2051]:53
+[novatel_oem7_driver_exe-1] [INFO] [1779385112.472884005] [novatel.oem7.main]: Log[2264]:4875

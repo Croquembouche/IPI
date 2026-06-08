@@ -1,0 +1,8 @@
+PING 10.100.100.6 (10.100.100.6) 56(84) bytes of data.
+64 bytes from 10.100.100.6: icmp_seq=1 ttl=62 time=16.1 ms
+64 bytes from 10.100.100.6: icmp_seq=2 ttl=62 time=15.2 ms
+64 bytes from 10.100.100.6: icmp_seq=3 ttl=62 time=14.8 ms
+
+--- 10.100.100.6 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 14.754/15.342/16.077/0.550 ms

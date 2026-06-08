@@ -1,0 +1,2 @@
+system_time_ns,ros_time_sec,sample_topic,position_source,speed_source,latitude_deg,longitude_deg,altitude_m,horizontal_speed_mps,vertical_speed_mps,north_velocity_mps,east_velocity_mps,up_velocity_mps,track_ground_deg,solution_status,position_or_velocity_type
+1778765838811419390,1778765838.810810697,/novatel/oem7/bestvel,/novatel/oem7/bestpos,/novatel/oem7/bestvel,39.666697932,-75.757000455,33.075767262,0.003369428,-0.000801053,,,,172.448768297,novatel_oem7_msgs.msg.SolutionStatus(status=0),novatel_oem7_msgs.msg.PositionOrVelocityType(type=53)

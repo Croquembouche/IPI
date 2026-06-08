@@ -1,0 +1,17 @@
+Generating public/private ed25519 key pair.
+Your identification has been saved in /tmp/ipi-ssh-20260515_sunny_run_1/key
+Your public key has been saved in /tmp/ipi-ssh-20260515_sunny_run_1/key.pub
+The key fingerprint is:
+SHA256:FdpUhKE6hWPEvZ5D0uV9Ju5qyozUE7OnUoOmG4F9VfA ipi-20260515_sunny_run_1
+The key's randomart image is:
++--[ED25519 256]--+
+|     .....==o    |
+|     ....Bo.     |
+|      +.=+E.     |
+|   o ..=+.. o o  |
+|  . o +=S. . +   |
+|     ooo*+  .    |
+|    .o..+o..     |
+|    .o.+ +. .    |
+|    ....=o..     |
++----[SHA256]-----+

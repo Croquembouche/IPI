@@ -1,0 +1,12 @@
+stdin is not a terminal device. Keyboard handling disabled.[INFO] [1778684189.789079267] [rosbag2_recorder]: Press SPACE for pausing/resuming
+[INFO] [1778684189.793789053] [rosbag2_storage]: Opened database '/home/hydrau/Documents/Github/IPI/results/real_5g/20260513_sunny_fintechparking_run_1/gps/rosbag/rosbag_0.db3' for READ_WRITE.
+[INFO] [1778684189.795522500] [rosbag2_recorder]: Listening for topics...
+[INFO] [1778684189.795564384] [rosbag2_recorder]: Event publisher thread: Starting
+[INFO] [1778684189.795692394] [rosbag2_recorder]: Recording...
+[INFO] [1778684189.898274390] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/bestpos'
+[INFO] [1778684189.899227545] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/bestvel'
+[INFO] [1778684189.900606811] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/fix'
+[INFO] [1778684189.901762899] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/gps'
+[INFO] [1778684189.902520041] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/inspva'
+[INFO] [1778684189.903655793] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/odom'
+[INFO] [1778684189.903705557] [rosbag2_recorder]: All requested topics are subscribed. Stopping discovery...
