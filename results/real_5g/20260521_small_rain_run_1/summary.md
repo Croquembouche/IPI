@@ -13,7 +13,7 @@
 
 ## GPS Evidence
 
-- Latest GPS sample: latitude 39.688992729, longitude -75.816216868, altitude_m -6426.114583964, horizontal_speed_mps 0.000000000, sample_topic /novatel/oem7/odom, position_source /novatel/oem7/fix, speed_source /novatel/oem7/odom.
+- Latest GPS sample: latitude 39.663549611, longitude -75.756997286, altitude_m -6426.114583964, horizontal_speed_mps 0.000000000, sample_topic /novatel/oem7/odom, position_source /novatel/oem7/fix, speed_source /novatel/oem7/odom.
 - Raw GPS files: `gps_20260521/gps/gps_samples.csv`, `gps_20260521/gps/gps_latest.csv`, `gps_20260521/gps/rosbag/`
 - Note: the latest odometry-derived altitude appears invalid/unstable in this sample, but latitude/longitude and zero speed were recorded.
 

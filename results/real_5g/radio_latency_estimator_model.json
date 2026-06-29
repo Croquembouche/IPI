@@ -1,0 +1,95 @@
+{
+  "features": [
+    {
+      "name": "rsrp_dbm",
+      "label": "RSRP",
+      "unit": "dBm",
+      "higher_is_better": true,
+      "normalization_min": -120.0,
+      "normalization_max": -102.6
+    },
+    {
+      "name": "rsrq_db",
+      "label": "RSRQ",
+      "unit": "dB",
+      "higher_is_better": true,
+      "normalization_min": -13.0,
+      "normalization_max": -10.0
+    },
+    {
+      "name": "snr_db_reported",
+      "label": "SNR",
+      "unit": "dB",
+      "higher_is_better": true,
+      "normalization_min": 3.5,
+      "normalization_max": 19.7
+    }
+  ],
+  "method": "inverse-distance weighted interpolation over normalized RSRP, RSRQ, and SNR",
+  "distance": "Euclidean distance in min-max normalized radio-feature space",
+  "weight": "1 / (distance + 1e-6)^2",
+  "scope": "Interpolation within the measured stationary private-5G radio envelope; not a validated causal radio model.",
+  "latency_fields": [
+    "mqtt_1k_p50_ms",
+    "mqtt_1k_p95_ms",
+    "tcp_1k_p50_ms",
+    "tcp_1k_p95_ms"
+  ],
+  "training_samples": [
+    {
+      "run": "Run 3",
+      "radio_quality_index": 0.0,
+      "rsrp_dbm": -120.0,
+      "rsrq_db": -13.0,
+      "snr_db_reported": 3.5,
+      "mqtt_1k_p50_ms": 104.6,
+      "mqtt_1k_p95_ms": 571.0,
+      "tcp_1k_p50_ms": 162.8,
+      "tcp_1k_p95_ms": 1210.8
+    },
+    {
+      "run": "Run 5",
+      "radio_quality_index": 0.561,
+      "rsrp_dbm": -108.7,
+      "rsrq_db": -11.6,
+      "snr_db_reported": 12.7,
+      "mqtt_1k_p50_ms": 31.7,
+      "mqtt_1k_p95_ms": 51.6,
+      "tcp_1k_p50_ms": 129.7,
+      "tcp_1k_p95_ms": 170.9
+    },
+    {
+      "run": "Run 2",
+      "radio_quality_index": 0.784,
+      "rsrp_dbm": -107.4,
+      "rsrq_db": -10.1,
+      "snr_db_reported": 14.2,
+      "mqtt_1k_p50_ms": 31.4,
+      "mqtt_1k_p95_ms": 70.4,
+      "tcp_1k_p50_ms": 124.1,
+      "tcp_1k_p95_ms": 155.7
+    },
+    {
+      "run": "Run 1",
+      "radio_quality_index": 0.817,
+      "rsrp_dbm": -106.0,
+      "rsrq_db": -10.1,
+      "snr_db_reported": 14.5,
+      "mqtt_1k_p50_ms": 33.8,
+      "mqtt_1k_p95_ms": 44.5,
+      "tcp_1k_p50_ms": 120.3,
+      "tcp_1k_p95_ms": 140.2
+    },
+    {
+      "run": "Run 4",
+      "radio_quality_index": 1.0,
+      "rsrp_dbm": -102.6,
+      "rsrq_db": -10.0,
+      "snr_db_reported": 19.7,
+      "mqtt_1k_p50_ms": 34.0,
+      "mqtt_1k_p95_ms": 47.3,
+      "tcp_1k_p50_ms": 128.2,
+      "tcp_1k_p95_ms": 155.3
+    }
+  ]
+}

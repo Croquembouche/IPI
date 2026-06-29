@@ -1,0 +1,6 @@
+label,description,latitude,longitude,sample_count,lat_min,lat_max,lon_min,lon_max,included,reason,source
+Run 1,"Run 1, sunny FinTech parking",39.663793229,-75.757002704,531,39.663793209,39.663796579,-75.757008669,-75.757002678,true,,results/real_5g/20260513_sunny_fintechparking_run_1/gps/gps_samples.csv
+Run 2,"Run 2, sunny after rain",39.666699491,-75.757007496,1111,39.666697922,39.666699506,-75.757007541,-75.757000393,true,,results/real_5g/20260514_sunny_after_rain_run_1/gps/gps_samples.csv
+Run 3,"Run 3, sunny continuation",39.662797359,-75.757436528,1266,39.662796990,39.662801204,-75.757436640,-75.757431554,true,,results/real_5g/20260515_sunny_run_1/gps/gps_samples.csv
+Run 4,"Run 4, cloudy",39.665710840,-75.756101486,13100,39.665704739,39.665712407,-75.756106345,-75.756101036,true,,results/real_5g/20260522_cloudy_run_1/gps_20260522/gps/gps_samples.csv
+Run 5,"Run 5, small rain",39.663549611,-75.756997286,10117,39.663549611,39.663549611,-75.756997286,-75.756997286,true,,results/real_5g/20260521_small_rain_run_1/gps_20260521/gps/gps_samples.csv
