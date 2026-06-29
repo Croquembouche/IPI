@@ -1,0 +1,144 @@
+{
+  "aggregate": {
+    "datasets": [
+      {
+        "benchmark": "OpenDAIR-V2X",
+        "categories": {
+          "annotation": 16,
+          "image": 16,
+          "point_cloud": 16
+        },
+        "dataset": "DAIR-V2X-C-Example",
+        "files": 48,
+        "gpu_ms_total": 882.263,
+        "processed_bytes": 26750377
+      },
+      {
+        "benchmark": "OpenDAIR-V2X",
+        "categories": {
+          "annotation": 16,
+          "image": 16,
+          "point_cloud": 16
+        },
+        "dataset": "V2X-Seq-SPD-Example",
+        "files": 48,
+        "gpu_ms_total": 25.215,
+        "processed_bytes": 29359370
+      },
+      {
+        "benchmark": "OpenDAIR-V2X",
+        "categories": {
+          "annotation": 28
+        },
+        "dataset": "V2X-Seq-TFD-Example",
+        "files": 28,
+        "gpu_ms_total": 17.21,
+        "processed_bytes": 29360128
+      },
+      {
+        "benchmark": "TruckV2X",
+        "categories": {
+          "annotation": 16,
+          "image": 16,
+          "point_cloud": 16
+        },
+        "dataset": "TruckV2X-test-Town1_2",
+        "files": 48,
+        "gpu_ms_total": 20.489,
+        "processed_bytes": 17278974
+      },
+      {
+        "benchmark": "V2X-Radar",
+        "categories": {
+          "annotation": 16,
+          "image": 16,
+          "point_cloud": 16
+        },
+        "dataset": "V2X-Radar-C-validate",
+        "files": 48,
+        "gpu_ms_total": 21.864,
+        "processed_bytes": 26006775
+      },
+      {
+        "benchmark": "V2X-Radar",
+        "categories": {
+          "annotation": 4
+        },
+        "dataset": "V2X-Radar-V-ImageSets",
+        "files": 4,
+        "gpu_ms_total": 0.921,
+        "processed_bytes": 148953
+      }
+    ],
+    "elapsed_s": 14.770803,
+    "failures": 0,
+    "files": 224,
+    "processed_bytes": 128904577,
+    "successes": 224,
+    "throughput_mb_s": 8.727,
+    "workers": [
+      {
+        "elapsed_s": 11.667031,
+        "failures": 0,
+        "gpu_index": 0,
+        "gpu_name": "NVIDIA GeForce RTX 2080 Ti",
+        "max_memory_allocated_bytes": 17349632,
+        "processed_bytes": 32973011,
+        "records": 56,
+        "successes": 56,
+        "throughput_mb_s": 2.826
+      },
+      {
+        "elapsed_s": 11.085078,
+        "failures": 0,
+        "gpu_index": 1,
+        "gpu_name": "NVIDIA GeForce RTX 2080 Ti",
+        "max_memory_allocated_bytes": 17347584,
+        "processed_bytes": 32086079,
+        "records": 56,
+        "successes": 56,
+        "throughput_mb_s": 2.895
+      },
+      {
+        "elapsed_s": 11.082894,
+        "failures": 0,
+        "gpu_index": 2,
+        "gpu_name": "NVIDIA GeForce RTX 2080 Ti",
+        "max_memory_allocated_bytes": 17346560,
+        "processed_bytes": 31994604,
+        "records": 56,
+        "successes": 56,
+        "throughput_mb_s": 2.887
+      },
+      {
+        "elapsed_s": 11.08106,
+        "failures": 0,
+        "gpu_index": 3,
+        "gpu_name": "NVIDIA GeForce RTX 2080 Ti",
+        "max_memory_allocated_bytes": 17344512,
+        "processed_bytes": 31850883,
+        "records": 56,
+        "successes": 56,
+        "throughput_mb_s": 2.874
+      }
+    ]
+  },
+  "categories": [
+    "annotation",
+    "image",
+    "point_cloud"
+  ],
+  "cuda_visible_devices": "0,1,2,3",
+  "data_root": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data",
+  "environment": {
+    "gpu_processes": "GPU-40de027c-7906-c37f-f054-03f93e42eacc, 1088661, /home/william/gemma4-e4b-chat/llama.cpp/build/bin/llama-server, 6122 MiB\nGPU-6afe7dcf-86db-6cc9-aec9-64c9fd3f9f60, 1088661, /home/william/gemma4-e4b-chat/llama.cpp/build/bin/llama-server, 5410 MiB\nGPU-6e6909dc-9ffd-0c7f-35f1-a668dc2ef0ec, 1088661, /home/william/gemma4-e4b-chat/llama.cpp/build/bin/llama-server, 5948 MiB\nGPU-4347e9e3-d7fc-c4b2-1fa9-2d1195b62e40, 1088661, /home/william/gemma4-e4b-chat/llama.cpp/build/bin/llama-server, 5904 MiB",
+    "nvidia_smi_before_or_after": "0, NVIDIA GeForce RTX 2080 Ti, 11264 MiB, 6362 MiB, 7 %\n1, NVIDIA GeForce RTX 2080 Ti, 11264 MiB, 5419 MiB, 1 %\n2, NVIDIA GeForce RTX 2080 Ti, 11264 MiB, 5957 MiB, 0 %\n3, NVIDIA GeForce RTX 2080 Ti, 11264 MiB, 5923 MiB, 0 %",
+    "python": "3.9.23 (main, Jun  5 2025, 13:40:20) \n[GCC 11.2.0]"
+  },
+  "files_per_dataset": 48,
+  "generated_utc": "2026-06-29T17:59:54.051066+00:00",
+  "manifest": "/media/william/mist2/william/Github/IPI/results/v2x_benchmarks/latest/v2x_ipi_payload_manifest.json",
+  "max_bytes_per_file": 1048576,
+  "run_id": "v2x-gpu-dataset-benchmark-20260629T175939Z",
+  "selected_digest": "eb9635a19c4c323cf2827987b757a90be2913243a839858eadbbf23ab8ec96b3"
+}

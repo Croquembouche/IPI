@@ -1,0 +1,5 @@
+gpu_index,gpu_name,sample_idx,status,elapsed_ms,pred_boxes,gt_boxes,score_min,score_max
+0,NVIDIA GeForce RTX 2080 Ti,0,ok,3966.732,198,2,0.050309,0.454386
+1,NVIDIA GeForce RTX 2080 Ti,307,ok,4172.587,212,13,0.052509,0.609476
+2,NVIDIA GeForce RTX 2080 Ti,614,ok,3665.379,197,10,0.050145,0.656219
+3,NVIDIA GeForce RTX 2080 Ti,921,ok,3846.79,186,8,0.050537,0.527576

@@ -1,0 +1,7 @@
+condition_id,payload_bytes,attempts,accepted,success_rate_pct,rtt_ms_p50,rtt_ms_p95,rtt_ms_p99,rtt_ms_count
+v2x-ipi-loopback-payload-0,0,50,50,100.0,87.891,87.946,87.949,50
+v2x-ipi-loopback-payload-256,256,50,50,100.0,87.885,87.919,91.732,50
+v2x-ipi-loopback-payload-1024,1024,50,50,100.0,87.883,91.876,91.898,50
+v2x-ipi-loopback-payload-4096,4096,50,50,100.0,87.885,91.846,91.889,50
+v2x-ipi-loopback-payload-5447,5447,50,50,100.0,87.884,87.971,91.882,50
+v2x-ipi-loopback-payload-60000,60000,50,50,100.0,87.847,91.693,91.863,50

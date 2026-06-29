@@ -1,0 +1,197 @@
+{
+  "dataset_examples": [
+    {
+      "bytes": 264885691,
+      "name": "dair_v2x_c_example",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/archives/DAIR-V2X-C-Example.zip",
+      "status": "already_present",
+      "url": "https://drive.google.com/file/d/1y8bGwI63TEBkDEh2JU_gdV7uidthSnoe/view?usp=drive_link"
+    },
+    {
+      "bytes": 585329481,
+      "name": "v2x_seq_spd_example",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/archives/V2X-Seq-SPD-Example.zip",
+      "status": "already_present",
+      "url": "https://drive.google.com/file/d/1gjOmGEBMcipvDzu2zOrO9ex_OscUZMYY/view?usp=drive_link"
+    },
+    {
+      "bytes": 285827698,
+      "name": "v2x_seq_tfd_example",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/archives/V2X-Seq-TFD-Example.zip",
+      "status": "already_present",
+      "url": "https://drive.google.com/file/d/1-Ri92z6rkH14vAOFOx5xhfzvFxBptgAA/view?usp=sharing"
+    }
+  ],
+  "extractions": [
+    {
+      "archive": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/archives/DAIR-V2X-C-Example.zip",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/extracted/DAIR-V2X-C-Example",
+      "status": "already_present"
+    },
+    {
+      "archive": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/archives/V2X-Seq-SPD-Example.zip",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/extracted/V2X-Seq-SPD-Example",
+      "status": "already_present"
+    },
+    {
+      "archive": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/archives/V2X-Seq-TFD-Example.zip",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/extracted/V2X-Seq-TFD-Example",
+      "status": "already_present"
+    },
+    {
+      "archive": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/archives/TruckV2X-test-Town1_2.zip",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/extracted/TruckV2X-test-Town1_2",
+      "status": "already_present"
+    },
+    {
+      "archive": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/archives/V2X-Radar-C-validate.tar.gz",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/extracted/V2X-Radar-C-validate",
+      "status": "already_present"
+    },
+    {
+      "archive": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/archives/V2X-Radar-V-ImageSets.zip",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/extracted/V2X-Radar-V-ImageSets",
+      "status": "already_present"
+    }
+  ],
+  "full_dataset_downloads": [],
+  "full_dataset_entrypoints": [
+    {
+      "benchmark": "OpenCOOD",
+      "dataset": "OPV2V",
+      "download_kind": "google_drive_folder",
+      "name": "opv2v",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/full/opv2v",
+      "status": "entrypoint_recorded",
+      "url": "https://drive.google.com/drive/folders/1dkDeHlwOVbmgXcDazZvO6TFEZ6V_7WUu"
+    },
+    {
+      "benchmark": "OpenCOOD",
+      "dataset": "V2XSet",
+      "download_kind": "google_drive_folder",
+      "name": "v2xset",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/full/v2xset",
+      "status": "entrypoint_recorded",
+      "url": "https://drive.google.com/drive/folders/1r5sPiBEvo8Xby-nMaWUTnJIPK6WhY1B6?usp=sharing"
+    },
+    {
+      "benchmark": "OpenDAIR-V2X",
+      "dataset": "DAIR-V2X and V2X-Seq",
+      "download_kind": "google_drive_folder",
+      "name": "dair_v2x",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/full/dair_v2x",
+      "status": "entrypoint_recorded",
+      "url": "https://drive.google.com/drive/folders/1gnrw5llXAIxuB9sEKKCm6xTaJ5HQAw2e?usp=sharing"
+    },
+    {
+      "benchmark": "V2V4Real",
+      "dataset": "V2V4Real",
+      "download_kind": "box_web",
+      "name": "v2v4real",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/full/v2v4real",
+      "status": "entrypoint_recorded",
+      "url": "https://mobility-lab.seas.ucla.edu/v2v4real/"
+    },
+    {
+      "benchmark": "V2X-Real",
+      "dataset": "V2X-Real",
+      "download_kind": "web",
+      "name": "v2x_real",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/full/v2x_real",
+      "status": "entrypoint_recorded",
+      "url": "https://mobility-lab.seas.ucla.edu/v2x-real/"
+    }
+  ],
+  "generated_unix_s": 1782758524,
+  "huggingface_artifacts": [
+    {
+      "benchmark": "TruckV2X",
+      "bytes": 1159933259,
+      "dataset": "TruckV2X",
+      "expected_bytes": 1159933259,
+      "name": "truckv2x_town1_2_test",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/archives/TruckV2X-test-Town1_2.zip",
+      "repo_id": "XieTenghu1/TruckV2X",
+      "source_path": "test/Town1_2.zip",
+      "status": "already_present",
+      "url": "https://huggingface.co/datasets/XieTenghu1/TruckV2X/resolve/main/test/Town1_2.zip?download=true"
+    },
+    {
+      "benchmark": "V2X-Radar",
+      "bytes": 5745353647,
+      "dataset": "V2X-Radar-C",
+      "expected_bytes": 5745353647,
+      "name": "v2x_radar_c_validate",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/archives/V2X-Radar-C-validate.tar.gz",
+      "repo_id": "yanglei18/V2X-Radar",
+      "source_path": "V2X-Radar-C/validate.tar.gz",
+      "status": "already_present",
+      "url": "https://huggingface.co/datasets/yanglei18/V2X-Radar/resolve/main/V2X-Radar-C/validate.tar.gz?download=true"
+    },
+    {
+      "benchmark": "V2X-Radar",
+      "bytes": 48903,
+      "dataset": "V2X-Radar-V",
+      "expected_bytes": 48903,
+      "name": "v2x_radar_v_imagesets",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/archives/V2X-Radar-V-ImageSets.zip",
+      "repo_id": "yanglei18/V2X-Radar",
+      "source_path": "V2X-Radar-V/ImageSets.zip",
+      "status": "already_present",
+      "url": "https://huggingface.co/datasets/yanglei18/V2X-Radar/resolve/main/V2X-Radar-V/ImageSets.zip?download=true"
+    }
+  ],
+  "model_artifacts": [
+    {
+      "benchmark": "V2X-Radar",
+      "bytes": 55260533,
+      "config": "CodeBase/OpenCOOD/opencood/hypes_yaml/v2x-radar/radar_only/collab_radaronly_radarpillarnet_late.yaml",
+      "dataset": "V2X-Radar-C",
+      "method": "Late Fusion",
+      "modality": "radar",
+      "name": "v2x_radar_c_radar_late",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/data/checkpoints/V2X-Radar/radar_late/v2x_radar_c_radar_late.pth",
+      "status": "already_present",
+      "url": "https://drive.google.com/file/d/1_U8tDDLwjQJLzqlMI24I0vuvlxfQ2gwg/view?usp=drive_link"
+    }
+  ],
+  "repositories": [
+    {
+      "name": "dair_v2x",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/repos/DAIR-V2X",
+      "revision": "c885c54af0c34bc515fa9ca8b5e8fda76a15462c",
+      "status": "already_present",
+      "url": "https://github.com/AIR-THU/DAIR-V2X.git"
+    },
+    {
+      "name": "opencood",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/repos/OpenCOOD",
+      "revision": "31ba16025da27ffe4e336f011290dfbc66f9a1f1",
+      "status": "already_present",
+      "url": "https://github.com/DerrickXuNu/OpenCOOD.git"
+    },
+    {
+      "name": "v2v4real",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/repos/V2V4Real",
+      "revision": "5a821e13753bafc611f95c47bc1a306acdcb0f7c",
+      "status": "already_present",
+      "url": "https://github.com/ucla-mobility/V2V4Real.git"
+    },
+    {
+      "name": "v2x_radar",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/repos/V2X-Radar",
+      "revision": "1624751e31260c68d544e60599079d2104ee8a73",
+      "status": "already_present",
+      "url": "https://github.com/yanglei18/V2X-Radar.git"
+    },
+    {
+      "name": "v2x_real",
+      "path": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/repos/V2X-Real",
+      "revision": "2b8acd5c15b22fdb47326e30b8805e172d9b1259",
+      "status": "already_present",
+      "url": "https://github.com/ucla-mobility/V2X-Real.git"
+    }
+  ],
+  "root": "/media/william/mist2/william/Github/IPI/benchmarks/v2x",
+  "sources_file": "/media/william/mist2/william/Github/IPI/benchmarks/v2x/sources.json"
+}

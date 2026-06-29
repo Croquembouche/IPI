@@ -32,6 +32,11 @@ this file to decide which source folders matter for that task.
   tables.
 - `experiment-tracker.html` - Root-level convenience entry point for the static
   tracker under `web/experiment-tracker/`.
+- `benchmarks/v2x/` - Public V2X benchmark staging area. It tracks source URLs,
+  ignored downloaded data, ignored benchmark code checkouts, and reproducible
+  instructions for DAIR-V2X/OpenDAIR-V2X, OPV2V/OpenCOOD, V2XSet/OpenCOOD,
+  V2V4Real, TruckV2X, V2X-Radar, and V2X-Real IPI tests. Current staged data
+  covers OpenDAIR-V2X examples, TruckV2X, and V2X-Radar.
 - `paper_review_instructions_detailed.md` - Paper-specific review guidance and
   current rendered text snapshot used for manuscript review tasks.
 - `.gitignore` - Ignores generated build outputs, ROS build/install/log trees,
@@ -131,6 +136,24 @@ ctest --test-dir cpp/build --output-on-failure
   produces signal strength map artifacts.
 - `scripts/build_radio_latency_relationship.py` - Builds the signal/latency
   relationship dataset and estimator output.
+- `scripts/download_v2x_benchmarks.py` - Clones V2X benchmark repositories,
+  downloads official example archives when possible, records full dataset
+  entrypoints, and writes `benchmarks/v2x/data/manifests/download_manifest.json`.
+- `scripts/build_v2x_ipi_payload_manifest.py` - Scans staged V2X dataset files
+  and writes an IPI payload manifest with raw artifact sizes, IPI-safe payload
+  sizes, and chunk-count estimates.
+- `scripts/run_v2x_ipi_loopback.py` - Runs the local TCP IPI probe pair across
+  dataset-derived payload sizes, optionally grouped by dataset family, and
+  records CSV/summary artifacts under `results/v2x_benchmarks/`.
+- `scripts/run_v2x_gpu_dataset_benchmark.py` - Uses all selected CUDA devices
+  for a lightweight tensor workload over staged V2X annotation, image, and
+  point-cloud artifacts. It validates dataset/GPU plumbing and records per-file
+  timings, but it is not detector AP/IoU.
+- `scripts/run_v2x_radar_detector_benchmark.py` - Loads the official V2X-Radar
+  radar-only late-fusion checkpoint, applies a small runtime compatibility shim
+  for the fork's old `mmcv.runner` imports, shards validation samples over all
+  selected GPUs, and records detector AP/statistics under
+  `results/v2x_benchmarks/`.
 - `scripts/gps_topic_recorder.py` - ROS 2 node that records NovAtel GPS topics
   to CSV plus a latest-sample snapshot.
 - `scripts/record_gps_for_experiment.sh` - Starts the NovAtel OEM7 driver and
@@ -157,6 +180,12 @@ ctest --test-dir cpp/build --output-on-failure
   as experiment evidence.
 - `results/local_loopback/` and `results/visualize/` may appear for local
   generated or visualization outputs.
+- `results/v2x_benchmarks/` - V2X benchmark evidence generated from staged
+  public datasets and the IPI loopback harness. Keep `download_manifest.json`,
+  `v2x_ipi_payload_manifest.json`, per-run CSVs, summaries, environment
+  snapshots, four-GPU dataset artifact benchmark outputs, OpenCOOD/V2X-Radar
+  smoke notes, full V2X-Radar detector benchmark outputs, and benchmark command
+  logs as recorded results.
 
 ## Paper And Web Assets
 
@@ -212,5 +241,10 @@ ctest --test-dir cpp/build --output-on-failure
   figures, and paper sections before broadening conclusions.
 - For static tracker tasks, use `web/experiment-tracker/` and verify in a local
   browser or simple HTTP server when UI behavior changes.
+- For public V2X dataset/benchmark tasks, start with `benchmarks/v2x/README.md`
+  and `benchmarks/v2x/sources.json`; preserve downloaded data under ignored
+  `benchmarks/v2x/data/`, preserve external benchmark code under ignored
+  `benchmarks/v2x/repos/`, and record derived IPI/ML results under
+  `results/v2x_benchmarks/`.
 - For documentation-only tasks, update `current_task.md` with status and
   validation notes even when code tests are not run.

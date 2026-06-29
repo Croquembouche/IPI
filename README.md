@@ -16,6 +16,8 @@ the architecture end-to-end.
 | `experiment.md` | Edge4AV experiment tracker for recording run IDs, condition IDs, metrics, and paper-ready results. |
 | `web/experiment-tracker/` | Dependency-free browser UI for entering experiment results, tracking readiness, and exporting JSON or Markdown snapshots. |
 | `cpp/` | C++17 reference library implementing the data models, UPER encoding helpers, optional ROS 2/Mocar adapters, vehicle–vehicle mesh helpers, and in-memory receiver/sender APIs. |
+| `benchmarks/v2x/` | Public V2X benchmark staging area for DAIR-V2X/OpenDAIR-V2X, OPV2V, V2XSet, V2V4Real, TruckV2X, V2X-Radar, and V2X-Real assets used to test IPI payload/transport behavior. |
+| `results/v2x_benchmarks/` | Recorded V2X benchmark download manifests, dataset-derived IPI payload manifests, local IPI loopback results, GPU dataset-smoke runs, and benchmark framework notes. |
 | `third_party/mocar/` | Vendor SDK artifacts and samples for Mocar RSU/OBU devices (used by the optional hardware demos). |
 | `v2x_msg/` | ROS 2 message definitions for V2X (required when building the ROS integration). |
 
@@ -81,6 +83,51 @@ If you started the server from inside `web/` instead of the repo root, use:
 ```text
 http://localhost:8000/experiment-tracker/
 ```
+
+## V2X Dataset Benchmarks
+
+The benchmark staging area under `benchmarks/v2x/` tracks at least three
+distinct V2X benchmark families for IPI testing: DAIR-V2X/OpenDAIR-V2X,
+OPV2V/OpenCOOD, V2XSet/OpenCOOD, V2V4Real, TruckV2X, and V2X-Radar. V2X-Real
+is also recorded as a modern follow-up target.
+
+To clone benchmark code, download available official examples, and record full
+dataset entrypoints:
+
+```bash
+python3 scripts/download_v2x_benchmarks.py --root benchmarks/v2x --install-missing --extract
+```
+
+To convert staged V2X data into IPI payload conditions and run the local IPI
+loopback benchmark:
+
+```bash
+python3 scripts/build_v2x_ipi_payload_manifest.py
+python3 scripts/run_v2x_ipi_loopback.py --build --count 50
+```
+
+To run separate IPI conditions for each staged dataset family:
+
+```bash
+python3 scripts/run_v2x_ipi_loopback.py --group-by-dataset --count 20
+```
+
+To exercise staged V2X artifacts on all four GPUs:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3 \
+conda run -n mmdet3d python scripts/run_v2x_gpu_dataset_benchmark.py \
+  --manifest results/v2x_benchmarks/latest/v2x_ipi_payload_manifest.json
+```
+
+Bulk full-dataset downloads for OPV2V, V2XSet, DAIR-V2X, V2V4Real, and
+TruckV2X, V2X-Radar, and V2X-Real should remain under ignored paths in
+`benchmarks/v2x/data/`; record all benchmark outputs under
+`results/v2x_benchmarks/`.
+
+The current V2X evidence includes a full four-GPU V2X-Radar detector validation
+run with the official radar-only late-fusion checkpoint:
+`results/v2x_benchmarks/v2x-radar-detector-benchmark-20260629T182624Z/`.
 
 ### Example Programs
 

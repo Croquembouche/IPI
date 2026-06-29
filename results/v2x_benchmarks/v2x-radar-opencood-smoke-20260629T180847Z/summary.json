@@ -1,0 +1,66 @@
+{
+  "run_id": "v2x-radar-opencood-smoke-20260629T180847Z",
+  "generated_utc": "2026-06-29T18:08:47Z",
+  "benchmark": "V2X-Radar",
+  "framework": "OpenCOOD fork from V2X-Radar repository",
+  "repository": "benchmarks/v2x/repos/V2X-Radar/CodeBase/OpenCOOD",
+  "config": "opencood/hypes_yaml/v2x-radar/radar_only/collab_radaronly_radarpillarnet_late.yaml",
+  "data_path": "benchmarks/v2x/data/v2x-radar/v2x-radar-c/validate",
+  "source_extraction": "benchmarks/v2x/data/extracted/V2X-Radar-C-validate/validate",
+  "conda_environment": "mmdet3d",
+  "visualize": true,
+  "train": false,
+  "dataset_constructed": true,
+  "sample_retrieved": true,
+  "dataset_length": 922,
+  "scenario_count": 5,
+  "first_sample_keys": [
+    "ego",
+    "142",
+    "-1"
+  ],
+  "ego_key_subset": [
+    "agent_modality_list",
+    "anchor_box",
+    "cav_id_list",
+    "cav_num",
+    "input_m1",
+    "label_dict",
+    "lidar_poses",
+    "lidar_poses_clean",
+    "object_bbx_center",
+    "object_bbx_mask",
+    "object_ids",
+    "origin_lidar",
+    "origin_radar",
+    "pairwise_t_matrix",
+    "sample_idx",
+    "single_label_dict_torch",
+    "single_object_bbx_center_torch",
+    "single_object_bbx_mask_torch",
+    "yaml_file_path"
+  ],
+  "sample_shapes": {
+    "origin_lidar": [
+      42238,
+      4
+    ],
+    "origin_radar": [
+      10008,
+      4
+    ],
+    "object_bbx_center": [
+      150,
+      7
+    ],
+    "object_bbx_mask": [
+      150
+    ]
+  },
+  "detector_metrics": null,
+  "notes": [
+    "This is a dataset/framework integration smoke, not detector AP/IoU evaluation.",
+    "The ignored symlink path keeps a literal v2x-radar component because the fork's loader branches on path components.",
+    "With visualize=false, single-modality item retrieval fails because the fork unconditionally expects both projected_lidar and projected_radar keys."
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "benchmark_repositories": {
+    "opencood": {
+      "url": "https://github.com/DerrickXuNu/OpenCOOD.git",
+      "description": "Open cooperative detection benchmark framework; supports OPV2V and V2XSet and documents four-GPU distributed training."
+    },
+    "dair_v2x": {
+      "url": "https://github.com/AIR-THU/DAIR-V2X.git",
+      "description": "OpenDAIR-V2X benchmark code and DAIR-V2X/V2X-Seq dataset utilities."
+    },
+    "v2v4real": {
+      "url": "https://github.com/ucla-mobility/V2V4Real.git",
+      "description": "Official V2V4Real codebase for real-world V2V cooperative perception, tracking, and Sim2Real."
+    },
+    "v2x_real": {
+      "url": "https://github.com/ucla-mobility/V2X-Real.git",
+      "description": "Official V2X-Real codebase for multi-agent real-world V2X cooperative perception."
+    },
+    "v2x_radar": {
+      "url": "https://github.com/yanglei18/V2X-Radar.git",
+      "description": "Official V2X-Radar codebase for 4D-radar cooperative perception."
+    }
+  },
+  "dataset_examples": {
+    "dair_v2x_c_example": {
+      "dataset": "DAIR-V2X-C",
+      "benchmark": "OpenDAIR-V2X VIC3D",
+      "filename": "DAIR-V2X-C-Example.zip",
+      "drive_file_id": "1y8bGwI63TEBkDEh2JU_gdV7uidthSnoe",
+      "url": "https://drive.google.com/file/d/1y8bGwI63TEBkDEh2JU_gdV7uidthSnoe/view?usp=drive_link",
+      "description": "Official DAIR-V2X cooperative example archive."
+    },
+    "v2x_seq_spd_example": {
+      "dataset": "V2X-Seq-SPD",
+      "benchmark": "OpenDAIR-V2X sequential perception",
+      "filename": "V2X-Seq-SPD-Example.zip",
+      "drive_file_id": "1gjOmGEBMcipvDzu2zOrO9ex_OscUZMYY",
+      "url": "https://drive.google.com/file/d/1gjOmGEBMcipvDzu2zOrO9ex_OscUZMYY/view?usp=drive_link",
+      "description": "Official V2X-Seq sequential perception example archive."
+    },
+    "v2x_seq_tfd_example": {
+      "dataset": "V2X-Seq-TFD",
+      "benchmark": "OpenDAIR-V2X trajectory forecasting",
+      "filename": "V2X-Seq-TFD-Example.zip",
+      "drive_file_id": "1-Ri92z6rkH14vAOFOx5xhfzvFxBptgAA",
+      "url": "https://drive.google.com/file/d/1-Ri92z6rkH14vAOFOx5xhfzvFxBptgAA/view?usp=sharing",
+      "description": "Official V2X-Seq trajectory forecasting example archive."
+    }
+  },
+  "full_dataset_entrypoints": {
+    "opv2v": {
+      "dataset": "OPV2V",
+      "benchmark": "OpenCOOD",
+      "download_kind": "google_drive_folder",
+      "drive_folder_id": "1dkDeHlwOVbmgXcDazZvO6TFEZ6V_7WUu",
+      "url": "https://drive.google.com/drive/folders/1dkDeHlwOVbmgXcDazZvO6TFEZ6V_7WUu",
+      "description": "Official OpenCOOD OPV2V data folder."
+    },
+    "v2xset": {
+      "dataset": "V2XSet",
+      "benchmark": "OpenCOOD",
+      "download_kind": "google_drive_folder",
+      "drive_folder_id": "1r5sPiBEvo8Xby-nMaWUTnJIPK6WhY1B6",
+      "url": "https://drive.google.com/drive/folders/1r5sPiBEvo8Xby-nMaWUTnJIPK6WhY1B6?usp=sharing",
+      "description": "Official OpenCOOD V2XSet data folder."
+    },
+    "dair_v2x_and_v2x_seq": {
+      "dataset": "DAIR-V2X and V2X-Seq",
+      "benchmark": "OpenDAIR-V2X",
+      "download_kind": "google_drive_folder",
+      "drive_folder_id": "1gnrw5llXAIxuB9sEKKCm6xTaJ5HQAw2e",
+      "url": "https://drive.google.com/drive/folders/1gnrw5llXAIxuB9sEKKCm6xTaJ5HQAw2e?usp=sharing",
+      "description": "Official DAIR-V2X public Google Drive folder for full datasets."
+    },
+    "dair_v2x": {
+      "dataset": "DAIR-V2X and V2X-Seq",
+      "benchmark": "OpenDAIR-V2X",
+      "download_kind": "google_drive_folder",
+      "drive_folder_id": "1gnrw5llXAIxuB9sEKKCm6xTaJ5HQAw2e",
+      "url": "https://drive.google.com/drive/folders/1gnrw5llXAIxuB9sEKKCm6xTaJ5HQAw2e?usp=sharing",
+      "description": "Alias used by scripts for the official DAIR-V2X public folder."
+    },
+    "v2v4real": {
+      "dataset": "V2V4Real",
+      "benchmark": "V2V4Real",
+      "download_kind": "box_web",
+      "url": "https://mobility-lab.seas.ucla.edu/v2v4real/",
+      "box_root": "https://ucla.app.box.com/v/UCLA-MobilityLab-V2V4REAL",
+      "description": "Official V2V4Real website with Box links for train/test chunks and KITTI-format data."
+    },
+    "v2x_real": {
+      "dataset": "V2X-Real",
+      "benchmark": "V2X-Real",
+      "download_kind": "web",
+      "url": "https://mobility-lab.seas.ucla.edu/v2x-real/",
+      "description": "Official V2X-Real dataset website and benchmark entrypoint."
+    },
+    "truckv2x": {
+      "dataset": "TruckV2X",
+      "benchmark": "TruckV2X",
+      "download_kind": "huggingface_dataset",
+      "url": "https://huggingface.co/datasets/XieTenghu1/TruckV2X",
+      "description": "Truck-centered multi-agent V2X cooperative perception dataset."
+    },
+    "v2x_radar": {
+      "dataset": "V2X-Radar",
+      "benchmark": "V2X-Radar",
+      "download_kind": "huggingface_dataset",
+      "url": "https://huggingface.co/datasets/yanglei18/V2X-Radar",
+      "description": "Multi-modal cooperative perception dataset with 4D radar."
+    }
+  },
+  "huggingface_artifacts": {
+    "truckv2x_town1_2_test": {
+      "dataset": "TruckV2X",
+      "benchmark": "TruckV2X",
+      "repo_id": "XieTenghu1/TruckV2X",
+      "path": "test/Town1_2.zip",
+      "filename": "TruckV2X-test-Town1_2.zip",
+      "url": "https://huggingface.co/datasets/XieTenghu1/TruckV2X/resolve/main/test/Town1_2.zip?download=true",
+      "expected_bytes": 1159933259,
+      "description": "One official TruckV2X test-town archive for bounded local staging."
+    },
+    "v2x_radar_v_imagesets": {
+      "dataset": "V2X-Radar-V",
+      "benchmark": "V2X-Radar",
+      "repo_id": "yanglei18/V2X-Radar",
+      "path": "V2X-Radar-V/ImageSets.zip",
+      "filename": "V2X-Radar-V-ImageSets.zip",
+      "url": "https://huggingface.co/datasets/yanglei18/V2X-Radar/resolve/main/V2X-Radar-V/ImageSets.zip?download=true",
+      "expected_bytes": 48903,
+      "description": "Official V2X-Radar vehicle-side split/index archive."
+    },
+    "v2x_radar_c_validate": {
+      "dataset": "V2X-Radar-C",
+      "benchmark": "V2X-Radar",
+      "repo_id": "yanglei18/V2X-Radar",
+      "path": "V2X-Radar-C/validate.tar.gz",
+      "filename": "V2X-Radar-C-validate.tar.gz",
+      "url": "https://huggingface.co/datasets/yanglei18/V2X-Radar/resolve/main/V2X-Radar-C/validate.tar.gz?download=true",
+      "expected_bytes": 5745353647,
+      "description": "Official V2X-Radar cooperative validation archive; large but script-downloadable."
+    }
+  },
+  "model_artifacts": {
+    "v2x_radar_c_radar_late": {
+      "dataset": "V2X-Radar-C",
+      "benchmark": "V2X-Radar",
+      "method": "Late Fusion",
+      "modality": "radar",
+      "config": "CodeBase/OpenCOOD/opencood/hypes_yaml/v2x-radar/radar_only/collab_radaronly_radarpillarnet_late.yaml",
+      "subdir": "radar_late",
+      "filename": "v2x_radar_c_radar_late.pth",
+      "drive_file_id": "1_U8tDDLwjQJLzqlMI24I0vuvlxfQ2gwg",
+      "url": "https://drive.google.com/file/d/1_U8tDDLwjQJLzqlMI24I0vuvlxfQ2gwg/view?usp=drive_link",
+      "description": "Official V2X-Radar radar-only late-fusion cooperative 3D object detection checkpoint listed in the V2X-Radar model zoo."
+    }
+  }
+}
