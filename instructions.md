@@ -193,6 +193,62 @@ Optional custom phases:
 - receive callback output or vendor logs on `V2X-RX-RADIO`
 - any Mocar radio logs you already use for latency extraction
 
+### 3.6 Optional Mocar Radio RTT Probe
+
+For radio RTT, build and run the custom Mocar RTT probe on both V2X devices.
+This measures request-to-echo-return time on the initiator's local monotonic
+clock and does not require clock synchronization between devices.
+
+Build:
+
+```bash
+cd third_party/mocar/J2735-2020/samples/ipi_custom_rtt
+make clean && make
+```
+
+On the echo device:
+
+```bash
+./ipi_custom_rtt \
+  --role responder \
+  --node-id v2x-rx-radio
+```
+
+On the measuring device:
+
+```bash
+./ipi_custom_rtt \
+  --role initiator \
+  --node-id v2x-tx-radio \
+  --count 1000 \
+  --interval-ms 100 \
+  --timeout-ms 1000 \
+  --payload-bytes 128 \
+  --csv > mocar_radio_rtt.csv
+```
+
+The CSV file reports one row per probe with `rtt_ms`, success state,
+`payload_bytes`, actual `packet_bytes`, and responder identity.
+
+To run the full payload sweep, keep the responder process running and execute
+the sweep on the measuring device:
+
+```bash
+./run_payload_sweep.sh \
+  --node-id v2x-tx-radio \
+  --count 1000 \
+  --interval-ms 100
+```
+
+The default sweep is `0, 128, 256, 512, ... 131072` bytes.
+The sweep output directory includes CSV files and sheet-friendly tab-delimited
+text files:
+
+- `mocar_radio_rtt_all_samples.txt`
+- `mocar_radio_rtt_summary.txt`
+- `mocar-rtt-payload-<bytes>_samples.txt`
+- `mocar-rtt-payload-<bytes>_rtt_ms.txt`
+
 ## 4. Private 5G Path over TCP: 2 5G devices
 
 This path uses the IPI latency probe pair directly over the private 5G IP path.

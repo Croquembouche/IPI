@@ -165,6 +165,48 @@ Override phases/states/timing if needed:
 
 Enable debug hex dumps in the sender with `IPI_DEBUG=1` when troubleshooting.
 
+## Demo: Mocar Radio RTT Probe
+
+The `ipi_custom_rtt` sample uses the Mocar custom V2X API to send a timestamped
+probe from one radio and echo it from the other radio. RTT is computed on the
+initiator, so this path does not depend on synchronized clocks.
+
+Build:
+```bash
+cd third_party/mocar/J2735-2020/samples/ipi_custom_rtt
+make clean && make
+```
+
+Run on the echo-side radio:
+```bash
+./ipi_custom_rtt --role responder --node-id v2x-rx-radio
+```
+
+Run on the measuring radio:
+```bash
+./ipi_custom_rtt \
+  --role initiator \
+  --node-id v2x-tx-radio \
+  --count 1000 \
+  --interval-ms 100 \
+  --payload-bytes 128 \
+  --csv > mocar_radio_rtt.csv
+```
+
+For a payload sweep that doubles size each condition up to 128 KiB, keep the
+responder running and run this on the measuring radio:
+```bash
+./run_payload_sweep.sh \
+  --node-id v2x-tx-radio \
+  --count 1000 \
+  --interval-ms 100
+```
+
+The sweep writes CSV files plus tab-delimited text files for spreadsheet import:
+`mocar_radio_rtt_all_samples.txt`, `mocar_radio_rtt_summary.txt`,
+`mocar-rtt-payload-<bytes>_samples.txt`, and
+`mocar-rtt-payload-<bytes>_rtt_ms.txt`.
+
 ## Demo: Private 5G Route Latency over TCP or MQTT
 
 This pair is intended for your private 5G IP path. Run the receiver on the RSU,

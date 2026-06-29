@@ -252,7 +252,7 @@ Responsibilities:
 Recommended order:
 
 1. Build and pass `ctest`.
-2. Build `ipi_spat_bridge`.
+2. Build `ipi_spat_bridge` and, if measuring radio RTT, `ipi_custom_rtt`.
 3. Stage binaries on all runtime nodes.
 4. Verify time synchronization.
 5. Start receive logging on `V2X-RX-RADIO`.
@@ -319,8 +319,8 @@ Be explicit about these when you deploy:
 - Radio path currently uses the vendored `J2735-2020` Mocar bridge sample for
   SPaT forwarding.
 - The radio-path sender host and the transmitting radio are separate roles.
-- The repo does not yet ship a dedicated receive-only Mocar latency collector
-  for `V2X-RX-RADIO`.
+- The repo ships `ipi_custom_rtt` for Mocar radio RTT. SPaT receive-side
+  one-way logging still depends on the Mocar callback/logger used in the lab.
 - Private 5G latency tooling supports both TCP and MQTT.
 - The current tools standardize experiment logs, but AV-facing outcome metrics
   still need to be supplied by the operator or higher-level AV stack.
