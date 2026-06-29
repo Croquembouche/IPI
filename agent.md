@@ -1,5 +1,26 @@
 # Agent Guide
 
+## Agent-Facing Markdown Contract
+
+Use these files together before making changes:
+
+- `agent.md` - Stable operating guidance for agents: project goals, claim
+  boundaries, pass/fail conditions, stop conditions, and working rules.
+- `agent_context.md` - Current repository map: what each important file or
+  folder does, where source-of-truth code lives, which folders are generated
+  artifacts, and what areas to inspect for a given task.
+- `current_task.md` - Mutable handoff for the active task: requested work,
+  current status, touched files, validation state, and next steps.
+
+The intended workflow is:
+
+1. Read `current_task.md` to learn the current assignment and whether prior
+   work is already complete, blocked, or partially validated.
+2. Use `agent_context.md` to route inspection to the relevant source, script,
+   result, or documentation tree instead of scanning the whole repository.
+3. Apply the standards in this file when deciding whether the work can stop,
+   needs tests, or must be marked incomplete.
+
 ## Project Goals
 
 The project goal is to evaluate and demonstrate Edge4AV, an empirical
@@ -89,6 +110,9 @@ A change or experiment pass is credible when all relevant items below are true:
 - Documentation updates stay consistent across `README.md`, `setup.md`,
   `instructions.md`, `experiment.md`, `references/README.md`, and relevant
   `cpp/` docs when behavior or workflow changes.
+- Agent-facing documentation updates keep `agent.md`, `agent_context.md`, and
+  `current_task.md` internally consistent. If a workflow, target, file map, or
+  task status changes, update the relevant handoff file in the same change.
 
 ## Fail Conditions
 
@@ -113,6 +137,29 @@ Treat work as failed or incomplete when any relevant item below is true:
   without reviewing whether its `main()` also transmits.
 - Vehicle-side experiment summaries omit GPS status, GPS paths, or a reason GPS
   was not collected.
+- `current_task.md` claims work is complete when tests, builds, paper
+  compiles, artifact generation, or operator documentation required by the task
+  have not actually been run or explicitly marked as not run.
+- `agent_context.md` points agents to files or folders that no longer exist, or
+  omits a new source-of-truth location added by the current task.
+
+## Stop Conditions
+
+Stop and hand the work back to the user when one of these is true:
+
+- The requested change is complete, relevant validation has passed or is
+  explicitly documented as not run, and `current_task.md` reflects the outcome.
+- A required physical device, private-5G network, Mocar radio, ROS 2 runtime,
+  credential, proprietary reference, or user decision is unavailable and no
+  meaningful local progress remains.
+- Continuing would require deleting or rewriting experiment outputs, generated
+  logs, vendored SDK files, or user-authored paper content outside the requested
+  scope.
+- A code, paper, or documentation change would broaden the Edge4AV claims beyond
+  current evidence in `results/`, paper figures, or documented experiments.
+- The build/test/paper command fails in a way that is unrelated to the change
+  and cannot be isolated locally. Record the failure command and important
+  error in `current_task.md` before stopping.
 
 ## Agent Working Rules
 
@@ -131,3 +178,6 @@ Treat work as failed or incomplete when any relevant item below is true:
 - When updating paper text, keep claims bounded to the evidence currently in the
   repository and move speculative ablations to supplementary or future-work
   framing.
+- When finishing a task, update `current_task.md` with status, touched files,
+  validation commands, and remaining follow-up work. Do not leave it describing
+  stale in-progress work.

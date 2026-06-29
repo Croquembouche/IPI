@@ -1,180 +1,216 @@
 # Agent Context
 
-This repository contains the Intersection Programming Interface (IPI) and
+This repository contains the Intersection Programming Interface (IPI) and the
 Edge4AV experiment workspace. IPI is a standards-aligned message fabric for
 intelligent intersections, connected/autonomous vehicles, RSUs/OBUs, edge
-services, and cloud/backhaul services. The codebase combines a C++17 reference
-library, V2X and private-5G latency tooling, ROS 2 integration assets, paper
-drafts, reference documents, and collected experiment results.
+services, and cloud/backhaul services. The checkout combines a C++17 reference
+library, private-5G and radio latency tooling, ROS 2 message assets, Mocar SDK
+samples, paper artifacts, static experiment-tracker UI, and collected real
+private-5G results.
+
+Read `current_task.md` first for the active assignment and handoff state. Use
+this file to decide which source folders matter for that task.
 
 ## Top-Level Files
 
-- `agent_context.md` - This repository map for future agents.
-- `agent.md` - Agent-facing project goals, scope boundaries, pass conditions,
-  fail conditions, and working rules.
+- `agent.md` - Stable agent operating guide: project goals, scope boundaries,
+  pass conditions, fail conditions, stop conditions, and working rules.
+- `agent_context.md` - This repository map. Keep it updated when files,
+  folders, source-of-truth locations, or build/deployment paths change.
+- `current_task.md` - Mutable current-task handoff. Update it at task start,
+  when status changes, and before handing work back.
 - `README.md` - High-level project overview, repository layout, C++ build
   commands, web tracker instructions, example binaries, and demo workflows for
-  Edge-to-device SPaT over TCP and private-5G latency over TCP/MQTT.
-- `setup.md` - Deployment guide for building, staging, and running the current
-  IPI reference implementation across build host, TX edge, Mocar radios,
-  private-5G sender/receiver nodes, and MQTT broker roles.
+  SPaT-over-radio, Mocar radio RTT, and private-5G TCP/MQTT latency.
+- `setup.md` - Deployment guide for build host, TX edge, Mocar radio, private
+  5G sender/receiver, and MQTT broker roles.
 - `instructions.md` - Operator runbook for latency tests using V2X radios,
-  private-5G devices, shared experiment metadata, CSV logging, and GPS capture.
-- `experiment.md` - Edge4AV campaign tracker. It defines service classes,
-  planned figures, core and supplementary experiment matrices, required
-  metadata, GPS recording requirements, and result tables.
+  private-5G devices, shared experiment metadata, CSV logging, optional Mocar
+  RTT, and GPS capture expectations.
+- `experiment.md` - Edge4AV campaign tracker defining service classes, planned
+  figures, experiment matrices, required metadata, GPS requirements, and result
+  tables.
 - `experiment-tracker.html` - Root-level convenience entry point for the static
-  browser experiment tracker in `web/experiment-tracker/`.
-- `.gitignore` - Ignores generated build outputs, vendored bridge build output,
-  temporary files, paper build artifacts, and ROS workspace build/install/log
-  products.
-- `.agents/` and `.codex/` - Empty local agent configuration directories at the
-  time this context file was created.
-- `.git/` - Local Git metadata directory. `git status` failed in this workspace
-  during context creation even though the directory exists, so use filesystem
-  inspection as the fallback source of truth when Git commands are unavailable.
-- `.vscode/` - Local editor settings.
+  tracker under `web/experiment-tracker/`.
+- `paper_review_instructions_detailed.md` - Paper-specific review guidance and
+  current rendered text snapshot used for manuscript review tasks.
+- `.gitignore` - Ignores generated build outputs, ROS build/install/log trees,
+  Python cache files, temporary files, and paper build artifacts.
+- `.git/` - Git metadata. `git status --short` currently works in this checkout.
+- `.vscode/`, `.agents/`, `.codex/`, and `tmp/` - Local editor, agent, or
+  scratch areas. Treat as local state unless the user explicitly asks to
+  publish or preserve a specific file.
 
-## Source and Build Trees
+## C++ Source And Build Tree
 
 - `cpp/` - C++17 reference implementation and examples.
   - `cpp/CMakeLists.txt` - Builds the static `ipi` library, examples, optional
-    ROS 2 bridge code, optional Mocar examples, and unit tests when
-    `IPI_ENABLE_TESTS=ON`.
+    ROS 2 bridge code, optional Mocar SDK examples, install targets, and tests.
+    Defaults: `IPI_BUILD_EXAMPLES=ON`, `IPI_ENABLE_TESTS=OFF`,
+    `IPI_ENABLE_ROS2_BRIDGE=OFF`, and `IPI_ENABLE_MOCAR_EXAMPLES=OFF`.
   - `cpp/README.md` and `cpp/LOGIC.md` - C++ layout, architecture notes,
-    feature summary, bridge design sketch, mesh mode, task offloading, build
-    options, and next steps.
-  - `cpp/include/ipi/core/` - Public data models for IPI service requests,
-    cooperative service messages, message frames, and validation.
-  - `cpp/include/ipi/v2x/` - Public J2735 helper models, UPER codec facade, and
-    optional ROS 2 bridge interface.
-  - `cpp/include/ipi/api/` - Public API facades for sender/receiver semantics,
-    Edge4AV dual-plane behavior, experiment logging, private-5G latency probes,
-    MQTT client support, and private session transport.
-  - `cpp/include/ipi/mesh/` - Public mesh manager and cooperative task
-    offloader interfaces for degraded infrastructure or V2V scenarios.
+    bridge design sketch, mesh behavior, task offloading, build options, and
+    next steps.
+  - `cpp/include/ipi/core/` and `cpp/src/core/` - IPI data models, service
+    requests, cooperative service payloads, `MessageFrame`, and validation.
+  - `cpp/include/ipi/v2x/` and `cpp/src/v2x/` - SAE J2735 helper models,
+    UPER codec facade, and optional ROS 2 bridge implementation.
+  - `cpp/include/ipi/api/` and `cpp/src/api/` - Sender/receiver APIs,
+    Edge4AV dual-plane behavior, experiment logging, private session transport,
+    private-5G latency probe encoding/timing, shared state, and minimal MQTT
+    3.1.1 client support.
+  - `cpp/include/ipi/mesh/` and `cpp/src/mesh/` - Mesh manager and cooperative
+    task offloader for degraded infrastructure or V2V scenarios.
   - `cpp/include/ipi/common/` - Shared debugging helpers.
-  - `cpp/src/core/`, `cpp/src/v2x/`, `cpp/src/api/`, `cpp/src/mesh/` -
-    Implementations for the corresponding public headers.
-  - `cpp/examples/library/` - Host-side example tools:
+  - `cpp/examples/library/` - Host-side examples:
     `build_service_request`, `v2x_roundtrip`, `spat_tcp_sender`,
-    `private_5g_latency_sender`, `private_5g_latency_receiver`,
-    `mesh_demo`, and `edge4av_dual_plane`.
-  - `cpp/examples/device/` - Hardware/ROS-facing examples:
-    `mocar_ipi_demo`, `ros2_bsm_broadcaster`, and `spat_tcp_bridge`.
-  - `cpp/tests/` - Unit and loopback tests for Edge4AV API behavior,
-    experiment logging, private session transport, and private-5G latency
-    probes.
+    `private_5g_latency_sender`, `private_5g_latency_receiver`, `mesh_demo`,
+    and `edge4av_dual_plane`.
+  - `cpp/examples/device/` - Device/ROS-facing examples built through CMake
+    when optional dependencies are available: `mocar_ipi_demo`,
+    `spat_tcp_bridge`, and `ros2_bsm_broadcaster`.
+  - `cpp/examples/README.md` - Example-level guidance.
+  - `cpp/tests/` - No-framework executable tests for Edge4AV API behavior,
+    experiment logging, private session transport, private-5G probe encoding,
+    TCP loopback, and MQTT loopback.
   - `cpp/build/` - Generated CMake build tree and compiled binaries currently
-    present in the workspace. Treat as an artifact unless debugging a local
-    build.
+    present. Treat as generated output unless debugging a local build.
 
-## Experiment, Paper, and Web Assets
+Primary validation command:
 
-- `paper/` - IEEE-style paper workspace for the Edge4AV study.
-  - `paper/IEEE-conference-template-062824.tex` - Main LaTeX paper entry.
-  - `paper/sections/` - Paper sections, including the abstract, introduction,
-    system design, experimental methodology, discussion/conclusion, and a
-    detailed experiment TODO/planning section.
-  - `paper/figs/` - Figure directory.
-  - `paper/*.bib`, `paper/IEEEtran*.bst`, `paper/IEEEtran.cls` - Bibliography
-    and IEEE template support files.
-  - `paper/*.pdf`, `paper/*.aux`, `paper/*.bbl`, `paper/*.blg`,
-    `paper/*.log` - Rendered or generated paper artifacts. The top-level
-    `.gitignore` ignores the `paper/` directory, so verify expectations before
-    treating these as source deliverables.
+```bash
+cmake -S cpp -B cpp/build -DIPI_ENABLE_TESTS=ON
+cmake --build cpp/build
+ctest --test-dir cpp/build --output-on-failure
+```
+
+## Mocar And Radio Assets
+
+- `third_party/mocar/J2735-2020/` - Vendored Mocar J2735 SDK material used for
+  the deployment path documented in `README.md`, `setup.md`, and
+  `instructions.md`.
+  - `include/` and `lib/` - Vendor headers and runtime libraries such as
+    `libmocarcv2x.so` and `libzlog.so`.
+  - `samples/ipi_spat_bridge/` - TCP-to-Mocar SPaT bridge. Build separately
+    from the main CMake project with:
+
+    ```bash
+    make -C third_party/mocar/J2735-2020/samples/ipi_spat_bridge
+    ```
+
+  - `samples/ipi_custom_rtt/` - Custom-channel Mocar radio RTT probe. It has
+    initiator and responder roles, computes RTT on the initiator's monotonic
+    clock, and includes `run_payload_sweep.sh` for payload sweeps.
+  - `samples/spat/spat_sample.c` - Vendor SPaT sample useful as a receive
+    callback reference. Its `main()` also transmits, so do not treat it as a
+    drop-in receive-only latency harness.
+  - Other vendor samples (`bsm`, `map`, `srm`, `ssm`, `tim`, `custom`, etc.) -
+    Reference implementations for Mocar API usage.
+- `cpp/CMakeLists.txt` also has an optional `IPI_ENABLE_MOCAR_EXAMPLES` path
+  that expects a different SDK layout at `third_party/mocar/new_V2X_64bit` or
+  `-DMOCAR_SDK_ROOT=...`. That is not the documented deployment path for the
+  current `J2735-2020` bridge and RTT samples.
+
+## ROS 2 Assets
+
+- `ros2_ws/src/v2x_msg/` - ROS 2 message package with J2735-style definitions
+  such as BSM, MAP, SPAT, SRM, SSM, TIM, and supporting message types.
+- `ros2_ws/build/`, `ros2_ws/install/`, and `ros2_ws/log/` - Generated ROS 2
+  workspace outputs when present. Treat as local build artifacts.
+
+## Scripts
+
+- `scripts/build_real5g_dashboard.py` - Reads private-5G sender CSVs and writes
+  a static dashboard with aggregate latency, success rate, payload sensitivity,
+  comparisons, trials, and GPS snapshots.
+- `scripts/build_real5g_paper_figures.py` - Generates paper-facing figures from
+  real private-5G result artifacts.
+- `scripts/build_run_signal_latency_summary.py` - Builds run-level summaries
+  that join signal information and latency output.
+- `scripts/build_signal_strength_maps.py` - Parses signal measurements and
+  produces signal strength map artifacts.
+- `scripts/build_radio_latency_relationship.py` - Builds the signal/latency
+  relationship dataset and estimator output.
+- `scripts/gps_topic_recorder.py` - ROS 2 node that records NovAtel GPS topics
+  to CSV plus a latest-sample snapshot.
+- `scripts/record_gps_for_experiment.sh` - Starts the NovAtel OEM7 driver and
+  GPS recorder for a specific result directory.
+- `scripts/__pycache__/` - Generated Python bytecode. Do not treat as source.
+
+## Results And Experiment Evidence
+
+- `results/README.md` - Results-area overview.
+- `results/real_5g/` - Real private-5G campaigns and derived analysis files.
+  Top-level derived artifacts include parsed signal measurements, run-location
+  summaries, signal maps, `run_signal_latency_summary.csv`,
+  `radio_latency_relationship.csv`, and
+  `radio_latency_estimator_model.json`.
+- Dated run directories under `results/real_5g/` currently include:
+  - `20260513_sunny_fintechparking_run_1/`
+  - `20260514_sunny_after_rain_run_1/`
+  - `20260515_sunny_run_1/`
+  - `20260521_small_rain_run_1/`
+  - `20260522_cloudy_run_1/`
+- Run directories typically contain sender CSV/error files, base-station
+  receiver artifacts, command logs, environment summaries, metadata markdown,
+  GPS folders, generated helper scripts, and summary markdown. Preserve these
+  as experiment evidence.
+- `results/local_loopback/` and `results/visualize/` may appear for local
+  generated or visualization outputs.
+
+## Paper And Web Assets
+
+- `paper/` - IEEE-style Edge4AV paper workspace.
+  - `IEEE-conference-template-062824.tex` - Main LaTeX entry point.
+  - `sections/` - Paper sections and TODO/planning material.
+  - `figs/` - Paper figures, including generated PNGs and source SVG/PNG
+    artifacts.
+  - `ref.bib`, `IEEE*.bib`, `IEEEtran*.bst`, and `IEEEtran.cls` -
+    bibliography and template support files.
+  - `*.pdf`, `*.aux`, `*.bbl`, `*.blg`, `*.log`, and `tmp/rendered_figures/` -
+    generated/rendered artifacts. Verify whether a paper task wants these
+    regenerated before editing or committing them.
 - `web/experiment-tracker/` - Dependency-free static browser app for entering
-  Edge4AV experiment results, tracking readiness, and exporting campaign state
-  as JSON or Markdown. It stores edits in browser local storage.
+  Edge4AV experiment results, tracking readiness, and exporting campaign state.
+  It stores edits in browser local storage.
   - `index.html` - App shell.
   - `app.js` - Tracker data model, UI behavior, import/export, and local state.
   - `styles.css` - Tracker styling.
 
-## ROS, Device SDK, and Third-Party Assets
-
-- `ros2_ws/` - ROS 2 workspace used for GPS and V2X message integration.
-  - `ros2_ws/src/v2x_msg/` - ROS 2 message package with J2735-style V2X message
-    definitions such as BSM, MAP, SPAT, SRM, SSM, TIM, and supporting message
-    types.
-  - `ros2_ws/src/novatel_oem7_driver/` - NovAtel OEM7 ROS 2 driver source and
-    packaging scripts used by GPS recording helpers.
-  - `ros2_ws/build/`, `ros2_ws/install/`, `ros2_ws/log/` - Generated ROS 2
-    workspace artifacts currently present. Treat as local build output.
-- `third_party/mocar/` - Vendored Mocar V2X SDK material for RSU/OBU hardware
-  demos.
-  - `third_party/mocar/J2735-2020/` - J2735 SDK archive, README, libraries,
-    headers, and sample code. The IPI SPaT bridge sample is built separately
-    from the main CMake project.
-  - `third_party/mocar/J2735-2020/Readme.txt` - Vendor SDK readme.
-  - `third_party/mocar/J2735-2020/samples/ipi_spat_bridge/` - Device-side TCP
-    to Mocar SPaT bridge build target referenced by `README.md`, `setup.md`,
-    and `instructions.md`.
-
-## Scripts and Results
-
-- `scripts/` - Utility scripts for experiment support.
-  - `build_real5g_dashboard.py` - Reads private-5G sender CSVs and writes a
-    static results dashboard with aggregate p50/p95/p99 latency, success rate,
-    payload sensitivity, comparisons, trials, and GPS snapshot data.
-  - `gps_topic_recorder.py` - ROS 2 node that records NovAtel GPS position and
-    speed topics to CSV plus a latest-sample snapshot.
-  - `record_gps_for_experiment.sh` - Launches the NovAtel OEM7 driver and GPS
-    recorder for a specific experiment result directory.
-  - `scripts/__pycache__/` - Generated Python bytecode artifacts.
-- `results/` - Local and real private-5G experiment output.
-  - `results/local_loopback/` - Local loopback experiment outputs when present.
-  - `results/real_5g/` - Real private-5G campaigns grouped by dated run
-    directories. Each run typically contains command logs, metadata markdown,
-    sender CSV/error files, environment summaries, base-station artifacts, GPS
-    recordings, generated helper scripts, and summary markdown.
-  - `results/visualize/` - Generated or supporting visualization output area.
-
 ## Reference Documents
 
-- `references/` - Specification and source reference material.
-  - `references/README.md` - Human-readable IPI message-fabric design. It
-    defines the RSU broadcast, 5G MQTT session, HTTP backhaul, and optional V2V
-    mesh planes; J2735 alignment; message catalogue; service request and
-    cooperative service schemas; cross-plane latency/security/privacy notes;
-    developer enablement; interoperability; and safety/failover practices.
-  - `references/J2735_202309.pdf` - SAE J2735 reference PDF.
-  - `references/OpenIntersection.pdf` - Prior OpenIntersection reference paper.
-  - `references/Function Design Document for Intersection Programming Interface (IPI).docx`
-    - Functional design source document.
-  - `references/Supported Applications Document for Intersection Programming Interface (IPI).docx`
-    - Supported-application source document.
+- `references/README.md` - Human-readable IPI message-fabric design. It covers
+  RSU broadcast, private-5G MQTT session, HTTP backhaul, optional V2V mesh
+  planes, J2735 alignment, message catalogue, service request and cooperative
+  service schemas, latency/security/privacy notes, interoperability, and
+  safety/failover practices.
+- `references/J2735_202309.pdf` - SAE J2735 reference PDF.
+- `references/OpenIntersection.pdf` - Prior OpenIntersection reference paper.
+- `references/Function Design Document for Intersection Programming Interface (IPI).docx`
+  - Functional design source document.
+- `references/Supported Applications Document for Intersection Programming Interface (IPI).docx`
+  - Supported-application source document.
 
-## Development Notes
+## Routing Rules For Future Agents
 
-- Main C++ build:
-
-  ```bash
-  cmake -S cpp -B cpp/build -DIPI_ENABLE_TESTS=ON
-  cmake --build cpp/build
-  ctest --test-dir cpp/build --output-on-failure
-  ```
-
-- Optional CMake flags:
-  - `-DIPI_BUILD_EXAMPLES=ON` builds example executables.
-  - `-DIPI_ENABLE_TESTS=ON` builds tests.
-  - `-DIPI_ENABLE_ROS2_BRIDGE=ON` enables ROS 2 bridge code.
-  - `-DIPI_ENABLE_MOCAR_EXAMPLES=ON` enables Mocar SDK examples when SDK
-    libraries are available.
-
-- Mocar SPaT bridge build:
-
-  ```bash
-  make -C third_party/mocar/J2735-2020/samples/ipi_spat_bridge
-  ```
-
-- GPS capture is required for future vehicle-side experiments and should be
-  started before latency trials:
-
-  ```bash
-  scripts/record_gps_for_experiment.sh results/real_5g/<timestamp>
-  ```
-
-- Preserve experiment traceability. Sender, receiver, bridge, GPS, and summary
-  artifacts should share `run_id`, `condition_id`, `condition_label`,
-  `request_id`, `network_load_level`, `qos_profile`, `mobility_state`, and
-  `clock_sync_state` wherever the tooling supports them.
+- For C++ model, API, encoding, mesh, or private-5G changes, start in `cpp/`
+  and run the CMake/CTest flow above when feasible.
+- For Mocar radio deployment, start with `README.md`, `setup.md`,
+  `instructions.md`, and `third_party/mocar/J2735-2020/samples/`.
+- For Mocar RTT work, route to
+  `third_party/mocar/J2735-2020/samples/ipi_custom_rtt/`; keep initiator-side
+  RTT timing explicit and do not require synchronized clocks for RTT.
+- For one-way latency claims, verify `clock_sync_state` and supporting
+  metadata. Without synchronized clocks, report RTT only.
+- For experiment evidence, route to `results/real_5g/` and preserve run IDs,
+  condition IDs, sender/receiver logs, base-station artifacts, GPS paths, and
+  summary markdown.
+- For GPS tasks, use `scripts/record_gps_for_experiment.sh`,
+  `scripts/gps_topic_recorder.py`, and run-specific GPS folders under
+  `results/real_5g/`.
+- For paper claims, verify the current evidence in `results/`, generated
+  figures, and paper sections before broadening conclusions.
+- For static tracker tasks, use `web/experiment-tracker/` and verify in a local
+  browser or simple HTTP server when UI behavior changes.
+- For documentation-only tasks, update `current_task.md` with status and
+  validation notes even when code tests are not run.
