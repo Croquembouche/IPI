@@ -92,6 +92,12 @@ if(IPI_BUILD_EXAMPLES)
     add_executable(example_private_5g_latency_receiver examples/library/private_5g_latency_receiver.cpp)
     target_link_libraries(example_private_5g_latency_receiver PRIVATE ipi)
 
+    add_executable(example_private_5g_latency_udp_sender examples/library/private_5g_latency_udp_sender.cpp)
+    target_link_libraries(example_private_5g_latency_udp_sender PRIVATE ipi)
+
+    add_executable(example_private_5g_latency_udp_receiver examples/library/private_5g_latency_udp_receiver.cpp)
+    target_link_libraries(example_private_5g_latency_udp_receiver PRIVATE ipi)
+
     add_executable(example_mesh_demo examples/library/mesh_demo.cpp)
     target_link_libraries(example_mesh_demo PRIVATE ipi)
 

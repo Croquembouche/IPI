@@ -1,8 +1,148 @@
 # Current Task
 
-Last updated: 2026-06-29 18:43 UTC
+Last updated: 2026-06-29 21:12 UTC
 
 ## Task
+
+Implement the full top-tier Edge4AV experiment collection suite: code, build
+validation, starter scripts, and operator instructions for all planned
+MobiCom/MobiSys-grade experiments.
+
+## Status
+
+Completed for the local implementation and validation scope. Physical
+collection still requires the radio/private-5G devices, GPS stack, MQTT broker,
+and operator-triggered route/failure runs.
+
+## Current Implementation Scope
+
+New/updated source and scripts:
+
+- `cpp/examples/library/private_5g_latency_udp_sender.cpp`
+- `cpp/examples/library/private_5g_latency_udp_receiver.cpp`
+- `cpp/CMakeLists.txt`
+- `scripts/edge4av_loadgen.py`
+- `scripts/build_detector_output_ipi_payloads.py`
+- `scripts/analyze_edge4av_deadlines.py`
+- `scripts/create_edge4av_experiment_suite.py`
+- `top_tier_experiment_collection.md`
+- `agent_context.md`
+
+Experiment suite target:
+
+- 12 generated starter scripts under
+  `results/edge4av_top_tier/<run_id>/start_scripts/`
+- per-run `experiment_matrix.csv`, `INSTRUCTIONS.md`, and
+  `suite_manifest.json`
+- support for radio RTT, private-5G TCP/MQTT/UDP probes, controlled TCP/UDP
+  load generation, detector-output payload replay, deadline analysis, offload
+  tradeoff collection, multi-client scalability, and failure/fallback event
+  logging.
+
+Validation run:
+
+```bash
+python3 -m py_compile scripts/edge4av_loadgen.py scripts/build_detector_output_ipi_payloads.py scripts/analyze_edge4av_deadlines.py scripts/create_edge4av_experiment_suite.py
+git diff --check
+python3 scripts/create_edge4av_experiment_suite.py --results-root tmp/edge4av_suite_smoke --run-id smoke
+for f in tmp/edge4av_suite_smoke/smoke/start_scripts/*.sh; do bash -n "$f" || exit 1; done
+cmake -S cpp -B cpp/build -DIPI_ENABLE_TESTS=ON
+cmake --build cpp/build
+ctest --test-dir cpp/build --output-on-failure
+python3 scripts/build_detector_output_ipi_payloads.py --output tmp/detector_output_ipi_payloads.json
+```
+
+Additional smoke checks:
+
+- Direct UDP latency loopback with
+  `example_private_5g_latency_udp_receiver --once --csv` and
+  `example_private_5g_latency_udp_sender --count 1 --csv`; sender and receiver
+  each emitted one accepted CSV sample.
+- Short UDP load-generator server/client run at `1 Mbps`; client sent 245
+  packets and the server received 245 packets.
+
+Validation results:
+
+- Python syntax checks passed.
+- Generated 12 starter scripts, `experiment_matrix.csv`, `INSTRUCTIONS.md`,
+  and `suite_manifest.json`.
+- Generated starter scripts passed `bash -n`.
+- CMake configure/build passed.
+- CTest passed: `6/6` tests.
+- Detector-output payload helper found `922` samples and representative
+  payloads `0, 256, 1024, 4096, 19648, 22816, 23968, 25024, 60000` bytes.
+
+## Previous Paper Update Context
+
+The prior task reviewed newly included V2X benchmark results and added
+supported material to the Edge4AV paper. That scope is complete and preserved
+below for continuity.
+
+## Previous Paper Status
+
+Completed for the paper-integration scope.
+
+## Paper Updates
+
+Paper files updated under the ignored `paper/` tree:
+
+- `paper/sections/0_abstract.tex`
+- `paper/sections/1_introduction.tex`
+- `paper/sections/5_experiments.tex`
+- `paper/sections/6_discussionandconclusion.tex`
+- `paper/ref.bib`
+- `paper/IEEE-conference-template-062824.tex`
+
+Content added:
+
+- Summarized the public V2X benchmark integration in the abstract while keeping
+  the safety and tight-loop cooperative-perception boundaries explicit.
+- Added the benchmark integration to the introduction evidence base and
+  contribution list.
+- Added a new `Public V2X Benchmark Integration` subsection to the experiment
+  section.
+- Added Table `tab:v2x-benchmark-integration`, covering dataset-derived IPI
+  payload manifest results, local loopback transport, four-GPU artifact
+  processing, V2X-Radar OpenCOOD smoke, and the full V2X-Radar detector
+  validation.
+- Updated the discussion to distinguish local benchmark/detector integration
+  from deployed network-service readiness.
+- Added bibliography entries for OpenCOOD, OpenDAIR-V2X, TruckV2X, and
+  V2X-Radar, plus `\usepackage{url}` in the paper preamble.
+
+Important claim boundary:
+
+- The local IPI benchmark loopback validates payload packaging and transport
+  mechanics for dataset-derived payload conditions; it is not presented as a
+  private-5G network measurement.
+- The V2X-Radar detector run validates the local cooperative-perception
+  benchmark stack and provides workload scale; it is not presented as evidence
+  for tight-loop networked cooperative perception or closed-loop AV safety.
+
+Validation run:
+
+```bash
+pdflatex -interaction=nonstopmode IEEE-conference-template-062824.tex
+bibtex IEEE-conference-template-062824
+pdflatex -interaction=nonstopmode IEEE-conference-template-062824.tex
+pdflatex -interaction=nonstopmode IEEE-conference-template-062824.tex
+```
+
+Result:
+
+- Build completed successfully from `paper/`.
+- New bibliography citations resolved after the BibTeX and final LaTeX passes.
+- Final PDF: `paper/IEEE-conference-template-062824.pdf` with 13 pages.
+- Remaining log messages are layout warnings and the existing missing-author
+  warning; no LaTeX errors, undefined citations, or unresolved references were
+  found in the final log scan.
+
+Repository note:
+
+- The top-level `.gitignore` ignores `paper/`, so these paper edits and
+  regenerated paper artifacts do not appear in `git status` unless force-added.
+
+## Benchmark Staging Context
 
 Download and stage V2X datasets and benchmark code so IPI can be implemented
 and tested against public V2X benchmark assets. Use at least three different
@@ -10,7 +150,7 @@ V2X benchmark/dataset families, preserve all recorded results, and use the
 available four RTX 2080 Ti GPUs for GPU benchmark runs when those runs are
 ready.
 
-## Status
+## Benchmark Status
 
 Completed for the requested local scope.
 

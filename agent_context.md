@@ -30,6 +30,9 @@ this file to decide which source folders matter for that task.
 - `experiment.md` - Edge4AV campaign tracker defining service classes, planned
   figures, experiment matrices, required metadata, GPS requirements, and result
   tables.
+- `top_tier_experiment_collection.md` - Full 12-experiment MobiCom/MobiSys
+  collection runbook with starter-script generation, role startup order,
+  condition sweeps, repeat counts, and data-retention requirements.
 - `experiment-tracker.html` - Root-level convenience entry point for the static
   tracker under `web/experiment-tracker/`.
 - `benchmarks/v2x/` - Public V2X benchmark staging area. It tracks source URLs,
@@ -69,8 +72,9 @@ this file to decide which source folders matter for that task.
   - `cpp/include/ipi/common/` - Shared debugging helpers.
   - `cpp/examples/library/` - Host-side examples:
     `build_service_request`, `v2x_roundtrip`, `spat_tcp_sender`,
-    `private_5g_latency_sender`, `private_5g_latency_receiver`, `mesh_demo`,
-    and `edge4av_dual_plane`.
+    `private_5g_latency_sender`, `private_5g_latency_receiver`,
+    `private_5g_latency_udp_sender`, `private_5g_latency_udp_receiver`,
+    `mesh_demo`, and `edge4av_dual_plane`.
   - `cpp/examples/device/` - Device/ROS-facing examples built through CMake
     when optional dependencies are available: `mocar_ipi_demo`,
     `spat_tcp_bridge`, and `ros2_bsm_broadcaster`.
@@ -154,6 +158,16 @@ ctest --test-dir cpp/build --output-on-failure
   for the fork's old `mmcv.runner` imports, shards validation samples over all
   selected GPUs, and records detector AP/statistics under
   `results/v2x_benchmarks/`.
+- `scripts/edge4av_loadgen.py` - Dependency-free TCP/UDP background-load
+  generator used by controlled private-5G load and QoS stress experiments.
+- `scripts/build_detector_output_ipi_payloads.py` - Converts V2X-Radar
+  detector `per_sample.csv` output into representative IPI detector-output
+  payload sizes for replay over the private-5G transport probes.
+- `scripts/analyze_edge4av_deadlines.py` - Computes deadline-hit rates and
+  p50/p95/p99 RTT summaries from Edge4AV sender CSV files.
+- `scripts/create_edge4av_experiment_suite.py` - Generates the full 12-script
+  top-tier Edge4AV experiment suite under `results/edge4av_top_tier/<run_id>/`
+  plus a matrix, manifest, and per-run instructions.
 - `scripts/gps_topic_recorder.py` - ROS 2 node that records NovAtel GPS topics
   to CSV plus a latest-sample snapshot.
 - `scripts/record_gps_for_experiment.sh` - Starts the NovAtel OEM7 driver and
