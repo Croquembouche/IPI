@@ -6,20 +6,58 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#include <algorithm>
 #include <array>
 #include <cstdint>
 #include <cstdlib>
 #include <exception>
 #include <iostream>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <unordered_map>
 #include <vector>
 
 namespace {
 
 constexpr std::uint16_t kDefaultPort = 36667;
 constexpr std::size_t kMaxUdpPayload = 65507;
+constexpr std::size_t kMaxReassembledPayload = 1024U * 1024U;
+constexpr std::size_t kFragmentHeaderSize = 28U;
+constexpr std::uint8_t kFragmentVersion = 1U;
+constexpr std::uint64_t kFragmentTtlNs = 10ULL * 1000ULL * 1000ULL * 1000ULL;
+constexpr std::array<std::uint8_t, 4> kFragmentMagic{'I', '5', 'G', 'F'};
+
+struct FragmentKey {
+    std::uint32_t peerAddress{};
+    std::uint16_t peerPort{};
+    std::uint64_t messageId{};
+
+    bool operator==(const FragmentKey& other) const {
+        return peerAddress == other.peerAddress && peerPort == other.peerPort && messageId == other.messageId;
+    }
+};
+
+struct FragmentKeyHash {
+    std::size_t operator()(const FragmentKey& key) const {
+        const auto h1 = std::hash<std::uint32_t>{}(key.peerAddress);
+        const auto h2 = std::hash<std::uint16_t>{}(key.peerPort);
+        const auto h3 = std::hash<std::uint64_t>{}(key.messageId);
+        return h1 ^ (h2 << 1U) ^ (h3 << 2U);
+    }
+};
+
+struct FragmentAssembly {
+    std::uint32_t totalSize{};
+    std::uint16_t fragmentCount{};
+    std::vector<std::uint8_t> bytes{};
+    std::vector<bool> received{};
+    std::size_t receivedCount{};
+    std::uint64_t lastUpdateNs{};
+};
+
+using FragmentAssemblies = std::unordered_map<FragmentKey, FragmentAssembly, FragmentKeyHash>;
 
 struct Args {
     std::uint16_t port{kDefaultPort};
@@ -99,6 +137,97 @@ int create_socket(std::uint16_t port) {
         throw std::runtime_error("bind() failed");
     }
     return socketFd;
+}
+
+bool is_fragment_datagram(const std::uint8_t* data, std::size_t size) {
+    return size >= kFragmentHeaderSize && std::equal(kFragmentMagic.begin(), kFragmentMagic.end(), data);
+}
+
+std::uint16_t read_u16_be(const std::uint8_t* data) {
+    return static_cast<std::uint16_t>((static_cast<std::uint16_t>(data[0]) << 8U) |
+                                      static_cast<std::uint16_t>(data[1]));
+}
+
+std::uint32_t read_u32_be(const std::uint8_t* data) {
+    return (static_cast<std::uint32_t>(data[0]) << 24U) |
+           (static_cast<std::uint32_t>(data[1]) << 16U) |
+           (static_cast<std::uint32_t>(data[2]) << 8U) |
+           static_cast<std::uint32_t>(data[3]);
+}
+
+std::uint64_t read_u64_be(const std::uint8_t* data) {
+    std::uint64_t value = 0;
+    for (std::size_t i = 0; i < 8U; ++i) {
+        value = (value << 8U) | static_cast<std::uint64_t>(data[i]);
+    }
+    return value;
+}
+
+void cleanup_stale_fragments(FragmentAssemblies& assemblies, std::uint64_t nowNs) {
+    for (auto it = assemblies.begin(); it != assemblies.end();) {
+        if (nowNs > it->second.lastUpdateNs && nowNs - it->second.lastUpdateNs > kFragmentTtlNs) {
+            it = assemblies.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
+std::optional<std::vector<std::uint8_t>> reassemble_fragment(const std::uint8_t* data,
+                                                             std::size_t size,
+                                                             const sockaddr_in& peer,
+                                                             FragmentAssemblies& assemblies) {
+    if (!is_fragment_datagram(data, size)) {
+        return std::vector<std::uint8_t>(data, data + size);
+    }
+    if (data[4] != kFragmentVersion) {
+        throw std::runtime_error("unsupported UDP fragment version");
+    }
+    const auto headerSize = read_u16_be(data + 6U);
+    if (headerSize != kFragmentHeaderSize || size < headerSize) {
+        throw std::runtime_error("invalid UDP fragment header");
+    }
+
+    const auto messageId = read_u64_be(data + 8U);
+    const auto totalSize = read_u32_be(data + 16U);
+    const auto offset = read_u32_be(data + 20U);
+    const auto fragmentIndex = read_u16_be(data + 24U);
+    const auto fragmentCount = read_u16_be(data + 26U);
+    const auto chunkSize = size - headerSize;
+
+    if (totalSize == 0U || totalSize > kMaxReassembledPayload || fragmentCount == 0U ||
+        fragmentIndex >= fragmentCount || chunkSize == 0U ||
+        static_cast<std::uint64_t>(offset) + static_cast<std::uint64_t>(chunkSize) > totalSize) {
+        throw std::runtime_error("invalid UDP fragment");
+    }
+
+    const auto nowNs = ipi::api::current_unix_time_ns();
+    cleanup_stale_fragments(assemblies, nowNs);
+
+    const FragmentKey key{peer.sin_addr.s_addr, peer.sin_port, messageId};
+    auto& assembly = assemblies[key];
+    if (assembly.bytes.empty() || assembly.totalSize != totalSize || assembly.fragmentCount != fragmentCount) {
+        assembly.totalSize = totalSize;
+        assembly.fragmentCount = fragmentCount;
+        assembly.bytes.assign(totalSize, 0U);
+        assembly.received.assign(fragmentCount, false);
+        assembly.receivedCount = 0U;
+    }
+    assembly.lastUpdateNs = nowNs;
+
+    if (!assembly.received[fragmentIndex]) {
+        std::copy(data + headerSize, data + size, assembly.bytes.begin() + offset);
+        assembly.received[fragmentIndex] = true;
+        ++assembly.receivedCount;
+    }
+
+    if (assembly.receivedCount != assembly.fragmentCount) {
+        return std::nullopt;
+    }
+
+    auto complete = std::move(assembly.bytes);
+    assemblies.erase(key);
+    return complete;
 }
 
 ipi::api::Private5gProbeAck handle_request(const ipi::api::Private5gProbeRequest& request,
@@ -185,6 +314,7 @@ int main(int argc, char** argv) {
 
         ipi::v2x::UperCodec codec;
         std::array<std::uint8_t, kMaxUdpPayload> buffer{};
+        FragmentAssemblies fragmentAssemblies;
 
         for (;;) {
             sockaddr_in peer{};
@@ -199,8 +329,14 @@ int main(int argc, char** argv) {
                 continue;
             }
             try {
-                const std::vector<std::uint8_t> encodedRequest(buffer.begin(), buffer.begin() + received);
-                const auto request = ipi::api::decode_private_5g_probe_request(encodedRequest);
+                auto encodedRequest = reassemble_fragment(buffer.data(),
+                                                          static_cast<std::size_t>(received),
+                                                          peer,
+                                                          fragmentAssemblies);
+                if (!encodedRequest) {
+                    continue;
+                }
+                const auto request = ipi::api::decode_private_5g_probe_request(*encodedRequest);
                 const auto ack = handle_request(request, codec);
                 const auto encodedAck = ipi::api::encode_private_5g_probe_ack(ack);
                 static_cast<void>(::sendto(socketFd,

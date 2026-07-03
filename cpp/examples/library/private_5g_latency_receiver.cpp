@@ -12,13 +12,17 @@
 #include <cstdlib>
 #include <exception>
 #include <iostream>
+#include <mutex>
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <thread>
 
 namespace {
 
 constexpr std::uint16_t kDefaultPort = 36666;
+
+std::mutex gLogMutex;
 
 enum class TransportKind {
     Tcp,
@@ -154,7 +158,7 @@ int create_server_socket(std::uint16_t port) {
         ::close(socketFd);
         throw std::runtime_error("bind() failed");
     }
-    if (::listen(socketFd, 4) != 0) {
+    if (::listen(socketFd, 128) != 0) {
         ::close(socketFd);
         throw std::runtime_error("listen() failed");
     }
@@ -226,8 +230,10 @@ void log_ack(const Args& args,
     record.detail = ack.detail;
 
     if (args.csv) {
+        std::lock_guard<std::mutex> lock(gLogMutex);
         std::cout << ipi::api::experiment_log_to_csv(record) << '\n';
     } else {
+        std::lock_guard<std::mutex> lock(gLogMutex);
         std::cout << ipi::api::experiment_log_to_text(record) << '\n';
     }
 }
@@ -257,18 +263,25 @@ void run_tcp_receiver(const Args& args) {
     const int serverFd = create_server_socket(args.port);
     std::cerr << "private 5G latency receiver listening on port " << args.port << " over tcp\n";
 
-    ipi::v2x::UperCodec codec;
     for (;;) {
         const int clientFd = ::accept(serverFd, nullptr, nullptr);
         if (clientFd < 0) {
             std::cerr << "accept() failed\n";
             continue;
         }
-        const bool exitAfterClient = handle_tcp_client(clientFd, args, codec);
-        ::close(clientFd);
-        if (exitAfterClient) {
+
+        if (args.once) {
+            ipi::v2x::UperCodec codec;
+            static_cast<void>(handle_tcp_client(clientFd, args, codec));
+            ::close(clientFd);
             break;
         }
+
+        std::thread([clientFd, args]() {
+            ipi::v2x::UperCodec codec;
+            static_cast<void>(handle_tcp_client(clientFd, args, codec));
+            ::close(clientFd);
+        }).detach();
     }
 
     ::close(serverFd);

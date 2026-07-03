@@ -1,0 +1,7 @@
+[2026-07-01T10:56:13-04:00] Syncing code and tools to edge
+[2026-07-01T10:56:21-04:00] Starting GNSS recorder
+[2026-07-01T10:56:26-04:00] Running TCP condition p5g-tcp-loadqos-payload-1024-idle
+[2026-07-01T11:02:09-04:00] Running TCP condition p5g-tcp-loadqos-payload-1024-uplink-25mbps
+[2026-07-01T11:09:23-04:00] Running MQTT condition p5g-mqtt-loadqos-payload-1024-idle
+[2026-07-01T11:13:28-04:00] Running MQTT condition p5g-mqtt-loadqos-payload-1024-uplink-25mbps
+[2026-07-01T11:18:49-04:00] Experiment 06 run complete

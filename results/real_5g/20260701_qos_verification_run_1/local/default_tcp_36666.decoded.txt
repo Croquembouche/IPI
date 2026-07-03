@@ -1,0 +1,4 @@
+14:59:45.620134 IP (tos 0x0, ttl 64, id 45624, offset 0, flags [DF], proto TCP (6), length 60)
+    10.120.121.35.34782 > 10.100.100.6.36666: Flags [S], cksum 0xf233 (incorrect -> 0xf1ac), seq 3106879495, win 64240, options [mss 1460,sackOK,TS val 430655327 ecr 0,nop,wscale 10], length 0
+14:59:45.643108 IP (tos 0x0, ttl 62, id 0, offset 0, flags [DF], proto TCP (6), length 40)
+    10.100.100.6.36666 > 10.120.121.35.34782: Flags [R.], cksum 0xb57a (correct), seq 0, ack 3106879496, win 0, length 0

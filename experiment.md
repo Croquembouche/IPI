@@ -66,21 +66,53 @@ Recommended per-run metadata:
 
 ### Core Main-Paper Experiments
 
-- [ ] `E1` Baseline service envelope
-- [ ] `E2` Scaling and contention
-- [ ] `E3` Crowded-network / QoS stress tests
-- [ ] `E4` Edge-offload vs RSU-local compute
+- [ ] `E1` Baseline service envelope (private-5G TCP/MQTT complete; radio path pending)
+- [x] `E2` Scaling and contention (stationary private-5G TCP/UDP/MQTT 1-100 client sweep collected; runbook repeats pending)
+- [ ] `E3` Crowded-network / QoS stress tests (default-load Phase A complete; real QoS comparison pending)
+- [ ] `E4` Edge-offload vs RSU-local compute (detector compute timing complete; placement comparison pending)
 - [ ] `E5` Vehicle-level outcome
 
 ### Supplementary Experiments
 
-- [ ] `S1` Payload sensitivity
+- [x] `S1` Payload sensitivity
 - [ ] `S2` Failure detection and recovery
-- [ ] `S3` Cold-start / session resumption
+- [ ] `S3` Cold-start / session resumption (some MQTT resume artifacts exist, but no controlled S3 run yet)
 - [ ] `S4` Security overhead
-- [ ] `S5` RF gradient sensitivity
+- [ ] `S5` RF gradient sensitivity (GNSS-indexed signal maps exist; controlled near/mid/far sweep pending)
 - [ ] `S6` Mobility / handover
 - [ ] `S7` Additional queue-discipline ablations
+
+### Recorded Evidence Snapshot
+
+- Private-5G TCP/MQTT SPaT and guided-service baselines: completed in
+  `results/real_5g/20260513_sunny_fintechparking_run_1/summary.md`.
+- Private-5G TCP/MQTT payload sensitivity, stationary with GNSS: completed in
+  `results/real_5g/20260521_small_rain_run_1/summary.md` and
+  `results/real_5g/20260522_cloudy_run_1/summary.md`.
+- V2X detector workload and detector-output payload source: completed in
+  `results/v2x_benchmarks/v2x-radar-detector-benchmark-20260629T182624Z/`.
+- Dataset-derived IPI local loopback: completed in
+  `results/v2x_benchmarks/v2x-ipi-loopback-20260629T175556Z/`.
+- Detector-output-to-IPI private-5G TCP/MQTT replay with GNSS: completed in
+  `results/real_5g/20260702_detector_output_to_ipi_run_1/summary.md`.
+- Detector-output-to-IPI private-5G fragmented UDP replay with GNSS: completed
+  in `results/real_5g/20260702_detector_output_to_ipi_udp_fragmented_run_1/summary.md`.
+- Experiment 08 end-to-end deadline/service-envelope analysis over completed
+  private-5G sender CSVs: completed in
+  `results/real_5g/20260702_end_to_end_deadline_analysis_run_1/summary.md`.
+- Experiment 11 multiclient scalability private-5G TCP/UDP/MQTT sweep with
+  GNSS: completed for two stationary current-location repeats. First repeat is
+  split across `results/real_5g/20260702_multiclient_scalability_run_2/summary.md`
+  and `results/real_5g/20260702_multiclient_scalability_run_3/summary.md`;
+  second full sweep is in
+  `results/real_5g/20260702_multiclient_scalability_run_4/summary.md`.
+- Experiment 12 failure/fallback stationary no-Mocar subset with GNSS:
+  receiver-restart for TCP/UDP/MQTT and MQTT broker-restart completed in
+  `results/real_5g/20260703_failure_fallback_run_1/summary.md`.
+- Partial July stationary run with GNSS and interrupted TCP transport-comparison
+  replicate: `results/edge4av_top_tier/edge4av-stationary-goodfit-20260701T142538Z/`.
+- Experiment 06 weak-signal stationary repeat with GNSS: completed in
+  `results/real_5g/20260701_load_qos_weak_signal_run_1/summary.md`.
 
 ### Claims to Avoid Unless You Have Real Data
 
@@ -123,11 +155,11 @@ Measure baseline end-to-end envelopes for the two main service classes across:
 
 | Condition ID | Samples | Success Rate | p50 ms | p95 ms | p99 ms | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| `radio-spat-baseline` |  |  |  |  |  |  |
-| `p5g-tcp-spat-baseline` |  |  |  |  |  |  |
-| `p5g-mqtt-spat-baseline` |  |  |  |  |  |  |
-| `p5g-tcp-guided-baseline` |  |  |  |  |  |  |
-| `p5g-mqtt-guided-baseline` |  |  |  |  |  |  |
+| `radio-spat-baseline` |  |  |  |  |  | Pending Mocar/radio run |
+| `p5g-tcp-spat-baseline` | 1000 | 100.0% | 119.797 | 137.470 | 149.907 | Completed in `20260513_sunny_fintechparking_run_1` |
+| `p5g-mqtt-spat-baseline` | 1000 | 100.0% | 23.356 | 34.114 | 39.656 | Completed in `20260513_sunny_fintechparking_run_1` |
+| `p5g-tcp-guided-baseline` | 1000 | 100.0% | 119.065 | 137.970 | 185.428 | Completed using `p5g-tcp-service-payload-0` |
+| `p5g-mqtt-guided-baseline` | 1000 | 100.0% | 23.154 | 36.620 | 43.797 | Completed using `p5g-mqtt-service-payload-0` |
 
 ### Figure Takeaway
 
@@ -146,8 +178,11 @@ multiple physical plus emulated clients.
 
 - `N = 1`
 - `N = 2`
-- `N = 3`
-- `N = 6` using emulation to extend beyond the physical device count
+- `N = 5`
+- `N = 10`
+- `N = 20`
+- `N = 50`
+- `N = 100`
 
 ### Required Conditions
 
@@ -171,10 +206,15 @@ multiple physical plus emulated clients.
 
 | Condition ID | Participants | Per-Client p95 ms | Fairness Ratio | Drop Rate | CPU | NIC | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `scale-guided-n1` |  |  |  |  |  |  |  |
-| `scale-guided-n2` |  |  |  |  |  |  |  |
-| `scale-guided-n3` |  |  |  |  |  |  |  |
-| `scale-guided-n6` |  |  |  |  |  |  |  |
+| `p5g-scale-tcp-payload-1024-clients-1` | 1 | 177.841-177.841 | 1.00 | 0.00% |  |  | p95 177.841 ms, run 2 |
+| `p5g-scale-tcp-payload-1024-clients-20` | 20 | 215.920-228.003 | 1.06 | 0.00% |  |  | p95 221.684 ms, run 2 |
+| `p5g-scale-tcp-payload-1024-clients-100` | 100 | 274.832-290.742 | 1.06 | 0.00% |  |  | p95 283.765 ms, run 3 |
+| `p5g-scale-udp-payload-1024-clients-1` | 1 | 51.798-51.798 | 1.00 | 0.40% |  |  | p95 51.798 ms, run 2 |
+| `p5g-scale-udp-payload-1024-clients-20` | 20 | 45.692-48.106 | 1.05 | 0.02% |  |  | p95 45.927 ms, run 2 |
+| `p5g-scale-udp-payload-1024-clients-100` | 100 | 138.870-151.839 | 1.09 | 0.63% |  |  | p95 145.894 ms, run 3 |
+| `p5g-scale-mqtt-payload-1024-clients-1` | 1 | 43.242-43.242 | 1.00 | 0.00% |  |  | p95 43.242 ms, run 2 |
+| `p5g-scale-mqtt-payload-1024-clients-20` | 20 | 82.232-92.480 | 1.12 | 0.00% |  |  | p95 89.831 ms, run 2 |
+| `p5g-scale-mqtt-payload-1024-clients-100` | 100 | 173.854-179.697 | 1.03 | 0.00% |  |  | p95 177.053 ms, run 3 |
 
 ### Figure Takeaway
 
@@ -223,12 +263,21 @@ much QoS helps.
 
 | Condition ID | Success Rate | p50 ms | p95 ms | p99 ms | Tail Growth vs Idle | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| `p5g-tcp-idle-default` |  |  |  |  |  |  |
-| `p5g-tcp-heavy-default` |  |  |  |  |  |  |
+| `p5g-tcp-idle-default` | 100.0% | 129.781 | 161.851 | 181.829 | 1.00x | Repeat in `20260701_load_qos_run_2` with 1024 B payload |
+| `p5g-tcp-heavy-default` | 100.0% | 150.454 | 387.992 | 665.835 | 2.40x p95 | Uplink load target 25 Mbps, achieved about 2.27 Mbps client-side |
 | `p5g-tcp-heavy-qos` |  |  |  |  |  |  |
-| `p5g-mqtt-idle-default` |  |  |  |  |  |  |
-| `p5g-mqtt-near-sat-fifo` |  |  |  |  |  |  |
+| `p5g-mqtt-idle-default` | 100.0% | 35.281 | 52.063 | 67.788 | 1.00x | Repeat in `20260701_load_qos_run_2` with 1024 B payload |
+| `p5g-mqtt-near-sat-fifo` | 100.0% | 116.110 | 175.905 | 477.905 | 3.38x p95 | Default QoS load-stress proxy only; target 25 Mbps, achieved about 2.27 Mbps client-side |
 | `p5g-mqtt-near-sat-qos` |  |  |  |  |  |  |
+
+Weak-signal stationary repeat:
+
+| Condition Group | Success Rate | p95 RTT Range | Measured Load | GNSS | Notes |
+| --- | --- | ---: | ---: | --- | --- |
+| `p5g-tcp-weak-signal-default-*` | 100.0% | 668.347-933.823 ms | 0.000-0.262 Mbps client-side | mean `39.662931577, -75.757349646` | Idle plus 1/2/4 stream load sweep completed in `20260701_load_qos_weak_signal_run_1` |
+| `p5g-mqtt-weak-signal-default-*` | 100.0% | 551.800-769.656 ms | 0.000-0.251 Mbps client-side | mean `39.662931577, -75.757349646` | Background load generators often timed out at weak-signal location |
+| `p5g-tcp-weak-signal-qos-5qi-mapped-*` | 100.0% | 661.442-780.026 ms | 0.000-0.214 Mbps client-side | mean `39.662931577, -75.757349646` | QoS profile label only; core-side 5QI enforcement not independently verified |
+| `p5g-mqtt-weak-signal-qos-5qi-mapped-*` | 100.0% | 702.193-773.772 ms | 0.175-0.322 Mbps client-side | mean `39.662931577, -75.757349646` | QoS profile label only; core-side 5QI enforcement not independently verified |
 
 ### Figure Takeaway
 
@@ -311,13 +360,34 @@ Tie communication quality to actual AV behavior.
 
 ## Supplementary Experiments
 
+### Experiment 08 End-To-End Deadline Analysis
+
+The deadline analysis uses RTT directly for private-5G request/response
+services. A request is deadline-available only when `accepted == true` and
+`rtt_ms <= deadline_ms`.
+
+| Evidence group | Success Rate | p95 RTT ms | Miss @100 ms | Miss @500 ms | Miss @1000 ms | Notes |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| SPaT/state mirror | 100.00% | 130.323 | 46.60% | 0.00% | 0.00% | Use only as non-safety signal-state awareness over private-5G RTT |
+| Compact service <=4 KiB, excluding E11 | 100.00% | 413.725 | 62.24% | 3.71% | 0.55% | Good 500 ms compact assistance envelope; not robust 100 ms safety envelope |
+| E06 load/QoS 1 KiB | 100.00% | 602.354 | 75.88% | 6.53% | 0.96% | Conditional under load/weak-signal stress |
+| E09 detector-output replay | 99.54% | 245.879 | 57.14% | 0.68% | 0.46% | Good 500 ms advisory/perception-aid envelope |
+| E11 multiclient 1 KiB | 99.79% | 233.349 | 49.08% | 0.49% | 0.27% | Scales for 500 ms compact assistance; 100 ms depends on transport/client count |
+| Map/perception 128-512 KiB | 100.00% | 667.975 | 99.01% | 11.64% | 0.73% | Treat as asynchronous/prefetch |
+| Bulk >=1 MiB | 100.00% | 3122.273 | 100.00% | 100.00% | 62.61% | Bulk/backhaul only |
+
+Summary: current private-5G RTT evidence supports 400-500 ms compact
+infrastructure-assistance envelopes broadly, supports 100 ms only for compact
+MQTT/UDP under favorable conditions, and does not support 10-25 ms tight
+cooperative automation claims.
+
 ### S1 Payload Sensitivity
 
 | Condition ID | Payload Size | Transport | p95 ms | Notes |
 | --- | --- | --- | --- | --- |
-| `payload-0p2kb` | 0.2 KB |  |  |  |
-| `payload-1kb` | 1 KB |  |  |  |
-| `payload-4kb` | 4 KB |  |  |  |
+| `payload-0p2kb` | 0.2 KB | TCP/MQTT | TCP 146.860; MQTT 37.980 | Completed, 1000/1000 accepted per transport in `20260522_cloudy_run_1` |
+| `payload-1kb` | 1 KB | TCP/MQTT | TCP 155.301; MQTT 47.302 | Completed, 1000/1000 accepted per transport in `20260522_cloudy_run_1` |
+| `payload-4kb` | 4 KB | TCP/MQTT | TCP 119.639; MQTT 47.683 | Completed, 1000/1000 accepted per transport in `20260522_cloudy_run_1` |
 
 ### S2 Failure Detection and Recovery
 
@@ -369,7 +439,25 @@ Use this table to map raw files to conditions.
 
 | Date | Run ID | Condition ID | Nodes Used | Log Files | Notes |
 | --- | --- | --- | --- | --- | --- |
-|  |  |  |  |  |  |
+| 2026-05-13 | `edge4av-real-20260513-sunny-fintechparking-run-1` | `p5g-{tcp,mqtt}-{spat,service}-baseline` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260513_sunny_fintechparking_run_1/` | Private-5G baseline and SPaT/guided-service evidence |
+| 2026-05-21 | `edge4av-real-20260521-small-rain-run-1` | `p5g-{tcp,mqtt}-service-payload-*` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260521_small_rain_run_1/` | Payload sensitivity replicate, stationary GNSS |
+| 2026-05-22 | `edge4av-real-20260522-cloudy-run-1` | `p5g-{tcp,mqtt}-service-payload-*` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260522_cloudy_run_1/` | Payload sensitivity and TCP/MQTT transport comparison |
+| 2026-06-29 | `v2x-radar-detector-benchmark-20260629T182624Z` | detector compute/output source | four local RTX 2080 Ti GPUs | `results/v2x_benchmarks/v2x-radar-detector-benchmark-20260629T182624Z/` | Detector workload completed for 922 samples |
+| 2026-06-29 | `v2x-ipi-loopback-20260629T175556Z` | dataset-derived IPI loopback | local host | `results/v2x_benchmarks/v2x-ipi-loopback-20260629T175556Z/` | Local IPI payload transport mechanics |
+| 2026-07-01 | `edge4av-stationary-goodfit-20260701T142538Z` | partial `transport-tcp-payload-1024` | vehicle host, edge `10.100.100.6` | `results/edge4av_top_tier/edge4av-stationary-goodfit-20260701T142538Z/` | Interrupted after noting existing experiment 07 evidence; partial TCP and GNSS retained |
+| 2026-07-01 | `edge4av-real-20260701-load-qos-run-1` | `p5g-{tcp,mqtt}-loadqos-payload-1024-{idle,uplink-25mbps}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260701_load_qos_run_1/` | Experiment 06 default-load Phase A, stationary GNSS, 1000/1000 accepted per condition |
+| 2026-07-01 | `edge4av-real-20260701-load-qos-run-2` | `p5g-{tcp,mqtt}-loadqos-payload-1024-{idle,uplink-25mbps}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260701_load_qos_run_2/` | Experiment 06 repeat with 64 KiB load packets, stationary GNSS, 1000/1000 accepted per condition |
+| 2026-07-01 | `edge4av-real-20260701-load-qos-run-3` | `p5g-{tcp,mqtt}-loadqos-payload-1024-uplink-streams-{1,2,4}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260701_load_qos_run_3/` | Experiment 06 load sweep, stationary GNSS, measured aggregate load about 1.99-5.74 Mbps, 1000/1000 accepted per condition |
+| 2026-07-01 | `edge4av-real-20260701-load-qos-run-4` | `p5g-{tcp,mqtt}-qos-5qi-mapped-payload-1024-uplink-streams-{1,2,4}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260701_load_qos_run_4/` | Experiment 06 non-default QoS-profile leg, `qos_profile=5qi-mapped`, stationary GNSS, 1000/1000 accepted per condition; network-side 5QI enforcement not independently verified |
+| 2026-07-01 | `qos-verification-20260701` | TCP packet-marking verification | vehicle host `eno2`, edge `10.100.100.6`, gateway `10.100.100.1` | `results/real_5g/20260701_qos_verification_run_1/` | Successful default and `5qi-mapped` TCP probes both captured with `tos 0x0`; core-side QoS-flow counters still required for verified 5QI claim |
+| 2026-07-01 | `edge4av-real-20260701-load-qos-weak-signal-run-1` | `p5g-{tcp,mqtt}-weak-signal-{default,qos-5qi-mapped}-payload-1024-{idle,uplink-streams-{1,2,4}}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260701_load_qos_weak_signal_run_1/` | Experiment 06 weak-signal stationary repeat with NovAtel GNSS; measured client load collapsed to about 0.00-0.322 Mbps, 1000/1000 accepted per condition |
+| 2026-07-02 | `edge4av-real-20260702-detector-output-to-ipi-run-1` | `p5g-{tcp,mqtt}-detector-output-payload-*` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260702_detector_output_to_ipi_run_1/` | Experiment 09 detector-output replay over private-5G TCP/MQTT with NovAtel GNSS; payload sizes derived from detector output distribution; MQTT set pruned to avoid near-duplicate p99/max points |
+| 2026-07-02 | `edge4av-real-20260702-detector-output-to-ipi-udp-fragmented-run-1` | `p5g-udp-detector-output-payload-*` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260702_detector_output_to_ipi_udp_fragmented_run_1/` | Experiment 09 detector-output replay over private-5G UDP with application-level fragmentation and NovAtel GNSS; main detector payloads 4096-23968 B achieved 99.5-100.0% message success; weak-signal repeat pending |
+| 2026-07-02 | `edge4av-real-20260702-end-to-end-deadline-analysis-run-1` | `deadline-service-envelope-{10,25,100,120,400,500,1000,5000}ms` | completed private-5G sender CSVs | `results/real_5g/20260702_end_to_end_deadline_analysis_run_1/` | Experiment 08 post-hoc deadline/service-envelope analysis; uses RTT directly for request/response services and treats threshold misses as unavailable replies |
+| 2026-07-02 | `edge4av-real-20260702-multiclient-scalability-run-2` | `p5g-scale-{tcp,udp,mqtt}-payload-1024-clients-{1,2,5,10,20}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260702_multiclient_scalability_run_2/` | Experiment 11 stationary multiclient sweep with NovAtel GNSS; TCP/MQTT accepted 100.0%, UDP accepted 99.10-99.98% across base client levels |
+| 2026-07-02 | `edge4av-real-20260702-multiclient-scalability-run-3` | `p5g-scale-{tcp,udp,mqtt}-payload-1024-clients-{50,100}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260702_multiclient_scalability_run_3/` | Experiment 11 high-client extension with NovAtel GNSS; TCP/MQTT accepted 100.0%, UDP accepted 98.97% at 50 clients and 99.37% at 100 clients |
+| 2026-07-02 | `edge4av-real-20260702-multiclient-scalability-run-4` | `p5g-scale-{tcp,udp,mqtt}-payload-1024-clients-{1,2,5,10,20,50,100}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260702_multiclient_scalability_run_4/` | Experiment 11 second stationary repeat with NovAtel GNSS; TCP/MQTT accepted 100.0%, UDP accepted 99.965-100.0% across client levels |
+| 2026-07-03 | `edge4av-real-20260703-failure-fallback-run-1` | `p5g-failure-{receiver-restart-{tcp,udp,mqtt},broker-restart-mqtt}-payload-1024` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260703_failure_fallback_run_1/` | Experiment 12 stationary failure/fallback subset with NovAtel GNSS; receiver-restart accepted TCP 95.3%, UDP 96.9%, MQTT 99.1%; MQTT broker-restart accepted 95.5% |
 
 ## Paper Readiness Check
 

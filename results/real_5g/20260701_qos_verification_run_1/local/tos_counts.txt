@@ -1,0 +1,5 @@
+default tos counts
+     12 tos 0x0
+
+5qi_mapped tos counts
+     12 tos 0x0

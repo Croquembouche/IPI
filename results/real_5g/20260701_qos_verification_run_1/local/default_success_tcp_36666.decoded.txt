@@ -1,0 +1,25 @@
+15:02:01.740473 IP (tos 0x0, ttl 64, id 11499, offset 0, flags [DF], proto TCP (6), length 60)
+    10.120.121.35.34226 > 10.100.100.6.36666: Flags [S], cksum 0xf233 (incorrect -> 0x5eac), seq 2437210468, win 64240, options [mss 1460,sackOK,TS val 430791447 ecr 0,nop,wscale 10], length 0
+15:02:01.768150 IP (tos 0x0, ttl 62, id 0, offset 0, flags [DF], proto TCP (6), length 60)
+    10.100.100.6.36666 > 10.120.121.35.34226: Flags [S.], cksum 0x2e23 (correct), seq 474518292, ack 2437210469, win 65160, options [mss 1460,sackOK,TS val 3861026659 ecr 430791447,nop,wscale 7], length 0
+15:02:01.768229 IP (tos 0x0, ttl 64, id 11500, offset 0, flags [DF], proto TCP (6), length 52)
+    10.120.121.35.34226 > 10.100.100.6.36666: Flags [.], cksum 0xf22b (incorrect -> 0x5b1d), seq 1, ack 1, win 63, options [nop,nop,TS val 430791475 ecr 3861026659], length 0
+15:02:01.768421 IP (tos 0x0, ttl 64, id 11501, offset 0, flags [DF], proto TCP (6), length 56)
+    10.120.121.35.34226 > 10.100.100.6.36666: Flags [P.], cksum 0xf22f (incorrect -> 0x55ce), seq 1:5, ack 1, win 63, options [nop,nop,TS val 430791475 ecr 3861026659], length 4
+15:02:01.793176 IP (tos 0x0, ttl 62, id 53936, offset 0, flags [DF], proto TCP (6), length 52)
+    10.100.100.6.36666 > 10.120.121.35.34226: Flags [.], cksum 0x593c (correct), seq 1, ack 5, win 510, options [nop,nop,TS val 3861026689 ecr 430791475], length 0
+15:02:01.793210 IP (tos 0x0, ttl 64, id 11502, offset 0, flags [DF], proto TCP (6), length 1399)
+    10.120.121.35.34226 > 10.100.100.6.36666: Flags [P.], cksum 0xf76e (incorrect -> 0xb611), seq 5:1352, ack 1, win 63, options [nop,nop,TS val 430791500 ecr 3861026689], length 1347
+15:02:01.823102 IP (tos 0x0, ttl 62, id 53937, offset 0, flags [DF], proto TCP (6), length 52)
+    10.100.100.6.36666 > 10.120.121.35.34226: Flags [.], cksum 0x53cb (correct), seq 1, ack 1352, win 501, options [nop,nop,TS val 3861026719 ecr 430791500], length 0
+15:02:01.827996 IP (tos 0x0, ttl 62, id 53938, offset 0, flags [DF], proto TCP (6), length 56)
+    10.100.100.6.36666 > 10.120.121.35.34226: Flags [P.], cksum 0x52d4 (correct), seq 1:5, ack 1352, win 501, options [nop,nop,TS val 3861026719 ecr 430791500], length 4
+15:02:01.828023 IP (tos 0x0, ttl 64, id 11503, offset 0, flags [DF], proto TCP (6), length 52)
+    10.120.121.35.34226 > 10.100.100.6.36666: Flags [.], cksum 0xf22b (incorrect -> 0x555a), seq 1352, ack 5, win 63, options [nop,nop,TS val 430791535 ecr 3861026719], length 0
+15:02:01.828047 IP (tos 0x0, ttl 62, id 53939, offset 0, flags [DF], proto TCP (6), length 287)
+    10.100.100.6.36666 > 10.120.121.35.34226: Flags [FP.], cksum 0xc561 (correct), seq 5:240, ack 1352, win 501, options [nop,nop,TS val 3861026720 ecr 430791500], length 235
+15:02:01.828238 IP (tos 0x0, ttl 64, id 11504, offset 0, flags [DF], proto TCP (6), length 52)
+    10.120.121.35.34226 > 10.100.100.6.36666: Flags [F.], cksum 0xf22b (incorrect -> 0x546c), seq 1352, ack 241, win 63, options [nop,nop,TS val 430791535 ecr 3861026720], length 0
+15:02:01.857926 IP (tos 0x0, ttl 62, id 53940, offset 0, flags [DF], proto TCP (6), length 52)
+    10.100.100.6.36666 > 10.120.121.35.34226: Flags [.], cksum 0x5299 (correct), seq 241, ack 1353, win 501, options [nop,nop,TS val 3861026749 ecr 430791535], length 0
+

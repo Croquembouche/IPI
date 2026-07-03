@@ -1,0 +1,17 @@
+[2026-07-01T15:21:33-04:00] Syncing code and tools to edge
+[2026-07-01T15:21:45-04:00] Starting GNSS recorder
+[2026-07-01T15:21:50-04:00] Running TCP condition p5g-tcp-weak-signal-default-payload-1024-idle
+[2026-07-01T15:29:59-04:00] Running MQTT condition p5g-mqtt-weak-signal-default-payload-1024-idle
+[2026-07-01T15:35:53-04:00] Running TCP condition p5g-tcp-weak-signal-default-payload-1024-uplink-streams-1
+[2026-07-01T15:44:25-04:00] Running TCP condition p5g-tcp-weak-signal-default-payload-1024-uplink-streams-2
+[2026-07-01T15:54:07-04:00] Running TCP condition p5g-tcp-weak-signal-default-payload-1024-uplink-streams-4
+[2026-07-01T16:03:42-04:00] Running MQTT condition p5g-mqtt-weak-signal-default-payload-1024-uplink-streams-1
+[2026-07-01T16:10:14-04:00] Running MQTT condition p5g-mqtt-weak-signal-default-payload-1024-uplink-streams-2
+[2026-07-01T16:17:15-04:00] Running MQTT condition p5g-mqtt-weak-signal-default-payload-1024-uplink-streams-4
+[2026-07-01T16:24:47-04:00] Running TCP condition p5g-tcp-weak-signal-qos-5qi-mapped-payload-1024-uplink-streams-1
+[2026-07-01T16:34:24-04:00] Running TCP condition p5g-tcp-weak-signal-qos-5qi-mapped-payload-1024-uplink-streams-2
+[2026-07-01T16:42:46-04:00] Running TCP condition p5g-tcp-weak-signal-qos-5qi-mapped-payload-1024-uplink-streams-4
+[2026-07-01T16:51:48-04:00] Running MQTT condition p5g-mqtt-weak-signal-qos-5qi-mapped-payload-1024-uplink-streams-1
+[2026-07-01T16:58:48-04:00] Running MQTT condition p5g-mqtt-weak-signal-qos-5qi-mapped-payload-1024-uplink-streams-2
+[2026-07-01T17:06:03-04:00] Running MQTT condition p5g-mqtt-weak-signal-qos-5qi-mapped-payload-1024-uplink-streams-4
+[2026-07-01T17:13:29-04:00] Experiment 06 run complete

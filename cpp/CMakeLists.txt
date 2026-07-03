@@ -9,6 +9,7 @@ option(IPI_ENABLE_MOCAR_EXAMPLES "Build examples that depend on the Mocar SDK" O
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+find_package(Threads REQUIRED)
 
 # Mocar SDK layout (defaults to new_V2X_64bit drop). Override with
 # -DMOCAR_SDK_ROOT=/path/to/new_V2X_64bit if staged elsewhere.
@@ -90,7 +91,7 @@ if(IPI_BUILD_EXAMPLES)
     target_link_libraries(example_private_5g_latency_sender PRIVATE ipi)
 
     add_executable(example_private_5g_latency_receiver examples/library/private_5g_latency_receiver.cpp)
-    target_link_libraries(example_private_5g_latency_receiver PRIVATE ipi)
+    target_link_libraries(example_private_5g_latency_receiver PRIVATE ipi Threads::Threads)
 
     add_executable(example_private_5g_latency_udp_sender examples/library/private_5g_latency_udp_sender.cpp)
     target_link_libraries(example_private_5g_latency_udp_sender PRIVATE ipi)

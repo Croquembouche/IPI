@@ -1,0 +1,26 @@
+[2026-07-02T14:08:23-04:00] Building local C++ tools
+[2026-07-02T14:08:23-04:00] Syncing source to edge
+[2026-07-02T14:08:24-04:00] Building edge C++ tools
+[2026-07-02T14:08:27-04:00] Starting GNSS recorder
+[2026-07-02T14:08:32-04:00] Running Experiment 11 condition p5g-scale-tcp-payload-1024-clients-1
+[2026-07-02T14:14:05-04:00] Running Experiment 11 condition p5g-scale-tcp-payload-1024-clients-2
+[2026-07-02T14:19:39-04:00] Running Experiment 11 condition p5g-scale-tcp-payload-1024-clients-5
+[2026-07-02T14:25:15-04:00] Running Experiment 11 condition p5g-scale-tcp-payload-1024-clients-10
+[2026-07-02T14:30:48-04:00] Running Experiment 11 condition p5g-scale-tcp-payload-1024-clients-20
+[2026-07-02T14:36:24-04:00] Running Experiment 11 condition p5g-scale-tcp-payload-1024-clients-50
+[2026-07-02T14:42:12-04:00] Running Experiment 11 condition p5g-scale-tcp-payload-1024-clients-100
+[2026-07-02T14:48:57-04:00] Running Experiment 11 condition p5g-scale-udp-payload-1024-clients-1
+[2026-07-02T14:53:01-04:00] Running Experiment 11 condition p5g-scale-udp-payload-1024-clients-2
+[2026-07-02T14:57:05-04:00] Running Experiment 11 condition p5g-scale-udp-payload-1024-clients-5
+[2026-07-02T15:01:10-04:00] Running Experiment 11 condition p5g-scale-udp-payload-1024-clients-10
+[2026-07-02T15:05:14-04:00] Running Experiment 11 condition p5g-scale-udp-payload-1024-clients-20
+[2026-07-02T15:09:24-04:00] Running Experiment 11 condition p5g-scale-udp-payload-1024-clients-50
+[2026-07-02T15:13:41-04:00] Running Experiment 11 condition p5g-scale-udp-payload-1024-clients-100
+[2026-07-02T15:18:25-04:00] Running Experiment 11 condition p5g-scale-mqtt-payload-1024-clients-1
+[2026-07-02T15:22:32-04:00] Running Experiment 11 condition p5g-scale-mqtt-payload-1024-clients-2
+[2026-07-02T15:26:40-04:00] Running Experiment 11 condition p5g-scale-mqtt-payload-1024-clients-5
+[2026-07-02T15:30:52-04:00] Running Experiment 11 condition p5g-scale-mqtt-payload-1024-clients-10
+[2026-07-02T15:35:09-04:00] Running Experiment 11 condition p5g-scale-mqtt-payload-1024-clients-20
+[2026-07-02T15:39:36-04:00] Running Experiment 11 condition p5g-scale-mqtt-payload-1024-clients-50
+[2026-07-02T15:44:22-04:00] Running Experiment 11 condition p5g-scale-mqtt-payload-1024-clients-100
+[2026-07-02T15:49:46-04:00] Experiment 11 multiclient scalability run complete

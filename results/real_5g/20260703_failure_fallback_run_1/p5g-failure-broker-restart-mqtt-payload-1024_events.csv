@@ -1,0 +1,8 @@
+event_time_ns,event_time_iso,condition_id,transport,failure_mode,action,detail
+1783088730775945523,2026-07-03T10:25:30-04:00,p5g-failure-broker-restart-mqtt-payload-1024,mqtt,broker-restart,condition_start,starting condition
+1783088737774636146,2026-07-03T10:25:37-04:00,p5g-failure-broker-restart-mqtt-payload-1024,mqtt,broker-restart,service_ready,receiver stack ready
+1783088737780925250,2026-07-03T10:25:37-04:00,p5g-failure-broker-restart-mqtt-payload-1024,mqtt,broker-restart,sender_started,pid=44880
+1783088797788623695,2026-07-03T10:26:37-04:00,p5g-failure-broker-restart-mqtt-payload-1024,mqtt,broker-restart,failure_begin,killing mqtt broker and receiver
+1783088808441862971,2026-07-03T10:26:48-04:00,p5g-failure-broker-restart-mqtt-payload-1024,mqtt,broker-restart,restart_begin,starting mqtt broker and receiver
+1783088812809737473,2026-07-03T10:26:52-04:00,p5g-failure-broker-restart-mqtt-payload-1024,mqtt,broker-restart,restart_complete,mqtt broker and receiver restarted
+1783088975668737550,2026-07-03T10:29:35-04:00,p5g-failure-broker-restart-mqtt-payload-1024,mqtt,broker-restart,sender_complete,status=0

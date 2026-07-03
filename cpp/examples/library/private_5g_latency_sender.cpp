@@ -4,6 +4,7 @@
 
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <signal.h>
 #include <sys/socket.h>
 #include <unistd.h>
 
@@ -53,6 +54,7 @@ struct Args {
     std::size_t payloadBytes{0};
     ipi::api::ExperimentContext context{};
     bool csv{false};
+    bool continueOnFailure{false};
 };
 
 struct ProbeStats {
@@ -165,6 +167,7 @@ Args parse_args(int argc, char** argv) {
                 << "  --vehicle-outcome-name <s>  Driving metric name\n"
                 << "  --vehicle-outcome-value <v> Driving metric value\n"
                 << "  --vehicle-outcome-unit <u>  Driving metric unit\n"
+                << "  --continue-on-failure       Keep sending probes after transport failures\n"
                 << "  --csv                       Emit structured CSV rows\n";
             std::exit(0);
         }
@@ -208,6 +211,8 @@ Args parse_args(int argc, char** argv) {
             args.spatIntersectionId = static_cast<std::uint16_t>(std::stoul(argv[++i]));
         } else if (arg == "--horizon-ms" && i + 1 < argc) {
             args.horizonMs = static_cast<std::uint16_t>(std::stoul(argv[++i]));
+        } else if (arg == "--continue-on-failure") {
+            args.continueOnFailure = true;
         } else if (arg == "--csv") {
             args.csv = true;
         } else if (ipi::api::consume_experiment_context_arg(args.context, arg, i, argc, argv)) {
@@ -478,12 +483,15 @@ ProbeStats run_tcp_sender(const Args& args) {
     ProbeStats stats;
     stats.rtts.reserve(args.count);
 
-    const int socketFd = connect_socket(args);
+    int socketFd = -1;
     ipi::v2x::UperCodec codec;
 
     for (std::size_t i = 0; i < args.count; ++i) {
         const auto request = build_request(args, i + 1U, codec);
         try {
+            if (socketFd < 0) {
+                socketFd = connect_socket(args);
+            }
             const auto encodedRequest = ipi::api::encode_private_5g_probe_request(request);
             ipi::api::send_private_5g_probe_packet(socketFd, encodedRequest);
 
@@ -493,7 +501,13 @@ ProbeStats run_tcp_sender(const Args& args) {
             record_probe_result(args, request, ack, clientReceiveTimeNs, stats);
         } catch (const std::exception& ex) {
             record_probe_failure(args, request, ex.what(), ipi::api::current_unix_time_ns(), stats);
-            break;
+            if (socketFd >= 0) {
+                ::close(socketFd);
+                socketFd = -1;
+            }
+            if (!args.continueOnFailure) {
+                break;
+            }
         }
 
         if (i + 1U < args.count) {
@@ -501,7 +515,9 @@ ProbeStats run_tcp_sender(const Args& args) {
         }
     }
 
-    ::close(socketFd);
+    if (socketFd >= 0) {
+        ::close(socketFd);
+    }
     return stats;
 }
 
@@ -511,12 +527,16 @@ ProbeStats run_mqtt_sender(const Args& args) {
 
     ipi::v2x::UperCodec codec;
     ipi::api::MinimalMqttClient client(make_mqtt_client_id(args));
-    client.connect(args.host, args.port);
-    client.subscribe(make_ack_topic(args));
+    bool connected = false;
 
     for (std::size_t i = 0; i < args.count; ++i) {
         const auto request = build_request(args, i + 1U, codec);
         try {
+            if (!connected) {
+                client.connect(args.host, args.port);
+                client.subscribe(make_ack_topic(args));
+                connected = true;
+            }
             client.publish(make_request_topic(args), ipi::api::encode_private_5g_probe_request(request));
             const auto message = client.receive(std::chrono::milliseconds(args.timeoutMs));
             if (!message) {
@@ -528,7 +548,11 @@ ProbeStats run_mqtt_sender(const Args& args) {
             }
         } catch (const std::exception& ex) {
             record_probe_failure(args, request, ex.what(), ipi::api::current_unix_time_ns(), stats);
-            break;
+            client.disconnect();
+            connected = false;
+            if (!args.continueOnFailure) {
+                break;
+            }
         }
 
         if (i + 1U < args.count) {
@@ -544,6 +568,7 @@ ProbeStats run_mqtt_sender(const Args& args) {
 
 int main(int argc, char** argv) {
     try {
+        ::signal(SIGPIPE, SIG_IGN);
         const Args args = parse_args(argc, argv);
         if (args.csv) {
             print_csv_header();

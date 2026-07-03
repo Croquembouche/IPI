@@ -1,0 +1,49 @@
+threaded mqtt broker listening on 0.0.0.0:1883
+1783000649.841576 accept ('10.120.121.36', 42120)
+1783000649.842947 close ('10.120.121.36', 42120) closed
+1783000650.515149 accept ('127.0.0.1', 46080)
+1783000650.516498 subscribe ('127.0.0.1', 46080) ipi/detector-output-to-ipi-run-1/latency/av-1/request
+1783000652.586287 accept ('10.120.121.36', 42124)
+1783000652.615993 subscribe ('10.120.121.36', 42124) ipi/detector-output-to-ipi-run-1/latency/av-1/ack
+1783000652.656348 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=612 forwarded=1
+1783000652.657031 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=230 forwarded=1
+1783000652.886855 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=612 forwarded=1
+1783000652.887563 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=230 forwarded=1
+1783000653.107174 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=612 forwarded=1
+1783000653.107803 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=230 forwarded=1
+1783000653.347237 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=612 forwarded=1
+1783000653.347823 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=230 forwarded=1
+1783000653.567678 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=612 forwarded=1
+1783000653.568308 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=230 forwarded=1
+1783000653.798006 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=612 forwarded=1
+1783000653.798628 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=230 forwarded=1
+1783000654.028354 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=612 forwarded=1
+1783000654.029042 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=230 forwarded=1
+1783000654.268642 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=612 forwarded=1
+1783000654.269303 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=230 forwarded=1
+1783000654.488796 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=612 forwarded=1
+1783000654.489425 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=230 forwarded=1
+1783000654.709179 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=614 forwarded=1
+1783000654.709805 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=231 forwarded=1
+1783000654.939355 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=614 forwarded=1
+1783000654.939990 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=231 forwarded=1
+1783000655.169809 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=614 forwarded=1
+1783000655.170442 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=231 forwarded=1
+1783000655.390071 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=614 forwarded=1
+1783000655.390772 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=231 forwarded=1
+1783000655.620524 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=614 forwarded=1
+1783000655.621191 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=231 forwarded=1
+1783000655.880942 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=614 forwarded=1
+1783000655.881612 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=231 forwarded=1
+1783000656.131407 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=614 forwarded=1
+1783000656.132054 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=231 forwarded=1
+1783000656.362052 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=614 forwarded=1
+1783000656.362697 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=231 forwarded=1
+1783000656.612295 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=614 forwarded=1
+1783000656.612959 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=231 forwarded=1
+1783000656.832813 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=614 forwarded=1
+1783000656.833461 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=231 forwarded=1
+1783000657.053001 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/request bytes=614 forwarded=1
+1783000657.053644 publish topic=ipi/detector-output-to-ipi-run-1/latency/av-1/ack bytes=231 forwarded=1
+1783000657.183165 close ('10.120.121.36', 42124) closed
+1783000679.962366 close ('127.0.0.1', 46080) closed

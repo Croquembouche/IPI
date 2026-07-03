@@ -1,0 +1,11 @@
+[2026-07-02T13:20:57-04:00] Building local C++ tools
+[2026-07-02T13:20:58-04:00] Syncing source to edge
+[2026-07-02T13:20:58-04:00] Building edge C++ tools
+[2026-07-02T13:21:00-04:00] Starting GNSS recorder
+[2026-07-02T13:21:05-04:00] Running Experiment 11 condition p5g-scale-tcp-payload-1024-clients-50
+[2026-07-02T13:27:05-04:00] Running Experiment 11 condition p5g-scale-tcp-payload-1024-clients-100
+[2026-07-02T13:34:09-04:00] Running Experiment 11 condition p5g-scale-udp-payload-1024-clients-50
+[2026-07-02T13:39:36-04:00] Running Experiment 11 condition p5g-scale-udp-payload-1024-clients-100
+[2026-07-02T13:45:18-04:00] Running Experiment 11 condition p5g-scale-mqtt-payload-1024-clients-50
+[2026-07-02T13:50:08-04:00] Running Experiment 11 condition p5g-scale-mqtt-payload-1024-clients-100
+[2026-07-02T13:56:52-04:00] Experiment 11 multiclient scalability run complete

@@ -1,0 +1,22 @@
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/d1/Documents/Github/IPI/cpp/build
+[ 47%] Built target ipi
+[ 58%] Built target example_mesh_demo
+[ 58%] Built target example_build_service_request
+[ 70%] Built target example_private_5g_latency_sender
+[ 70%] Built target example_v2x_roundtrip
+Scanning dependencies of target example_private_5g_latency_receiver
+[ 76%] Built target example_spat_tcp_sender
+[ 79%] Building CXX object CMakeFiles/example_private_5g_latency_receiver.dir/examples/library/private_5g_latency_receiver.cpp.o
+[ 85%] Built target example_private_5g_latency_udp_sender
+[ 91%] Built target example_private_5g_latency_udp_receiver
+[ 97%] Built target example_edge4av_dual_plane
+[100%] Linking CXX executable example_private_5g_latency_receiver
+/usr/bin/ld: CMakeFiles/example_private_5g_latency_receiver.dir/examples/library/private_5g_latency_receiver.cpp.o: in function `std::thread::thread<(anonymous namespace)::run_tcp_receiver((anonymous namespace)::Args const&)::{lambda()#1}, , void>((anonymous namespace)::run_tcp_receiver((anonymous namespace)::Args const&)::{lambda()#1}&&)':
+private_5g_latency_receiver.cpp:(.text+0x2e3f): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[2]: *** [CMakeFiles/example_private_5g_latency_receiver.dir/build.make:85: example_private_5g_latency_receiver] Error 1
+make[1]: *** [CMakeFiles/Makefile2:229: CMakeFiles/example_private_5g_latency_receiver.dir/all] Error 2
+make: *** [Makefile:130: all] Error 2

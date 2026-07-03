@@ -1,0 +1,168 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
+RUN_DIR="$REPO_ROOT/results/real_5g/20260702_detector_output_to_ipi_udp_run_1"
+RUN_ID="edge4av-real-20260702-detector-output-to-ipi-udp-run-1"
+EDGE_HOST="${EDGE_HOST:-10.100.100.6}"
+EDGE_USER="${EDGE_USER:-d1}"
+EDGE_REPO="${EDGE_REPO:-/home/d1/Documents/Github/IPI}"
+REMOTE_RUN_DIR="$EDGE_REPO/results/real_5g/20260702_detector_output_to_ipi_udp_run_1"
+
+COUNT="${COUNT:-1000}"
+INTERVAL_MS="${INTERVAL_MS:-200}"
+UDP_TIMEOUT_MS="${UDP_TIMEOUT_MS:-3000}"
+UDP_PORT="${UDP_PORT:-36667}"
+INTERSECTION_ID="${INTERSECTION_ID:-detector-output-to-ipi-udp-run-1}"
+SOURCE_ID="${SOURCE_ID:-av-1}"
+PAYLOADS="${PAYLOADS:-0 4096 19648 22816 23968 60000}"
+PAYLOAD_MANIFEST="$RUN_DIR/detector_output_ipi_payloads.json"
+
+if [ -z "${SSHPASS:-}" ]; then
+  echo "SSHPASS must be set for password-based edge SSH." >&2
+  exit 1
+fi
+
+mkdir -p "$RUN_DIR"/{base_station,commands,gps,tools}
+
+SSH_BASE=(
+  sshpass -e ssh
+  -o StrictHostKeyChecking=no
+  -o UserKnownHostsFile=/dev/null
+  "$EDGE_USER@$EDGE_HOST"
+)
+RSYNC_RSH="sshpass -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+
+log() {
+  printf '[%s] %s\n' "$(date --iso-8601=seconds)" "$*" | tee -a "$RUN_DIR/run.log"
+}
+
+ssh_edge_bash() {
+  printf 'set -euo pipefail\n%s\n' "$1" | "${SSH_BASE[@]}" "bash -s"
+}
+
+record_command() {
+  printf '%s\n' "$*" >> "$RUN_DIR/commands/experiment_09_udp_commands.txt"
+}
+
+remote_cleanup() {
+  ssh_edge_bash "pkill -f '[e]xample_private_5g_latency_udp_receiver' || true" >/dev/null 2>&1 || true
+}
+
+GPS_PID=""
+stop_gps() {
+  if [ -z "$GPS_PID" ]; then
+    return
+  fi
+
+  for pid_file in \
+    "$RUN_DIR/gps/gps_topic_recorder.pid" \
+    "$RUN_DIR/gps/rosbag_record.pid" \
+    "$RUN_DIR/gps/novatel_driver.pid"; do
+    if [ -s "$pid_file" ]; then
+      kill -INT "$(cat "$pid_file")" 2>/dev/null || true
+    fi
+  done
+
+  kill -INT "$GPS_PID" 2>/dev/null || true
+  for _ in $(seq 1 20); do
+    if ! kill -0 "$GPS_PID" 2>/dev/null; then
+      wait "$GPS_PID" 2>/dev/null || true
+      GPS_PID=""
+      return
+    fi
+    sleep 1
+  done
+
+  kill -TERM "$GPS_PID" 2>/dev/null || true
+  sleep 2
+  kill -KILL "$GPS_PID" 2>/dev/null || true
+  wait "$GPS_PID" 2>/dev/null || true
+  GPS_PID=""
+}
+
+cleanup() {
+  set +e
+  stop_gps
+  remote_cleanup
+  rsync -az -e "$RSYNC_RSH" "$EDGE_USER@$EDGE_HOST:$REMOTE_RUN_DIR/base_station/" "$RUN_DIR/base_station/" >> "$RUN_DIR/rsync_from_base_station.log" 2>&1 || true
+}
+trap cleanup EXIT INT TERM
+
+write_environment() {
+  {
+    printf '# Experiment 09 Detector-Output-To-IPI UDP Private-5G Run\n\n'
+    printf -- '- Run id: `%s`\n' "$RUN_ID"
+    printf -- '- Local start time: `%s`\n' "$(date --iso-8601=seconds)"
+    printf -- '- Local host: `%s`\n' "$(hostname)"
+    printf -- '- Edge host: `%s@%s`\n' "$EDGE_USER" "$EDGE_HOST"
+    printf -- '- Run directory: `%s`\n' "$RUN_DIR"
+    printf -- '- Edge run directory: `%s`\n' "$REMOTE_RUN_DIR"
+    printf -- '- Vehicle state: `stationary`\n'
+    printf -- '- Detector manifest: `%s`\n' "$PAYLOAD_MANIFEST"
+    printf -- '- Detector-output payload bytes: `%s`\n' "$PAYLOADS"
+    printf -- '- Probe count: `%s`\n' "$COUNT"
+    printf -- '- Probe interval ms: `%s`\n' "$INTERVAL_MS"
+    printf -- '- UDP ack timeout ms: `%s`\n' "$UDP_TIMEOUT_MS"
+    printf -- '- Transport: `udp`\n'
+    printf -- '- Network load: `idle`\n'
+    printf -- '- QoS profile: `default`\n'
+    printf -- '- GNSS: `scripts/record_gps_for_experiment.sh`\n'
+  } > "$RUN_DIR/environment.md"
+}
+
+start_gps() {
+  log "Starting GNSS recorder"
+  bash "$REPO_ROOT/scripts/record_gps_for_experiment.sh" "$RUN_DIR" \
+    > "$RUN_DIR/gps_capture_stdout.log" \
+    2> "$RUN_DIR/gps_capture_stderr.log" &
+  GPS_PID=$!
+  echo "$GPS_PID" > "$RUN_DIR/gps_capture.pid"
+  sleep 5
+}
+
+stage_edge() {
+  log "Syncing code to edge"
+  rsync -az --delete --exclude build -e "$RSYNC_RSH" "$REPO_ROOT/cpp/" "$EDGE_USER@$EDGE_HOST:$EDGE_REPO/cpp/" > "$RUN_DIR/rsync_cpp_to_base_station.log" 2>&1
+  ssh_edge_bash "cd '$EDGE_REPO' && rm -rf cpp/build && cmake -S cpp -B cpp/build && cmake --build cpp/build -j\$(nproc)" > "$RUN_DIR/base_build.log" 2>&1
+  ssh_edge_bash "mkdir -p '$REMOTE_RUN_DIR/base_station' '$REMOTE_RUN_DIR/commands'"
+}
+
+start_udp_receiver() {
+  local condition="$1"
+  local payload="$2"
+  local remote_cmd
+  remote_cmd="cd '$EDGE_REPO' && mkdir -p '$REMOTE_RUN_DIR/base_station' && setsid -f bash -c \"echo \\\$\\\$ > '$REMOTE_RUN_DIR/base_station/${condition}_receiver.pid'; exec stdbuf -oL -eL ./cpp/build/example_private_5g_latency_udp_receiver --port '$UDP_PORT' --run-id '$RUN_ID' --condition-id '$condition' --condition-label detector-output-to-ipi --rsu-id rsu-1 --network-load-level idle --qos-profile default --mobility-state stationary --clock-sync-state unsynced --service-success true --vehicle-outcome-name detector_payload_bytes --vehicle-outcome-value '$payload' --vehicle-outcome-unit bytes --csv > '$REMOTE_RUN_DIR/base_station/${condition}_receiver.csv' 2> '$REMOTE_RUN_DIR/base_station/${condition}_receiver.err' < /dev/null\""
+  record_command "remote: $remote_cmd"
+  ssh_edge_bash "$remote_cmd"
+  sleep 2
+}
+
+stop_condition_processes() {
+  remote_cleanup
+  sleep 2
+  rsync -az -e "$RSYNC_RSH" "$EDGE_USER@$EDGE_HOST:$REMOTE_RUN_DIR/base_station/" "$RUN_DIR/base_station/" >> "$RUN_DIR/rsync_from_base_station.log" 2>&1 || true
+}
+
+run_udp_condition() {
+  local payload="$1"
+  local condition="p5g-udp-detector-output-payload-${payload}"
+  log "Running UDP detector-output condition $condition"
+  start_udp_receiver "$condition" "$payload"
+  local cmd
+  cmd="./cpp/build/example_private_5g_latency_udp_sender --host '$EDGE_HOST' --port '$UDP_PORT' --count '$COUNT' --interval-ms '$INTERVAL_MS' --timeout-ms '$UDP_TIMEOUT_MS' --message service --payload-bytes '$payload' --intersection-id '$INTERSECTION_ID' --source-id '$SOURCE_ID' --condition-id '$condition' --request-id '$condition' --run-id '$RUN_ID' --condition-label detector-output-to-ipi --av-id av-1 --obu-id obu-1 --rsu-id rsu-1 --network-load-level idle --qos-profile default --mobility-state stationary --clock-sync-state unsynced --service-success true --vehicle-outcome-name detector_payload_bytes --vehicle-outcome-value '$payload' --vehicle-outcome-unit bytes --csv"
+  record_command "local: $cmd > '$RUN_DIR/${condition}_sender.csv' 2> '$RUN_DIR/${condition}_sender.err'"
+  bash -lc "cd '$REPO_ROOT' && $cmd" > "$RUN_DIR/${condition}_sender.csv" 2> "$RUN_DIR/${condition}_sender.err"
+  stop_condition_processes
+}
+
+write_environment
+remote_cleanup
+stage_edge
+start_gps
+
+for payload in $PAYLOADS; do
+  run_udp_condition "$payload"
+done
+
+log "Experiment 09 UDP run complete"

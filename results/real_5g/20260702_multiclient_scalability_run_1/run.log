@@ -1,0 +1,7 @@
+[2026-07-02T12:04:06-04:00] Building local C++ tools
+[2026-07-02T12:04:07-04:00] Syncing source to edge
+[2026-07-02T12:04:08-04:00] Building edge C++ tools
+[2026-07-02T12:04:11-04:00] Starting GNSS recorder
+[2026-07-02T12:04:16-04:00] Running Experiment 11 condition p5g-scale-tcp-payload-1024-clients-1
+[2026-07-02T12:05:19-04:00] ERROR: timed out waiting for TCP receiver on 10.100.100.6:36666
+[2026-07-02T12:05:28-04:00] Running Experiment 11 condition p5g-scale-tcp-payload-1024-clients-2

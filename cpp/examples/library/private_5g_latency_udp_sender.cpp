@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #include <algorithm>
+#include <array>
 #include <chrono>
 #include <cmath>
 #include <cstdint>
@@ -15,6 +16,7 @@
 #include <exception>
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #include <optional>
 #include <sstream>
 #include <stdexcept>
@@ -28,6 +30,10 @@ namespace {
 
 constexpr std::uint16_t kDefaultPort = 36667;
 constexpr std::size_t kMaxUdpPayload = 65507;
+constexpr std::size_t kDefaultMaxUdpDatagramBytes = 1400U;
+constexpr std::size_t kFragmentHeaderSize = 28U;
+constexpr std::uint8_t kFragmentVersion = 1U;
+constexpr std::array<std::uint8_t, 4> kFragmentMagic{'I', '5', 'G', 'F'};
 
 enum class ProbeMessageKind {
     CooperativeService,
@@ -47,6 +53,7 @@ struct Args {
     std::uint16_t spatIntersectionId{101};
     std::uint16_t horizonMs{2500};
     std::size_t payloadBytes{0};
+    std::size_t maxUdpDatagramBytes{kDefaultMaxUdpDatagramBytes};
     ipi::api::ExperimentContext context{};
     bool csv{false};
 };
@@ -110,6 +117,7 @@ Args parse_args(int argc, char** argv) {
                 << "  --session-id <id>            Session id text for service probes\n"
                 << "  --source-id <id>             Vehicle/source id text\n"
                 << "  --payload-bytes <n>          Extra service payload bytes for sizing tests\n"
+                << "  --udp-max-datagram-bytes <n> Application UDP datagram cap before fragmentation (default 1400)\n"
                 << "  --spat-intersection <id>     Numeric SPaT intersection id (default 101)\n"
                 << "  --horizon-ms <ms>            Requested service horizon (default 2500)\n"
                 << "  --run-id <id>                Shared experiment run identifier\n"
@@ -157,6 +165,8 @@ Args parse_args(int argc, char** argv) {
             args.sourceId = argv[++i];
         } else if (arg == "--payload-bytes" && i + 1 < argc) {
             args.payloadBytes = static_cast<std::size_t>(std::stoull(argv[++i]));
+        } else if (arg == "--udp-max-datagram-bytes" && i + 1 < argc) {
+            args.maxUdpDatagramBytes = static_cast<std::size_t>(std::stoull(argv[++i]));
         } else if (arg == "--spat-intersection" && i + 1 < argc) {
             args.spatIntersectionId = static_cast<std::uint16_t>(std::stoul(argv[++i]));
         } else if (arg == "--horizon-ms" && i + 1 < argc) {
@@ -175,8 +185,100 @@ Args parse_args(int argc, char** argv) {
     if (args.payloadBytes > 60000U) {
         throw std::invalid_argument("--payload-bytes must be <= 60000 for UDP datagrams");
     }
+    if (args.maxUdpDatagramBytes <= kFragmentHeaderSize || args.maxUdpDatagramBytes > kMaxUdpPayload) {
+        throw std::invalid_argument("--udp-max-datagram-bytes must be > fragment header and <= max UDP payload");
+    }
     apply_context_defaults(args);
     return args;
+}
+
+void append_u16_be(std::vector<std::uint8_t>& out, std::uint16_t value) {
+    out.push_back(static_cast<std::uint8_t>((value >> 8U) & 0xFFU));
+    out.push_back(static_cast<std::uint8_t>(value & 0xFFU));
+}
+
+void append_u32_be(std::vector<std::uint8_t>& out, std::uint32_t value) {
+    out.push_back(static_cast<std::uint8_t>((value >> 24U) & 0xFFU));
+    out.push_back(static_cast<std::uint8_t>((value >> 16U) & 0xFFU));
+    out.push_back(static_cast<std::uint8_t>((value >> 8U) & 0xFFU));
+    out.push_back(static_cast<std::uint8_t>(value & 0xFFU));
+}
+
+void append_u64_be(std::vector<std::uint8_t>& out, std::uint64_t value) {
+    for (int shift = 56; shift >= 0; shift -= 8) {
+        out.push_back(static_cast<std::uint8_t>((value >> static_cast<unsigned>(shift)) & 0xFFU));
+    }
+}
+
+std::uint64_t fragment_message_id(const ipi::api::Private5gProbeRequest& request) {
+    constexpr std::uint64_t kSequenceSalt = 0x9E3779B97F4A7C15ULL;
+    return request.clientSendTimeNs ^ (request.sequence * kSequenceSalt);
+}
+
+void append_fragment_header(std::vector<std::uint8_t>& datagram,
+                            std::uint64_t messageId,
+                            std::uint32_t totalSize,
+                            std::uint32_t offset,
+                            std::uint16_t fragmentIndex,
+                            std::uint16_t fragmentCount) {
+    datagram.insert(datagram.end(), kFragmentMagic.begin(), kFragmentMagic.end());
+    datagram.push_back(kFragmentVersion);
+    datagram.push_back(0U);
+    append_u16_be(datagram, static_cast<std::uint16_t>(kFragmentHeaderSize));
+    append_u64_be(datagram, messageId);
+    append_u32_be(datagram, totalSize);
+    append_u32_be(datagram, offset);
+    append_u16_be(datagram, fragmentIndex);
+    append_u16_be(datagram, fragmentCount);
+}
+
+void send_encoded_request(int socketFd,
+                          const Args& args,
+                          const ipi::api::Private5gProbeRequest& request,
+                          const std::vector<std::uint8_t>& encodedRequest) {
+    if (encodedRequest.size() > kMaxUdpPayload) {
+        throw std::runtime_error("encoded UDP probe exceeds max datagram payload");
+    }
+
+    if (encodedRequest.size() <= args.maxUdpDatagramBytes) {
+        const ssize_t sent = ::send(socketFd, encodedRequest.data(), encodedRequest.size(), 0);
+        if (sent < 0 || static_cast<std::size_t>(sent) != encodedRequest.size()) {
+            throw std::runtime_error("udp send failed");
+        }
+        return;
+    }
+
+    if (encodedRequest.size() > std::numeric_limits<std::uint32_t>::max()) {
+        throw std::runtime_error("encoded UDP probe exceeds fragmentation size limit");
+    }
+
+    const auto chunkCapacity = args.maxUdpDatagramBytes - kFragmentHeaderSize;
+    const auto fragmentCountSize = (encodedRequest.size() + chunkCapacity - 1U) / chunkCapacity;
+    if (fragmentCountSize > std::numeric_limits<std::uint16_t>::max()) {
+        throw std::runtime_error("encoded UDP probe requires too many fragments");
+    }
+
+    const auto messageId = fragment_message_id(request);
+    const auto totalSize = static_cast<std::uint32_t>(encodedRequest.size());
+    const auto fragmentCount = static_cast<std::uint16_t>(fragmentCountSize);
+    for (std::uint16_t fragmentIndex = 0; fragmentIndex < fragmentCount; ++fragmentIndex) {
+        const auto offset = static_cast<std::size_t>(fragmentIndex) * chunkCapacity;
+        const auto chunkSize = std::min(chunkCapacity, encodedRequest.size() - offset);
+        std::vector<std::uint8_t> datagram;
+        datagram.reserve(kFragmentHeaderSize + chunkSize);
+        append_fragment_header(datagram,
+                               messageId,
+                               totalSize,
+                               static_cast<std::uint32_t>(offset),
+                               fragmentIndex,
+                               fragmentCount);
+        datagram.insert(datagram.end(), encodedRequest.begin() + offset, encodedRequest.begin() + offset + chunkSize);
+
+        const ssize_t sent = ::send(socketFd, datagram.data(), datagram.size(), 0);
+        if (sent < 0 || static_cast<std::size_t>(sent) != datagram.size()) {
+            throw std::runtime_error("udp fragment send failed");
+        }
+    }
 }
 
 ipi::MessageFrame build_service_frame(const Args& args, std::uint64_t sequence) {
@@ -410,13 +512,7 @@ int main(int argc, char** argv) {
             const auto request = build_request(args, i + 1U, codec);
             try {
                 const auto encodedRequest = ipi::api::encode_private_5g_probe_request(request);
-                if (encodedRequest.size() > kMaxUdpPayload) {
-                    throw std::runtime_error("encoded UDP probe exceeds max datagram payload");
-                }
-                const ssize_t sent = ::send(socketFd, encodedRequest.data(), encodedRequest.size(), 0);
-                if (sent < 0 || static_cast<std::size_t>(sent) != encodedRequest.size()) {
-                    throw std::runtime_error("udp send failed");
-                }
+                send_encoded_request(socketFd, args, request, encodedRequest);
                 const ssize_t received = ::recv(socketFd, buffer.data(), buffer.size(), 0);
                 if (received < 0) {
                     record_failure(args, request, "udp ack timeout", ipi::api::current_unix_time_ns(), stats);

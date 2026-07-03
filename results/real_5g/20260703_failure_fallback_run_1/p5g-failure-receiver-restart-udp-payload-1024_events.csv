@@ -1,0 +1,8 @@
+event_time_ns,event_time_iso,condition_id,transport,failure_mode,action,detail
+1783088206449456235,2026-07-03T10:16:46-04:00,p5g-failure-receiver-restart-udp-payload-1024,udp,receiver-restart,condition_start,starting condition
+1783088211886296296,2026-07-03T10:16:51-04:00,p5g-failure-receiver-restart-udp-payload-1024,udp,receiver-restart,service_ready,receiver stack ready
+1783088211894406514,2026-07-03T10:16:51-04:00,p5g-failure-receiver-restart-udp-payload-1024,udp,receiver-restart,sender_started,pid=39821
+1783088271903664021,2026-07-03T10:17:51-04:00,p5g-failure-receiver-restart-udp-payload-1024,udp,receiver-restart,failure_begin,killing udp receiver
+1783088282542324878,2026-07-03T10:18:02-04:00,p5g-failure-receiver-restart-udp-payload-1024,udp,receiver-restart,restart_begin,starting udp receiver
+1783088285188665895,2026-07-03T10:18:05-04:00,p5g-failure-receiver-restart-udp-payload-1024,udp,receiver-restart,restart_complete,udp receiver restarted
+1783088459599213358,2026-07-03T10:20:59-04:00,p5g-failure-receiver-restart-udp-payload-1024,udp,receiver-restart,sender_complete,status=0

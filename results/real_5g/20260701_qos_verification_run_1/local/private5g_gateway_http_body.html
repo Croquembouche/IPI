@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="third_party/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    </head>
+    <body class="clearfix">
+    <div id="top" class="clearfix">
+        <div id="head">
+          <form action="/auth/logout.cgi" method='post' class="logout-form">
+            <button id="logout-button" type="submit" class="button button_logout submit-button" value="Submit">Logout</button>
+          </form>
+          <div class="header-logo-container">
+            <img id="header_logo" src="images/meraki-logo.png" width="120">
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <header id="status">
+        <i class="icon-check-circled green" id="healthy_check" style="display: none;"></i>
+        <h1 id="healthy_status" style="display: none;">Healthy</h1>
+        <h2 id="healthy_message" style="display: none;">This <a class='device_noun'></a>&nbsp;is functioning normally</h2>
+        <i class="icon-alert" id="alert_x"style="display: none; color: ##FF0033;"></i>
+        <h1 id="alert_status" style="display: none">Something's not right</h1>
+        <div id="status-text">
+            <h2 id="lan_check_text_scan_status" style="display: none;">
+                This <a class='device_noun'></a>&nbsp;is trying to join a network or find a working uplink connection.
+            </h2>
+            <h2 id="ethernet_check_text_bad_status" style="display: none;">
+              This <a class='device_noun'></a>&nbsp;does not have a working uplink connection.
+            </h2>
+            <h2 id="lan_check_text_bad_gateway_status" style="display: none;">
+              This <a class='device_noun'></a>&nbsp;is unable to reach its configured gateway.
+            </h2>
+            <h2 id="lan_check_text_no_gateway_status" style="display: none;">
+              This <a class='device_noun'></a>&nbsp;has no default gateway configured.
+            </h2>
+            <h2 id="lan_check_text_ipconflict_status" style="display: none;">
+                This <a class='device_noun'></a>&nbsp;has detected an IP conflict on its uplink connection with another machine.
+            </h2>
+            <h2 id="internet_check_text_bad_status" style="display: none;">
+                This <a class='device_noun'></a>&nbsp;is not connected to the Internet.
+            </h2>
+            <h2 id="internet_check_text_no_ip_status" style="display: none;">
+              This <a class='device_noun'></a>&nbsp;does not have an IP address on its uplink connection.
+            </h2>
+            <h2 id="mesh_check_text_no_gateway" style="display: none;">
+              This <a class='device_noun'></a>&nbsp;does not have a mesh uplink.
+            </h2>
+            <h2 id="internet_check_text_nodns_status" style="display: none;">
+                This <a class='device_noun'></a>&nbsp;does not have a working DNS server.
+            </h2>
+            <h2 id="config_check_text_bad_status" style="display: none;">
+                This <a class='device_noun'></a>&nbsp;is not connected to the <a class='cloud_noun'></a>.
+            </h2>
+            <h2 id="cellular_bad_signal_condition_status" style="display: none;">
+                This <a class='device_noun'></a>&nbsp;is not connected to the Internet.<br>This could be due to poor signal conditions.
+            </h2>
+            <h2 id="config_check_text_mtunnel_bad_status" style="display: none;">
+                Make sure you can send outgoing traffic to UDP port 7351 through your firewall.
+            </h2>
+            <h2 id="config_check_text_nextunnel_bad_status" style="display: none;">
+                Make sure you can send outgoing traffic to TCP port 443 through your firewall.
+            </h2>
+            <h2 id="config_check_text_http_proxy_bad_status" style="display: none;">
+                Make sure the HTTP proxy configuration is correct.
+            </h2>
+            <h2 id="config_check_text_config_bad_status" style="display: none;">
+                Make sure you can send outgoing traffic to TCP port 7734 through your firewall.
+            </h2>
+            <h2 id="ntp_bad_status" style="display: none;">
+                Make sure you can send outgoing traffic to UDP port 123.
+            </h2>
+          <div id="status-text3">
+            <h2 id="wired_wan_mode_callout" style="display: none;">
+                Device is in <strong> Wired WAN Mode! </strong>
+            </h2>
+          </div>
+        </div>
+                <i class="icon-alert green" id="site_survey_alert" style="display: none;"></i>
+                <h1 id="site_survey_status" style="display: none;">Site Survey</h1>
+                <h2 id="site_survey_message" style="display: none;">This <a class='device_noun'></a>&nbsp;is in site survey mode. You can disable site survey mode on the Configure tab.</h2>
+            </header>
+        </div>
+        <div id="margin-clear">.</div>
+        <div id="details" data-spy="affix" data-offset-top="333" style="display:none;">
+        <div class="simple-tabs-container">
+            <ul class="simple-tabs container" style="white-space:nowrap;">
+              <li class="connection_tab" style="display: none;">Connection</li>
+              <li class="neighbors_tab" style="display: none;">Neighbors</li>
+              <li class="configure_tab">Configure</li>
+              <li class="ethernet_tab" style="display: none;">Uplink</li>
+              <li class="swports_status_tab" style="display: none;">Switch ports status</li>
+              <li class="swports_conf_tab" style="display: none;">Switch ports configuration</li>
+              <li class="cellular_status_tab" style="display: none;">Cellular Status</li>
+              <li class="sim_pin_tab" style="display: none;">SIM PIN configuration</li>
+              <li class="map_apps_tab" style="display: none;">Apps</li>
+            </ul>
+            <ul class="simple-tabs-content container">
+                <!-- Connection -->
+                <li>
+                    <section id="connection">
+                        <div class="sub-section">
+                            <h1>Your client connection</h1>
+                            <table id="your_client_connection_table">
+                                <tr id="your_ip_line" class="your_hideable_connection_info" style="display: none;">
+                                    <th scope="row">Client IP</th><td id="your_ip"></td>
+                                </tr>
+                                <tr id="your_mac_line" class="your_hideable_connection_info" style="display: none;">
+                                    <th scope="row">Client MAC</th><td id="your_mac"></td>
+                                </tr>
+                                <tr id="your_mld_mac_line" class="your_hideable_connection_info" style="display: none;">
+                                    <th scope="row">Client MLD MAC</th><td id="your_mld_mac"></td>
+                                <tr id="your_vlan_line" class="your_hideable_connection_info" style="display: none;">
+                                    <th scope="row">VLAN</th><td id="your_vlan"></td>
+                                </tr>
+                                    <tr id="your_port_line" class="your_hideable_connection_info" style="display: none;">
+                                    <th scope="row">Port</th><td id="your_port"></td>
+                                </tr>
+                                    <tr id="your_radio_line" style="display: none;">
+                                    <th scope="row">AP radio</th><td id="your_radio"></td>
+                                </tr>
+                                    <tr id="your_band_line" style="display: none;">
+                                    <th scope="row">Band</th><td id="your_band"></td>
+                                </tr>
+                                    <tr id="your_channel_line" style="display: none;">
+                                    <th scope="row">Channel</th><td id="your_channel"></td>
+                                </tr>
+                                    <tr id="your_mode_line" style="display: none;">
+                                    <th scope="row">Mode</th><td id="wireless_mode"></td>
+                                </tr>
+                                    <tr id="your_max_bitrate_line" style="display: none;">
+                                    <th scope="row">Max bitrate</th><td id="max_device_bitrate"></td>
+                                </tr>
+                                    <tr id="your_signal_line" style="display: none;">
+                                    <th scope="row">Signal</th>
+                                    <td><span id="signal_strength"></span>
+                                        <div class="meter" id="rssi_graph">
+                                            <div class="meter-bar" id="rssi_graph_bar"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3 id="your_client_connection_multilink_title">Connection Links</h3>
+                            <table id="your_client_connection_link_table">
+                            </table>
+                        </div>
+                        <div id="speed-test" class="sub-section" style="display: none;">
+                            <h1>Speed test</h1>
+                            <p>Run a browser-based speed test to check your connection to this <a class='device_noun'></a>.</p>
+                            <div id="toggle_speed_test" class="button button_speed_test" style="margin-right: 1%;"><span id="speed_test_button_text">Run speed test</span></div>
+                            <div id="speed_test_spinner" style="height: 7px; width: 25px; display: none;"></div>
+                            <div id='speed_test_out'></div>
+                        </div>
+                        <div class="sub-section">
+                            <h1><a class='device_noun_camel'></a> details</h1>
+                                <table>
+                                <tr id="device_name_row_container" style="display: none;">
+                                    <th>Name</th><td class="device_name" id="switch_details_device_name"></td>
+                                </tr>
+                                <tr>
+                                    <th>Network name</th><td id='device_network_name'></td>
+                                </tr>
+                                <tr>
+                                    <th>Hardware address</th><td class='device_mac'></td>
+                                </tr>
+                                <tr id="product_model_details" style="display: none;">
+                                    <th>Product model</th><td id='product_model_text'></td>
+                                </tr>
+                                <tr id="ant_beam_state" style="display: none;">
+                                    <th>Antenna Beam State</th><td id='ant_beam_state_text'></td>
+                                </tr>
+                                <tr id="mg_signalstrength" style="display: none;">
+                                    <th scope="row">Signal Strength</th>
+                                    <td><span id="mg_signalstrength_bar"></span>
+                                        <div class="meter" id="mg_signalstrength_graph">
+                                            <div class="meter-bar" id="mg_signalstrength_graph_bar"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr id="mg_rsrp" style="display: none;">
+                                    <th scope="row">Reference Signal Received Power (RSRP)</th>
+                                    <td><span id="mg_rsrp_bar"></span>
+                                        <div class="meter" id="mg_rsrp_graph">
+                                            <div class="meter-bar" id="mg_rsrp_graph_bar"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr id="mg_rsrq" style="display: none;">
+                                    <th scope="row">Reference Signal Received Quality (RSRQ)</th>
+                                    <td><span id="mg_rsrq_bar"></span>
+                                        <div class="meter" id="mg_rsrq_graph">
+                                            <div class="meter-bar" id="mg_rsrq_graph_bar"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr id="mg_rscp" style="display: none;">
+                                    <th scope="row">Received Signal Code Power (RSCP)</th>
+                                    <td><span id="mg_rscp_bar"></span>
+                                        <div class="meter" id="mg_rscp_graph">
+                                            <div class="meter-bar" id="mg_rscp_graph_bar"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr id="mg_ec_n0" style="display: none;">
+                                    <th scope="row">Energy per chip over Noise Spectral Density (EC/N0)</th>
+                                    <td><span id="mg_ec_n0_bar"></span>
+                                        <div class="meter" id="mg_ec_n0_graph">
+                                            <div class="meter-bar" id="mg_ec_n0_graph_bar"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr id="mg_band" style="display: none;">
+                                    <th>Band</th><td id='mg_band_text'></td>
+                                </tr>
+                                <tr id="mg_type" style="display: none;">
+                                    <th>Type</th><td id='mg_type_text'></td>
+                                </tr>
+                                <tr id="mg_carrier" style="display: none;">
+                                    <th>Carrier</th><td id='mg_carrier_text'></td>
+                                </tr>
+                                <tr id="mg_apn" style="display: none;">
+                                    <th>APN</th><td id='mg_apn_text'></td>
+                                </tr>
+                                <tr id="mg_status" style="display: none;">
+                                    <th>Status</th><td id='mg_status_text'></td>
+                                </tr>
+                                <tr id="mg_connection" style="display: none;">
+                                    <th>Cellular Connection</th><td id='mg_connection_text'></td>
+                                </tr>
+                                <tr id="mg_connection_fail" style="display: none;">
+                                  <th>Error Message</th><td id='mg_connection_fail_text'></td>
+                                </tr>
+                                <tr id="display_ip_type" style="display: none;">
+                                    <th>IP Type</th><td id='display_ip_type_text'></td>
+                                </tr>
+
+                                <tr id="vmx_hypervisor_platform_details" style="display:none;">
+                                    <th>Platform</th><td id='vmx_hypervisor_platform_text'></td>
+                                </tr>
+                                <tr id="vmx_open_source_download" style="display:none;">
+                                    <th>Open Source Disclosure</th><td><a id="open_source_link">Download</a></td>
+                                </tr>
+
+                                <tr id="radio_1_util" style="display: none;">
+                                    <th id="radio_1_text"></th>
+                                    <td>
+                                        <span>
+                                            <div id="radio_1_wifi_text"></div>
+                                        </span>
+                                        <div class="meter">
+                                            <div class="meter-bar" id="radio_1_wifi_bar" style="background:#880000; float:left;"></div>
+                                            <div class="meter-bar" id="radio_1_non_wifi_bar" style="float:left;"></div>
+                                        </div>
+                                        <div id="radio_1_non_wifi_text"></div>
+                                    </td>
+                                </tr>
+                                <tr id="radio_2_util" style="display: none;">
+                                    <th id="radio_2_text"></th>
+                                    <td>
+                                        <span>
+                                            <div id="radio_2_wifi_text"></div>
+                                        </span>
+                                        <div class="meter">
+                                            <div class="meter-bar" id="radio_2_wifi_bar" style="background:#880000; float:left;"></div>
+                                            <div class="meter-bar" id="radio_2_non_wifi_bar" style="float:left;"></div>
+                                        </div>
+                                        <div id="radio_2_non_wifi_text"></div>
+                                    </td>
+                                </tr>
+                                <tr id="radio_3_util" style="display: none;">
+                                    <th id="radio_3_text"></th>
+                                    <td>
+                                        <span>
+                                            <div id="radio_3_wifi_text"></div>
+                                        </span>
+                                        <div class="meter">
+                                            <div class="meter-bar" id="radio_3_wifi_bar" style="background:#880000; float:left;"></div>
+                                            <div class="meter-bar" id="radio_3_non_wifi_bar" style="float:left;"></div>
+                                        </div>
+                                        <div id="radio_3_non_wifi_text"></div>
+                                    </td>
+                                </tr>
+                                <tr id="tr_cellular_connectivity" style="display: none;">
+                                    <th>Cellular Uplink</th>
+                                    <td>
+                                        <div id="cellular_check_text_gateway">
+                                            This <a class='device_noun'></a>&nbsp;is connected to a cellular network.
+                                            <div id="cellular_ip_div">Cellular IP address: <span class="cellular_ip"></span></div>
+                                            <div id="cellular_ip6_div">Cellular IPv6 address: <span class="cellular_ip6"></span></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="tr_ethernet_connectivity" style="display: none;">
+                                    <th>Uplink</th>
+                                        <td>
+                                           <div id="ethernet_check_text_good" style="display: none;">
+                                                This <a class='device_noun'></a>&nbsp;has a working uplink connection.
+                                                <div class="eth_carrier_text"><span class="wired_nat_details"></span> Port status: <span class="eth_carrier"></span></div>
+                                                <div class="eth_duplex_text"><span class="wired_nat_details"></span> Duplex: <span class="eth_duplex"></span></div>
+                                                <div class="eth_speed_text"><span class="wired_nat_details"></span> Speed: <span class="eth_speed"></span></div>
+                                                <div class="eth_ms_uplink_port_text"><span class="wired_nat_details"></span> Port number: <span class="eth_ms_uplink_port"></span></div>
+                                            </div>
+                                            <div id="ethernet_check_text_bad" style="display: none;">
+                                                This <a class='device_noun'></a>&nbsp;does not have a working uplink connection.<br><br>
+                                                <b>Check the following: </b>
+                                                <ul class='troubleshooting_checklist'>
+                                                 <li>The uplink cable is in good condition and passes a cable test</li>
+                                                 <li>The port on the upstream device is not disabled </li>
+                                                </ul>
+                                            </div>
+                                            <div id="lan_check_text_node" style="display: none;">
+                                                This <a class='device_noun'></a>&nbsp;is acting as a repeater and has not detected an uplink connection on an uplink port.
+                                            </div>
+                                            <div id="lan_check_text_scan" style="display: none;">
+                                                <div class="gw_ip_text"><span class="wired_nat_details"></span>Attempting gateway IP address: <span class="gw_ip"></span></div>
+                                                <div class="gw_ip6_text"><span class="wired_nat_details"></span>Attempting gateway IPv6 address: <span class="gw_ip6"></span></div>
+                                                This <a class='device_noun'></a>&nbsp;is trying to join a network or find a working uplink connection.
+                                            </div>
+                                            <div class="primary_error_text" id="primary_error_text_ethernet" style="display: none;">Fixing this first may resolve other issues listed on this page.</div>
+                                            <div class="details wired_nat_details" id="ip_details"></div>
+                                        </td>
+                                </tr>
+                                <tr id="tr_ip_address">
+                                  <th>IP Address</th>
+                                    <td>
+                                      <div id="lan_check_text_gateway" style="display: none;">
+                                        This <a class='device_noun'></a>&nbsp;is directly connected to a local network.
+                                        <a class='is_dhcp_ip_text'>The IP has been assigned via DHCP.</a>
+                                        <a class='is_static_ip_text'>A static IP has been configured.</a>
+                                        <div class="wired_ip_text"><span class="wired_nat_details">Primary </span>IP address: <span class="wired_ip"></span></div>
+                                        <div class="netmask_text"><span class="wired_nat_details"></span>Subnet mask: <span class="netmask"></span></div>
+                                        <div class="wired_ip6_text"><span class="wired_nat_details">Primary </span>IPv6 address: <span class="wired_ip6"></span></div>
+                                        <div class="prefix_text"><span class="wired_nat_details"></span>IPv6 prefix length: <span class="ip_prefix"></span></div>
+                                      </div>
+                                      <div id="lan_check_text_ipconflict" style="display: none;">
+                                        This <a class='device_noun'></a>&nbsp;has detected an IP conflict on its uplink connection with another machine.
+                                        <a class='is_dhcp_ip_text'>The IP has been assigned via DHCP.</a>
+                                        <a class='is_static_ip_text'>A static IP has been configured.</a>
+                                        <div class="wired_ip_text"><span class="wired_nat_details">Primary </span>IP address: <span class="wired_ip"></span></div>
+                                        <div class="netmask_text"><span class="wired_nat_details"></span>Subnet mask: <span class="netmask"></span></div>
+                                        <div class="wired_ip6_text"><span class="wired_nat_details">Primary </span>IPv6 address: <span class="wired_ip6"></span></div>
+                                        <div class="prefix_text"><span class="wired_nat_details"></span>IPv6 prefix length: <span class="ip_prefix"></span></div>
+                                      </div>
+                                      <div id="lan_check_text_mesh" style="display: none;">
+                                        This <a class='device_noun'></a>&nbsp;is acting as a repeater, hence no local IP.
+                                      </div>
+                                      <div id="internet_check_no_dhcp_ip" style="display: none;">
+                                        This <a class='device_noun'></a>&nbsp;does not have a working IP address.<br><br>
+                                        <b>Check the following: </b>
+                                        For dynamically assigned IP addresses,
+                                          <ul class='troubleshooting_checklist'>
+                                            <li>If the traffic should be tagged with a VLAN ID, the VLAN ID should be set in the Configure tab. Otherwise, please confirm that the VLAN ID is empty</li>
+                                            <li>Verify DHCP server or relay is functioning (i.e. has available leases or no errors being printed)</li>
+                                          </ul>
+                                          For setting a static IP address, navigate to the Configure tab.
+                                      </div>
+                                      <div class="primary_error_text" id="primary_error_text_ip_address" style="display: none;">Fixing this first may resolve other issues listed on this page.</div>
+                                    </td>
+                                </tr>
+                                <tr id="tr_gw_communication">
+                                  <th>Gateway</th>
+                                    <td>
+                                      <div id="lan_check_text_good_gateway" style="display: none;">
+                                        This <a class='device_noun'></a>&nbsp;has a default gateway and it is reachable.
+                                        <div class="gw_ip_text"><span class="wired_nat_details"></span>Gateway IP address: <span class="gw_ip"></span></div>
+                                        <div class="gw_ip6_text"><span class="wired_nat_details"></span>Gateway IPv6 address: <span class="gw_ip6"></span></div>
+                                      </div>
+                                      <div id="lan_check_text_no_gateway" style="display: none;">
+                                        This <a class='device_noun'></a>&nbsp;has no default gateway configured. <br><br>
+                                        <b>Check the following: </b>
+                                        For dynamically assigned IP addresses,
+                                          <ul class='troubleshooting_checklist'>
+                                            <li>For dynamic IP assignment, the DHCP server is providing the appropriate router IP address for the subnet</li>
+                                            <li>For static IP assignment, the correct router IP is configured</li>
+                                          </ul>
+                                      </div>
+                                      <div id="lan_check_text_mesh_gateway" style="display: none;">
+                                        This <a class='device_noun'></a>&nbsp;has a mesh gateway and it is reachable.
+                                        <div class="gw_ip_text"><span class="wired_nat_details"></span>Mesh gateway IP address: <span class="gw_ip"></span></div>
+                                        <div class="gw_ip6_text"><span class="wired_nat_details"></span>Mesh gateway IPv6 address: <span class="gw_ip6"></span></div>
+                                      </div>
+                                      <div id="lan_check_text_no_mesh_gateway" style="display: none;">
+                                        This <a class='device_noun'></a>&nbsp;has no mesh gateway.
+                                      </div>
+
+                                      <div id="lan_check_text_bad_gateway" style="display: none;">
+                                        <div class="gw_ip_text"><span class="wired_nat_details"></span>This <a class='device_noun'></a>&nbsp;is unable to reach the gateway at <span class="gw_ip"></span></div>
+                                        <div class="gw_ip6_text"><span class="wired_nat_details"></span>This <a class='device_noun'></a>&nbsp;is unable to reach the gateway at <span class="gw_ip6"></span></div>
+                                        The default gateway is not responding to the continuous ARP request from the device. <br> <br>
+                                        <b>Check the following: </b>
+                                        For dynamically assigned IP addresses,
+                                          <ul class='troubleshooting_checklist'>
+                                            <li>The default gateway is reachable by another device on the same subnet</li>
+                                            <li>The gateway is receiving and responding to the ARP requests from the device</li>
+                                          </ul>
+                                      </div>
+                                      <div class="primary_error_text" id="primary_error_text_gateway" style="display: none;">Fixing this first may resolve other issues listed on this page.</div>
+                                    </td>
+                                </tr>
+                                <tr id="tr_dns_communication">
+                                  <th>DNS Communication</th>
+                                  <td>
+                                    <div id="internet_check_text_nodns" style="display: none;">
+                                      This <a class='device_noun'></a>&nbsp;cannot resolve IP addresses through the configured DNS servers.<br> <br>
+                                      <b>Check the following: </b>
+                                          <ul class='troubleshooting_checklist'>
+                                            <li>The servers can resolve meraki.com, google.com, and yahoo.com</li>
+                                            <li>UDP port 53 traffic to your DNS server is allowed</li>
+                                          </ul>
+                                      <div class="dns1_ip_text" style="display: none;">DNS server 1: <span class="dns1_ip"></span></div>
+                                      <div class="dns2_ip_text" style="display: none;">DNS server 2: <span class="dns2_ip"></span></div>
+                                      <div class="dns6_1_ip_text" style="display: none;">DNSv6 server 1: <span class="dns6_1_ip"></span></div>
+                                      <div class="dns6_2_ip_text" style="display: none;">DNSv6 server 2: <span class="dns6_2_ip"></span></div>
+                                    </div>
+                                    <div id="internet_check_text_dns_good" style="display: none;">
+                                      This <a class='device_noun'></a>&nbsp;has a working DNS server.
+                                      <div class="dns1_ip_text" style="display: none;">DNS server 1: <span class="dns1_ip"></span></div>
+                                      <div class="dns2_ip_text" style="display: none;">DNS server 2: <span class="dns2_ip"></span></div>
+                                      <div class="dns6_1_ip_text" style="display: none;">DNSv6 server 1: <span class="dns6_1_ip"></span></div>
+                                      <div class="dns6_2_ip_text" style="display: none;">DNSv6 server 2: <span class="dns6_2_ip"></span></div>
+                                    </div>
+                                    <div class="primary_error_text" id="primary_error_text_dns" style="display: none;">Fixing this first may resolve other issues listed on this page.</div>
+                                  </td>
+                                </tr>
+                                <tr id="tr_internet_check" style="display: none;">
+                                    <th>Internet</th>
+                                    <td>
+                                        <div id="internet_check_text_good" style="display: none;">
+                                            This <a class='device_noun'></a>&nbsp;is connected to the Internet.
+                                        </div>
+                                        <div id="internet_check_text_bad" style="display: none;">
+                                            This <a class='device_noun'></a>&nbsp;is not connected to the Internet.
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="ntp_info" style="display: none;">
+                                  <th scope="row">System Time</th>
+                                  <td>
+                                    <div class="ntp_not_synced_text" style="display: none;">
+                                      This <a class='device_noun'></a>&nbsp;cannot reach a NTP server, which can lead to the system clock becoming unsynchronized or showing an incorrect time. <br> <br>
+                                      <b>Check the following: </b>
+                                          <ul class='troubleshooting_checklist'>
+                                            <li>UDP port 123 to any destination is allowed</li>
+                                            <li>The DNS servers can resolve pool.ntp.org</li>
+                                          </ul>
+                                    </div>
+                                    <div class="ntp_time_text" style="display: none;"><span class="ntp_time"></div>
+                                    <div class="primary_error_text" id="primary_error_text_ntp" style="display: none;">Fixing this first may resolve other issues listed on this page.</div>
+                                </td>
+                              </tr>
+                                <tr>
+                                    <th class='cloud_noun'></th>
+                                    <td>
+                                        <div id="config_check_text_bad" style="display: none;">
+                                            This <a class='device_noun'></a>&nbsp;is not connected to the <a class='cloud_noun'></a> at <a class='tunnel_address'></a>. <br>
+                                            The <a class='device_noun'></a>&nbsp;needs to establish communication with the Cisco Meraki cloud to download its configuration, monitor, and manage the device.
+                                        </div>
+                                        <div id="config_check_text_mtunnel_bad" style="display: none;">
+                                          <b>Check the following: </b>
+                                          <ul class='troubleshooting_checklist'>
+                                            <li>Verify the outgoing traffic to <a class='tunnel_address'></a> on UDP port number 7351 is allowed upstream</li>
+                                          </ul>
+                                        </div>
+                                        <div id="config_check_text_nextunnel_bad" style="display: none;">
+                                          <b>Check the following: </b>
+                                          <ul class='troubleshooting_checklist'>
+                                            <li>Verify the outgoing traffic to <a class='tunnel_address'></a> on TCP port number 443 is allowed upstream</li>
+                                          </ul>
+                                        </div>
+                                         <div id="config_check_text_http_proxy_bad" style="display: none;">
+                                          <ul class='troubleshooting_checklist'>
+                                            <li>Make sure that the HTTP proxy is reachable and properly configured</li>
+                                          </ul>
+                                        </div>
+                                        <div id="config_check_text_config_bad" style="display: none;">
+                                            This <a class='device_noun'></a>&nbsp;is not able to reach config-2037.meraki.com or config-s.meraki.com.<br>
+                                            Make sure you can send them outgoing traffic via TCP port 7734 through your firewall.<br>
+                                        </div>
+                                        <div id="config_check_text_good" style="display: none;">
+                                            This <a class='device_noun'></a>&nbsp;is successfully connected to the <a id="node_link" class='cloud_noun' href="http://dashboard.meraki.com"></a>.
+                                        </div>
+                                        <div id="config_last_good" style="display:none;">
+                                           Last successful config download <a id='time_since_last_config'></a>&nbsp;ago.
+                                        </div>
+                                        <div id="config_last_bad" style="display:none;">
+                                           Last failed attempt to download config <a id='time_since_last_config_fail'></a>&nbsp;ago.
+                                      </div>
+                                      <div class="primary_error_text" id="primary_error_text_cloud" style="display: none;">Fixing this first may resolve other issues listed on this page.</div>
+                                    </td>
+                                </tr>
+                                <tr id="firmware_check_text" style="display:none;">
+                                    <th>Firmware</th>
+                                    <td>
+                                        <div id="firmware_check_text_updating" style="display:none;"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="cellular_stats_div" class="sub-section" style="display:none;">
+                          <h1>Cellular Status</h1>
+                          <div id="cellular_stats_tables_div"></div>
+                        </div>
+                        <div id="vlan_utilization" class="sub-section" style="display:none;">
+                            <h1>VLAN utilization</h1>
+                            <table class="flip-table">
+                                <thead>
+                                    <tr><th></th><th>VLAN list</th><th>VLAN count</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Port primary or allowed VLANs</td><td id='port_vlans'></td><td id='port_vlans_count'></td></tr>
+                                    <tr><td>Access port voice VLANs</td><td id='voice_vlans'></td><td id='voice_vlans_count'></td></tr>
+                                    <tr><td>Access policy guest VLANs</td><td id='guest_vlans'></td><td id='guest_vlans_count'></td></tr>
+                                    <tr><td>Management VLAN</td><td id='management_vlan'></td><td id='management_vlan_count'></td></tr>
+                                    <tr class="all_vlans"><td>All VLANs in use</td><td id='all_vlans'></td><td id='all_vlans_count'></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="cellular_state_div" class="sub-section" style="display:none;">
+                            <h1>Cellular status</h1>
+                            <table>
+                                <tr>
+                                    <th>Status</th><td id="cellular_status"></td>
+                                </tr>
+                                <tr>
+                                    <th>IP</th><td id="cellular_ip"></td>
+                                </tr>
+                                <tr>
+                                    <th>Type</th><td id="cellular_type"></td>
+                                </tr>
+                                <tr>
+                                    <th>Provider</th><td id="cellular_provider"></td>
+                                </tr>
+                                <tr>
+                                    <th>Model</th><td id="cellular_model"></td>
+                                </tr>
+                                <tr id="cellular_apn_tr" style="display: none;">
+                                    <th>Access Point Name (APN)</th><td id="cellular_apn"></td>
+                                </tr>
+                                <tr id="cellular_signal_tr" style="display: none;">
+                                    <th>Signal strength</th><td id="cellular_signal"></td>
+                                </tr>
+                                <tr id="cellular_rsrp_tr" style="display: none;">
+                                    <th>Reference Signal Received Power (RSRP)</th><td id="cellular_rsrp"></td>
+                                </tr>
+                                <tr id="cellular_rsrq_tr" style="display: none;">
+                                    <th>Reference Signal Received Quality (RSRQ)</th><td id="cellular_rsrq"></td>
+                                </tr>
+                                <tr id="cellular_band_tr" style="display: none;">
+                                    <th>Band</th><td id="cellular_band"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="stacking_status" class="sub-section" style="display:none;">
+                          <h1>Stacking Status</h1>
+                          <table id="stack_info" class="flip-table">
+                            <thead>
+                              <tr>
+                                <th> Hardware Addresss </th>
+                                <th> Product Model </th>
+                                <th> Current </th>
+                              </tr>
+                            </thead>
+                            <tbody></tbody>
+                          </table>
+                        </div>
+                        <div id="offline-migration" class="sub-section" style="display: none;">
+                            <h1>Offline Migration</h1>
+                            <pre id="offline-migration-logs"></pre>
+                        </div>
+                    </section>
+                </li>
+
+                <!-- Neighbors -->
+                <li>
+                    <section id="meraki_peers" style="display:none;">
+                        <h1>Meraki peers</h1>
+                        <table class="flip-table sortable">
+                            <thead>
+                                <tr>
+                                    <th class="ssid_m" scope="col"><span style="cursor:pointer">SSID</span></th>
+                                    <th class="bssid_m" scope="col"><span style="cursor:pointer">BSSID</span></th>
+                                    <th class="channel_m" scope="col"><span style="cursor:pointer">Channel</span></th>
+                                    <th class="signal_m" scope="col" data-defaultsort='dsc'><span style="cursor:pointer">Signal (dB)</span></th>
+                                    <th class="mode_m" scope="col"><span style="cursor:pointer">Mode</span></th>
+                                    <th class="encryption_m" scope="col"><span style="cursor:pointer">Encryption</span></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </section>
+                    <section id="neighbors">
+                        <h1>Neighbors</h1>
+                        <table class="flip-table sortable">
+                            <thead>
+                                <tr>
+                                    <th class="ssid" scope="col"><span style="cursor:pointer">SSID</span></th>
+                                    <th class="bssid" scope="col"><span style="cursor:pointer">BSSID</span></th>
+                                    <th class="channel" scope="col"><span style="cursor:pointer">Channel</span></th>
+                                    <th class="signal" scope="col" data-defaultsort='dsc'><span style="cursor:pointer">Signal (dB)</span></th>
+                                    <th class="mode" scope="col"><span style="cursor:pointer">Mode</span></th>
+                                    <th class="encryption" scope="col"><span style="cursor:pointer">Encryption</span></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </section>
+                </li>
+
+                <!-- Configure -->
+                <li>
+
+                <form class="clearfix" id="configure_form">
+
+                <section id="wired-uplink-config">
+                  <h1>Uplink configuration</h1>
+                  <p>Configure the uplink Internet connection on this <a class='device_noun'></a>.</p>
+                    <fieldset id="ip_config" class="ip_config" style='height:100%'>
+                      <h2>Internet 1</h2>
+                      <ul>
+                        <li id="wan0_role_op" class="wan0_enabled_op">
+                            <label for='wired_wan0_enabled'>Role</label>
+                            <select class='wired_wan0_enabled' name='wired_wan0_enabled'>
+                              <option value='enabled'>Internet</option>
+                              <option value='disabled'>LAN</option>
+                            </select>
+                        </li>
+
+                        <li id="wan0_remap_op" class="wan0_remap_mode_op">
+                          <label for='wan0_remap_mode'>Active Port</label>
+                          <select class='wan0_remap_mode' name='wan0_remap_mode'>
+                            <!-- enum wan_remap_enum -->
+                            <option value='2'>Auto</option>
+                            <option value='1'>SFP</option>
+                            <option value='0'>Ethernet</option>
+                          </select>
+                        </li>
+
+                        <li id="vlan_config" class="vlan_config">
+                          <label for='vlan_tagging_enabled'>VLAN tagging</label>
+                          <select class='vlan_tagging_enabled' name='vlan_tagging_enabled'>
+                            <option value='disabled'>Don't use VLAN tagging</option>
+                            <option value='enabled'>Use VLAN tagging</option>
+                          </select>
+                        </li>
+
+                        <li class='vlan_id_config'>
+                          <label for='vlan_tag'>VLAN ID</label>
+                          <input id='vlan_tag' name='vlan_tag' type='text' size='5' />
+                        </li>
+
+                        <li class='connection_type_select_row' class='ip_config_group'>
+                          <label for='connection_type_select'>Connection type</label>
+                          <select class='connection_type_select' name='connection_type'>
+                            <option id='connection_type_direct' value='direct'>Direct</option>
+                            <option id='connection_type_pppoe' value='pppoe'>PPPoE</option>
+                          </select>
+                        </li>
+
+
+                        <li class="direct_op direct_connection_options">
+                          <label for='direct_ip_assignment_select'>IP assignment</label>
+                          <select class='direct_ip_assignment_select' name='direct_ip_assignment'>
+                            <option value='dhcp'>DHCP</option>
+                            <option value='static'>Static</option>
+                          </select>
+                        </li>
+
+                        <li class="direct_op direct_static_op">
+                          <label for='static_wired_ip'>Address</label>
+                          <input type='text' class='direct_op' name='static_wired_ip' size=15 value=''>
+                        </li>
+
+                        <li class="direct_op direct_static_op">
+                          <label for='static_wired_netmask'>Netmask</label>
+                          <input type='text' class='direct_op' name='static_wired_netmask' size=15 value=''>
+                        </li>
+
+                        <li class="direct_op direct_static_op">
+                          <label for='static_wired_gateway'>Gateway</label>
+                          <input type='text' class='direct_op' name='static_wired_gateway' size=15 value=''>
+                        </li>
+
+                        <li class="direct_op direct_static_op">
+                          <label for='static_wired_dns1'>DNS server 1</label>
+                          <input type='text' class='direct_op' name='static_wired_dns1' size=15 value=''>
+                        </li>
+
+                        <li class="direct_op direct_static_op">
+                          <label for='static_wired_dns2'>DNS server 2</label>
+                          <input type='text' class='direct_op' name='static_wired_dns2' size=15 value=''>
+                        </li>
+
+                        <li class="pppoe_op">
+                          <label for="pppoe_authentication_enabled_select">Authentication</label>
+                          <select class="pppoe_authentication_enabled_select" name='pppoe_authentication_enabled'>
+                            <option value='false'>No authentication</option>
+                            <option value='true'>Use authentication</option>
+                          </select>
+                        </li>
+
+                        <li class="pppoe_op pppoe_auth_op">
+                          <label for='pppoe_authentication_username'>Username</label>
+                          <input type='text' name='pppoe_authentication_username' size=15 value=''>
+                        </li>
+
+                        <li class="pppoe_op pppoe_auth_op">
+                          <label for='pppoe_authentication_password'>Password</label>
+                          <input type='password' name='pppoe_authentication_password' size=15 value=''>
+                        </li>
+
+                        <li class="pppoe_op">
+                          <label for="pppoe_ip_assignment_select">IPv4 assignment</label>
+                          <select class="pppoe_ip_assignment_select" name='pppoe_ip_assignment'>
+                            <option value='dynamic'>Dynamic</option>
+                            <option value='static'>Static</option>
+                          </select>
+                        </li>
+
+                        <li class="pppoe_op pppoe_ip_op">
+                          <label for='pppoe_static_ip'>IPv4 address</label>
+                          <input type='text' id='pppoe_static_ip' name='pppoe_static_ip' size=15 value=''>
+                        </li>
+
+                        <li class="pppoe_op">
+                          <label for="pppoe_ip6_assignment_select">IPv6 assignment</label>
+                          <select class="pppoe_ip6_assignment_select" name='pppoe_ip6_assignment'>
+                            <option value='dynamic'>Dynamic</option>
+                            <option value='static'>Static</option>
+                            <option value='off'>Off</option>
+                          </select>
+                        </li>
+
+                        <li class="pppoe_op pppoe_ip6_op">
+                          <label for='pppoe_static_link_local_ip6'>IPv6 link-local address</label>
+                          <input type='text' id='pppoe_static_link_local_ip6' name='pppoe_static_link_local_ip6' size=25 value=''>
+                        </li>
+                      </ul>
+
+                    </fieldset>
+
+                    <fieldset id="ip_config_1" class="ip_config" style='height:100%'>
+                      <h2>Internet 2</h2>
+
+
+                      <ul>
+                        <li id="wan1_role_op" class="wan1_enabled_op">
+                          <label for='wired_wan1_enabled'>Role</label>
+                          <select class='wired_wan1_enabled' name='wired_wan1_enabled'>
+                            <option value='enabled'>Internet</option>
+                            <option value='disabled'>LAN</option>
+                          </select>
+                        </li>
+
+                        <li id="wan1_remap_op" class="wan1_remap_mode_op">
+                          <label for='wan1_remap_mode'>Active Port</label>
+                          <select class='wan1_remap_mode' name='wan1_remap_mode'>
+                            <!-- enum wan_remap_enum -->
+                            <option value='2'>Auto</option>
+                            <option value='1'>SFP</option>
+                            <option value='0'>Ethernet</option>
+                          </select>
+                        </li>
+
+                        <li>
+                          <label for='vlan_tagging_enabled'>VLAN tagging</label>
+                          <select class='vlan_tagging_enabled' name='vlan_tagging_enabled_1'>
+                            <option value='disabled'>Don't use VLAN tagging</option>
+                            <option value='enabled'>Use VLAN tagging</option>
+                          </select>
+                        </li>
+
+                        <li class='vlan_id_config'>
+                          <label for='vlan_tag'>VLAN ID</label>
+                          <input id='vlan_tag' name='vlan_tag_1' type='text' size='5' />
+                        </li>
+
+                        <li class='connection_type_select_row' class='ip_config_group'>
+                          <label for='connection_type_select'>Connection Type</label>
+                          <select class='connection_type_select' name='connection_type_1'>
+                            <option id='connection_type_direct' value='direct'>Direct</option>
+                            <option id='connection_type_pppoe' value='pppoe'>PPPoE</option>
+                          </select>
+                        </li>
+
+                        <li class="direct_op direct_connection_options">
+                          <label for='direct_ip_assignment_select'>IP assignment</label>
+                          <select class='direct_ip_assignment_select' name='direct_ip_assignment_1'>
+                            <option value='dhcp'>DHCP</option>
+                            <option value='static'>Static</option>
+                          </select>
+                        </li>
+
+                        <li class="direct_op direct_static_op">
+                          <label for='static_wired_ip'>Address</label>
+                          <input type='text' name='static_wired_ip_1' size=15 value=''>
+                        </li>
+
+                        <li class="direct_op direct_static_op">
+                          <label for='static_wired_netmask'>Netmask</label>
+                          <input type='text' name='static_wired_netmask_1' size=15 value=''>
+                        </li>
+
+                        <li class="direct_op direct_static_op">
+                          <label for='static_wired_gateway'>Gateway</label>
+                          <input type='text' name='static_wired_gateway_1' size=15 value=''>
+                        </li>
+
+                        <li class="direct_op direct_static_op">
+                          <label for='static_wired_dns1'>DNS server 1</label>
+                          <input type='text' name='static_wired_dns1_1' size=15 value=''>
+                        </li>
+
+                        <li class="direct_op direct_static_op">
+                          <label for='static_wired_dns2'>DNS server 2</label>
+                          <input type='text' name='static_wired_dns2_1' size=15 value=''>
+                        </li>
+
+                        <li class="pppoe_op">
+                          <label for="pppoe_authentication_enabled_select">Authentication</label>
+                          <select class="pppoe_authentication_enabled_select" name='pppoe_authentication_enabled_1'>
+                            <option value='false'>No authentication</option>
+                            <option value='true'>Use authentication</option>
+                          </select>
+                        </li>
+
+                        <li class="pppoe_op pppoe_auth_op">
+                          <label for='pppoe_authentication_username'>Username</label>
+                          <input type='text' name='pppoe_authentication_username_1' size=15 value=''>
+                        </li>
+
+                        <li class="pppoe_op pppoe_auth_op">
+                          <label for='pppoe_authentication_password'>Password</label>
+                          <input type='password' name='pppoe_authentication_password_1' size=15 value=''>
+                        </li>
+
+                        <li class="pppoe_op">
+                          <label for="pppoe_ip_assignment_select">IPv4 assignment</label>
+                          <select class="pppoe_ip_assignment_select" name='pppoe_ip_assignment_1'>
+                            <option value='dynamic'>Dynamic</option>
+                            <option value='static'>Static</option>
+                          </select>
+                        </li>
+
+                        <li class="pppoe_op pppoe_ip_op">
+                          <label for='pppoe_static_ip'>IPv4 address</label>
+                          <input type='text' id='pppoe_static_ip' name='pppoe_static_ip_1' size=15 value=''>
+                        </li>
+
+                        <li class="pppoe_op">
+                          <label for="pppoe_ip6_assignment_select">IPv6 assignment</label>
+                          <select class="pppoe_ip6_assignment_select" name='pppoe_ip6_assignment_1'>
+                            <option value='dynamic'>Dynamic</option>
+                            <option value='static'>Static</option>
+                            <option value='off'>Off</option>
+                          </select>
+                        </li>
+
+                        <li class="pppoe_op pppoe_ip6_op">
+                          <label for='pppoe_static_link_local_ip6'>IPv6 link-local address</label>
+                          <input type='text' id='pppoe_static_link_local_ip6' name='pppoe_static_link_local_ip6_1' size=25 value=''>
+                        </li>
+                      </ul>
+                    </fieldset>
+
+                  </section>
+
+                  <section id="cellular_settings_with_multi_modem_sim_support" style="display: none;">
+                  </section>
+
+                  <section id="cellular-gateway-uplink-config">
+                        <h1>Wired WAN Mode</h1>
+                        <p> In Wired WAN Mode Port 1 Is Configured as a WAN Port. This allows the <a class='device_noun'></a>
+                          Port 1 to be plugged into a switch,router and other uplink to access Meraki Cloud
+                          even when the cellular network is inaccessible.</p>
+                          <fieldset id="ip_config" class="ip_config" style='height:100%'>
+                            <h2>Internet 1</h2>
+                            <ul>
+                              <li id="wan0_role_op" class="wan0_enabled_op">
+                                  <label for='wired_wan0_enabled'>Enable Wired WAN Mode</label>
+                                  <input type="checkbox" id="wired_wan0_enabled" name="wired_wan0_enabled" size=15>
+                              </li>
+                            </ul>
+                          </fieldset>
+                  </section>
+                  <section id="cellular-pin">
+                        <h2>SIM PIN</h2>
+                          <fieldset id="cellular_pin" class="cellular_pin" style="height:100%">
+                            <ul>
+                              <li class="PIN_update">
+                                 <label for="cell_pin">PIN</label>
+                                 <input type="text" id="cell_pin" name="cell_pin" size=15 value="">
+                              </li>
+
+                              <li class="PIN_unlock_count">
+                                <label type="text">Number of PIN attempts remaining</label>
+                                <label type="text" id="cell_pin_count_num"></label>
+                              </li>
+                            </ul>
+                          </fieldset>
+                  </section>
+                  <section id="cellular-info">
+                      <h2>Cellular Information</h2>
+                        <p>SIM specific information.</p>
+                        <fieldset id="cellular_pin" class="cellular_pin" style="height:100%">
+                          <ul>
+                            <li class="mg_imei">
+                              <label type="text">IMEI</label>
+                              <label type="text" id="mg_imei_text"></label>
+                            </li>
+                            <li class="mg_iccid">
+                              <label type="text">ICCID</label>
+                              <label type="text" id="mg_iccid_text"></label>
+                            </li>
+                            <li class="mg_imsi">
+                              <label type="text">IMSI</label>
+                              <label type="text" id="mg_imsi_text"></label>
+                            </li>
+                          </ul>
+                        </fieldset>
+                  </section>
+                  <section id="cellular-gateway-override">
+                         <h2> Access Point Name Configuration</h2>
+                         <p>Set Cellular Override in order to set APN and other cellular settings.</p>
+                           <fieldset id="cellular_override" class="cellular_override" style="height:100%">
+                            <ul>
+                              <li>
+                                <label for='cell_override'>Cellular Override</label>
+                                <select class='cell_override' name='cell_override'>
+                                    <option value='disabled'>Use Meraki SIM settings</option>
+                                    <option value='enabled'>Use custom SIM settings</option>
+                                </select>
+                              </li>
+
+                              <li class="APN_update">
+                                 <label for="APN">APN</label>
+                                 <input type="text" id="APN" name="APN" size=15 value='' title="Valid APNs are between 1 and 64 characters, with only alphahumeric symbols, . and - ">
+                              </li>
+
+                              <li class="Cell_username">
+                                 <label for="cell_user">Username</label>
+                                 <input type="text" id="cell_user" name="cell_user" size=15 value=""  title="Valid usernames are between 1 and 64 characters, with only alphahumeric symbols, . and - ">
+                              </li>
+
+                              <li class="Cell_password">
+                                 <label for="cell_pass">Password</label>
+                                 <input type="text" id="cell_pass" name="cell_pass" size=15 value="" title="Valid passwords are between 1 and 64 characters, with only alphahumeric symbols, . and - ">
+                              </li>
+
+                              <li class="Cell_auth">
+                                <label for='cell_auth'>Cellular Authorization</label>
+                                <select class='cell_auth' name='cell_auth'>
+                                    <option value='none'>None</option>
+                                    <option value='pap'>PAP</option>
+                                    <option value='CHAP'>CHAP</option>
+                                </select>
+                              </li>
+
+                              <li class="Cell_ip_type">
+                                <label for='cell_ip_type'>Cellular IP Type</label>
+                                <select class='cell_ip_type' name='cell_ip_type'>
+                                    <option value='ipv4'>IPv4</option>
+                                    <option value='ipv4v6'>IPv4v6</option>
+                                    <option value='ipv6'>IPv6</option>
+                                </select>
+                              </li>
+
+                              <li class="Cell_PUK">
+                                 <label for="cell_puk">PUK</label>
+                                 <input type="text" id="cell_puk" name="cell_puk" size=15 value="">
+                              </li>
+                            </ul>
+                           </fieldset>
+                  </section>
+                  <section id="uplink-config">
+                        <h1>Uplink configuration</h1>
+                        <p>Configure the uplink Internet connection on this <a class='device_noun'></a>.</p>
+                        <form class="clearfix">
+                            <fieldset>
+                                <h2>IP configuration</h2>
+                                <ul>
+                                    <li>
+                                        <label for="direct_ip_assignment_select">IP assignment</label>
+                                        <select class="direct_ip_assignment_select" id="direct_ip_assignment_select" name="direct_ip_assignment">
+                                            <option value="dhcp">DHCP</option>
+                                            <option value="static">Static</option>
+                                        </select>
+                                    </li>
+                                    <li class="static_vid_settings">
+                                        <label for="static_wired_vid">VLAN</label>
+                                        <input type="text" id="static_wired_vid" name="static_wired_vid" placeholder="vlan">
+                                    </li>
+                                    <li class="static_settings" style="display:none;">
+                                      <label for="static_wired_ip">Address</label>
+                                      <input type="text" id="static_wired_ip" name="static_wired_ip" placeholder="0.0.0.0">
+                                    </li>
+                                    <li class="static_settings" style="display:none;">
+                                      <label for="static_wired_netmask">Netmask</label>
+                                      <input type="text" id="static_wired_netmask" name="static_wired_netmask" placeholder="255.255.255.0">
+                                    </li>
+                                    <li class="static_settings" style="display:none;">
+                                      <label for="static_wired_gateway">Gateway</label>
+                                      <input type="text" id="static_wired_gateway" name="static_wired_gateway" placeholder="0.0.0.0">
+                                    </li>
+                                    <li class="static_settings" style="display:none;">
+                                      <label for="static_wired_dns1">DNS server 1</label>
+                                      <input type="text" id="static_wired_dns1" name="static_wired_dns1" placeholder="0.0.0.0">
+                                    </li>
+                                    <li class="static_settings" style="display:none;">
+                                      <label for="static_wired_dns2">DNS server 2</label>
+                                      <input type="text" id="static_wired_dns2" name="static_wired_dns2" placeholder="0.0.0.0">
+                                    </li>
+                                    <div id="ip6_settings" style="display:none">
+                                      <li>
+                                        <label for="direct_ip6_assignment_select">IPv6 assignment</label>
+                                        <select class="direct_ip6_assignment_select" id="direct_ip6_assignment_select" name="direct_ip6_assignment">
+                                          <option value="auto">Auto</option>
+                                          <option value="static">Static</option>
+                                        </select>
+                                      </li>
+                                      <li class="static6_settings" style="display:none;">
+                                        <label for="static_wired_vid6">IPv6 Static VLAN</label>
+                                        <input type="text" id="static_wired_vid6" name="static_wired_vid6" placeholder="vlan">
+                                      </li>
+                                      <li class="static6_settings" style="display:none;">
+                                        <label for="static_wired_ip6">Address/Prefix Len</label>
+                                        <input type="text" id="static_wired_ip6" name="static_wired_ip6" placeholder="::0" style="width:21em"> /
+                                        <input type="text" id="static_wired_ip6_plen" name="static_wired_ip6_plen" placeholder="64" style="width:3em">
+                                      </li>
+                                      <li class="static6_settings" style="display:none;">
+                                        <label for="static_wired_ip6_gateway">Gateway</label>
+                                        <input type="text" id="static_wired_ip6_gateway" name="static_wired_ip6_gateway" placeholder="::0" style="width:21em">
+                                      </li>
+                                      <li class="static6_settings" style="display:none;">
+                                        <label for="static_wired_dns6_1">DNS server 1</label>
+                                        <input type="text" id="static_wired_dns6_1" name="static_wired_dns6_1" placeholder="::0" style="width:21em">
+                                      </li>
+                                      <li class="static6_settings" style="display:none;">
+                                        <label for="static_wired_dns6_2">DNS server 2</label>
+                                        <input type="text" id="static_wired_dns6_2" name="static_wired_dns6_2" placeholder="::0" style="width:21em">
+                                      </li>
+                                    </div>
+                                </ul>
+                            </fieldset>
+                            <div id="site_survey_enable" style="display:none;"></div>
+                            <div id="site_survey" style="display:none;"></div>
+                            <div id="power_adjust" style="display:none;"></div>
+                  </section>
+
+                  <section class="non-first-section" id="shared-config">
+                  <fieldset>
+                    <h1 id="proxy_title">Web proxy</h1>
+                    <p id="proxy_description">HTTP will be used for the device to communicate with the <a class='cloud_noun'></a>&nbsp;if UDP communication is blocked</p>
+                    <ul>
+                      <li>
+                        <label for="backend_access_proxy_enabled_select">Use a proxy?</label>
+                        <select id="backend_access_proxy_enabled_select" name="backend_access_proxy_enabled">
+                          <option value="false">No</option>
+                        </select>
+                      </li>
+                      <li class="proxy_op" style="display:none;">
+                        <label for="backend_access_proxy_server">IP Address</label>
+                        <input type="text" class="backend_access_proxy_server_port" name="backend_access_proxy_server" placeholder="0.0.0.0">
+                      </li>
+                      <li class="proxy_op" style="display:none;">
+                        <label for="backend_access_proxy_port">Port</label>
+                        <input type="text" class="backend_access_proxy_server_port" name="backend_access_proxy_port" onkeypress="return numbersonly(this, event)" placeholder="Port #">
+                      </li>
+                      <li id="proxy_auth_op" class="proxy_op" style="display:none;">
+                        <label for="backend_access_proxy_userpwd_enabled_select">Authentication</label>
+                        <select id="backend_access_proxy_userpwd_enabled_select" name="backend_access_proxy_userpwd_enabled">
+                          <option value="false">No authentication</option>
+                          <option value="true">Use authentication</option>
+                        </select>
+                      </li>
+                      <li class="proxy_op proxy_auth_op" style="display:none;">
+                        <label for="backend_access_proxy_user">Username</label>
+                        <input type="text" name="backend_access_proxy_user" placeholder="Username">
+                      </li>
+                      <li class="proxy_op proxy_auth_op" style="display:none;">
+                        <label for="backend_access_proxy_password">Password</label>
+                        <input type="password" name="backend_access_proxy_password" placeholder="Password">
+                      </li>
+                    </ul>
+                  </fieldset>
+                  <div class="save_button button button_configure">
+                    <span>Save</span>
+                  </div>
+                  <span class="save_config_text" style="display:none;"></span>
+                  </section>
+
+                  </form>
+
+                  <section id="dm_logging_section" style="display: none;">
+                    <h1>DM Logging</h1>
+                    <p>With DM (Diagnostic Monitor) Logging tool, you can capture packet exchanges between the modem and cellular network, and also between the modem and the host platform, which then can be used to debug cellular connectivity or performance issues.</p>
+                  </section>
+
+                  <section class="non-first-section" id="catalyst-conversion">
+                    <form><fieldset>
+                      <h1>Migrate to WLC Management mode</h1>
+                      <p>Migrate your AP to WLC Management mode</p>
+                      <p><strong>AP will reboot when initiated!</strong></p>
+                      <button class="catalyst_conversion_button button button_configure">
+                          <span>Migrate to WLC Management mode</span>
+                      </button>
+                      <span class="catalyst_state_text" style="display:none;"></span>
+                    </fieldset></form>
+                  </section>
+
+                  <section class="non-first-section" id="data-download">
+                    <form><fieldset>
+                      <h1>Download support data</h1>
+                      <p>Download diagnostic information about this device for Support to examine. This can take several minutes.</p>
+                      <p><strong>Do this only if requested by Cisco Meraki Support.</strong></p>
+                      <button class="download_state_button button button_configure">
+                          <span>Download</span>
+                      </button>
+                      <span class="download_state_text" style="display:none;"></span>
+                    </fieldset></form>
+                  </section>
+                  <section class="non-first-section" id="pcap-download" style="display:none">
+                    <form><fieldset>
+                      <h1>Cloud Connectivity Packet Capture</h1>
+                      <p>This capture is filtered to traffic pertaining to Meraki Cloud Connectivity.</p>
+                      <ul>
+                        <li>
+                          <label for="pcap_device_name">Switch</label>
+                          <span class="device_name" id="pcap_device_name" name="pcap_device_name">---</span>
+                        </li>
+                        <li class="pcap_port_setting">
+                            <label for="pcap_port_setting">Port:</label>
+                            <input type="text" id="pcap_port_setting" name="pcap_port_setting">
+                        </li>
+                        <li class="pcap_duration_setting">
+                            <label for="pcap_duration_setting">Duration:</label>
+                            <select id="pcap_duration_setting" name="pcap_duration_setting">
+                              <option value="60">1 minute</option>
+                              <option value="120">2 minute</option>
+                              <option value="300">5 minute</option>
+                            </select>
+                        </li>
+                      </ul>
+                    </fieldset></form>
+                    <button type="button" class="pcap_download_button button button_configure">
+                      <span>Start Capture</span>
+                    </button>
+                    <span class="pcap_state_text" style="display:none;"></span>
+                  </section>
+
+                </li>
+                <li>
+                  <section id='link_neg_section'>
+                    <h1>Ethernet configuration</h1>
+                    <p>Use this page to configure physical link settings on the Ethernet ports.</p>
+                    <form action='/configure/set_link_neg.cgi' method='post'>
+                      <table id='link_neg_table' class='flip-table'></table>
+                      <div class="save_button button button_configure">
+                        <span>Save</span>
+                      </div>
+                      <span class="save_config_text" style="display:none;"></span>
+                    </form>
+                  </section>
+                </li>
+               <!-- Switch port status -->
+                <li>
+                    <section id="swports_status" class="swport_tab" style="display:none;">
+                        <h1>Switch ports status</h1>
+                        <nav>Switch: <select></select></nav>
+                        <table class="flip-table sortable" >
+                            <thead>
+                                <tr>
+                                    <th class="port" scope="col" data-defaultsort='dsc'><span style="cursor:pointer">Port</span></th>
+                                    <th class="native_vlan" scope="col"><span style="cursor:pointer">Native VLAN</span></th>
+                                    <th class="allowed_vlans" scope="col"><span style="cursor:pointer">Allowed VLANs</span></th>
+                                    <th class="flags" scope="col"><span style="cursor:pointer">Flags</span></th>
+                                    <th class="status" scope="col"><span style="cursor:pointer">Status</span></th>
+                                    <th class="bytes_in" scope="col"><span style="cursor:pointer">Bytes in</span></th>
+                                    <th class="bytes_out" scope="col"><span style="cursor:pointer">Bytes out</span></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </section>
+                </li>
+
+               <!-- Switch port adjust -->
+                <li>
+                    <section id="swports_adjust" class = "swports_adjust_section swport_tab" style="display:none;">
+                        <h1>Switch ports configuration</h1>
+                        <nav>Switch: <select></select></nav>
+                        <form action='/configure/swports_adjust.cgi' method='post'>
+                          <div style='margin:1em 0'>
+                            </div>
+
+                        <div id="vlan_error" class="error_message">Invalid VLAN number. VLAN must be a value between 1 and 4094, or "none" for trunk ports<br></div>
+                        <div id="stkportcount_error" class="error_message">Invalid Stackport configuration. No more than 2 stackports are supported<br></div>
+                        <table class="flip-table">
+                            <thead>
+                                <tr>
+                                    <th class="port" scope="col">Port</th>
+                                    <th class="port_availability" scope="col">Enabled</th>
+                                    <th class="stacking_enabled" scope="col">Stacking</th>
+                                    <th class="port_schedule" scope="col">Port&nbsp;Schedule</th>
+                                    <th class="access_policy" scope="col">Access&nbsp;Policy</th>
+                                    <th class="native_vlan" scope="col">Native&nbsp;VLAN</th>
+                                    <th class="allowed_vlans" scope="col">Allowed&nbsp;VLANs</th>
+                                    <th class="link_negotiation" scope="col">Link&nbsp;Negotiation</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <br>
+                            <div  class="save_button button button_configure">
+                                <span>Save</span>
+                            </div>
+                            <span id='or_cancel' style='display:none;'> or <a href="#swports_adjust" onclick="cancel_link()">cancel</a></span>
+                            <span class="save_config_text" style="display:none;"></span>
+                        </form>
+                    </section>
+                </li>
+
+                <!-- Cellular Status -->
+                <li>
+                  <section class="cellular_status_tab" id="cellular_status_section" style="display:none;">
+                  </section>
+                </li>
+
+                <!-- SIM PIN -->
+                <li>
+                  <section class="sim_pin_tab" id="sim_pin_status_section" style="display:none;">
+                  </section>
+
+                  <section class="sim_pin_unlock" id="sim_pin_entry" style="display:none;">
+                  <form action="/sim_pin_unlock_lsp.cgi" method='post'>
+                    <label for="sim_pin_unlock_code"> Enter PIN </label>
+                    <input type="text" id="sim_pin_unlock_code" name="pin" minlength="4" maxlength="10">
+                    <input type="submit" value="Submit">
+                  </form>
+                  </section>
+                  <section class="sim_pin_unblock" id="sim_puk_entry" style="display:none;">
+                    <form action="/sim_pin_unblock_lsp.cgi" method='post'>
+                      <label for="sim_pin_puk"> Enter PUK </label>
+                      <input type="text" id="sim_pin_puk_code" name="puk" minlength="4" maxlength="10">
+                      <label for="sim_pin_puk_new"> Enter new PIN </label>
+                      <input type="text" id="sim_pin_puk_new" name="pin" minlength="4" maxlength="10">
+                      <input type="submit" value="Submit">
+                    </form>
+                  </section>
+                  <section class="sim_pin_unblock_warning" id="sim_puk_warning" style="display:none;">
+                        <h1> The PUK may not be attempted on the local status page when fewer than five attempts remain.</h1>
+                        <h2> Either use the dashboard to try again, or use this SIM in another device.</h2>
+                  </section>
+                </li>
+
+                <!-- MAP Apps -->
+                <li id="map-apps-specific" style="display:none;">
+                    <ul class="map-apps-tabs" id="map-apps-tab-list">
+
+                    </ul>
+                    <ul class="map-apps-tabs-content" id="map-apps-tab-content">
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <footer>
+            <div class="container">
+                &copy; Cisco Systems, Inc.
+            </div>
+        </footer>
+        </div>
+
+        <script id="dm_logging_template" type="text/x-jsrender">
+          <div id="{{:modem}}_dm_logging">
+            <button class="dm_logging_launch_button button button_configure" onclick="dm_logging_modal_toggle('{{:modem}}', true)">Launch DM Logging Tool<span class="invisible-if-only-1-modem"> on {{:modem}}</span></button>
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="modal-close" onclick="dm_logging_modal_toggle('{{:modem}}', false)">&times;</button>
+                  <h1>DM Logging Tool</h1>
+                </div>
+                <div class="modal-body">
+                  <fieldset class="start_section">
+                    <form class="dm_logging_form">
+                      <input type="hidden" name="modem" value="{{:modem}}" />
+                      <p>Choose when to stop</p>
+                      <div class="stop_condition_section">
+                        <p>
+                        <input type="radio" id="{{:modem}}_dm_logging_stop_condition_manually" name="stop_condition" value="manually" onclick="dm_logging_stop_condition_selected('{{:modem}}', 'manually')" />
+                        <label for="{{:modem}}_dm_logging_stop_condition_manually" class="oneline">Manual stop</label>
+                        </p>
+                        <p>
+                        <input type="radio" id="{{:modem}}_dm_logging_stop_condition_timer" name="stop_condition" value="timer" onclick="dm_logging_stop_condition_selected('{{:modem}}', 'timer')" checked />
+                        <label for="{{:modem}}_dm_logging_stop_condition_timer" class="oneline">Auto stop after <input type="number" name="timer" min=1 value="" /> seconds</label>
+                        <span class="error_msg"></span>
+                        </p>
+                        <p>
+                        <input type="radio" id="{{:modem}}_dm_logging_stop_condition_cellular_link_down" name="stop_condition" value="cellular_link_down" onclick="dm_logging_stop_condition_selected('{{:modem}}', 'cellular_link_down')" />
+                        <label for="{{:modem}}_dm_logging_stop_condition_cellular_link_down" class="oneline">Auto stop when cellular link down</label>
+                        </p>
+                      </div>
+                      <p>Choose filter</p>
+                      <div class="filter_section"></div>
+                      <p>You can also <button type="button" class="button button_inline" onclick="dm_logging_filter_upload_button_clicked(event)">Upload Custom Filter</button>
+                        <input type="file" accept=".dmc,.cfg" onchange="dm_logging_filter_upload(this)" hidden />
+                        <span class="error_msg"></span>
+                      </p>
+                      <hr>
+                      <p style="text-align: right;">
+                        <button type="button" class="button button_configure" onclick="dm_logging_modal_toggle('{{:modem}}', false)">Cancel</button>
+                        <button type="button" class="dm_logging_start_button button button_configure" onclick="dm_logging_start('{{:modem}}', false)">Start</button>
+                        <button type="button" class="dm_logging_start_button button button_configure" onclick="dm_logging_start('{{:modem}}', true)">Capture Dmlogging with initial Attach</button>
+                      </p>
+                    </form>
+                  </fieldset>
+                  <fieldset class="status_section"></fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+        </script>
+        <script src="third_party/jquery/jquery-3.5.0.min.js"></script>
+        <script src="third_party/jsrender/jsrender-1.0.11.min.js"></script>
+        <script src="my.min.js"></script>
+        <script src="third_party/spin/spin.min.js" type="text/javascript"></script>
+        <script src="third_party/bootstrap-sortable/bootstrap-sortable.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            Mkilocal = window.Mkilocal || {};
+            Mkilocal.page_name = "/";
+            Mkilocal.bootstrap = true;
+            Mkilocal.active_subtab = "nav-index";
+            jQuery(index_js.init);
+
+            var catalyst_state_text_hide_timeout = null;
+            var download_state_text_hide_timeout = null;
+            var pcap_state_text_hide_timeout = null;
+
+            $("#wired_wan0_enabled").change(function(){
+              var checked = $(this).is(":checked");
+              $("#wired_wan0_enabled").val( checked ? 'enabled' : 'disabled');
+            })
+
+            function validate_jolteon(dict) {
+              var ok = true;
+              $('#cellular_settings_with_multi_modem_sim_support').find('span').text('');
+              Object.keys(dict).forEach(function (key) {
+                const match = key.match(/^(cellular_modem[0-9]+_sim[0-9]+_dataSession[0-9]+)_(.+)/);
+                if (match !== null) {
+                  var data_session_name = match[1];
+                  var attr = match[2];
+                  if (attr === 'apnName') {
+                    if (dict[key] === '') {
+                      $('input[name="' + key + '"]').next('span').text(' * APN required');
+                      ok = false;
+                    } else if (!dict[key].match(/^[A-Za-z0-9.-]+$/)) {
+                      $('input[name="' + key + '"]').next('span').text(' * Invalid APN (illegal character in APN name)');
+                      ok = false;
+                    } else if (dict[key].length > 63) {
+                      $('input[name="' + key + '"]').next('span').text(' * Max APN length is 63 characters');
+                      ok = false;
+                    }
+                  } else if (attr === 'authType') {
+                    var username_key = data_session_name + '_username';
+                    var password_key = data_session_name + '_password';
+                    if (dict[key] === 'none') {
+                      delete dict[username_key];
+                      delete dict[password_key];
+                    } else {
+                      if (dict[username_key] === '') {
+                        $('input[name="' + username_key + '"]').next('span').text(' * Username required');
+                        ok = false;
+                      }
+
+                      if (dict[password_key] === '') {
+                        $('input[name="' + password_key + '"]').next('span').text(' * Password required');
+                        ok = false;
+                      }
+                    }
+                  }
+                }
+              });
+
+              return ok;
+            }
+
+            function validate_eevees(dict) {
+              var ok = true;
+              $('#cellular-gateway-override').find('span').text('');
+              Object.keys(dict).forEach(function (key) {
+                if (key === "cell_auth") {
+                  if (dict[key] === "None") {
+                    if (dict["cell_user"] || dict["cell_pass"]) {
+                      ok = false;
+                    }
+                  } else if (dict[key] === "PAP" || dict[key] === "CHAP") {
+                    if (!dict['cell_user'].match(/^[0-9A-Za-z \.\-+\@_=:/\\[\]~]{1,63}$/) ||
+                        !dict['cell_pass'].match(/^[0-9A-Za-z \.\-+\@_=:/\\[\]~]{1,63}$/)) {
+                      ok = false;
+                    }
+                  }
+                }
+                if (key === "cell_override" && dict[key] === 'enabled') {
+                  if (!dict['APN'].match(/^[A-Za-z0-9.-]{1,63}$/)) {
+                    ok = false;
+                  }
+                  if (dict['cell_auth'] === undefined) {
+                    ok = false;
+                  }
+                }
+              });
+              return ok;
+            }
+
+            $(document).ready(function() {
+                $('.save_button').click(function() {
+                    $('.save_config_text').hide();
+                    $('.save_config_text').removeClass("save_config_error");
+                    var form = $(this).parents('form:first');
+                    var form_data = '';
+                    var dict = {};
+
+                    // If the board is switch polaris and the form action is not set, show a
+                    // confirmation dialog. Form action is not set only on the Uplink
+                    // Configuration page for the save_button class.
+                    if (Mkilocal.board_is_switch_polaris && !form.attr('action')) {
+                      // get the current switch management VLAN from wired_config
+                      var mgmt_vlan = parseInt(Mkilocal.mgmt_vlan, 10);
+                      // get the new management VLAN from the form
+                      var new_mgmt_vlan = parseInt($('#static_wired_vid').val(), 10);
+                      // if new mgmt VLAN is greater than 995 and has changed, show a
+                      // confirmation dialog
+                      if (new_mgmt_vlan > 995 && new_mgmt_vlan != mgmt_vlan) {
+                        if (!confirm("You are modifying the management VLAN. This VLAN " +
+                            "is outside the system-default VLAN range of 1-995 for " +
+                            "this switch. It will be added to any trunk ports " +
+                            "configured with the system-default VLAN range.\n" +
+                            "Click OK to proceed."))
+                        {
+                            return;
+                        }
+                      }
+                    }
+
+                    form.serializeArray().forEach(function (nvp) {
+                      if (dict[nvp['name']] === undefined) {
+                        dict[nvp['name']] = nvp['value'];
+                      } else {
+                        dict[nvp['name']] += ',' + nvp['value'];
+                      }
+                    });
+                    if (Mkilocal.board_uses_jolteon ? !validate_jolteon(dict) : !validate_eevees(dict)) {
+                      $('.save_config_text').text('One or more errors found. Please fix them and try again.');
+                      $('.save_config_text').addClass("save_config_error");
+                      $('.save_config_text').fadeIn();
+                      return;
+                    }
+                    if (Mkilocal.board_uses_jolteon){
+                      var new_dict = {};
+                      for (const key in dict) {
+                        if (/^cellular_/.test(key)) {
+                          new_dict[key.replaceAll('_', '.').replace('cellular', 'cellular_settings_json')] = dict[key];
+                        } else {
+                          new_dict[key] = dict[key];
+                        }
+                      }
+                      form_data = $.param(new_dict);
+                    } else {
+                      form_data = $.param(dict);
+                    }
+
+                    var url = form.attr('action') ? form.attr('action') : '/set_new_config.cgi';
+                    $('.editable').removeClass('changed_setting_swports_adjust');
+                    $.ajax({type: 'post',
+                            data: form_data,
+                            url: url,
+                            success: function(data) {
+                                if (!data.error_msg) {
+                                    $('#or_cancel').css('display', 'none');
+                                    $('.save_config_text').text("Configure changes saved");
+                                    $('.save_config_text').removeClass("save_config_error");
+                                    setTimeout(function() {
+                                      window.location.reload(true);
+                                    }, 1000);
+                                } else {
+                                    $('.save_config_text').text(data.error_msg);
+                                    $('.save_config_text').addClass("save_config_error");
+                                }
+                                $('.save_config_text').fadeIn();
+                                setTimeout(function() {
+                                    $('.save_config_text').fadeOut();
+                                }, 12000);
+                            }
+                          });
+                    });
+
+                    $('.catalyst_conversion_button').click(function() {
+                      if (!confirm("Are you sure you want to migrate this device to WLC Management mode?")) {
+                        return;
+                      }
+                      if (catalyst_state_text_hide_timeout !== null) {
+                        clearTimeout(catalyst_state_text_hide_timeout);
+                        catalyst_state_text_hide_timeout = null;
+                      }
+
+                      var catalyst_conversion_button = $('.catalyst_conversion_button');
+                      var catalyst_state_text = $('.catalyst_state_text');
+
+                      catalyst_state_text.hide();
+                      catalyst_conversion_button.prop("disabled", true);
+
+                      xhr = new XMLHttpRequest();
+                      xhr.open('GET', '/configure/catalyst_conversion.cgi', true);
+                      xhr.responseType = 'document';
+
+                      xhr.onload = function(e) {
+                        if (this.status !== 200) {
+                          catalyst_state_text.html("<font color='red'>Error entering Catalyst mode: XHR " + this.status + " " + this.statusText + "! -- Contact Cisco Meraki support.</font>");
+                          catalyst_conversion_button.prop("disabled", false);
+                          catalyst_state_text_hide_timeout = setTimeout(function() {
+                            catalyst_state_text.fadeOut();
+                            catalyst_state_text_hide_timeout = null;
+                          }, 8000);
+                        }
+                        else {
+                            catalyst_state_text.html("Resetting!");
+                        }
+                      };
+
+                      xhr.send();
+                    });
+
+                    $('.pcap_download_button').click(function() {
+                      if (pcap_state_text_hide_timeout !== null) {
+                        clearTimeout(pcap_state_text_hide_timeout);
+                        pcap_state_text_hide_timeout = null;
+                      }
+
+                      var pcap_state_text = $('.pcap_state_text');
+                      var pcap_download_button = $('.pcap_download_button');
+
+                      pcap_state_text.hide();
+                      pcap_download_button.prop("disabled", true);
+
+                      xhr = new XMLHttpRequest();
+
+                      var ports = document.getElementById('pcap_port_setting').value;
+                      var select = document.getElementById('pcap_duration_setting');
+                      var name = document.getElementById('pcap_device_name').innerHTML;
+                      var duration = select.options[select.selectedIndex].value;
+                      var pcap_parameter_string = '/lsp_tcpdump?ports=' + ports + '&timeout=' + duration + '&lsp_pcap=1&raw_pcap=1';
+
+                      xhr.open('GET', pcap_parameter_string, true);
+
+                      xhr.responseType = 'blob';
+
+                      xhr.onload = function(e) {
+                        if (this.status === 200) {
+                          var blob = new Blob([this.response]);
+
+                          var fr = new FileReader();
+                          fr.onload = function(ev) {
+                            pcap_state_text.html("Packet capture ready!");
+                            pcap_download_button.prop("disabled", false);
+                            var link = document.createElement('a');
+                            link.style = "display: none";
+
+                            link.href = window.URL.createObjectURL(blob);
+                            var my_MAC = (Mkilocal.mac || 'unknown').replace(/:/g, "-");
+                            var my_name = name.replace(/\W/g, '')
+                            var file_ts = Date.now();
+
+                            let url = window.URL.createObjectURL(blob);
+                            link.href = url;
+                            link.download = "pcap_" + my_name + "_" + my_MAC + "_port-" + ports + "_" + file_ts + ".pcap";
+
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            window.URL.revokeObjectURL(url);
+
+
+                            pcap_state_text_hide_timeout = setTimeout(function() {
+                              pcap_state_text.fadeOut();
+                              pcap_state_text_hide_timeout = null;
+                            }, 8000);
+                          };
+                          fr.readAsText(blob);
+                        }
+                        else if (this.status === 403) {
+                          var blob = new Blob([this.response]);
+
+                          var fr = new FileReader();
+                          fr.onload = function(ev) {
+                            var errorText = ev.target.result;
+                            pcap_state_text.html("<font color='red'>" + errorText + "</font>");
+                            pcap_download_button.prop("disabled", false);
+                          }
+                          fr.readAsText(blob);
+                        }
+                        else {
+                          pcap_state_text.html("<font color='red'>Error retrieving packet capture: XHR " + this.status + " " + this.statusText + "! -- Contact Cisco Meraki support.</font>");
+                          pcap_download_button.prop("disabled", false);
+                          pcap_state_text_hide_timeout = setTimeout(function() {
+                            pcap_state_text.fadeOut();
+                            pcap_state_text_hide_timeout = null;
+                          }, 8000);
+                        }
+                      };
+
+                    pcap_state_text.html('Packet capture in progress -- do not close this tab.').fadeIn();
+
+                    xhr.send();
+                });
+
+                $('.download_state_button').click(function() {
+                  if (download_state_text_hide_timeout !== null) {
+                    clearTimeout(download_state_text_hide_timeout);
+                    download_state_text_hide_timeout = null;
+                  }
+
+                  var download_state_text = $('.download_state_text');
+                  var download_state_button = $('.download_state_button');
+
+                  download_state_text.hide();
+                  download_state_button.prop("disabled", true);
+
+                  var xhr = new XMLHttpRequest();
+                  xhr.open('GET', '/configure/device_state_data.cgi', true);
+                  xhr.responseType = 'blob';
+
+                  xhr.onload = function(e) {
+                    if (this.status === 200) {
+                      var blob = this.response;
+
+                      var first = blob.slice(0, 5, 'text/plain');
+                      var fr = new FileReader();
+                      fr.onload = function(ev) {
+                        if (ev.target.result === "Error" || ev.target.result.substr(0, 3) === "OOM") {
+                          var fr2 = new FileReader();
+                          fr2.onload = function(ev2) {
+                            var errorText = ev2.target.result;
+                            download_state_text.html("<font color='red'>" + errorText + " -- Contact Cisco Meraki support.</font>");
+                            download_state_button.prop("disabled", false);
+                          }
+                          fr2.readAsText(blob);
+                        }
+                        else {
+                          download_state_text.html("Download ready!");
+                          download_state_button.prop("disabled", false);
+                          var link = document.createElement('a');
+                          link.href = window.URL.createObjectURL(blob);
+                          var myMAC = (Mkilocal.mac || 'unknown').replace(/:/g, "-");
+                          var file_ts = Date.now();
+                          link.download = "SDB_" + myMAC + "_" + file_ts + ".dat";
+                          document.body.appendChild(link);
+                          link.click();
+                          document.body.removeChild(link);
+                        }
+                        download_state_text_hide_timeout = setTimeout(function() {
+                          download_state_text.fadeOut();
+                          download_state_text_hide_timeout = null;
+                        }, 8000);
+                      };
+                      fr.readAsText(first);
+                    }
+                    else {
+                      download_state_text.html("<font color='red'>Error retrieving SDB: XHR " + this.status + " " + this.statusText + "! -- Contact Cisco Meraki support.</font>");
+                      download_state_button.prop("disabled", false);
+                      download_state_text_hide_timeout = setTimeout(function() {
+                        download_state_text.fadeOut();
+                        download_state_text_hide_timeout = null;
+                      }, 8000);
+                    }
+                  };
+
+                  download_state_text.html('Download in progress -- do not close this tab.').fadeIn();
+
+                  xhr.send();
+                });
+
+                $(".swport_tab").each(function() {
+                  var tbody = $("tbody", this);
+                  $("nav > select", this).change(function() {
+                    Mkilocal.cur_switch = $(this).val();
+                    tbody.children().each(function() { $(this).toggle($(this).attr("data-dev") == Mkilocal.cur_switch); });
+                  });
+                });
+
+            });
+
+            $('.direct_ip_assignment_select').on('change', function() {
+                $(this).parents('section').find('.static_settings').toggle($(this).val() != "dhcp");
+            });
+            $('.direct_ip6_assignment_select').on('change', function() {
+                $(this).parents('section').find('.static6_settings').toggle($(this).val() != "auto");
+            });
+        </script>
+        <script type="text/javascript">
+            function cancel_link(){
+                $('.save_config_text').hide();
+                jQuery(swports_adjust_js.init);
+            }
+        </script>
+    </body>
+</html>

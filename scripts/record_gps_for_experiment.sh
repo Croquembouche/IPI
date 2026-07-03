@@ -70,15 +70,19 @@ fi
 DRIVER_PID=""
 BAG_PID=""
 CSV_PID=""
+SLEEP_PID=""
 
 cleanup() {
   set +e
+  trap - EXIT INT TERM
+  if [ -n "$SLEEP_PID" ]; then kill "$SLEEP_PID" 2>/dev/null; fi
   if [ -n "$CSV_PID" ]; then kill "$CSV_PID" 2>/dev/null; fi
   if [ -n "$BAG_PID" ]; then kill "$BAG_PID" 2>/dev/null; fi
   if [ -n "$DRIVER_PID" ]; then kill "$DRIVER_PID" 2>/dev/null; fi
-  wait "$CSV_PID" "$BAG_PID" "$DRIVER_PID" 2>/dev/null
+  wait "$SLEEP_PID" "$CSV_PID" "$BAG_PID" "$DRIVER_PID" 2>/dev/null
 }
-trap cleanup EXIT INT TERM
+trap cleanup EXIT
+trap 'cleanup; exit 0' INT TERM
 
 {
   printf '# GPS Recording Metadata\n\n'
@@ -119,9 +123,14 @@ CSV_PID=$!
 echo "$CSV_PID" > "$GPS_DIR/gps_topic_recorder.pid"
 
 if [ -n "$DURATION_SEC" ]; then
-  sleep "$DURATION_SEC"
+  sleep "$DURATION_SEC" &
+  SLEEP_PID=$!
+  wait "$SLEEP_PID" || true
 else
   while true; do
-    sleep 3600
+    sleep 3600 &
+    SLEEP_PID=$!
+    wait "$SLEEP_PID" || true
+    SLEEP_PID=""
   done
 fi

@@ -1,0 +1,22 @@
+[2026-07-02T09:03:21-04:00] Syncing code and tools to edge
+[2026-07-02T09:03:29-04:00] Starting GNSS recorder
+[2026-07-02T09:03:34-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-0
+[2026-07-02T09:09:02-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-256
+[2026-07-02T09:14:29-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-1024
+[2026-07-02T09:19:59-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-4096
+[2026-07-02T09:24:44-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-19648
+[2026-07-02T09:29:53-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-22816
+[2026-07-02T09:35:36-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-23968
+[2026-07-02T09:41:00-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-25024
+[2026-07-02T09:46:51-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-60000
+[2026-07-02T09:54:35-04:00] Running MQTT detector-output condition p5g-mqtt-detector-output-payload-0
+[2026-07-02T09:58:32-04:00] Running MQTT detector-output condition p5g-mqtt-detector-output-payload-256
+[2026-07-02T09:59:09-04:00] Running MQTT detector-output condition p5g-mqtt-detector-output-payload-1024
+[2026-07-02T10:00:25-04:00] Running MQTT detector-output condition p5g-mqtt-detector-output-payload-4096
+[2026-07-02T10:02:26-04:00] Starting GNSS recorder for trimmed MQTT continuation
+[2026-07-02T10:02:31-04:00] Running trimmed MQTT detector-output condition p5g-mqtt-detector-output-payload-4096
+[2026-07-02T10:06:45-04:00] Running trimmed MQTT detector-output condition p5g-mqtt-detector-output-payload-19648
+[2026-07-02T10:11:55-04:00] Running trimmed MQTT detector-output condition p5g-mqtt-detector-output-payload-22816
+[2026-07-02T10:17:13-04:00] Running trimmed MQTT detector-output condition p5g-mqtt-detector-output-payload-23968
+[2026-07-02T10:22:42-04:00] Running trimmed MQTT detector-output condition p5g-mqtt-detector-output-payload-60000
+[2026-07-02T10:30:35-04:00] Experiment 09 trimmed MQTT continuation complete

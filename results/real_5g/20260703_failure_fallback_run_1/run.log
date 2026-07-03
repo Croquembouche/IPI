@@ -1,0 +1,9 @@
+[2026-07-03T10:10:55-04:00] Building local C++ tools
+[2026-07-03T10:10:55-04:00] Syncing source to edge
+[2026-07-03T10:10:56-04:00] Building edge C++ tools
+[2026-07-03T10:11:00-04:00] Starting GNSS recorder
+[2026-07-03T10:11:05-04:00] Running Experiment 12 condition p5g-failure-receiver-restart-tcp-payload-1024
+[2026-07-03T10:16:46-04:00] Running Experiment 12 condition p5g-failure-receiver-restart-udp-payload-1024
+[2026-07-03T10:21:08-04:00] Running Experiment 12 condition p5g-failure-receiver-restart-mqtt-payload-1024
+[2026-07-03T10:25:30-04:00] Running Experiment 12 condition p5g-failure-broker-restart-mqtt-payload-1024
+[2026-07-03T10:29:45-04:00] Experiment 12 failure/fallback run complete

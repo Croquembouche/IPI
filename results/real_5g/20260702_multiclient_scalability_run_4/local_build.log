@@ -1,0 +1,35 @@
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hydrau/Documents/Github/IPI/cpp/build
+Consolidate compiler generated dependencies of target ipi
+[ 34%] Built target ipi
+Consolidate compiler generated dependencies of target example_v2x_roundtrip
+Consolidate compiler generated dependencies of target example_build_service_request
+[ 39%] Built target example_v2x_roundtrip
+[ 43%] Built target example_build_service_request
+Consolidate compiler generated dependencies of target example_spat_tcp_sender
+Consolidate compiler generated dependencies of target example_private_5g_latency_sender
+[ 47%] Built target example_spat_tcp_sender
+[ 52%] Built target example_private_5g_latency_sender
+Consolidate compiler generated dependencies of target example_private_5g_latency_receiver
+Consolidate compiler generated dependencies of target example_private_5g_latency_udp_sender
+[ 56%] Built target example_private_5g_latency_receiver
+[ 60%] Built target example_private_5g_latency_udp_sender
+Consolidate compiler generated dependencies of target example_private_5g_latency_udp_receiver
+Consolidate compiler generated dependencies of target example_mesh_demo
+[ 65%] Built target example_private_5g_latency_udp_receiver
+[ 69%] Built target example_mesh_demo
+Consolidate compiler generated dependencies of target test_edge4av_interface
+Consolidate compiler generated dependencies of target example_edge4av_dual_plane
+[ 73%] Built target test_edge4av_interface
+[ 78%] Built target example_edge4av_dual_plane
+Consolidate compiler generated dependencies of target test_private_session_transport
+Consolidate compiler generated dependencies of target test_private_5g_latency_probe
+[ 82%] Built target test_private_session_transport
+[ 86%] Built target test_private_5g_latency_probe
+Consolidate compiler generated dependencies of target test_experiment_logging
+Consolidate compiler generated dependencies of target test_private_5g_latency_loopback
+[ 91%] Built target test_experiment_logging
+[ 95%] Built target test_private_5g_latency_loopback
+Consolidate compiler generated dependencies of target test_private_5g_latency_mqtt_loopback
+[100%] Built target test_private_5g_latency_mqtt_loopback

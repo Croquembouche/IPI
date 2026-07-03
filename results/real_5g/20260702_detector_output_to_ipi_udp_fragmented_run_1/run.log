@@ -1,0 +1,11 @@
+[2026-07-02T11:15:45-04:00] Building local C++ latency tools
+[2026-07-02T11:15:45-04:00] Syncing source to edge
+[2026-07-02T11:15:46-04:00] Building edge C++ latency tools
+[2026-07-02T11:15:48-04:00] Starting GNSS recorder
+[2026-07-02T11:15:53-04:00] Running UDP condition p5g-udp-detector-output-payload-0 count=1000 interval_ms=200 timeout_ms=3000 max_seconds=420
+[2026-07-02T11:19:58-04:00] Running UDP condition p5g-udp-detector-output-payload-4096 count=1000 interval_ms=200 timeout_ms=5000 max_seconds=720
+[2026-07-02T11:24:10-04:00] Running UDP condition p5g-udp-detector-output-payload-19648 count=1000 interval_ms=200 timeout_ms=5000 max_seconds=900
+[2026-07-02T11:29:23-04:00] Running UDP condition p5g-udp-detector-output-payload-22816 count=1000 interval_ms=200 timeout_ms=5000 max_seconds=900
+[2026-07-02T11:34:57-04:00] Running UDP condition p5g-udp-detector-output-payload-23968 count=1000 interval_ms=200 timeout_ms=5000 max_seconds=900
+[2026-07-02T11:40:30-04:00] Running UDP condition p5g-udp-detector-output-payload-60000 count=100 interval_ms=200 timeout_ms=8000 max_seconds=900
+[2026-07-02T11:52:16-04:00] Fragmented UDP experiment complete

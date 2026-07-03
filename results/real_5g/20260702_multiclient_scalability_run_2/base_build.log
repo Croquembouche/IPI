@@ -1,0 +1,24 @@
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE  
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/d1/Documents/Github/IPI/cpp/build
+[ 47%] Built target ipi
+[ 58%] Built target example_mesh_demo
+[ 58%] Built target example_build_service_request
+[ 70%] Built target example_v2x_roundtrip
+[ 70%] Built target example_private_5g_latency_sender
+[ 79%] Linking CXX executable example_private_5g_latency_receiver
+[ 79%] Built target example_spat_tcp_sender
+[ 85%] Built target example_private_5g_latency_udp_sender
+[ 91%] Built target example_private_5g_latency_udp_receiver
+[ 97%] Built target example_edge4av_dual_plane
+[100%] Built target example_private_5g_latency_receiver
