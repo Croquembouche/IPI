@@ -59,7 +59,7 @@ Recommended per-run metadata:
 - Figure 1: baseline service envelope across radio, private-5G TCP, private-5G MQTT
 - Figure 2: scaling and fairness under physical plus emulated load
 - Figure 3: crowded-network / QoS stress behavior
-- Figure 4: edge-offload vs RSU-local compute
+- Figure 4: edge-offload vs RSU-local compute, covered by existing paper result
 - Figure 5: vehicle-level outcome under baseline vs stressed conditions
 
 ## Experiment Checklist
@@ -69,7 +69,7 @@ Recommended per-run metadata:
 - [x] `E1` Baseline service envelope (private-5G TCP/MQTT and stationary Mocar V2X exp_01 radio baseline complete)
 - [x] `E2` Scaling and contention (stationary private-5G TCP/UDP/MQTT 1-100 client sweep collected; runbook repeats pending)
 - [ ] `E3` Crowded-network / QoS stress tests (default-load Phase A complete; real QoS comparison pending)
-- [ ] `E4` Edge-offload vs RSU-local compute (detector compute timing complete; placement comparison pending)
+- [x] `E4` Edge-offload vs RSU-local compute (covered by existing "Towards Collaborative Autonomous Driving" paper result from Yuankai He; no new collection needed here)
 - [ ] `E5` Vehicle-level outcome
 
 ### Supplementary Experiments
@@ -79,7 +79,7 @@ Recommended per-run metadata:
 - [ ] `S3` Cold-start / session resumption (some MQTT resume artifacts exist, but no controlled S3 run yet)
 - [ ] `S4` Security overhead
 - [ ] `S5` RF gradient sensitivity (GNSS-indexed signal maps exist; controlled near/mid/far sweep pending)
-- [ ] `S6` Mobility / handover
+- [x] `S6` Mobility / handover (Mocar V2X mobility collected; handover/weak-signal kept as discussion only)
 - [ ] `S7` Additional queue-discipline ablations
 
 ### Recorded Evidence Snapshot
@@ -117,6 +117,20 @@ Recommended per-run metadata:
   replicate: `results/edge4av_top_tier/edge4av-stationary-goodfit-20260701T142538Z/`.
 - Experiment 06 weak-signal stationary repeat with GNSS: completed in
   `results/real_5g/20260701_load_qos_weak_signal_run_1/summary.md`.
+- Experiment 02 Mocar V2X radio-distance/mobility with NovAtel GNSS:
+  completed in
+  `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_173816/summary.md`,
+  `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_175820/summary.md`,
+  `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_182104/summary.md`,
+  and `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_183232/summary.md`.
+  Runs 3-4 include corrected send-time GNSS joins and a 500 ms timeout.
+- Experiment 03 broadcast contention: marked complete by operator based on prior
+  collection; no additional Mocar V2X run needed for the current paper plan.
+- Experiment 05 handover/weak-signal: no new collection needed; keep as a paper
+  discussion / limitation point rather than a measured result.
+- Experiment 07 transport comparison: complete for the current paper plan.
+  TCP/MQTT stationary evidence exists in the May runs; UDP behavior is covered
+  by later private-5G UDP experiments.
 
 ### Claims to Avoid Unless You Have Real Data
 
@@ -291,10 +305,14 @@ Weak-signal stationary repeat:
 
 ## E4 Edge-Offload vs RSU-Local Compute
 
+Status: completed previously. This result is already covered by the existing
+"Towards Collaborative Autonomous Driving" paper result from Yuankai He, so no
+new Exp 10 data collection is needed for the current paper plan.
+
 ### Goal
 
-Prove whether edge offload helps or hurts the fallback / guided-planning
-service relative to RSU-local handling.
+Document whether edge offload helps or hurts the fallback / guided-planning
+service relative to RSU-local handling using the existing covered result.
 
 ### Required Conditions
 
@@ -463,17 +481,21 @@ Use this table to map raw files to conditions.
 | 2026-07-02 | `edge4av-real-20260702-multiclient-scalability-run-4` | `p5g-scale-{tcp,udp,mqtt}-payload-1024-clients-{1,2,5,10,20,50,100}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260702_multiclient_scalability_run_4/` | Experiment 11 second stationary repeat with NovAtel GNSS; TCP/MQTT accepted 100.0%, UDP accepted 99.965-100.0% across client levels |
 | 2026-07-03 | `edge4av-real-20260703-failure-fallback-run-1` | `p5g-failure-{receiver-restart-{tcp,udp,mqtt},broker-restart-mqtt}-payload-1024` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260703_failure_fallback_run_1/` | Experiment 12 stationary failure/fallback subset with NovAtel GNSS; receiver-restart accepted TCP 95.3%, UDP 96.9%, MQTT 99.1%; MQTT broker-restart accepted 95.5% |
 | 2026-07-04 | `20260704_exp_01_payload_sweep_0_2kb_164129` | `mocar-exp01-payload-0-2048-stationary-final-location` | Mocar OBU/RSU, NovAtel GNSS | `results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/` | Final Experiment 01 stationary Mocar V2X baseline run; 0 B completed as 1000/1000 timeouts, 256 B stopped after 332 timeout rows, and 256/512/1024/2048 B counted as timeout for analysis by operator instruction |
+| 2026-07-04 | `edge4av-exp02-mobility-20260704T173816` | `mocar-exp02-mobility-route-los-moving-live-payload-256` | Mocar OBU/RSU, NovAtel GNSS | `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_173816/` | Experiment 02 mobility run 1; 675 rows before operator stop, 515 successes, 160 timeouts, p50 RTT 99.610 ms |
+| 2026-07-04 | `edge4av-exp02-mobility-20260704T175820` | `mocar-exp02-mobility-route-los-moving-run2-payload-256` | Mocar OBU/RSU, NovAtel GNSS | `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_175820/` | Experiment 02 mobility run 2; 1000 rows, 731 successes, 269 timeouts, p50 RTT 28.326 ms |
+| 2026-07-04 | `edge4av-exp02-mobility-20260704T182104` | `mocar-exp02-mobility-route-los-moving-run3-payload-256` | Mocar OBU/RSU, NovAtel GNSS | `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_182104/` | Experiment 02 mobility run 3 with corrected send-time GNSS join and 500 ms timeout; 1000 rows, 591 successes, 409 timeouts, p50 RTT 29.204 ms |
+| 2026-07-04 | `edge4av-exp02-mobility-20260704T183232` | `mocar-exp02-mobility-route-los-moving-run4-payload-256` | Mocar OBU/RSU, NovAtel GNSS | `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_183232/` | Experiment 02 mobility run 4 with corrected send-time GNSS join and 500 ms timeout; 1000 rows, 716 successes, 284 timeouts, p50 RTT 28.276 ms |
 
 ## Paper Readiness Check
 
 - [ ] Baseline envelope figure complete
 - [ ] Scaling and fairness figure complete
 - [ ] Crowded-network / QoS figure complete
-- [ ] Edge-offload vs local-compute figure complete
+- [x] Edge-offload vs local-compute figure complete
 - [ ] Vehicle-level outcome figure complete
 - [ ] One clear radio vs 5G comparison
 - [ ] One clear QoS vs no-QoS comparison
-- [ ] One clear local vs offloaded comparison
+- [x] One clear local vs offloaded comparison
 - [ ] Main claim supported without over-claiming public-5G equivalence
 
 ## Final Claim Notes

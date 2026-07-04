@@ -57,6 +57,26 @@ This file tracks what remains after reconciling `experiment.md`,
   plus earlier location sweeps under `results/mocar_v2x/`.
 - [x] Radio baseline part of `E1` for stationary Mocar V2X.
   Evidence: `results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/summary.md`.
+- [x] `02_radio_distance_mobility` Mocar V2X mobility/radio-distance runs with
+  NovAtel GNSS.
+  Evidence: `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_173816/summary.md`,
+  `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_175820/summary.md`,
+  `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_182104/summary.md`,
+  and `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_183232/summary.md`.
+  Runs 3-4 include corrected send-time GNSS joins.
+- [x] `03_broadcast_contention`
+  Marked complete by operator based on prior collection; no additional Mocar V2X
+  run needed for the current paper plan.
+- [x] `05_handover_weak_signal`
+  No new collection needed; keep as a paper discussion / limitation point rather
+  than a standalone measured result.
+- [x] `07_transport_comparison`
+  TCP/MQTT stationary evidence exists, and UDP behavior is covered by later
+  private-5G UDP experiments. No separate Exp 07 blocker remains.
+- [x] `10_edge_offload_tradeoff`
+  No new collection needed for this paper. Edge-offload/local-compute result is
+  already covered by the existing "Towards Collaborative Autonomous Driving"
+  paper result from Yuankai He.
 
 ## Highest-Priority Remaining Stationary, No-Mocar Work
 
@@ -79,9 +99,6 @@ This file tracks what remains after reconciling `experiment.md`,
 
 ## Optional Or Conditional Remaining Work
 
-- [ ] `07_transport_comparison` UDP leg
-  TCP/MQTT evidence already exists. Run UDP only if the paper explicitly claims
-  a three-transport comparison.
 - [ ] Security overhead (`S4`)
   Add TLS/mTLS or equivalent security mode only if the paper needs a security
   overhead claim.
@@ -90,14 +107,8 @@ This file tracks what remains after reconciling `experiment.md`,
 
 ## Hardware Or Mobility Work Still Open
 
-- [ ] `02_radio_distance_mobility`
-  Requires Mocar/radio devices and distance/LOS/NLOS setup.
-- [ ] `03_broadcast_contention`
-  Requires Mocar/radio devices and background radio senders.
 - [ ] `04_private5g_mobility`
   Requires driving route passes and GNSS.
-- [ ] `05_handover_weak_signal`
-  Requires weak-signal/handover route passes and modem/signal evidence.
 - [ ] Vehicle-level outcome (`E5`)
   Requires actual AV behavior metric collection under baseline and stressed
   network conditions.
@@ -106,5 +117,8 @@ This file tracks what remains after reconciling `experiment.md`,
 
 Repeat `09_detector_output_to_ipi` or `11_multiclient_scalability` at the
 weak-signal stationary location if the paper needs RF-good versus RF-weak
-comparisons. For experiment 06, only the core-side QoS-flow verification remains
-if the paper will make a QoS-specific claim.
+comparisons. Run `04_private5g_mobility` if the paper needs moving private-5G
+route data. For experiment 06, only the core-side QoS-flow verification remains
+if the paper will make a QoS-specific claim. Experiment 10 is not a remaining
+blocker because the edge-offload/local-compute result is already covered by the
+existing paper result.
