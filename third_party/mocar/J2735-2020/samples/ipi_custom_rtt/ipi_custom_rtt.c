@@ -61,7 +61,9 @@ typedef struct ReplyState {
     bool ready;
     uint32_t expected_sequence;
     uint64_t origin_send_ns;
+    uint64_t origin_send_epoch_ns;
     uint64_t reply_recv_ns;
+    uint64_t reply_recv_epoch_ns;
     uint64_t responder_recv_ns;
     uint64_t responder_send_ns;
     uint32_t reply_payload_bytes;
@@ -81,7 +83,7 @@ static Args g_args = {
 };
 
 static pthread_mutex_t g_reply_lock = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t g_reply_cond = PTHREAD_COND_INITIALIZER;
+static pthread_cond_t g_reply_cond;
 static ReplyState g_reply = {0};
 static volatile sig_atomic_t g_running = 1;
 
@@ -89,6 +91,13 @@ static uint64_t monotonic_time_ns(void)
 {
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC, &ts);
+    return ((uint64_t)ts.tv_sec * 1000000000ULL) + (uint64_t)ts.tv_nsec;
+}
+
+static uint64_t realtime_epoch_ns(void)
+{
+    struct timespec ts;
+    clock_gettime(CLOCK_REALTIME, &ts);
     return ((uint64_t)ts.tv_sec * 1000000000ULL) + (uint64_t)ts.tv_nsec;
 }
 
@@ -115,6 +124,21 @@ static void handle_signal(int sig)
 {
     (void)sig;
     g_running = 0;
+}
+
+static int init_reply_condition(void)
+{
+    pthread_condattr_t attr;
+    int rc = pthread_condattr_init(&attr);
+    if (rc != 0) {
+        return rc;
+    }
+    rc = pthread_condattr_setclock(&attr, CLOCK_MONOTONIC);
+    if (rc == 0) {
+        rc = pthread_cond_init(&g_reply_cond, &attr);
+    }
+    pthread_condattr_destroy(&attr);
+    return rc;
 }
 
 static void copy_node_id(char* dst, const char* src)
@@ -362,10 +386,12 @@ static void maybe_record_reply(const RttMessage* msg, int len)
     }
 
     uint64_t recv_ns = monotonic_time_ns();
+    uint64_t recv_epoch_ns = realtime_epoch_ns();
     pthread_mutex_lock(&g_reply_lock);
     if (g_reply.waiting && msg->sequence == g_reply.expected_sequence) {
         g_reply.ready = true;
         g_reply.reply_recv_ns = recv_ns;
+        g_reply.reply_recv_epoch_ns = recv_epoch_ns;
         g_reply.responder_recv_ns = msg->responder_recv_ns;
         g_reply.responder_send_ns = msg->responder_send_ns;
         g_reply.reply_payload_bytes = (uint32_t)len;
@@ -396,7 +422,8 @@ static void v2x_custom_rtt_recv_handle(char* buffer, int len)
 static void print_csv_header(void)
 {
     printf("sequence,payload_bytes,packet_bytes,success,rtt_ms,origin_send_mono_ns,reply_recv_mono_ns,"
-           "responder_id,responder_recv_mono_ns,responder_send_mono_ns,detail\n");
+           "responder_id,responder_recv_mono_ns,responder_send_mono_ns,detail,"
+           "origin_send_epoch_ns,reply_recv_epoch_ns,decision_epoch_ns,timeout_ms\n");
 }
 
 static void print_result(uint32_t sequence,
@@ -405,13 +432,14 @@ static void print_result(uint32_t sequence,
                          bool success,
                          double rtt_ms,
                          const ReplyState* reply,
+                         uint64_t decision_epoch_ns,
                          const char* detail)
 {
     if (g_args.quiet) {
         return;
     }
     if (g_args.csv) {
-        printf("%" PRIu32 ",%" PRIu32 ",%" PRIu32 ",%s,%.6f,%" PRIu64 ",%" PRIu64 ",%s,%" PRIu64 ",%" PRIu64 ",%s\n",
+        printf("%" PRIu32 ",%" PRIu32 ",%" PRIu32 ",%s,%.6f,%" PRIu64 ",%" PRIu64 ",%s,%" PRIu64 ",%" PRIu64 ",%s,%" PRIu64 ",%" PRIu64 ",%" PRIu64 ",%" PRIu32 "\n",
                sequence,
                payload_bytes,
                packet_bytes,
@@ -422,7 +450,11 @@ static void print_result(uint32_t sequence,
                reply ? reply->responder_id : "",
                reply ? reply->responder_recv_ns : 0,
                reply ? reply->responder_send_ns : 0,
-               detail);
+               detail,
+               reply ? reply->origin_send_epoch_ns : 0,
+               reply ? reply->reply_recv_epoch_ns : 0,
+               decision_epoch_ns,
+               g_args.timeout_ms);
     } else if (success) {
         printf("seq=%" PRIu32 " payload_bytes=%" PRIu32 " packet_bytes=%" PRIu32
                " rtt_ms=%.3f responder=%s\n",
@@ -457,6 +489,7 @@ static int run_initiator(void)
     uint32_t sequence = 1;
     while (g_running && (g_args.count == 0 || sequence <= g_args.count)) {
         uint64_t send_ns = monotonic_time_ns();
+        uint64_t send_epoch_ns = realtime_epoch_ns();
         int len = build_rtt_payload(payload,
                                     IPI_RTT_PACKET_BUFFER_BYTES,
                                     'Q',
@@ -468,7 +501,14 @@ static int run_initiator(void)
                                     0,
                                     g_args.payload_bytes);
         if (len < 0) {
-            print_result(sequence, g_args.payload_bytes, 0, false, 0.0, NULL, "payload-build-failed");
+            print_result(sequence,
+                         g_args.payload_bytes,
+                         0,
+                         false,
+                         0.0,
+                         NULL,
+                         realtime_epoch_ns(),
+                         "payload-build-failed");
             free(payload);
             return 1;
         }
@@ -478,16 +518,25 @@ static int run_initiator(void)
         g_reply.waiting = true;
         g_reply.expected_sequence = sequence;
         g_reply.origin_send_ns = send_ns;
+        g_reply.origin_send_epoch_ns = send_epoch_ns;
         pthread_mutex_unlock(&g_reply_lock);
 
         if (v2x_packet_data_send(payload, len, MOCAR_CUSTOM_MSG_ID) != 0) {
             pthread_mutex_lock(&g_reply_lock);
+            ReplyState result = g_reply;
             g_reply.waiting = false;
             pthread_mutex_unlock(&g_reply_lock);
-            print_result(sequence, g_args.payload_bytes, (uint32_t)len, false, 0.0, NULL, "send-failed");
+            print_result(sequence,
+                         g_args.payload_bytes,
+                         (uint32_t)len,
+                         false,
+                         0.0,
+                         &result,
+                         realtime_epoch_ns(),
+                         "send-failed");
         } else {
             struct timespec deadline;
-            clock_gettime(CLOCK_REALTIME, &deadline);
+            clock_gettime(CLOCK_MONOTONIC, &deadline);
             add_ms_to_timespec(&deadline, g_args.timeout_ms);
 
             pthread_mutex_lock(&g_reply_lock);
@@ -501,9 +550,23 @@ static int run_initiator(void)
 
             if (result.ready && result.reply_recv_ns >= result.origin_send_ns) {
                 double rtt_ms = (double)(result.reply_recv_ns - result.origin_send_ns) / 1000000.0;
-                print_result(sequence, g_args.payload_bytes, (uint32_t)len, true, rtt_ms, &result, "ok");
+                print_result(sequence,
+                             g_args.payload_bytes,
+                             (uint32_t)len,
+                             true,
+                             rtt_ms,
+                             &result,
+                             realtime_epoch_ns(),
+                             "ok");
             } else {
-                print_result(sequence, g_args.payload_bytes, (uint32_t)len, false, 0.0, &result, "timeout");
+                print_result(sequence,
+                             g_args.payload_bytes,
+                             (uint32_t)len,
+                             false,
+                             0.0,
+                             &result,
+                             realtime_epoch_ns(),
+                             "timeout");
             }
         }
 
@@ -522,6 +585,11 @@ int main(int argc, char** argv)
     parse_args(argc, argv);
     signal(SIGINT, handle_signal);
     signal(SIGTERM, handle_signal);
+
+    if (init_reply_condition() != 0) {
+        fprintf(stderr, "pthread condition initialization failed\n");
+        return 1;
+    }
 
     if (mde_v2x_init(0) != 0) {
         fprintf(stderr, "mde_v2x_init failed\n");

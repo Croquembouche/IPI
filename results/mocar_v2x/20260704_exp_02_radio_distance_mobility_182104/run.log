@@ -1,0 +1,6 @@
+[2026-07-04T18:21:04-04:00] Preparing exp 02 mobility run
+[2026-07-04T18:21:06-04:00] Preparing Mocar OBU/RSU for exp 02
+[2026-07-04T18:21:34-04:00] Starting continuous GNSS recorder
+[2026-07-04T18:21:39-04:00] Starting OBU V2X initiator condition=mocar-exp02-mobility-route-los-moving-run3-payload-256
+[2026-07-04T18:28:53-04:00] Fetching Mocar OBU/RSU artifacts
+[2026-07-04T18:28:56-04:00] Exp 02 mobility run complete

@@ -1,0 +1,2 @@
+condition_id,rows,success,timeouts,success_rate,p50_rtt_ms,p95_rtt_ms,p99_rtt_ms,timeout_ms,gnss_samples,clock_offset_obu_minus_local_ns,clock_alignment_median_rtt_ns
+mocar-exp02-mobility-route-los-moving-run4-payload-256,1000,716,284,0.716,28.275574,41.621093,50.650618,500,83136,148759169,368899895

@@ -1,0 +1,2 @@
+condition_id,rows,success,timeouts,success_rate,first_success_sequence,p50_rtt_ms,p95_rtt_ms,p99_rtt_ms
+mocar-exp02-mobility-route-los-moving-live-payload-256,675,515,160,0.762962962962963,1,99.60988,108.420753,112.43572
