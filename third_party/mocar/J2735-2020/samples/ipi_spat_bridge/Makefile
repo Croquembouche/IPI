@@ -1,10 +1,12 @@
 EXE := ipi_spat_bridge
 
 # Use the same toolchain naming as other samples; C++17 for bridge + IPI helpers.
+ifeq ($(origin CXX),default)
 CXX := aarch64-linux-gnu-g++
+endif
 
 # Defaults if not provided by parent samples Makefile
-LOCAL_LFLAGS ?= -L ../../lib -Wl,-rpath,'$$ORIGIN/../../lib:/usr/lib:/usr/local/lib'
+LOCAL_LFLAGS ?= -L ../../lib -Wl,-rpath,'$$ORIGIN/../lib:$$ORIGIN/../../lib:/usr/lib:/usr/local/lib'
 LIBS ?= -lmocarcv2x -lzlog -ldl -lrt
 
 IPI_ROOT := $(abspath ../../../../../cpp)

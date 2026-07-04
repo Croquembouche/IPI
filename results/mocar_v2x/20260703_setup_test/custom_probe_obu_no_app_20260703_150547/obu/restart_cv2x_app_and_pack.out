@@ -1,0 +1,11 @@
+cv2x mode
+init gps...
+115200
+set F9P
+Starting apps
+Starting cv2x_app
+
+Application Status
+cv2x_app running
+root      6668     1  4 03:05 ?        00:00:01 /usr/local/bin/cv2x_app -n 30b20eaa -i xxxx -d 0
+root     23887     1  0 01:05 ?        00:00:57 /usr/local/bin/cv2x_stack -s 0 -t 1 -d 0

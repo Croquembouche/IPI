@@ -1,0 +1,6 @@
+payload_bytes,rows,success,success_rate,avg_rtt_ms,p50_rtt_ms,p95_rtt_ms,p99_rtt_ms,source
+0,1000,1000,1.0,93.25240276199996,99.9388865,106.872512,111.81375,remote OBU /root/edge4av_exp/exp_01/20260703_exp_01_payload_sweep_run_4/obu/payload_0.csv
+256,1000,999,0.999,98.32442102402403,99.980298,106.884254,111.691053,results/mocar_v2x/20260703_exp_01_payload_256_full_160216/remote_obu/obu/payload_256.csv
+512,1000,1000,1.0,98.84768487699976,99.97157999999999,106.691248,114.576517,results/mocar_v2x/20260703_exp_01_payload_512_full_160733/remote_obu/obu/payload_512.csv
+1024,1000,1000,1.0,99.84087456800006,99.9663995,106.877405,112.513114,results/mocar_v2x/20260703_exp_01_payload_1024_full_161137/remote_obu/obu/payload_1024.csv
+2048,1000,1000,1.0,98.51503070299995,99.9577475,111.661121,120.562051,results/mocar_v2x/20260703_exp_01_payload_2048_full_161542/remote_obu/obu/payload_2048.csv

@@ -1,0 +1,4 @@
+mode=raw flags=-l 0 -d 2
+mode=tf flags=-t -f -l 0 -d 2
+mode=total flags=-T -t -f -l 0 -d 2
+mode=sch flags=-S -t -f -l 0 -d 2

@@ -1,0 +1,18 @@
+Warning: Permanently added '192.168.253.10' (RSA) to the list of known hosts.
+cv2x mode
+/usr/local/install/S99initapps.sh: line 62: sysctl: command not found
+/usr/local/install/S99initapps.sh: line 77: ifconfig: command not found
+/usr/local/install/S99initapps.sh: line 78: ifconfig: command not found
+/usr/local/install/S99initapps.sh: line 79: ifconfig: command not found
+/usr/local/install/S99initapps.sh: line 80: ifconfig: command not found
+/usr/local/install/S99initapps.sh: line 86: sqlite3: command not found
+Reloading apps
+Stopping cv2x_app
+init gps...
+115200
+set F9P
+/usr/local/install/S99initapps.sh: line 280: 22527 Killed                  cat $TTY_DEV >> /huali/ublox.log
+Starting cv2x_app
+/usr/local/install/start_stop_daemon.sh: line 149: start-stop-daemon: command not found
+root     10959     1  0 02:10 ?        00:00:08 /usr/local/bin/cv2x_stack -s 0 -t 1 -d 0
+root     11076     1  0 02:11 ?        00:00:00 /usr/local/bin/cv2x_monitor -n 1 -t 1 -m 0

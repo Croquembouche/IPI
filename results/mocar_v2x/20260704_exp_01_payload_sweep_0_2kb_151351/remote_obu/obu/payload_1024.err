@@ -1,0 +1,1 @@
+ipi_custom_rtt role=0 node_id=obu-exp01-sweep payload_bytes=1024 count=1000 asn_check=0

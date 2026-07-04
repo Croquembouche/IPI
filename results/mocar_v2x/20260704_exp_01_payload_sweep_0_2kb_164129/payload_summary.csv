@@ -1,0 +1,6 @@
+payload_bytes,attempts_for_analysis,observed_rows,success_for_analysis,timeouts_for_analysis,success_rate_for_analysis,avg_rtt_ms,p50_rtt_ms,p95_rtt_ms,p99_rtt_ms,note
+0,1000,1000,0,1000,0.0,,,,,observed
+256,1000,332,0,1000,0.0,,,,,operator_stopped_run; raw_observed_rows=332; raw_observed_success=0; raw_observed_timeouts=332; remaining_entries_and_analysis_treated_as_1000_timeouts; raw_preserved_as_remote_obu/obu/payload_256_observed_partial.csv; synthetic_file=analysis/payload_256_treated_timeout.csv
+512,1000,0,0,1000,0.0,,,,,operator_skipped_run; treated_as_1000_timeouts; synthetic_file=analysis/payload_512_treated_timeout.csv
+1024,1000,0,0,1000,0.0,,,,,operator_skipped_run; treated_as_1000_timeouts; synthetic_file=analysis/payload_1024_treated_timeout.csv
+2048,1000,0,0,1000,0.0,,,,,operator_skipped_run; treated_as_1000_timeouts; synthetic_file=analysis/payload_2048_treated_timeout.csv

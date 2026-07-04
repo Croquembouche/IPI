@@ -1,0 +1,1 @@
+ipi_custom_rtt role=1 node_id=rsu-rtt payload_bytes=128 count=100 asn_check=1

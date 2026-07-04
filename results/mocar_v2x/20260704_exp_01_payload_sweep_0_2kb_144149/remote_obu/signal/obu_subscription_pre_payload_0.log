@@ -1,0 +1,5 @@
+[I][init_qmi_services:490] Initialized QMI clients
+[I][register_wds_callback:551] Registered WDS callback
+[I][register_wds_callback:551] Registered WDS callback
+[I][get_v2x_subscribe_list:1140] wildcard_enabled=1, dest_port=9000
+[I][deinit_qmi_services:501] De-initialized QMI clients

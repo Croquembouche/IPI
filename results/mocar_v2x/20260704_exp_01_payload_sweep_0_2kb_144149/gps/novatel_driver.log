@@ -1,0 +1,72 @@
+[INFO] [launch]: All log files can be found below /home/hydrau/.ros/log/2026-07-04-14-41-49-944409-hydrau-57963
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [novatel_oem7_driver_exe-1]: process started with pid [58014]
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.107722075] [novatel.oem7.main]: Oem7RawMsg:  topic [oem7raw]: frame_id: 'gps'; q size: 200
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.108753319] [novatel.oem7.main]: Oem7MessageNode v.; Feb 19 2026 03:29:00
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.112993721] [novatel.oem7.main]: Oem7MessageDecoderLib version: 10.1.0
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.113373950] [novatel.oem7.main]: PPPPOS:  topic [ppppos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.113673897] [novatel.oem7.main]: BESTPOS:  topic [bestpos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.113958858] [novatel.oem7.main]: BESTVEL:  topic [bestvel]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.114206697] [novatel.oem7.main]: BESTGNSSVEL:  topic [bestgnssvel]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.114435278] [novatel.oem7.main]: BESTUTM:  topic [bestutm]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.114693423] [novatel.oem7.main]: BESTGNSSPOS:  topic [bestgnsspos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.114958385] [novatel.oem7.main]: INSPVA:  topic [inspva]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.115191346] [novatel.oem7.main]: GPSFix:  topic [gps]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.115635012] [novatel.oem7.main]: NavSatFix:  topic [fix]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.116246721] [novatel.oem7.main]: GPSFix position source: BESTPOS or INSPVAS based on quality
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.116342858] [novatel.oem7.main]: IMU:  topic [imu/data]: frame_id: 'imu_link'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.116585054] [novatel.oem7.main]: RAWIMU:  topic [imu/data_raw]: frame_id: 'imu_link'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.116821081] [novatel.oem7.main]: CORRIMU:  topic [corrimu]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.117052243] [novatel.oem7.main]: INSSTDEV:  topic [insstdev]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.117293007] [novatel.oem7.main]: INSPVAX:  topic [inspvax]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.117553756] [novatel.oem7.main]: INSCONFIG:  topic [insconfig]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [WARN] [1783190510.117900835] [novatel.oem7.main]: Message 'RAWIMUSX' will not be published.
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.118002055] [novatel.oem7.main]: HEADING2:  topic [heading2]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.118277841] [novatel.oem7.main]: RXSTATUS:  topic [rxstatus]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.118587278] [novatel.oem7.main]: TERRASTARINFO:  topic [terrastarinfo]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.118903724] [novatel.oem7.main]: TERRASTARSTATUS:  topic [terrastarstatus]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.119147976] [novatel.oem7.main]: TIME:  topic [time]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [WARN] [1783190510.119384590] [novatel.oem7.main]: Message 'NMEA_Sentence' will not be published.
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.119470417] [novatel.oem7.main]: Odometry:  topic [odom]: frame_id: 'odom'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.119898803] [novatel.oem7.main]: OdometryOrigin:  topic [odom_origin]: frame_id: 'odom'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.122366257] [novatel.oem7.main]: Oem7Net TCP['192.168.3.100' : 3001]
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.123094645] [novatel.oem7.main]: Oem7Net socket open: '1; OS error= 0
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.171413345] [novatel.oem7.main]: Standard Receiver Initialization:
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.192869367] [novatel.oem7.main]: AACmd 'UNLOGALL THISPORT' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.206464833] [novatel.oem7.main]: AACmd 'LOG INSCONFIGB ONCE' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.222145734] [novatel.oem7.main]: AACmd 'LOG TERRASTARINFOB ONCE' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.233019744] [novatel.oem7.main]: AACmd 'LOG TERRASTARSTATUSB ONCE' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.245708046] [novatel.oem7.main]: AACmd 'LOG TERRASTARINFOB ONTIME 300' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.257306575] [novatel.oem7.main]: AACmd 'LOG TERRASTARSTATUSB ONTIME 300' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.282413867] [novatel.oem7.main]: AACmd 'LOG INSCONFIGB ONTIME 300' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.296403746] [novatel.oem7.main]: AACmd 'LOG RXSTATUSB ONCHANGED' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.312234283] [novatel.oem7.main]: AACmd 'LOG BESTPOSB ONTIME 0.1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.321984600] [novatel.oem7.main]: AACmd 'LOG BESTVELB ONTIME 0.1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.335063414] [novatel.oem7.main]: AACmd 'LOG BESTGNSSVELB ONTIME 0.1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.347192111] [novatel.oem7.main]: AACmd 'LOG BESTUTMB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.358920075] [novatel.oem7.main]: AACmd 'LOG BESTGNSSPOSB ONTIME 0.1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.380434993] [novatel.oem7.main]: AACmd 'LOG PPPPOSB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.392995846] [novatel.oem7.main]: AACmd 'LOG HEADING2B ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.405573355] [novatel.oem7.main]: AACmd 'LOG PSRDOP2B ONCHANGED' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.432005338] [novatel.oem7.main]: AACmd 'LOG INSPVASB ONTIME 0.02' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.444133929] [novatel.oem7.main]: AACmd 'LOG INSPVAXB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.460974966] [novatel.oem7.main]: AACmd 'LOG CORRIMUSB ONTIME 0.01' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.484501174] [novatel.oem7.main]: AACmd 'LOG INSSTDEVB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.507072034] [novatel.oem7.main]: AACmd 'LOG RAWIMUSXB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.542515869] [novatel.oem7.main]: AACmd 'LOG TIMEB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.556585333] [novatel.oem7.main]: AACmd 'LOG VERSIONB ONCE' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.582665676] [novatel.oem7.main]: AACmd 'LOG INSUPDATESTATUSB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.654992469] [novatel.oem7.main]: AACmd 'LOG RAWEPHEMB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.689286087] [novatel.oem7.main]: AACmd 'LOG GLOEPHEMERISB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.705455801] [novatel.oem7.main]: AACmd 'LOG BDSEPHEMERISB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.733863618] [novatel.oem7.main]: AACmd 'LOG GALFNAVEPHEMERISB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.742848316] [novatel.oem7.main]: AACmd 'LOG GALINAVEPHEMERISB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.760889738] [novatel.oem7.main]: AACmd 'LOG RANGEB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.760930757] [novatel.oem7.main]: Extended Receiver Initialization:
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.760967417] [novatel.oem7.main]: Receiver Initialization completed, errors= 0
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.770572914] [novatel.oem7.main]: GPSFix position source= INSPVA: 0 --> 0 at GPSTime[2425 585728760]
+[novatel_oem7_driver_exe-1] [ERROR] [1783190510.770617055] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1783190510.790428830] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1783190510.812003307] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [INFO] [1783190510.831161084] [novatel.oem7.main]: UTM new Zone:  -1 --> 18; N: 1 X: 434996 Y: 4.39097e+06
+[novatel_oem7_driver_exe-1] [INFO] [1783190511.030646137] [novatel.oem7.main]: GPSFix position source= INSPVA: 0 --> 1 at GPSTime[2425 585729020]

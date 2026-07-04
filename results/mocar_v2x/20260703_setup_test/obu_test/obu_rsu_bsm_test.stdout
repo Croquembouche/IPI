@@ -1,0 +1,10 @@
+txmsg-BSM: send msg successed, sequence 0
+rxmsg-BSM: receive msg success, vhId:40, sequence 4
+txmsg-BSM: send msg successed, sequence 1
+rxmsg-BSM: receive msg success, vhId:40, sequence 5
+txmsg-BSM: send msg successed, sequence 2
+rxmsg-BSM: receive msg success, vhId:40, sequence 6
+txmsg-BSM: send msg successed, sequence 3
+txmsg-BSM: send msg successed, sequence 4
+txmsg-BSM: send msg successed, sequence 5
+txmsg-BSM: send msg successed, sequence 6

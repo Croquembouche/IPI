@@ -66,7 +66,7 @@ Recommended per-run metadata:
 
 ### Core Main-Paper Experiments
 
-- [ ] `E1` Baseline service envelope (private-5G TCP/MQTT complete; radio path pending)
+- [x] `E1` Baseline service envelope (private-5G TCP/MQTT and stationary Mocar V2X exp_01 radio baseline complete)
 - [x] `E2` Scaling and contention (stationary private-5G TCP/UDP/MQTT 1-100 client sweep collected; runbook repeats pending)
 - [ ] `E3` Crowded-network / QoS stress tests (default-load Phase A complete; real QoS comparison pending)
 - [ ] `E4` Edge-offload vs RSU-local compute (detector compute timing complete; placement comparison pending)
@@ -93,6 +93,10 @@ Recommended per-run metadata:
   `results/v2x_benchmarks/v2x-radar-detector-benchmark-20260629T182624Z/`.
 - Dataset-derived IPI local loopback: completed in
   `results/v2x_benchmarks/v2x-ipi-loopback-20260629T175556Z/`.
+- Mocar V2X exp_01 stationary baseline/payload sweep with NovAtel GNSS:
+  completed across multiple locations under `results/mocar_v2x/`; final
+  location evidence is
+  `results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/summary.md`.
 - Detector-output-to-IPI private-5G TCP/MQTT replay with GNSS: completed in
   `results/real_5g/20260702_detector_output_to_ipi_run_1/summary.md`.
 - Detector-output-to-IPI private-5G fragmented UDP replay with GNSS: completed
@@ -458,6 +462,7 @@ Use this table to map raw files to conditions.
 | 2026-07-02 | `edge4av-real-20260702-multiclient-scalability-run-3` | `p5g-scale-{tcp,udp,mqtt}-payload-1024-clients-{50,100}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260702_multiclient_scalability_run_3/` | Experiment 11 high-client extension with NovAtel GNSS; TCP/MQTT accepted 100.0%, UDP accepted 98.97% at 50 clients and 99.37% at 100 clients |
 | 2026-07-02 | `edge4av-real-20260702-multiclient-scalability-run-4` | `p5g-scale-{tcp,udp,mqtt}-payload-1024-clients-{1,2,5,10,20,50,100}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260702_multiclient_scalability_run_4/` | Experiment 11 second stationary repeat with NovAtel GNSS; TCP/MQTT accepted 100.0%, UDP accepted 99.965-100.0% across client levels |
 | 2026-07-03 | `edge4av-real-20260703-failure-fallback-run-1` | `p5g-failure-{receiver-restart-{tcp,udp,mqtt},broker-restart-mqtt}-payload-1024` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260703_failure_fallback_run_1/` | Experiment 12 stationary failure/fallback subset with NovAtel GNSS; receiver-restart accepted TCP 95.3%, UDP 96.9%, MQTT 99.1%; MQTT broker-restart accepted 95.5% |
+| 2026-07-04 | `20260704_exp_01_payload_sweep_0_2kb_164129` | `mocar-exp01-payload-0-2048-stationary-final-location` | Mocar OBU/RSU, NovAtel GNSS | `results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/` | Final Experiment 01 stationary Mocar V2X baseline run; 0 B completed as 1000/1000 timeouts, 256 B stopped after 332 timeout rows, and 256/512/1024/2048 B counted as timeout for analysis by operator instruction |
 
 ## Paper Readiness Check
 

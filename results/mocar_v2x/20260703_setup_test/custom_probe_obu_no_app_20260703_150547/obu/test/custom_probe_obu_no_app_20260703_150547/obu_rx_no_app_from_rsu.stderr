@@ -1,0 +1,1 @@
+custom_probe_ready,mode=0,node_id=obu-rx-no-app,count=20,interval_ms=100,payload_bytes=32,asn_check=0

@@ -1,0 +1,4 @@
+unknown option -- O
+usage: scp [-346BCpqrTv] [-c cipher] [-F ssh_config] [-i identity_file]
+            [-J destination] [-l limit] [-o ssh_option] [-P port]
+            [-S program] source ... target

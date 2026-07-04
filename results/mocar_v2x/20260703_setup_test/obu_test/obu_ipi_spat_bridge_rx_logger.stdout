@@ -1,0 +1,11 @@
+spat_rx_logger_ready
+rxmsg-SPAT,count=1,time_ns=1783102248769427279,name=SPAT,intersections=1,id=101,revision=0,state_count=2,signal_group=1,event_state=4
+rxmsg-SPAT,count=2,time_ns=1783102249800840995,name=SPAT,intersections=1,id=101,revision=1,state_count=2,signal_group=1,event_state=4
+rxmsg-SPAT,count=3,time_ns=1783102250804752164,name=SPAT,intersections=1,id=101,revision=2,state_count=2,signal_group=1,event_state=4
+rxmsg-SPAT,count=4,time_ns=1783102251109824447,name=SPAT,intersections=1,id=101,revision=3,state_count=2,signal_group=1,event_state=4
+rxmsg-SPAT,count=5,time_ns=1783102252851276070,name=SPAT,intersections=1,id=101,revision=4,state_count=2,signal_group=1,event_state=4
+rxmsg-SPAT,count=6,time_ns=1783102253254862610,name=SPAT,intersections=1,id=101,revision=5,state_count=2,signal_group=1,event_state=4
+rxmsg-SPAT,count=7,time_ns=1783102254907874562,name=SPAT,intersections=1,id=101,revision=6,state_count=2,signal_group=1,event_state=4
+rxmsg-SPAT,count=8,time_ns=1783102255208354659,name=SPAT,intersections=1,id=101,revision=7,state_count=2,signal_group=1,event_state=4
+rxmsg-SPAT,count=9,time_ns=1783102256955358860,name=SPAT,intersections=1,id=101,revision=8,state_count=2,signal_group=1,event_state=4
+rxmsg-SPAT,count=10,time_ns=1783102257153039500,name=SPAT,intersections=1,id=101,revision=9,state_count=2,signal_group=1,event_state=4

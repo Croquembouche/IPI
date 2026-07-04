@@ -1,0 +1,120 @@
+/huali/log/cv2x_stack.log:25270:[2026-07-04 02:42:42.929] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25271:[2026-07-04 02:42:42.929] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25278:[2026-07-04 02:42:43.030] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25279:[2026-07-04 02:42:43.030] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25286:[2026-07-04 02:42:43.129] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25287:[2026-07-04 02:42:43.130] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25294:[2026-07-04 02:42:43.230] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25295:[2026-07-04 02:42:43.230] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25302:[2026-07-04 02:42:43.330] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25303:[2026-07-04 02:42:43.330] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25310:[2026-07-04 02:42:43.429] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25311:[2026-07-04 02:42:43.429] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25315:[2026-07-04 02:42:43.531] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25316:[2026-07-04 02:42:43.531] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25323:[2026-07-04 02:42:43.631] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25324:[2026-07-04 02:42:43.631] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25331:[2026-07-04 02:42:43.730] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25332:[2026-07-04 02:42:43.730] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25339:[2026-07-04 02:42:43.831] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25340:[2026-07-04 02:42:43.831] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25347:[2026-07-04 02:42:43.937] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25348:[2026-07-04 02:42:43.937] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25355:[2026-07-04 02:42:44.031] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25356:[2026-07-04 02:42:44.031] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25363:[2026-07-04 02:42:44.131] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25364:[2026-07-04 02:42:44.131] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25371:[2026-07-04 02:42:44.230] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25372:[2026-07-04 02:42:44.230] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25379:[2026-07-04 02:42:44.331] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25380:[2026-07-04 02:42:44.331] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25387:[2026-07-04 02:42:44.430] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25388:[2026-07-04 02:42:44.430] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25395:[2026-07-04 02:42:44.531] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25396:[2026-07-04 02:42:44.531] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25403:[2026-07-04 02:42:44.631] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25404:[2026-07-04 02:42:44.631] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25411:[2026-07-04 02:42:44.730] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25412:[2026-07-04 02:42:44.730] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25419:[2026-07-04 02:42:44.831] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25420:[2026-07-04 02:42:44.831] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25427:[2026-07-04 02:42:44.930] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25428:[2026-07-04 02:42:44.931] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25435:[2026-07-04 02:42:45.041] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25436:[2026-07-04 02:42:45.041] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25443:[2026-07-04 02:42:45.131] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25444:[2026-07-04 02:42:45.131] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25451:[2026-07-04 02:42:45.230] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25452:[2026-07-04 02:42:45.230] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25459:[2026-07-04 02:42:45.331] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25460:[2026-07-04 02:42:45.331] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25467:[2026-07-04 02:42:45.430] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25468:[2026-07-04 02:42:45.431] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25475:[2026-07-04 02:42:45.530] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25476:[2026-07-04 02:42:45.530] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25483:[2026-07-04 02:42:45.631] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25484:[2026-07-04 02:42:45.631] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25491:[2026-07-04 02:42:45.730] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25492:[2026-07-04 02:42:45.730] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25499:[2026-07-04 02:42:45.831] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25500:[2026-07-04 02:42:45.831] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25507:[2026-07-04 02:42:45.930] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25508:[2026-07-04 02:42:45.931] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25515:[2026-07-04 02:42:46.030] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25516:[2026-07-04 02:42:46.030] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25520:[2026-07-04 02:42:46.131] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25521:[2026-07-04 02:42:46.131] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25528:[2026-07-04 02:42:46.230] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25529:[2026-07-04 02:42:46.230] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25536:[2026-07-04 02:42:46.331] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25537:[2026-07-04 02:42:46.331] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25544:[2026-07-04 02:42:46.431] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25545:[2026-07-04 02:42:46.431] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25552:[2026-07-04 02:42:46.540] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25553:[2026-07-04 02:42:46.540] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25560:[2026-07-04 02:42:46.631] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25561:[2026-07-04 02:42:46.631] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25568:[2026-07-04 02:42:46.730] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25569:[2026-07-04 02:42:46.731] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25576:[2026-07-04 02:42:46.830] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25577:[2026-07-04 02:42:46.830] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25584:[2026-07-04 02:42:46.931] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25585:[2026-07-04 02:42:46.931] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25592:[2026-07-04 02:42:47.030] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25593:[2026-07-04 02:42:47.030] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25600:[2026-07-04 02:42:47.131] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25601:[2026-07-04 02:42:47.131] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25608:[2026-07-04 02:42:47.231] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25609:[2026-07-04 02:42:47.231] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25616:[2026-07-04 02:42:47.330] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25617:[2026-07-04 02:42:47.330] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25630:[2026-07-04 02:42:47.431] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25631:[2026-07-04 02:42:47.431] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25638:[2026-07-04 02:42:47.530] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25639:[2026-07-04 02:42:47.531] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25646:[2026-07-04 02:42:47.631] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25647:[2026-07-04 02:42:47.631] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25654:[2026-07-04 02:42:47.730] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25655:[2026-07-04 02:42:47.731] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25662:[2026-07-04 02:42:47.841] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25663:[2026-07-04 02:42:47.841] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25670:[2026-07-04 02:42:47.931] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25671:[2026-07-04 02:42:47.931] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25678:[2026-07-04 02:42:48.030] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25679:[2026-07-04 02:42:48.030] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25686:[2026-07-04 02:42:48.131] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25687:[2026-07-04 02:42:48.131] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25694:[2026-07-04 02:42:48.232] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25695:[2026-07-04 02:42:48.233] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25702:[2026-07-04 02:42:48.332] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25703:[2026-07-04 02:42:48.332] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25710:[2026-07-04 02:42:48.444] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25711:[2026-07-04 02:42:48.444] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25718:[2026-07-04 02:42:48.532] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25719:[2026-07-04 02:42:48.533] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25726:[2026-07-04 02:42:48.633] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25727:[2026-07-04 02:42:48.633] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25734:[2026-07-04 02:42:48.733] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25735:[2026-07-04 02:42:48.733] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111
+/huali/log/cv2x_stack.log:25739:[2026-07-04 02:42:48.832] TRACE [0x281472929870208:cv2x_rx.c] [cv2x_rx:279] Receive message[PSID:32] len=40
+/huali/log/cv2x_stack.log:25740:[2026-07-04 02:42:48.832] ERROR [0x281472929870208:cv2x_rx.c] [cv2x_rx_data_send:64] g_stack_udp_sockfd send error 111

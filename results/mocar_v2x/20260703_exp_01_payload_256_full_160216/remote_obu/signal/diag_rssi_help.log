@@ -1,0 +1,24 @@
+diag-rssi: invalid option -- '-'
+
+Usage: diag-rssi [-flag 1 <parameter>] [-flag 2 <parameter>] ...
+
+	-v <vendor_id>		The vendor ID of the modem device.
+	-p <product_id>		The product ID of the modem device.
+	-i <mdm_interface>	The interface to use on the modem device.
+	-a <endpoint_in>	The IN endpoint address of the device.
+	-b <endpoint_out>	The OUT endpoint address of the device.
+
+	-S 			Use this flag to only display info from packets with SCH > 1.
+	-T 			Use this flag to only display RSSI totals.
+	-t 			Use this flag to print packet timestamps.
+	-f 			Use this flag to print frame/subframe numbers.
+
+	-l <0|1>		Logging msg output: 0 for standard out, 1 for the syslog.
+	-d <0|1|2>		Set debug level from 0 (lowest, least output) to 2 (highest).
+	-s 			Include this flag to save settings to config file.
+	-h 			Use this flag to print this usage info.
+
+	Any missing parameters will use the values from the config file.
+	If a config file cannot be found or there are certain settings missing from the
+	config file, default values will be used for those settings.
+

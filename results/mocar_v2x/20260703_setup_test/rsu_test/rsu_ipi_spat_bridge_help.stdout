@@ -1,0 +1,5 @@
+Usage: /root/edge4av_exp/bin/ipi_spat_bridge [--port <p>] [--run-id <id>] [--condition-id <id>] [--condition-label <label>]
+       [--request-id <id>] [--av-id <id>] [--obu-id <id>] [--rsu-id <id>]
+       [--network-load-level <id>] [--qos-profile <id>] [--mobility-state <id>]
+       [--clock-sync-state <id>] [--service-success <bool>] [--vehicle-outcome-name <s>]
+       [--vehicle-outcome-value <v>] [--vehicle-outcome-unit <u>] [--csv] [--quiet]

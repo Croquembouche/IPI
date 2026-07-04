@@ -16,7 +16,16 @@
 #define IPI_RTT_MAGIC "IPI_RTT1"
 #define IPI_RTT_MAX_NODE_ID 63
 #define IPI_RTT_MAX_HEADER 512
-#define IPI_RTT_MAX_PAYLOAD (128 * 1024)
+#define IPI_RTT_MAX_PAYLOAD 2048U
+#define IPI_RTT_PACKET_BUFFER_BYTES 4048U
+#define MOCAR_CUSTOM_MSG_ID 0x1b
+
+/* The deployed SDK's mde_v2x_custom_send() symbol returns success without
+ * sending, so use the SDK packet sender with the custom message id directly.
+ * Keep experiment payload sweeps capped at 2 KB; larger custom frames were not
+ * reliable on the OBU/RSU link. The packet buffer remains larger because this
+ * SDK send path was verified with that allocation size. */
+extern int v2x_packet_data_send(char* buffer, int len, int msg_id);
 
 typedef enum Role {
     ROLE_INITIATOR = 0,
@@ -257,7 +266,7 @@ static bool parse_rtt_message(const char* buffer, int len, RttMessage* out)
         !parse_u32_field(fields[8], &out->payload_bytes)) {
         return false;
     }
-    if (out->payload_bytes > IPI_RTT_MAX_PAYLOAD) {
+    if (out->payload_bytes > IPI_RTT_PACKET_BUFFER_BYTES) {
         return false;
     }
     return out->kind == 'Q' || out->kind == 'R';
@@ -309,7 +318,7 @@ static void maybe_echo_request(const RttMessage* msg)
         return;
     }
 
-    char* payload = (char*)malloc(IPI_RTT_MAX_PAYLOAD);
+    char* payload = (char*)malloc(IPI_RTT_PACKET_BUFFER_BYTES);
     if (payload == NULL) {
         fprintf(stderr, "failed to allocate RTT reply payload\n");
         return;
@@ -317,7 +326,7 @@ static void maybe_echo_request(const RttMessage* msg)
     uint64_t recv_ns = monotonic_time_ns();
     uint64_t send_ns = monotonic_time_ns();
     int len = build_rtt_payload(payload,
-                                IPI_RTT_MAX_PAYLOAD,
+                                IPI_RTT_PACKET_BUFFER_BYTES,
                                 'R',
                                 msg->origin_id,
                                 g_args.node_id,
@@ -331,7 +340,7 @@ static void maybe_echo_request(const RttMessage* msg)
         free(payload);
         return;
     }
-    if (mde_v2x_custom_send(payload, len, g_args.asn_check) != 0) {
+    if (v2x_packet_data_send(payload, len, MOCAR_CUSTOM_MSG_ID) != 0) {
         fprintf(stderr, "RTT reply send failed for seq=%" PRIu32 "\n", msg->sequence);
         free(payload);
         return;
@@ -439,7 +448,7 @@ static int run_initiator(void)
         print_csv_header();
     }
 
-    char* payload = (char*)malloc(IPI_RTT_MAX_PAYLOAD);
+    char* payload = (char*)malloc(IPI_RTT_PACKET_BUFFER_BYTES);
     if (payload == NULL) {
         fprintf(stderr, "failed to allocate RTT request payload\n");
         return 1;
@@ -449,7 +458,7 @@ static int run_initiator(void)
     while (g_running && (g_args.count == 0 || sequence <= g_args.count)) {
         uint64_t send_ns = monotonic_time_ns();
         int len = build_rtt_payload(payload,
-                                    IPI_RTT_MAX_PAYLOAD,
+                                    IPI_RTT_PACKET_BUFFER_BYTES,
                                     'Q',
                                     g_args.node_id,
                                     "",
@@ -471,7 +480,7 @@ static int run_initiator(void)
         g_reply.origin_send_ns = send_ns;
         pthread_mutex_unlock(&g_reply_lock);
 
-        if (mde_v2x_custom_send(payload, len, g_args.asn_check) != 0) {
+        if (v2x_packet_data_send(payload, len, MOCAR_CUSTOM_MSG_ID) != 0) {
             pthread_mutex_lock(&g_reply_lock);
             g_reply.waiting = false;
             pthread_mutex_unlock(&g_reply_lock);

@@ -1,0 +1,52 @@
+{
+  "analysis_attempts": 1000,
+  "generated_files": [
+    "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/summary.md",
+    "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/payload_summary.csv",
+    "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/operator_note.md",
+    "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/analysis/payload_256_treated_timeout.csv",
+    "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/analysis/payload_512_treated_timeout.csv",
+    "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/analysis/payload_1024_treated_timeout.csv",
+    "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/analysis/payload_2048_treated_timeout.csv"
+  ],
+  "gnss": {
+    "latest_csv_row": "1783199249193220950,1783199249.192735254,/novatel/oem7/odom,/novatel/oem7/fix,/novatel/oem7/odom,39.662898773,-75.757423428,0.298159172,0.002739645,0.002203668,-0.001483315,-0.002303352,0.002203668,,,",
+    "mean_latitude_deg": 39.6629052667121,
+    "mean_longitude_deg": -75.75741299926972,
+    "samples": 342487
+  },
+  "operator_timeout_payload_bytes": [
+    256,
+    512,
+    1024,
+    2048
+  ],
+  "raw_facts": {
+    "0": {
+      "observed_rows": 1000,
+      "observed_success": 0,
+      "observed_timeout": 1000
+    },
+    "256": {
+      "observed_rows": 332,
+      "observed_success": 0,
+      "observed_timeout": 332
+    },
+    "512": {
+      "observed_rows": 0,
+      "observed_success": 0,
+      "observed_timeout": 0
+    },
+    "1024": {
+      "observed_rows": 0,
+      "observed_success": 0,
+      "observed_timeout": 0
+    },
+    "2048": {
+      "observed_rows": 0,
+      "observed_success": 0,
+      "observed_timeout": 0
+    }
+  },
+  "run_dir": "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129"
+}

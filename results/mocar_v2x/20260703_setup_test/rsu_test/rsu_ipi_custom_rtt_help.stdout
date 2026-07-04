@@ -1,0 +1,7 @@
+Usage: /root/edge4av_exp/bin/ipi_custom_rtt [--role initiator|responder|both] [--node-id <id>]
+       [--count <n>] [--interval-ms <ms>] [--timeout-ms <ms>]
+       [--payload-bytes <n>] [--asn-check <0|1>] [--csv] [--quiet]
+
+Run the same binary on both Mocar devices. Use --role responder on the
+echo device and --role initiator on the measuring device. RTT is computed
+from the initiator's local monotonic clock when the echoed payload returns.

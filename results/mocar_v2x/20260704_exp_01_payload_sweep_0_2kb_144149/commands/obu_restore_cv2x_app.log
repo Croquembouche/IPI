@@ -1,0 +1,12 @@
+Warning: Permanently added '192.168.253.10' (RSA) to the list of known hosts.
+cv2x mode
+Reloading apps
+Stopping cv2x_app
+init gps...
+115200
+set F9P
+/usr/local/install/S99initapps.sh: line 280: 13765 Killed                  cat $TTY_DEV >> /huali/ublox.log
+Starting cv2x_app
+root     10993     1  1 02:57 ?        00:00:02 /usr/local/bin/cv2x_stack -s 0 -t 1 -d 0
+root     11115     1  0 02:57 ?        00:00:00 /usr/local/bin/cv2x_monitor -n 1 -t 1 -m 0
+root     13809     1  4 03:01 ?        00:00:00 /usr/local/bin/cv2x_app -n 30b20eaa -i xxxx -d 0

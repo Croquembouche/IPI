@@ -1,0 +1,1 @@
+ipi_custom_rtt role=0 node_id=rsu-rtt-initiator payload_bytes=128 count=10 asn_check=0

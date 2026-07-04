@@ -1,0 +1,5 @@
+OBU process state
+root      6668     1  4 03:05 ?        00:00:04 /usr/local/bin/cv2x_app -n 30b20eaa -i xxxx -d 0
+root     23887     1  0 01:05 ?        00:00:58 /usr/local/bin/cv2x_stack -s 0 -t 1 -d 0
+OBU unix sockets
+OBU PSID32 around 03:05

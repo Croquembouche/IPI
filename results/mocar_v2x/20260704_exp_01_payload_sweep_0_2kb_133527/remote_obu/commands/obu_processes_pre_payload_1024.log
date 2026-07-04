@@ -1,0 +1,5 @@
+root     10959     1  1 02:10 ?        00:00:00 /usr/local/bin/cv2x_stack -s 0 -t 1 -d 0
+root     10978     1  0 02:10 ?        00:00:00 /usr/local/bin/chronyd -f /usr/local/config/chrony.conf -u root
+nobody   10992     1  0 02:10 ?        00:00:00 /usr/local/bin/gpsd -n /dev/ttyLP3 -s 115200 -f 8N1
+root     11016     1  5 02:10 ?        00:00:00 /usr/local/bin/cv2x_app -n 30b20eaa -i xxxx -d 0
+root     11076     1  0 02:11 ?        00:00:00 /usr/local/bin/cv2x_monitor -n 1 -t 1 -m 0

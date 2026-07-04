@@ -1,0 +1,10 @@
+{
+  "note": "Consolidated 0-2KB Mocar exp_01 sweep from the successful payload datasets. This is not one continuous run; source run is recorded per payload.",
+  "payload_sources": {
+    "0": "remote OBU /root/edge4av_exp/exp_01/20260703_exp_01_payload_sweep_run_4/obu/payload_0.csv",
+    "256": "results/mocar_v2x/20260703_exp_01_payload_256_full_160216/remote_obu/obu/payload_256.csv",
+    "512": "results/mocar_v2x/20260703_exp_01_payload_512_full_160733/remote_obu/obu/payload_512.csv",
+    "1024": "results/mocar_v2x/20260703_exp_01_payload_1024_full_161137/remote_obu/obu/payload_1024.csv",
+    "2048": "results/mocar_v2x/20260703_exp_01_payload_2048_full_161542/remote_obu/obu/payload_2048.csv"
+  }
+}

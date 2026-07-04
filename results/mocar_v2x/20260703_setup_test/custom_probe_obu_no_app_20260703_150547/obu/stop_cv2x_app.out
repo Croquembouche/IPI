@@ -1,0 +1,9 @@
+cv2x mode
+Stopping apps
+Stopping cv2x_app
+
+Application Status
+cv2x_app stopped
+root      6538 23985  0 03:05 ?        00:00:00 /bin/sh /usr/local/install/S99initapps.sh restart cv2x_app
+root      6579  6538  0 03:05 ?        00:00:00 /bin/sh /usr/local/install/start_stop_daemon.sh cv2x_app stop 0
+root     23887     1  0 01:05 ?        00:00:57 /usr/local/bin/cv2x_stack -s 0 -t 1 -d 0

@@ -1,0 +1,100 @@
+1976-01-01 01:01 0 /huali/log/cv2x_hub.core.log
+2024-07-13 03:42 10485679 /huali/log/runlog/cv2x_monitor.log.0
+2024-07-17 02:13 10485716 /huali/log/runlog/cv2x_message.log.0
+2024-07-17 02:30 10485960 /huali/log/runlog/cv2x_app.log.0
+2024-08-20 21:40 464820 /huali/log/cv2x_ota.core.log
+2024-08-20 21:40 568234 /huali/log/runlog/cv2x_ota.log
+2024-08-20 21:43 17547 /huali/log/cv2x_ota.log
+2024-08-20 21:43 5472851 /huali/log/runlog/cv2x_message.log
+2024-08-20 21:44 4354558 /huali/log/runlog/cv2x_monitor.log
+2024-08-20 21:44 6822472 /huali/log/runlog/cv2x_app.log
+2024-08-21 08:48 0 /huali/log/cv2x_comm_std.core.log
+2024-09-27 22:51 186 /huali/log/cv2x_monitor.core.log
+2024-09-27 22:51 93 /huali/log/cv2x_monitor.log
+2026-01-24 05:24 5242880 /huali/log/cv2x_stack.core.log.0
+2026-07-04 02:44 4377629 /huali/log/cv2x_stack.core.log
+2026-07-04 03:02 5242844 /huali/log/cv2x.core.log.0
+2026-07-04 03:07 27532943 /huali/log/cv2x_stack.log
+2026-07-04 03:07 4917490 /huali/log/cv2x.log
+2026-07-04 03:07 711690 /huali/log/cv2x.core.log
+TAIL cv2x_message
+[2024-08-20 21:43:47.994] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:48.094] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:48.195] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:48.295] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:48.395] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:48.495] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:48.595] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:48.695] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:48.795] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:48.895] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:48.994] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:49.095] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:49.195] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:49.295] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:49.394] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:49.492] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:49.595] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:49.693] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:49.792] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:49.895] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:49.996] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:50.093] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:50.195] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:50.295] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:50.393] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:50.495] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:50.593] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:50.695] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:50.793] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:50.895] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:50.995] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:51.093] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:51.195] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:51.295] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:51.395] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:51.495] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:51.595] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:51.695] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:51.795] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:51.893] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:51.991] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:52.095] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:52.193] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:52.295] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:52.395] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:52.493] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:52.595] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:52.693] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:52.795] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:52.893] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:52.995] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:53.095] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:53.193] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:53.295] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:53.393] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:53.495] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:53.593] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:53.691] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:53.794] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:53.892] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:53.995] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:54.093] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:54.195] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:54.295] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:54.393] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:54.495] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:54.593] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:54.695] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:54.793] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:54.895] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:54.994] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:55.094] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:55.194] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:55.295] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:55.392] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:55.495] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:55.593] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:55.695] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:55.793] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40
+[2024-08-20 21:43:55.895] TRACE [cv2x_tx] Secure send message[PSID:32] start >>> message len = 40

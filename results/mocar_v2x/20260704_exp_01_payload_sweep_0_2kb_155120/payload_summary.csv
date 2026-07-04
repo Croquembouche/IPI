@@ -1,0 +1,6 @@
+payload_bytes,attempts_for_analysis,observed_rows,success_for_analysis,timeouts_for_analysis,success_rate_for_analysis,avg_rtt_ms,p50_rtt_ms,p95_rtt_ms,p99_rtt_ms,note
+0,1000,1000,999,1,0.999,94.05405879779777,99.95401,106.976238,112.627101,observed
+256,1000,1000,991,9,0.991,97.82433757214922,99.968695,107.846576,112.592896,observed
+512,1000,1000,969,31,0.969,98.88303614757503,99.969027,110.741337,115.69073,observed
+1024,1000,1000,171,829,0.171,79.21150554385966,98.911052,111.729584,115.699798,observed
+2048,1000,910,0,1000,0.0,,,,,operator_stopped_run; raw_observed_rows=910; raw_observed_success=0; raw_observed_timeouts=910; remaining_entries_and_analysis_treated_as_1000_timeouts; raw_preserved_as_remote_obu/obu/payload_2048_observed_partial.csv; synthetic_file=analysis/payload_2048_treated_timeout.csv

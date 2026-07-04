@@ -1,0 +1,20 @@
+cv2x mode
+Reloading apps
+Stopping cv2x_stack
+Waiting cv2x_stack resources release......
+cv2x_stack resources released done!
+Stopping chronyd
+Stopping gpsd
+Stopping cv2x_app
+Stopping cv2x_monitor
+Stopping cv2x_ota
+init gps...
+115200
+set F9P
+/usr/local/install/S99initapps.sh: line 280: 22080 Killed                  cat $TTY_DEV >> /huali/ublox.log
+Starting cv2x_stack
+Starting chronyd
+Starting gpsd
+Starting cv2x_app
+Starting cv2x_monitor
+Starting cv2x_ota

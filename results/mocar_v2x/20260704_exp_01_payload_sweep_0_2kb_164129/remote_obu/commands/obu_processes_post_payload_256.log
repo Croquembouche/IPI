@@ -1,0 +1,3 @@
+root     31687     1  0 05:00 ?        00:00:03 /usr/local/bin/cv2x_stack -s 0 -t 1 -d 0
+root     31759     1  4 05:00 ?        00:00:16 /usr/local/bin/cv2x_app -n 30b20eaa -i xxxx -d 0
+root     31789     1  0 05:00 ?        00:00:00 /usr/local/bin/cv2x_monitor -n 1 -t 1 -m 0

@@ -1,0 +1,47 @@
+{
+  "analysis_attempts": 1000,
+  "generated_files": [
+    "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_155120/summary.md",
+    "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_155120/payload_summary.csv",
+    "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_155120/operator_note.md",
+    "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_155120/analysis/payload_2048_treated_timeout.csv",
+    "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_155120/remote_obu/obu/payload_2048_observed_partial.csv"
+  ],
+  "gnss": {
+    "latest_csv_row": "1783197427496390701,1783197427.495673249,/novatel/oem7/odom,/novatel/oem7/fix,/novatel/oem7/odom,39.663811117,-75.758487502,0.059086378,1.598475236,-0.001326571,1.598224130,0.028332116,-0.001326571,,,",
+    "mean_latitude_deg": 39.663789349432875,
+    "mean_longitude_deg": -75.75855746369622,
+    "samples": 603787
+  },
+  "operator_timeout_payload_bytes": [
+    2048
+  ],
+  "raw_facts": {
+    "0": {
+      "observed_rows": 1000,
+      "observed_success": 999,
+      "observed_timeout": 1
+    },
+    "256": {
+      "observed_rows": 1000,
+      "observed_success": 991,
+      "observed_timeout": 9
+    },
+    "512": {
+      "observed_rows": 1000,
+      "observed_success": 969,
+      "observed_timeout": 31
+    },
+    "1024": {
+      "observed_rows": 1000,
+      "observed_success": 171,
+      "observed_timeout": 829
+    },
+    "2048": {
+      "observed_rows": 910,
+      "observed_success": 0,
+      "observed_timeout": 910
+    }
+  },
+  "run_dir": "results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_155120"
+}

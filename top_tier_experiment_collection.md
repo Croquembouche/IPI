@@ -39,7 +39,7 @@ event or metadata logs.
 
 | Status | ID | Starter script | Minimum collection | Start roles and condition sweep |
 | --- | --- | --- | --- | --- |
-| [ ] Not started | 01 | `01_broadcast_message_baseline.sh` | 5 repeats, 1000 probes per message/rate | Run `ROLE=responder` on the peer radio, then `ROLE=initiator` on the target radio. Sweep `MESSAGE_CLASS=spat,map,bsm,tim` where supported and at least two `INTERVAL_MS` rates. |
+| [x] Completed | 01 | `01_broadcast_message_baseline.sh` | 5 repeats, 1000 probes per message/rate | Mocar V2X stationary baseline/payload sweeps collected with GNSS across multiple locations in `results/mocar_v2x/`, including final location `results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/`. |
 | [ ] Not started | 02 | `02_radio_distance_mobility.sh` | 5 repeats, 1000 probes per distance/mobility | Run responder once per location. Sweep `DISTANCE_M`, `LINK_STATE=los,nlos`, and `MOBILITY_STATE=stationary,moving-5mph,moving-15mph`. |
 | [ ] Not started | 03 | `03_broadcast_contention.sh` | 5 repeats, 1000 target probes while background load runs | Run responder, then one or more `ROLE=background_initiator` terminals, then `ROLE=target_initiator`. Sweep background payload/rate. |
 | [ ] Not started | 04 | `04_private5g_mobility.sh` | 10 route passes per transport/payload | Run `ROLE=receiver`, `ROLE=gps`, then `ROLE=sender`. Sweep `TRANSPORT=tcp,mqtt,udp` and payloads such as `0,1024,4096,60000`. |

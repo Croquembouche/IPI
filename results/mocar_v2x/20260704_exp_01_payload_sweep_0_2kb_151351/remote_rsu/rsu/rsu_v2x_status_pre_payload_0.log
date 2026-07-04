@@ -1,0 +1,6 @@
+[I][init_qmi_services:490] Initialized QMI clients
+[I][get_v2x_radio_status:596] Read V2X radio status
+V2X rx_status=1, tx_status=1
+rx_pool_0_status=1, rx_pool_1_status=0, rx_pool_2_status=0, rx_pool_3_status=0, 
+tx_pool_0_status=1, tx_pool_1_status=0, 
+[I][deinit_qmi_services:501] De-initialized QMI clients

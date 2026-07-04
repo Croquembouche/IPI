@@ -1,0 +1,159 @@
+==== /tmp/cv2x.log ====
+[    1.256011] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    1.274316] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[    1.293829] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    1.325959] usbserial: USB Serial support registered for generic
+[    1.337526] usbserial: USB Serial support registered for ch341-uart
+[    1.349445] usbserial: USB Serial support registered for cp210x
+[    1.361182] usbserial: USB Serial support registered for FTDI USB Serial Device
+[    1.374138] usbserial: USB Serial support registered for GSM modem (1-port)
+[    1.386760] usbserial: USB Serial support registered for pl2303
+[    1.398496] usbserial: USB Serial support registered for Qualcomm USB modem
+[    1.412902] vhci_hcd vhci_hcd.0: USB/IP Virtual Host Controller
+[    1.418886] vhci_hcd vhci_hcd.0: new USB bus registered, assigned bus number 1
+[    1.430783] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 5.10
+[    1.439068] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.446308] usb usb1: Product: USB/IP Virtual Host Controller
+[    1.462788] hub 1-0:1.0: USB hub found
+[    1.471493] vhci_hcd vhci_hcd.0: USB/IP Virtual Host Controller
+[    1.477437] vhci_hcd vhci_hcd.0: new USB bus registered, assigned bus number 2
+[    1.492957] usb usb2: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 5.10
+[    1.501249] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.508496] usb usb2: Product: USB/IP Virtual Host Controller
+[    1.524886] hub 2-0:1.0: USB hub found
+[    1.744288] usbhid: USB HID core driver
+[    4.846402] xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus number 3
+[    4.870216] usb usb3: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 5.10
+[    4.878515] usb usb3: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    4.901853] hub 3-0:1.0: USB hub found
+[    4.915462] xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus number 4
+[    4.923151] xhci-hcd xhci-hcd.1.auto: Host supports USB 3.0 SuperSpeed
+[    4.937984] usb usb4: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 5.10
+[    4.946269] usb usb4: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    4.969536] hub 4-0:1.0: USB hub found
+[    4.986884] ci_hdrc ci_hdrc.0: new USB bus registered, assigned bus number 5
+[    5.009645] ci_hdrc ci_hdrc.0: USB 2.0 started, EHCI 1.00
+[    5.015279] usb usb5: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 5.10
+[    5.023584] usb usb5: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    5.046647] hub 5-0:1.0: USB hub found
+[    5.249704] usb 3-1: new high-speed USB device number 2 using xhci-hcd
+[    5.389693] usb 5-1: new full-speed USB device number 2 using ci_hdrc
+[    5.402079] usb 3-1: New USB device found, idVendor=0424, idProduct=2514, bcdDevice= b.b3
+[    5.410301] usb 3-1: New USB device strings: Mfr=0, Product=0, SerialNumber=0
+[    5.428344] hub 3-1:1.0: USB hub found
+[    5.559096] usb 5-1: New USB device found, idVendor=1a86, idProduct=7523, bcdDevice= 2.64
+[    5.567338] usb 5-1: New USB device strings: Mfr=0, Product=2, SerialNumber=0
+[    5.574498] usb 5-1: Product: USB Serial
+[    5.591242] usb 5-1: ch341-uart converter now attached to ttyUSB0
+[    5.737733] usb 3-1.2: new high-speed USB device number 3 using xhci-hcd
+[    5.852965] usb 3-1.2: New USB device found, idVendor=05e3, idProduct=0730, bcdDevice=38.22
+[    5.869664] usb 3-1.2: New USB device strings: Mfr=0, Product=1, SerialNumber=2
+[    5.876994] usb 3-1.2: Product: USB Storage
+[    5.902117] usb-storage 3-1.2:1.0: USB Mass Storage device detected
+[    9.441664] usb 3-1.4: new high-speed USB device number 4 using xhci-hcd
+[    9.550842] usb 3-1.4: New USB device found, idVendor=2c7c, idProduct=0415, bcdDevice= 3.18
+[    9.566047] usb 3-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[    9.588233] usb 3-1.4: GSM modem (1-port) converter now attached to ttyUSB1
+[    9.605268] usb 3-1.4: GSM modem (1-port) converter now attached to ttyUSB2
+[    9.625135] usb 3-1.4: GSM modem (1-port) converter now attached to ttyUSB3
+[    9.638041] usb 3-1.4: GSM modem (1-port) converter now attached to ttyUSB4
+[   14.421812] usb 4-1: new SuperSpeed Gen 1 USB device number 2 using xhci-hcd
+[   14.448909] usb 4-1: New USB device found, idVendor=2c7c, idProduct=0800, bcdDevice= 4.14
+[   14.457135] usb 4-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[   14.488096] usb 4-1: GSM modem (1-port) converter now attached to ttyUSB5
+[   14.502327] usb 4-1: GSM modem (1-port) converter now attached to ttyUSB6
+[   14.516505] usb 4-1: GSM modem (1-port) converter now attached to ttyUSB7
+[   14.530664] usb 4-1: GSM modem (1-port) converter now attached to ttyUSB8
+==== /tmp/sys_work_app.log ====
+[11:50:33 main.c 147 main]: VERSION: CHECK_APP-V0.1-20211021
+[11:50:33 sql_task.c 386 sys_check_sql_write]: open sql db sucseess!!
+[11:50:33 sql_task.c 390 sys_check_sql_write]: ----------------imx8------------------
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'none' where name = 'lte_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'RM500Q-GL' where name = 'lte_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'BW121' where name = 'wifi_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'AG15' where name = 'v2x_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'F9P' where name = 'gnss_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'RM500QGLABR11A05M4G' where name = 'lte_ver';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'AG15UAR01A12M4G' where name = 'v2x_ver';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'valid' where name = 'valid';
+[11:50:33 sql_task.c 656 sys_check_sql_read]: open sql db sucseess!!
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = RM500Q-GL
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = BW121
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = AG15
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = F9P
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = RM500QGLABR11A05M4G
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = AG15UAR01A12M4G
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = valid
+[11:50:33 sql_task.c 674 sys_check_dat_dump]: -------dump-----------
+[11:50:33 sql_task.c 675 sys_check_dat_dump]: valid= valid
+[11:50:33 sql_task.c 676 sys_check_dat_dump]: lte_ic= RM500Q-GL
+[11:50:33 sql_task.c 677 sys_check_dat_dump]: wifi_ic= BW121
+[11:50:33 sql_task.c 678 sys_check_dat_dump]: v2x_ic= AG15
+[11:50:33 sql_task.c 679 sys_check_dat_dump]: gnss_ic= F9P
+[11:50:33 sql_task.c 680 sys_check_dat_dump]: lte_ver= RM500QGLABR11A05M4G
+[11:50:33 sql_task.c 681 sys_check_dat_dump]: v2x_ver= AG15UAR01A12M4G
+[11:50:33 sql_task.c 682 sys_check_dat_dump]: ------------------
+[11:50:33 sql_task.c 386 sys_check_sql_write]: open sql db sucseess!!
+[11:50:33 sql_task.c 390 sys_check_sql_write]: ----------------imx8------------------
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'none' where name = 'lte_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'RM500Q-GL' where name = 'lte_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'BW121' where name = 'wifi_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'AG15' where name = 'v2x_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'F9P' where name = 'gnss_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'RM500QGLABR11A05M4G' where name = 'lte_ver';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'AG15UAR01A12M4G' where name = 'v2x_ver';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'valid' where name = 'valid';
+[11:50:33 sql_task.c 656 sys_check_sql_read]: open sql db sucseess!!
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = RM500Q-GL
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = BW121
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = AG15
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = F9P
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = RM500QGLABR11A05M4G
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = AG15UAR01A12M4G
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = valid
+[11:50:33 sql_task.c 674 sys_check_dat_dump]: -------dump-----------
+[11:50:33 sql_task.c 675 sys_check_dat_dump]: valid= valid
+[11:50:33 sql_task.c 676 sys_check_dat_dump]: lte_ic= RM500Q-GL
+[11:50:33 sql_task.c 677 sys_check_dat_dump]: wifi_ic= BW121
+[11:50:33 sql_task.c 678 sys_check_dat_dump]: v2x_ic= AG15
+[11:50:33 sql_task.c 679 sys_check_dat_dump]: gnss_ic= F9P
+[11:50:33 sql_task.c 680 sys_check_dat_dump]: lte_ver= RM500QGLABR11A05M4G
+[11:50:33 sql_task.c 681 sys_check_dat_dump]: v2x_ver= AG15UAR01A12M4G
+[11:50:33 sql_task.c 682 sys_check_dat_dump]: ------------------
+[11:50:33 sql_task.c 386 sys_check_sql_write]: open sql db sucseess!!
+[11:50:33 sql_task.c 390 sys_check_sql_write]: ----------------imx8------------------
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'none' where name = 'lte_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'RM500Q-GL' where name = 'lte_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'BW121' where name = 'wifi_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'AG15' where name = 'v2x_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'F9P' where name = 'gnss_ic';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'RM500QGLABR11A05M4G' where name = 'lte_ver';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'AG15UAR01A12M4G' where name = 'v2x_ver';
+[11:50:33 sql_task.c 220 sys_check_sql_update_data]:  update_data = UPDATE sys_check_table set value = 'valid' where name = 'valid';
+[11:50:33 sql_task.c 656 sys_check_sql_read]: open sql db sucseess!!
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = RM500Q-GL
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = BW121
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = AG15
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = F9P
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = RM500QGLABR11A05M4G
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = AG15UAR01A12M4G
+[11:50:33 sql_task.c 335 sys_check_sql_inquiry_name_data]: pDat = valid
+[11:50:33 sql_task.c 674 sys_check_dat_dump]: -------dump-----------
+[11:50:33 sql_task.c 675 sys_check_dat_dump]: valid= valid
+[11:50:33 sql_task.c 676 sys_check_dat_dump]: lte_ic= RM500Q-GL
+[11:50:33 sql_task.c 677 sys_check_dat_dump]: wifi_ic= BW121
+[11:50:33 sql_task.c 678 sys_check_dat_dump]: v2x_ic= AG15
+[11:50:33 sql_task.c 679 sys_check_dat_dump]: gnss_ic= F9P
+[11:50:33 sql_task.c 680 sys_check_dat_dump]: lte_ver= RM500QGLABR11A05M4G
+[11:50:33 sql_task.c 681 sys_check_dat_dump]: v2x_ver= AG15UAR01A12M4G
+[11:50:33 sql_task.c 682 sys_check_dat_dump]: ------------------
+[11:50:33 sql_task.c 814 sysSqlCheckInit]: sql ok
+==== /tmp/ag15.log ====
+rmnet_data1 Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
+          inet6 addr: 80f8:f80:f80f:80f8:718f:b3e8:6a21:3511/64 Scope:Global
+          UP RUNNING  MTU:8188  Metric:1
+          RX packets:4836 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:55720 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:1513930 (1.4 MiB)  TX bytes:5192581 (4.9 MiB)
+

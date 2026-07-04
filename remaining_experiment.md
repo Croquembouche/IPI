@@ -51,6 +51,12 @@ This file tracks what remains after reconciling `experiment.md`,
   Receiver-restart was collected for TCP/UDP/MQTT; broker-restart was collected
   for MQTT, with NovAtel GNSS and edge-side receiver/broker artifacts.
   Evidence: `results/real_5g/20260703_failure_fallback_run_1/summary.md`.
+- [x] `01_broadcast_message_baseline` Mocar V2X stationary baseline/payload
+  sweep across GNSS-indexed locations.
+  Evidence: `results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/summary.md`
+  plus earlier location sweeps under `results/mocar_v2x/`.
+- [x] Radio baseline part of `E1` for stationary Mocar V2X.
+  Evidence: `results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/summary.md`.
 
 ## Highest-Priority Remaining Stationary, No-Mocar Work
 
@@ -84,8 +90,6 @@ This file tracks what remains after reconciling `experiment.md`,
 
 ## Hardware Or Mobility Work Still Open
 
-- [ ] `01_broadcast_message_baseline`
-  Requires Mocar/radio devices.
 - [ ] `02_radio_distance_mobility`
   Requires Mocar/radio devices and distance/LOS/NLOS setup.
 - [ ] `03_broadcast_contention`
@@ -94,9 +98,6 @@ This file tracks what remains after reconciling `experiment.md`,
   Requires driving route passes and GNSS.
 - [ ] `05_handover_weak_signal`
   Requires weak-signal/handover route passes and modem/signal evidence.
-- [ ] Radio part of `E1`
-  Needed only if the main paper keeps a direct radio-vs-private-5G baseline
-  figure.
 - [ ] Vehicle-level outcome (`E5`)
   Requires actual AV behavior metric collection under baseline and stressed
   network conditions.
