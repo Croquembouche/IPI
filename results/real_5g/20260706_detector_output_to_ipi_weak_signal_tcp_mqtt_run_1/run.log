@@ -1,0 +1,21 @@
+[2026-07-06T09:57:04-04:00] Syncing code and tools to edge
+[2026-07-06T09:57:13-04:00] Starting GNSS recorder
+[2026-07-06T09:57:18-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-0
+[2026-07-06T10:02:55-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-256
+[2026-07-06T10:08:35-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-1024
+[2026-07-06T10:14:23-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-4096
+[2026-07-06T10:19:21-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-19648
+[2026-07-06T10:25:42-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-22816
+[2026-07-06T10:32:24-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-23968
+[2026-07-06T10:38:58-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-25024
+[2026-07-06T10:45:46-04:00] Running TCP detector-output condition p5g-tcp-detector-output-payload-60000
+[2026-07-06T10:55:33-04:00] Running MQTT detector-output condition p5g-mqtt-detector-output-payload-0
+[2026-07-06T10:59:34-04:00] Running MQTT detector-output condition p5g-mqtt-detector-output-payload-256
+[2026-07-06T11:03:37-04:00] Running MQTT detector-output condition p5g-mqtt-detector-output-payload-1024
+[2026-07-06T11:07:49-04:00] Running MQTT detector-output condition p5g-mqtt-detector-output-payload-4096
+[2026-07-06T11:12:18-04:00] Running MQTT detector-output condition p5g-mqtt-detector-output-payload-19648
+[2026-07-06T11:18:21-04:00] Running MQTT detector-output condition p5g-mqtt-detector-output-payload-22816
+[2026-07-06T11:25:21-04:00] Running MQTT detector-output condition p5g-mqtt-detector-output-payload-23968
+[2026-07-06T11:32:08-04:00] Running MQTT detector-output condition p5g-mqtt-detector-output-payload-25024
+[2026-07-06T11:38:41-04:00] Running MQTT detector-output condition p5g-mqtt-detector-output-payload-60000
+[2026-07-06T11:48:54-04:00] Experiment 09 detector-output-to-IPI run complete

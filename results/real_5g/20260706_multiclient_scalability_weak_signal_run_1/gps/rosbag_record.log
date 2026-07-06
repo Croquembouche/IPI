@@ -1,0 +1,30 @@
+stdin is not a terminal device. Keyboard handling disabled.[INFO] [1783357472.359163769] [rosbag2_recorder]: Press SPACE for pausing/resuming
+[INFO] [1783357472.360566677] [rosbag2_storage]: Opened database '/home/hydrau/Documents/Github/IPI/results/real_5g/20260706_multiclient_scalability_weak_signal_run_1/gps/rosbag/rosbag_0.db3' for READ_WRITE.
+[INFO] [1783357472.360928051] [rosbag2_recorder]: Listening for topics...
+[INFO] [1783357472.360968413] [rosbag2_recorder]: Event publisher thread: Starting
+[INFO] [1783357472.362125359] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/odom'
+[INFO] [1783357472.362850132] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/inspva'
+[INFO] [1783357472.363506026] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/gps'
+[INFO] [1783357472.364184979] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/fix'
+[INFO] [1783357472.364589900] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/bestvel'
+[INFO] [1783357472.365011102] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/bestpos'
+[INFO] [1783357472.365089637] [rosbag2_recorder]: Recording...
+[INFO] [1783357472.365437488] [rosbag2_recorder]: All requested topics are subscribed. Stopping discovery...
+1783363952.410730 [0]        tev: ddsi_udp_conn_write to udp/239.255.0.1:7400 failed with retcode -1
+1783363952.510374 [0]        tev: ddsi_udp_conn_write to udp/239.255.0.1:7400 failed with retcode -1
+1783363952.510714 [0]        tev: ddsi_udp_conn_write to udp/239.255.0.1:7400 failed with retcode -1
+1783363952.610788 [0]        tev: ddsi_udp_conn_write to udp/239.255.0.1:7400 failed with retcode -1
+1783363952.710852 [0]        tev: ddsi_udp_conn_write to udp/239.255.0.1:7400 failed with retcode -1
+1783363952.810917 [0]        tev: ddsi_udp_conn_write to udp/239.255.0.1:7400 failed with retcode -1
+1783363952.910982 [0]        tev: ddsi_udp_conn_write to udp/239.255.0.1:7400 failed with retcode -1
+1783363953.011048 [0]        tev: ddsi_udp_conn_write to udp/239.255.0.1:7400 failed with retcode -1
+1783363953.211115 [0]        tev: ddsi_udp_conn_write to udp/239.255.0.1:7400 failed with retcode -1
+1783363953.411180 [0]        tev: ddsi_udp_conn_write to udp/239.255.0.1:7400 failed with retcode -1
+1783363953.811247 [0]        tev: ddsi_udp_conn_write to udp/239.255.0.1:7400 failed with retcode -1
+1783363954.211312 [0]        tev: ddsi_udp_conn_write to udp/239.255.0.1:7400 failed with retcode -1
+1783363955.011379 [0]        tev: ddsi_udp_conn_write to udp/192.168.4.2:33254 failed with retcode -1
+1783363955.811442 [0]        tev: ddsi_udp_conn_write to udp/192.168.4.2:33254 failed with retcode -1
+1783363957.411548 [0]        tev: ddsi_udp_conn_write to udp/192.168.4.2:33254 failed with retcode -1
+[INFO] [1783367307.671879302] [rosbag2_cpp]: Writing remaining messages from cache to the bag. It may take a while
+[INFO] [1783367307.674242486] [rosbag2_recorder]: Event publisher thread: Exiting
+[INFO] [1783367307.674613139] [rosbag2_recorder]: Recording stopped

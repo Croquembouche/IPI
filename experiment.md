@@ -101,6 +101,11 @@ Recommended per-run metadata:
   `results/real_5g/20260702_detector_output_to_ipi_run_1/summary.md`.
 - Detector-output-to-IPI private-5G fragmented UDP replay with GNSS: completed
   in `results/real_5g/20260702_detector_output_to_ipi_udp_fragmented_run_1/summary.md`.
+- Experiment 09 weak-signal detector-output repeat with GNSS: completed for
+  TCP/MQTT in
+  `results/real_5g/20260706_detector_output_to_ipi_weak_signal_tcp_mqtt_run_1/summary.md`
+  and fragmented UDP in
+  `results/real_5g/20260706_detector_output_to_ipi_weak_signal_udp_fragmented_run_1/summary.md`.
 - Experiment 08 end-to-end deadline/service-envelope analysis over completed
   private-5G sender CSVs: completed in
   `results/real_5g/20260702_end_to_end_deadline_analysis_run_1/summary.md`.
@@ -110,13 +115,17 @@ Recommended per-run metadata:
   and `results/real_5g/20260702_multiclient_scalability_run_3/summary.md`;
   second full sweep is in
   `results/real_5g/20260702_multiclient_scalability_run_4/summary.md`.
+  Weak-signal full sweep is in
+  `results/real_5g/20260706_multiclient_scalability_weak_signal_run_1/summary.md`.
 - Experiment 12 failure/fallback stationary no-Mocar subset with GNSS:
   receiver-restart for TCP/UDP/MQTT and MQTT broker-restart completed in
   `results/real_5g/20260703_failure_fallback_run_1/summary.md`.
 - Partial July stationary run with GNSS and interrupted TCP transport-comparison
   replicate: `results/edge4av_top_tier/edge4av-stationary-goodfit-20260701T142538Z/`.
 - Experiment 06 weak-signal stationary repeat with GNSS: completed in
-  `results/real_5g/20260701_load_qos_weak_signal_run_1/summary.md`.
+  `results/real_5g/20260701_load_qos_weak_signal_run_1/summary.md`; July 6
+  repeat completed in
+  `results/real_5g/20260706_load_qos_weak_signal_run_2/summary.md`.
 - Experiment 02 Mocar V2X radio-distance/mobility with NovAtel GNSS:
   completed in
   `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_173816/summary.md`,
@@ -474,7 +483,7 @@ Use this table to map raw files to conditions.
 | 2026-07-01 | `qos-verification-20260701` | TCP packet-marking verification | vehicle host `eno2`, edge `10.100.100.6`, gateway `10.100.100.1` | `results/real_5g/20260701_qos_verification_run_1/` | Successful default and `5qi-mapped` TCP probes both captured with `tos 0x0`; core-side QoS-flow counters still required for verified 5QI claim |
 | 2026-07-01 | `edge4av-real-20260701-load-qos-weak-signal-run-1` | `p5g-{tcp,mqtt}-weak-signal-{default,qos-5qi-mapped}-payload-1024-{idle,uplink-streams-{1,2,4}}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260701_load_qos_weak_signal_run_1/` | Experiment 06 weak-signal stationary repeat with NovAtel GNSS; measured client load collapsed to about 0.00-0.322 Mbps, 1000/1000 accepted per condition |
 | 2026-07-02 | `edge4av-real-20260702-detector-output-to-ipi-run-1` | `p5g-{tcp,mqtt}-detector-output-payload-*` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260702_detector_output_to_ipi_run_1/` | Experiment 09 detector-output replay over private-5G TCP/MQTT with NovAtel GNSS; payload sizes derived from detector output distribution; MQTT set pruned to avoid near-duplicate p99/max points |
-| 2026-07-02 | `edge4av-real-20260702-detector-output-to-ipi-udp-fragmented-run-1` | `p5g-udp-detector-output-payload-*` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260702_detector_output_to_ipi_udp_fragmented_run_1/` | Experiment 09 detector-output replay over private-5G UDP with application-level fragmentation and NovAtel GNSS; main detector payloads 4096-23968 B achieved 99.5-100.0% message success; weak-signal repeat pending |
+| 2026-07-02 | `edge4av-real-20260702-detector-output-to-ipi-udp-fragmented-run-1` | `p5g-udp-detector-output-payload-*` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260702_detector_output_to_ipi_udp_fragmented_run_1/` | Experiment 09 detector-output replay over private-5G UDP with application-level fragmentation and NovAtel GNSS; main detector payloads 4096-23968 B achieved 99.5-100.0% message success |
 | 2026-07-02 | `edge4av-real-20260702-end-to-end-deadline-analysis-run-1` | `deadline-service-envelope-{10,25,100,120,400,500,1000,5000}ms` | completed private-5G sender CSVs | `results/real_5g/20260702_end_to_end_deadline_analysis_run_1/` | Experiment 08 post-hoc deadline/service-envelope analysis; uses RTT directly for request/response services and treats threshold misses as unavailable replies |
 | 2026-07-02 | `edge4av-real-20260702-multiclient-scalability-run-2` | `p5g-scale-{tcp,udp,mqtt}-payload-1024-clients-{1,2,5,10,20}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260702_multiclient_scalability_run_2/` | Experiment 11 stationary multiclient sweep with NovAtel GNSS; TCP/MQTT accepted 100.0%, UDP accepted 99.10-99.98% across base client levels |
 | 2026-07-02 | `edge4av-real-20260702-multiclient-scalability-run-3` | `p5g-scale-{tcp,udp,mqtt}-payload-1024-clients-{50,100}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260702_multiclient_scalability_run_3/` | Experiment 11 high-client extension with NovAtel GNSS; TCP/MQTT accepted 100.0%, UDP accepted 98.97% at 50 clients and 99.37% at 100 clients |
@@ -485,6 +494,10 @@ Use this table to map raw files to conditions.
 | 2026-07-04 | `edge4av-exp02-mobility-20260704T175820` | `mocar-exp02-mobility-route-los-moving-run2-payload-256` | Mocar OBU/RSU, NovAtel GNSS | `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_175820/` | Experiment 02 mobility run 2; 1000 rows, 731 successes, 269 timeouts, p50 RTT 28.326 ms |
 | 2026-07-04 | `edge4av-exp02-mobility-20260704T182104` | `mocar-exp02-mobility-route-los-moving-run3-payload-256` | Mocar OBU/RSU, NovAtel GNSS | `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_182104/` | Experiment 02 mobility run 3 with corrected send-time GNSS join and 500 ms timeout; 1000 rows, 591 successes, 409 timeouts, p50 RTT 29.204 ms |
 | 2026-07-04 | `edge4av-exp02-mobility-20260704T183232` | `mocar-exp02-mobility-route-los-moving-run4-payload-256` | Mocar OBU/RSU, NovAtel GNSS | `results/mocar_v2x/20260704_exp_02_radio_distance_mobility_183232/` | Experiment 02 mobility run 4 with corrected send-time GNSS join and 500 ms timeout; 1000 rows, 716 successes, 284 timeouts, p50 RTT 28.276 ms |
+| 2026-07-06 | `edge4av-real-20260706-load-qos-weak-signal-run-2` | `p5g-{tcp,mqtt}-weak-signal-{default,qos-5qi-mapped}-payload-1024-{idle,uplink-streams-{1,2,4}}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260706_load_qos_weak_signal_run_2/` | Experiment 06 weak-signal stationary repeat with NovAtel GNSS; 1000/1000 successful probes for all 14 TCP/MQTT load/QoS-label conditions |
+| 2026-07-06 | `edge4av-real-20260706-detector-output-to-ipi-weak-signal-tcp-mqtt-run-1` | `p5g-{tcp,mqtt}-detector-output-payload-*` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260706_detector_output_to_ipi_weak_signal_tcp_mqtt_run_1/` | Experiment 09 weak-signal detector-output replay over private-5G TCP/MQTT with NovAtel GNSS; all payloads including 60000 B completed with 1000/1000 successful probes |
+| 2026-07-06 | `edge4av-real-20260706-detector-output-to-ipi-weak-signal-udp-fragmented-run-1` | `p5g-udp-detector-output-payload-*` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260706_detector_output_to_ipi_weak_signal_udp_fragmented_run_1/` | Experiment 09 weak-signal detector-output replay over private-5G fragmented UDP with NovAtel GNSS; main detector payloads completed, 19648-25024 B accepted 93.5-96.1%, 60000 B stress control accepted 0/100 |
+| 2026-07-06 | `edge4av-real-20260706-multiclient-scalability-weak-signal-run-1` | `p5g-scale-{tcp,udp,mqtt}-payload-1024-clients-{1,2,5,10,20,50,100}` | vehicle host, edge `10.100.100.6` | `results/real_5g/20260706_multiclient_scalability_weak_signal_run_1/` | Experiment 11 weak-signal full multiclient sweep with NovAtel GNSS; TCP accepted 100%, UDP accepted 90.811-99.900%, MQTT accepted 99.499-100.000% across client levels |
 
 ## Paper Readiness Check
 

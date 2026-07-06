@@ -1,0 +1,14 @@
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/d1/Documents/Github/IPI/cpp/build
+[ 47%] Built target ipi
+[ 58%] Built target example_build_service_request
+[ 58%] Built target example_mesh_demo
+[ 70%] Built target example_v2x_roundtrip
+[ 70%] Built target example_private_5g_latency_sender
+[ 82%] Built target example_spat_tcp_sender
+[ 82%] Built target example_private_5g_latency_receiver
+[ 94%] Built target example_private_5g_latency_udp_sender
+[ 94%] Built target example_private_5g_latency_udp_receiver
+[100%] Built target example_edge4av_dual_plane

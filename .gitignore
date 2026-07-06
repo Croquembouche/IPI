@@ -6,3 +6,8 @@ tmp/
 paper/
 __pycache__/
 *.pyc
+
+# Large raw GNSS captures exceed normal GitHub blob limits without Git LFS.
+# Keep them local or publish through an artifact store/LFS.
+results/**/gps/gps_samples.csv
+results/**/gps/rosbag/*.db3

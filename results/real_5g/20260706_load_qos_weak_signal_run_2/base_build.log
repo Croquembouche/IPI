@@ -1,0 +1,81 @@
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+-- The C compiler identification is GNU 9.4.0
+-- The CXX compiler identification is GNU 9.4.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE  
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/d1/Documents/Github/IPI/cpp/build
+Scanning dependencies of target ipi
+[ 11%] Building CXX object CMakeFiles/ipi.dir/src/core/message_frame.cpp.o
+[ 11%] Building CXX object CMakeFiles/ipi.dir/src/core/ipi_cooperative_service.cpp.o
+[ 11%] Building CXX object CMakeFiles/ipi.dir/src/core/ipi_service_request.cpp.o
+[ 11%] Building CXX object CMakeFiles/ipi.dir/src/core/validation.cpp.o
+[ 14%] Building CXX object CMakeFiles/ipi.dir/src/v2x/j2735_messages.cpp.o
+[ 17%] Building CXX object CMakeFiles/ipi.dir/src/v2x/uper_codec.cpp.o
+[ 20%] Building CXX object CMakeFiles/ipi.dir/src/mesh/mesh_manager.cpp.o
+[ 23%] Building CXX object CMakeFiles/ipi.dir/src/mesh/task_offloader.cpp.o
+[ 26%] Building CXX object CMakeFiles/ipi.dir/src/api/edge4av_interface.cpp.o
+[ 29%] Building CXX object CMakeFiles/ipi.dir/src/api/minimal_mqtt_client.cpp.o
+[ 32%] Building CXX object CMakeFiles/ipi.dir/src/api/private_5g_latency_probe.cpp.o
+[ 35%] Building CXX object CMakeFiles/ipi.dir/src/api/private_session_transport.cpp.o
+[ 38%] Building CXX object CMakeFiles/ipi.dir/src/api/receiver.cpp.o
+[ 41%] Building CXX object CMakeFiles/ipi.dir/src/api/sender.cpp.o
+[ 44%] Building CXX object CMakeFiles/ipi.dir/src/api/shared_state.cpp.o
+[ 47%] Linking CXX static library libipi.a
+[ 47%] Built target ipi
+Scanning dependencies of target example_v2x_roundtrip
+Scanning dependencies of target example_build_service_request
+Scanning dependencies of target example_mesh_demo
+Scanning dependencies of target example_spat_tcp_sender
+Scanning dependencies of target example_private_5g_latency_udp_receiver
+Scanning dependencies of target example_private_5g_latency_udp_sender
+Scanning dependencies of target example_private_5g_latency_sender
+Scanning dependencies of target example_private_5g_latency_receiver
+[ 61%] Building CXX object CMakeFiles/example_mesh_demo.dir/examples/library/mesh_demo.cpp.o
+[ 61%] Building CXX object CMakeFiles/example_private_5g_latency_udp_receiver.dir/examples/library/private_5g_latency_udp_receiver.cpp.o
+[ 61%] Building CXX object CMakeFiles/example_spat_tcp_sender.dir/examples/library/spat_tcp_sender.cpp.o
+[ 67%] Building CXX object CMakeFiles/example_private_5g_latency_udp_sender.dir/examples/library/private_5g_latency_udp_sender.cpp.o
+[ 61%] Building CXX object CMakeFiles/example_private_5g_latency_sender.dir/examples/library/private_5g_latency_sender.cpp.o
+[ 67%] Building CXX object CMakeFiles/example_build_service_request.dir/examples/library/build_service_request.cpp.o
+[ 70%] Building CXX object CMakeFiles/example_v2x_roundtrip.dir/examples/library/v2x_roundtrip.cpp.o
+[ 70%] Building CXX object CMakeFiles/example_private_5g_latency_receiver.dir/examples/library/private_5g_latency_receiver.cpp.o
+[ 73%] Linking CXX executable example_v2x_roundtrip
+[ 73%] Built target example_v2x_roundtrip
+Scanning dependencies of target example_edge4av_dual_plane
+[ 76%] Building CXX object CMakeFiles/example_edge4av_dual_plane.dir/examples/library/edge4av_dual_plane.cpp.o
+[ 79%] Linking CXX executable example_spat_tcp_sender
+[ 82%] Linking CXX executable example_build_service_request
+[ 85%] Linking CXX executable example_private_5g_latency_receiver
+[ 85%] Built target example_spat_tcp_sender
+[ 85%] Built target example_build_service_request
+[ 85%] Built target example_private_5g_latency_receiver
+[ 88%] Linking CXX executable example_mesh_demo
+[ 91%] Linking CXX executable example_private_5g_latency_udp_receiver
+[ 91%] Built target example_private_5g_latency_udp_receiver
+[ 91%] Built target example_mesh_demo
+[ 94%] Linking CXX executable example_private_5g_latency_sender
+[ 97%] Linking CXX executable example_private_5g_latency_udp_sender
+[ 97%] Built target example_private_5g_latency_sender
+[100%] Linking CXX executable example_edge4av_dual_plane
+[100%] Built target example_private_5g_latency_udp_sender
+[100%] Built target example_edge4av_dual_plane

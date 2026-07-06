@@ -1,0 +1,2 @@
+summary attempts=1000 accepted=926 rejected=0 failed=74 success_rate_pct=92.60
+summary rtt_ms p50=99.856 p95=171.629 p99=180.914 count=926

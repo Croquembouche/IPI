@@ -1,0 +1,4 @@
+summary attempts=1000 accepted=985 rejected=0 failed=15 success_rate_pct=98.50
+summary rtt_ms p50=3004.292 p95=4606.608 p99=208654.755 count=985
+summary uplink_ms p50=151388.105 p95=303903.385 p99=303903.385 count=12
+summary downlink_ms p50=148317.592 p95=149469.532 p99=149477.040 count=985

@@ -1,0 +1,4 @@
+summary attempts=1000 accepted=997 rejected=0 failed=3 success_rate_pct=99.70
+summary rtt_ms p50=755.415 p95=4474.062 p99=14092.107 count=997
+summary uplink_ms unavailable (clocks not synchronized or negative one-way samples)
+summary downlink_ms p50=146479.958 p95=146891.753 p99=146917.690 count=997

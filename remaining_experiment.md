@@ -27,7 +27,8 @@ This file tracks what remains after reconciling `experiment.md`,
 - [x] `06_load_qos_stress` non-default QoS-profile collection leg.
   Evidence: `results/real_5g/20260701_load_qos_run_4/summary.md`.
 - [x] `06_load_qos_stress` weak-signal stationary repeat with NovAtel GNSS.
-  Evidence: `results/real_5g/20260701_load_qos_weak_signal_run_1/summary.md`.
+  Evidence: `results/real_5g/20260701_load_qos_weak_signal_run_1/summary.md`
+  and repeat `results/real_5g/20260706_load_qos_weak_signal_run_2/summary.md`.
 - [x] Application-side packet marking check for QoS/5QI.
   Evidence: `results/real_5g/20260701_qos_verification_run_1/summary.md`.
 - [x] `09_detector_output_to_ipi` private-5G TCP/MQTT replay for
@@ -37,16 +38,24 @@ This file tracks what remains after reconciling `experiment.md`,
   detector-derived payload sizes, with GNSS at the current/good-signal
   location.
   Evidence: `results/real_5g/20260702_detector_output_to_ipi_udp_fragmented_run_1/summary.md`.
+- [x] `09_detector_output_to_ipi` weak-signal stationary repeat for TCP, MQTT,
+  and fragmented UDP, with NovAtel GNSS.
+  Evidence:
+  `results/real_5g/20260706_detector_output_to_ipi_weak_signal_tcp_mqtt_run_1/summary.md`
+  and
+  `results/real_5g/20260706_detector_output_to_ipi_weak_signal_udp_fragmented_run_1/summary.md`.
 - [x] `08_end_to_end_deadline` deadline/service-envelope analysis over completed
   private-5G sender CSVs.
   Evidence: `results/real_5g/20260702_end_to_end_deadline_analysis_run_1/summary.md`.
 - [x] `11_multiclient_scalability` stationary private-5G TCP/UDP/MQTT sweep for
   1, 2, 5, 10, 20, 50, and 100 clients, with NovAtel GNSS. Two
-  current-location repeats are now collected; weak-signal collection remains.
+  current-location repeats and one weak-signal repeat are now collected.
   Evidence: `results/real_5g/20260702_multiclient_scalability_run_2/summary.md`
   and `results/real_5g/20260702_multiclient_scalability_run_3/summary.md` for
   repeat 1, plus `results/real_5g/20260702_multiclient_scalability_run_4/summary.md`
-  for repeat 2.
+  for repeat 2, and
+  `results/real_5g/20260706_multiclient_scalability_weak_signal_run_1/summary.md`
+  for the weak-signal repeat.
 - [x] `12_failure_fallback` stationary no-Mocar subset for TCP, UDP, and MQTT.
   Receiver-restart was collected for TCP/UDP/MQTT; broker-restart was collected
   for MQTT, with NovAtel GNSS and edge-side receiver/broker artifacts.
@@ -87,15 +96,6 @@ This file tracks what remains after reconciling `experiment.md`,
   packet-marking check showed both default and `5qi-mapped` probes leaving the
   vehicle host with `tos 0x0`, so Meraki/private-5G core QoS-flow counters are
   still needed for a verified 5QI claim.
-- [ ] `11_multiclient_scalability` weak-signal stationary data collection
-  Two stationary current-location repeats are collected for TCP/UDP/MQTT at
-  `CLIENTS=1,2,5,10,20,50,100`. Repeat the same sweep at the weak-signal
-  location with NovAtel GNSS if the paper compares RF-good versus RF-weak
-  multiclient behavior.
-- [ ] `09_detector_output_to_ipi` weak-signal stationary repeat
-  Repeat detector-output replay at the weak-signal location with GNSS. Use the
-  same detector payload set and include TCP, MQTT, and fragmented UDP if the
-  paper compares all three transports under RF degradation.
 
 ## Optional Or Conditional Remaining Work
 
@@ -115,10 +115,8 @@ This file tracks what remains after reconciling `experiment.md`,
 
 ## Current Practical Next Run
 
-Repeat `09_detector_output_to_ipi` or `11_multiclient_scalability` at the
-weak-signal stationary location if the paper needs RF-good versus RF-weak
-comparisons. Run `04_private5g_mobility` if the paper needs moving private-5G
-route data. For experiment 06, only the core-side QoS-flow verification remains
-if the paper will make a QoS-specific claim. Experiment 10 is not a remaining
-blocker because the edge-offload/local-compute result is already covered by the
-existing paper result.
+Run `04_private5g_mobility` if the paper needs moving private-5G route data.
+For experiment 06, only the core-side QoS-flow verification remains if the paper
+will make a QoS-specific claim. Experiment 10 is not a remaining blocker because
+the edge-offload/local-compute result is already covered by the existing paper
+result.

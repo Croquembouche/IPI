@@ -1,0 +1,2 @@
+emit_time_ns,role,protocol,host,port,duration_s,target_mbps,bytes,packets,elapsed_s,throughput_mbps,detail
+1783344325660832229,client,tcp,10.100.100.6,39000,230.0,25.0,14024704,214,230.702001,0.486,tcp client complete

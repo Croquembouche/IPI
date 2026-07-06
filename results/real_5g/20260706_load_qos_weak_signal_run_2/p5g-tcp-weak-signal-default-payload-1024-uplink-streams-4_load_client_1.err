@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/hydrau/Documents/Github/IPI/results/real_5g/20260706_load_qos_weak_signal_run_2/tools/edge4av_loadgen.py", line 207, in <module>
+    raise SystemExit(main())
+  File "/home/hydrau/Documents/Github/IPI/results/real_5g/20260706_load_qos_weak_signal_run_2/tools/edge4av_loadgen.py", line 202, in main
+    return tcp_client(args)
+  File "/home/hydrau/Documents/Github/IPI/results/real_5g/20260706_load_qos_weak_signal_run_2/tools/edge4av_loadgen.py", line 125, in tcp_client
+    sock.sendall(payload)
+TimeoutError: timed out
