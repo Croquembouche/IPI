@@ -51,6 +51,8 @@ struct Private5gLatencyMetrics {
 
 [[nodiscard]] MessageFrame make_private_5g_probe_frame(const j2735::BasicSafetyMessage& message,
                                                        const v2x::UperCodec& codec);
+[[nodiscard]] MessageFrame make_private_5g_probe_frame(const j2735::PersonalSafetyMessage& message,
+                                                       const v2x::UperCodec& codec);
 [[nodiscard]] MessageFrame make_private_5g_probe_frame(const j2735::MapMessage& message,
                                                        const v2x::UperCodec& codec);
 [[nodiscard]] MessageFrame make_private_5g_probe_frame(const j2735::SpatMessage& message,

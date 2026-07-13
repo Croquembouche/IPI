@@ -5,6 +5,7 @@
 #ifdef IPI_ENABLE_ROS2
 #include <v2x_msg/msg/bsm.hpp>
 #include <v2x_msg/msg/map.hpp>
+#include <v2x_msg/msg/psm.hpp>
 #include <v2x_msg/msg/spat.hpp>
 #include <v2x_msg/msg/srm.hpp>
 #include <v2x_msg/msg/ssm.hpp>
@@ -23,6 +24,9 @@ namespace ipi::v2x {
 struct Ros2Bridge {
     static v2x_msg::msg::BSM to_ros(const j2735::BasicSafetyMessage& msg);
     static j2735::BasicSafetyMessage from_ros(const v2x_msg::msg::BSM& msg);
+
+    static v2x_msg::msg::PSM to_ros(const j2735::PersonalSafetyMessage& msg);
+    static j2735::PersonalSafetyMessage from_ros(const v2x_msg::msg::PSM& msg);
 
     static v2x_msg::msg::MAP to_ros(const j2735::MapMessage& msg);
     static j2735::MapMessage from_ros(const v2x_msg::msg::MAP& msg);

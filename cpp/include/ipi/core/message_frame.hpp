@@ -9,13 +9,14 @@
 namespace ipi {
 
 enum class MessageType : std::uint8_t {
-    BSM,
-    SRM,
-    TIM,
-    MAP,
-    SPAT,
-    SSM,
-    IpiCooperativeService
+    BSM = 0,
+    SRM = 1,
+    TIM = 2,
+    MAP = 3,
+    SPAT = 4,
+    SSM = 5,
+    IpiCooperativeService = 6,
+    PSM = 7
 };
 
 /**

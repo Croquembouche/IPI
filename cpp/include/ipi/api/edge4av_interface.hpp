@@ -70,6 +70,24 @@ public:
         return decoded;
     }
 
+    /**
+     * Pass through a pre-encoded J2735 MessageFrame payload. This is the escape
+     * hatch for standard or regional J2735 messages that do not yet have a
+     * lightweight typed model in this library (for example a full TIM).
+     */
+    Ack ingest_v2x_payload(EnvelopeMetadata metadata,
+                           J2735Payload payload,
+                           std::optional<int> rssi = {},
+                           std::optional<int> channel = {}) const;
+
+    Ack request_broadcast_payload(EnvelopeMetadata metadata,
+                                  BroadcastTarget target,
+                                  J2735Payload payload) const;
+
+    std::vector<J2735Payload> list_v2x_payloads(J2735MessageType type,
+                                                std::optional<Timestamp> since = {},
+                                                std::size_t limit = 50) const;
+
     SessionDescriptor register_session(SessionRegistration registration) const;
 
     SessionDescriptor register_vehicle_session(EnvelopeMetadata metadata,

@@ -14,6 +14,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <exception>
+#include <functional>
 #include <iomanip>
 #include <iostream>
 #include <limits>
@@ -37,7 +38,8 @@ constexpr std::array<std::uint8_t, 4> kFragmentMagic{'I', '5', 'G', 'F'};
 
 enum class ProbeMessageKind {
     CooperativeService,
-    Spat
+    Spat,
+    Psm
 };
 
 struct Args {
@@ -67,7 +69,15 @@ struct ProbeStats {
 };
 
 std::string_view service_type_name(ProbeMessageKind kind) {
-    return kind == ProbeMessageKind::Spat ? "intersection-state" : "guided-planning";
+    switch (kind) {
+        case ProbeMessageKind::Spat:
+            return "intersection-state";
+        case ProbeMessageKind::Psm:
+            return "personal-safety";
+        case ProbeMessageKind::CooperativeService:
+        default:
+            return "guided-planning";
+    }
 }
 
 double ns_to_ms(std::int64_t ns) {
@@ -112,7 +122,7 @@ Args parse_args(int argc, char** argv) {
                 << "  --count <n>                  Number of probes to send (default 10)\n"
                 << "  --interval-ms <ms>           Delay between probes (default 1000)\n"
                 << "  --timeout-ms <ms>            Ack wait timeout (default 5000)\n"
-                << "  --message <service|spat>     Payload kind (default service)\n"
+                << "  --message <service|spat|psm> Payload kind (default service)\n"
                 << "  --intersection-id <id>       Logical intersection id string\n"
                 << "  --session-id <id>            Session id text for service probes\n"
                 << "  --source-id <id>             Vehicle/source id text\n"
@@ -154,6 +164,8 @@ Args parse_args(int argc, char** argv) {
                 args.messageKind = ProbeMessageKind::CooperativeService;
             } else if (value == "spat") {
                 args.messageKind = ProbeMessageKind::Spat;
+            } else if (value == "psm") {
+                args.messageKind = ProbeMessageKind::Psm;
             } else {
                 throw std::invalid_argument("unsupported --message value");
             }
@@ -319,6 +331,40 @@ ipi::MessageFrame build_spat_frame(const Args& args, std::uint64_t sequence, con
     return ipi::api::make_private_5g_probe_frame(spat, codec);
 }
 
+ipi::MessageFrame build_psm_frame(const Args& args,
+                                  std::uint64_t sequence,
+                                  const ipi::v2x::UperCodec& codec) {
+    ipi::j2735::PersonalSafetyMessage psm;
+    psm.basicType = ipi::j2735::PersonalDeviceUserType::Pedestrian;
+    psm.secondMarkMs = static_cast<std::uint16_t>(
+        (ipi::api::current_unix_time_ns() / 1000000ULL) % 60000ULL);
+    psm.messageCount = static_cast<std::uint8_t>(sequence % 128ULL);
+    psm.temporaryId = static_cast<std::uint32_t>(std::hash<std::string>{}(args.sourceId));
+    psm.latitude = 42.3314 + (static_cast<double>(sequence) * 0.000001);
+    psm.longitude = -83.0458;
+    psm.horizontalAccuracyM = 2.0F;
+    psm.speedMps = 1.4F;
+    psm.headingDeg = 90.0F;
+    psm.pathPrediction = ipi::j2735::PersonalPathPrediction{20, 90};
+    psm.propulsion = ipi::j2735::PersonalPropelledInformation{
+        ipi::j2735::PersonalPropulsionKind::Human, 2};
+    return ipi::api::make_private_5g_probe_frame(psm, codec);
+}
+
+ipi::MessageFrame build_frame(const Args& args,
+                              std::uint64_t sequence,
+                              const ipi::v2x::UperCodec& codec) {
+    switch (args.messageKind) {
+        case ProbeMessageKind::Spat:
+            return build_spat_frame(args, sequence, codec);
+        case ProbeMessageKind::Psm:
+            return build_psm_frame(args, sequence, codec);
+        case ProbeMessageKind::CooperativeService:
+        default:
+            return build_service_frame(args, sequence);
+    }
+}
+
 ipi::api::Private5gProbeRequest build_request(const Args& args,
                                               std::uint64_t sequence,
                                               const ipi::v2x::UperCodec& codec) {
@@ -339,8 +385,7 @@ ipi::api::Private5gProbeRequest build_request(const Args& args,
     request.qosProfile = args.context.qosProfile;
     request.mobilityState = args.context.mobilityState;
     request.clockSyncState = args.context.clockSyncState;
-    request.frame = args.messageKind == ProbeMessageKind::Spat ? build_spat_frame(args, sequence, codec)
-                                                               : build_service_frame(args, sequence);
+    request.frame = build_frame(args, sequence, codec);
     return request;
 }
 

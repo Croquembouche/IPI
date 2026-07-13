@@ -40,13 +40,14 @@ After building, run from the repo root:
 ./cpp/build/example_private_5g_latency_sender --transport tcp --host <infra_ip> --port 36666 --message service
 ./cpp/build/example_private_5g_latency_receiver --transport mqtt --host <broker_ip> --port 1883 --intersection-id intersection-101 --source-id veh-01
 ./cpp/build/example_private_5g_latency_sender --transport mqtt --host <broker_ip> --port 1883 --message service --intersection-id intersection-101 --source-id veh-01
+./cpp/build/example_private_5g_latency_sender --transport mqtt --host <broker_ip> --port 1883 --message psm --intersection-id intersection-101 --source-id phone-01
 ./cpp/build/example_mesh_demo
 ```
 
 - `example_build_service_request` prints an `IPI-ServiceRequest` plus
   `IPI-CooperativeService` payload, useful as a template for your own
   requests/guidance.
-- `example_v2x_roundtrip` generates synthetic BSM/MAP/SPaT/SRM/SSM frames,
+- `example_v2x_roundtrip` generates synthetic BSM/PSM/MAP/SPaT/SRM/SSM frames,
   encodes them using the J2735 helpers and `UperCodec`, and decodes them again.
 - `example_spat_tcp_sender` connects to a remote RSU or bridge process over TCP
   and sends SPaT frames; see the root `README.md` “Edge→Device SPaT over TCP”
@@ -60,8 +61,9 @@ After building, run from the repo root:
   sender.
 - `example_private_5g_latency_sender` opens either a TCP session to the receiver
   or publishes to the MQTT request topic, then reports RTT plus one-way
-  uplink/downlink latency estimates for either `IPI-CooperativeService` or SPaT
-  probes. Use `--csv` for per-probe logging and pair it with
+  uplink/downlink latency estimates for `IPI-CooperativeService`, SPaT, or PSM
+  probes. `--message psm` exercises phone-originated Personal Safety Messages.
+  Use `--csv` for per-probe logging and pair it with
   `--run-id`/`--condition-id`/`--condition-label` so the output maps directly to
   paper figures and conditions.
 - `example_mesh_demo` simulates the Vehicle–Vehicle Local Mesh Mode: it feeds

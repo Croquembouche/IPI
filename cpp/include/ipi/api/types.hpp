@@ -34,7 +34,10 @@ enum class J2735MessageType {
     SPAT,
     MAP,
     SRM,
-    SSM
+    SSM,
+    PSM,
+    TIM,
+    IPI_COOPERATIVE_SERVICE
 };
 
 enum class J2735Encoding {

@@ -96,6 +96,43 @@ Edge4AvInterface::Edge4AvInterface(std::shared_ptr<ReceiverApi> receiver,
     }
 }
 
+Ack Edge4AvInterface::ingest_v2x_payload(EnvelopeMetadata metadata,
+                                        J2735Payload payload,
+                                        std::optional<int> rssi,
+                                        std::optional<int> channel) const {
+    if (payload.payload.empty()) {
+        return Ack{false, std::string{"J2735 payload must not be empty"}};
+    }
+    Envelope<J2735Payload> envelope;
+    envelope.metadata = normalize_metadata(std::move(metadata));
+    envelope.data = std::move(payload);
+    return receiver_->ingestV2xMessage(envelope, rssi, channel);
+}
+
+Ack Edge4AvInterface::request_broadcast_payload(EnvelopeMetadata metadata,
+                                                BroadcastTarget target,
+                                                J2735Payload payload) const {
+    if (payload.payload.empty()) {
+        return Ack{false, std::string{"J2735 payload must not be empty"}};
+    }
+    BroadcastRequest request;
+    request.metadata = normalize_metadata(std::move(metadata));
+    request.target = std::move(target);
+    request.message = std::move(payload);
+    return receiver_->requestBroadcast(request);
+}
+
+std::vector<J2735Payload> Edge4AvInterface::list_v2x_payloads(
+    J2735MessageType type,
+    std::optional<Timestamp> since,
+    std::size_t limit) const {
+    V2xQuery query;
+    query.type = type;
+    query.since = since;
+    query.limit = limit;
+    return sender_->listV2xMessages(query);
+}
+
 SessionDescriptor Edge4AvInterface::register_session(SessionRegistration registration) const {
     registration.metadata = normalize_metadata(std::move(registration.metadata));
     if (registration.metadata.source.id.empty()) {

@@ -3,6 +3,7 @@
 #include "ipi/common/debug.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <cstring>
 #include <iomanip>
 #include <sstream>
@@ -191,6 +192,202 @@ std::string BasicSafetyMessage::to_string() const {
         oss << ", laneId=" << *laneId;
     }
     oss << "}";
+    return oss.str();
+}
+
+void PersonalSafetyMessage::validate() const {
+    const auto basicTypeValue = static_cast<std::uint8_t>(basicType);
+    if (basicTypeValue > static_cast<std::uint8_t>(PersonalDeviceUserType::Animal)) {
+        throw std::invalid_argument("PSM basicType is not supported");
+    }
+    if (messageCount > 127) {
+        throw std::invalid_argument("PSM messageCount must be <= 127");
+    }
+    if (!std::isfinite(latitude) || latitude < -90.0 || latitude > 90.0) {
+        throw std::invalid_argument("PSM latitude out of range");
+    }
+    if (!std::isfinite(longitude) || longitude < -180.0 || longitude > 180.0) {
+        throw std::invalid_argument("PSM longitude out of range");
+    }
+    if (!std::isfinite(speedMps) || speedMps < 0.0F || speedMps > 163.82F) {
+        throw std::invalid_argument("PSM speedMps must be within [0, 163.82]");
+    }
+    if (!std::isfinite(headingDeg) || headingDeg < 0.0F || headingDeg >= 360.0F) {
+        throw std::invalid_argument("PSM headingDeg must be within [0, 360)");
+    }
+    if (elevationM &&
+        (!std::isfinite(*elevationM) || *elevationM < -409.5F || *elevationM > 6143.9F)) {
+        throw std::invalid_argument("PSM elevationM out of range");
+    }
+    if (horizontalAccuracyM &&
+        (!std::isfinite(*horizontalAccuracyM) || *horizontalAccuracyM < 0.0F ||
+         *horizontalAccuracyM > 655.35F)) {
+        throw std::invalid_argument("PSM horizontalAccuracyM out of range");
+    }
+    if (acceleration) {
+        const auto in_range = [](float value, float min, float max) {
+            return std::isfinite(value) && value >= min && value <= max;
+        };
+        if (!in_range(acceleration->longitudinalMps2, -20.0F, 20.0F) ||
+            !in_range(acceleration->lateralMps2, -20.0F, 20.0F) ||
+            !in_range(acceleration->verticalMps2, -20.0F, 20.0F) ||
+            !in_range(acceleration->yawRateDegPerSec, -327.67F, 327.67F)) {
+            throw std::invalid_argument("PSM acceleration field out of range");
+        }
+    }
+    if (pathHistory.size() > 23) {
+        throw std::invalid_argument("PSM pathHistory supports at most 23 points");
+    }
+    if (pathPrediction && pathPrediction->confidence > 100) {
+        throw std::invalid_argument("PSM pathPrediction confidence must be <= 100");
+    }
+    if (propulsion && static_cast<std::uint8_t>(propulsion->kind) >
+                          static_cast<std::uint8_t>(PersonalPropulsionKind::Motor)) {
+        throw std::invalid_argument("PSM propulsion kind is not supported");
+    }
+}
+
+std::vector<std::uint8_t> PersonalSafetyMessage::to_bytes() const {
+    validate();
+    std::vector<std::uint8_t> buffer;
+    buffer.reserve(40 + pathHistory.size() * 8);
+    buffer.push_back(static_cast<std::uint8_t>(basicType));
+    write_uint16(buffer, secondMarkMs);
+    buffer.push_back(messageCount);
+    write_uint32(buffer, temporaryId);
+    write_double(buffer, latitude);
+    write_double(buffer, longitude);
+    write_float(buffer, speedMps);
+    write_float(buffer, headingDeg);
+
+    std::uint8_t flags = 0;
+    if (elevationM) flags |= 0x01;
+    if (horizontalAccuracyM) flags |= 0x02;
+    if (acceleration) flags |= 0x04;
+    if (pathPrediction) flags |= 0x08;
+    if (propulsion) flags |= 0x10;
+    buffer.push_back(flags);
+
+    if (elevationM) write_float(buffer, *elevationM);
+    if (horizontalAccuracyM) write_float(buffer, *horizontalAccuracyM);
+    if (acceleration) {
+        write_float(buffer, acceleration->longitudinalMps2);
+        write_float(buffer, acceleration->lateralMps2);
+        write_float(buffer, acceleration->verticalMps2);
+        write_float(buffer, acceleration->yawRateDegPerSec);
+    }
+    if (pathPrediction) {
+        write_uint16(buffer, static_cast<std::uint16_t>(pathPrediction->radiusOfCurveM));
+        buffer.push_back(pathPrediction->confidence);
+    }
+    if (propulsion) {
+        buffer.push_back(static_cast<std::uint8_t>(propulsion->kind));
+        buffer.push_back(propulsion->subtype);
+    }
+
+    buffer.push_back(static_cast<std::uint8_t>(pathHistory.size()));
+    for (const auto& point : pathHistory) {
+        write_uint16(buffer, static_cast<std::uint16_t>(point.latitudeOffset));
+        write_uint16(buffer, static_cast<std::uint16_t>(point.longitudeOffset));
+        write_uint16(buffer, static_cast<std::uint16_t>(point.elevationOffset));
+        write_uint16(buffer, point.timeOffsetMs);
+    }
+
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[PSM] encode ", to_string(), " bytes=", buffer.size(),
+                        " hex=", ipi::debug::hex(buffer));
+    }
+    return buffer;
+}
+
+PersonalSafetyMessage PersonalSafetyMessage::from_bytes(const std::vector<std::uint8_t>& buffer) {
+    constexpr std::size_t kMinimumSize = 1 + 2 + 1 + 4 + 8 + 8 + 4 + 4 + 1 + 1;
+    if (buffer.size() < kMinimumSize) {
+        throw std::runtime_error("Buffer too small for PersonalSafetyMessage");
+    }
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[PSM] decode bytes=", buffer.size(), " hex=", ipi::debug::hex(buffer));
+    }
+
+    PersonalSafetyMessage msg;
+    std::size_t offset = 0;
+    msg.basicType = static_cast<PersonalDeviceUserType>(buffer[offset++]);
+    msg.secondMarkMs = read_uint16(buffer, offset);
+    msg.messageCount = buffer[offset++];
+    msg.temporaryId = read_uint32(buffer, offset);
+    msg.latitude = read_double(buffer, offset);
+    msg.longitude = read_double(buffer, offset);
+    msg.speedMps = read_float(buffer, offset);
+    msg.headingDeg = read_float(buffer, offset);
+    const std::uint8_t flags = buffer[offset++];
+
+    if (flags & 0x01) msg.elevationM = read_float(buffer, offset);
+    if (flags & 0x02) msg.horizontalAccuracyM = read_float(buffer, offset);
+    if (flags & 0x04) {
+        PersonalAccelerationSet values;
+        values.longitudinalMps2 = read_float(buffer, offset);
+        values.lateralMps2 = read_float(buffer, offset);
+        values.verticalMps2 = read_float(buffer, offset);
+        values.yawRateDegPerSec = read_float(buffer, offset);
+        msg.acceleration = values;
+    }
+    if (flags & 0x08) {
+        PersonalPathPrediction prediction;
+        prediction.radiusOfCurveM = static_cast<std::int16_t>(read_uint16(buffer, offset));
+        if (offset >= buffer.size()) {
+            throw std::runtime_error("Buffer underrun reading PSM path prediction confidence");
+        }
+        prediction.confidence = buffer[offset++];
+        msg.pathPrediction = prediction;
+    }
+    if (flags & 0x10) {
+        if (offset + 2 > buffer.size()) {
+            throw std::runtime_error("Buffer underrun reading PSM propulsion");
+        }
+        PersonalPropelledInformation propelled;
+        propelled.kind = static_cast<PersonalPropulsionKind>(buffer[offset++]);
+        propelled.subtype = buffer[offset++];
+        msg.propulsion = propelled;
+    }
+    if (offset >= buffer.size()) {
+        throw std::runtime_error("Buffer underrun reading PSM path history count");
+    }
+    const auto historyCount = static_cast<std::size_t>(buffer[offset++]);
+    msg.pathHistory.reserve(historyCount);
+    for (std::size_t i = 0; i < historyCount; ++i) {
+        PersonalPathHistoryPoint point;
+        point.latitudeOffset = static_cast<std::int16_t>(read_uint16(buffer, offset));
+        point.longitudeOffset = static_cast<std::int16_t>(read_uint16(buffer, offset));
+        point.elevationOffset = static_cast<std::int16_t>(read_uint16(buffer, offset));
+        point.timeOffsetMs = read_uint16(buffer, offset);
+        msg.pathHistory.push_back(point);
+    }
+    msg.validate();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[PSM] decoded ", msg.to_string());
+    }
+    return msg;
+}
+
+std::string PersonalSafetyMessage::to_string() const {
+    std::ostringstream oss;
+    oss << "PSM{type=" << ipi::j2735::to_string(basicType)
+        << ", temporaryId=" << temporaryId
+        << ", msgCount=" << static_cast<unsigned>(messageCount)
+        << ", secMarkMs=" << secondMarkMs
+        << ", lat=" << std::fixed << std::setprecision(7) << latitude
+        << ", lon=" << longitude
+        << ", speedMps=" << speedMps
+        << ", headingDeg=" << headingDeg
+        << ", pathPoints=" << pathHistory.size();
+    if (horizontalAccuracyM) {
+        oss << ", accuracyM=" << *horizontalAccuracyM;
+    }
+    if (propulsion) {
+        oss << ", propulsion=" << ipi::j2735::to_string(propulsion->kind)
+            << ':' << static_cast<unsigned>(propulsion->subtype);
+    }
+    oss << '}';
     return oss.str();
 }
 
@@ -515,6 +712,38 @@ std::string to_string(MovementPhaseState state) {
             return "proceed";
         case MovementPhaseState::Flashing:
             return "flashing";
+        default:
+            return "unknown";
+    }
+}
+
+std::string to_string(PersonalDeviceUserType type) {
+    switch (type) {
+        case PersonalDeviceUserType::Unavailable:
+            return "unavailable";
+        case PersonalDeviceUserType::Pedestrian:
+            return "pedestrian";
+        case PersonalDeviceUserType::PedalCyclist:
+            return "pedalCyclist";
+        case PersonalDeviceUserType::PublicSafetyWorker:
+            return "publicSafetyWorker";
+        case PersonalDeviceUserType::Animal:
+            return "animal";
+        default:
+            return "unknown";
+    }
+}
+
+std::string to_string(PersonalPropulsionKind kind) {
+    switch (kind) {
+        case PersonalPropulsionKind::Unavailable:
+            return "unavailable";
+        case PersonalPropulsionKind::Human:
+            return "human";
+        case PersonalPropulsionKind::Animal:
+            return "animal";
+        case PersonalPropulsionKind::Motor:
+            return "motor";
         default:
             return "unknown";
     }

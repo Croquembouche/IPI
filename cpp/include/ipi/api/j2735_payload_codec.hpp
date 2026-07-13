@@ -40,6 +40,30 @@ struct J2735PayloadTraits<j2735::BasicSafetyMessage> {
 };
 
 template <>
+struct J2735PayloadTraits<j2735::PersonalSafetyMessage> {
+    static constexpr J2735MessageType apiType = J2735MessageType::PSM;
+    static constexpr MessageType frameType = MessageType::PSM;
+
+    static std::vector<std::uint8_t> encode_uper(const v2x::UperCodec& codec,
+                                                 const j2735::PersonalSafetyMessage& message) {
+        return codec.encode(message);
+    }
+
+    static j2735::PersonalSafetyMessage decode_uper(const v2x::UperCodec& codec,
+                                                    const std::vector<std::uint8_t>& payload) {
+        return codec.decode_psm(payload);
+    }
+
+    static std::vector<std::uint8_t> encode_bytes(const j2735::PersonalSafetyMessage& message) {
+        return message.to_bytes();
+    }
+
+    static j2735::PersonalSafetyMessage decode_bytes(const std::vector<std::uint8_t>& payload) {
+        return j2735::PersonalSafetyMessage::from_bytes(payload);
+    }
+};
+
+template <>
 struct J2735PayloadTraits<j2735::MapMessage> {
     static constexpr J2735MessageType apiType = J2735MessageType::MAP;
     static constexpr MessageType frameType = MessageType::MAP;
@@ -132,6 +156,30 @@ struct J2735PayloadTraits<j2735::SignalStatusMessage> {
 
     static j2735::SignalStatusMessage decode_bytes(const std::vector<std::uint8_t>& payload) {
         return j2735::SignalStatusMessage::from_bytes(payload);
+    }
+};
+
+template <>
+struct J2735PayloadTraits<CooperativeServiceMessage> {
+    static constexpr J2735MessageType apiType = J2735MessageType::IPI_COOPERATIVE_SERVICE;
+    static constexpr MessageType frameType = MessageType::IpiCooperativeService;
+
+    static std::vector<std::uint8_t> encode_uper(const v2x::UperCodec& codec,
+                                                 const CooperativeServiceMessage& message) {
+        return codec.encode(message);
+    }
+
+    static CooperativeServiceMessage decode_uper(const v2x::UperCodec& codec,
+                                                  const std::vector<std::uint8_t>& payload) {
+        return codec.decode_ipi_cooperative_service(payload);
+    }
+
+    static std::vector<std::uint8_t> encode_bytes(const CooperativeServiceMessage& message) {
+        return message.to_canonical_encoding();
+    }
+
+    static CooperativeServiceMessage decode_bytes(const std::vector<std::uint8_t>& payload) {
+        return CooperativeServiceMessage::from_canonical_encoding(payload);
     }
 };
 

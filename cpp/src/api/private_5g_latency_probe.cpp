@@ -198,6 +198,11 @@ MessageFrame make_private_5g_probe_frame(const j2735::BasicSafetyMessage& messag
     return make_frame(MessageType::BSM, codec.encode(message));
 }
 
+MessageFrame make_private_5g_probe_frame(const j2735::PersonalSafetyMessage& message,
+                                         const v2x::UperCodec& codec) {
+    return make_frame(MessageType::PSM, codec.encode(message));
+}
+
 MessageFrame make_private_5g_probe_frame(const j2735::MapMessage& message,
                                          const v2x::UperCodec& codec) {
     return make_frame(MessageType::MAP, codec.encode(message));
@@ -226,6 +231,8 @@ std::string inspect_private_5g_probe_frame(const MessageFrame& frame, const v2x:
     switch (frame.type) {
         case MessageType::BSM:
             return codec.decode_bsm(frame.payload).to_string();
+        case MessageType::PSM:
+            return codec.decode_psm(frame.payload).to_string();
         case MessageType::MAP:
             return codec.decode_map(frame.payload).to_string();
         case MessageType::SPAT:
@@ -235,10 +242,11 @@ std::string inspect_private_5g_probe_frame(const MessageFrame& frame, const v2x:
         case MessageType::SSM:
             return codec.decode_ssm(frame.payload).to_string();
         case MessageType::IpiCooperativeService: {
-            auto message = CooperativeServiceMessage::from_canonical_encoding(frame.payload);
-            message.validate();
+            auto message = codec.decode_ipi_cooperative_service(frame.payload);
             return message.to_string();
         }
+        case MessageType::TIM:
+            return "TIM{payloadBytes=" + std::to_string(frame.payload.size()) + "}";
         default:
             throw std::invalid_argument("unsupported probe frame type");
     }

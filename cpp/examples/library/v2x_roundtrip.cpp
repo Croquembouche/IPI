@@ -39,6 +39,25 @@ int main() {
         auto bsmRecv = codec.decode_bsm(bsmBytes);
         std::cout << "BSM receive: " << bsmRecv.to_string() << "\n\n";
 
+        PersonalSafetyMessage psm{};
+        psm.basicType = PersonalDeviceUserType::Pedestrian;
+        psm.secondMarkMs = 12345;
+        psm.messageCount = 7;
+        psm.temporaryId = 0x10203040;
+        psm.latitude = 37.3366;
+        psm.longitude = -121.8898;
+        psm.horizontalAccuracyM = 1.5F;
+        psm.speedMps = 1.4F;
+        psm.headingDeg = 90.0F;
+        psm.pathPrediction = PersonalPathPrediction{25, 90};
+        psm.propulsion = PersonalPropelledInformation{PersonalPropulsionKind::Human, 2};
+
+        auto psmBytes = codec.encode(psm);
+        std::cout << "PSM send: " << psm.to_string() << '\n';
+        print_bytes(psmBytes);
+        auto psmRecv = codec.decode_psm(psmBytes);
+        std::cout << "PSM receive: " << psmRecv.to_string() << "\n\n";
+
         MapMessage map{};
         map.intersectionId = 101;
         map.revision = 3;

@@ -21,6 +21,8 @@ std::string to_string(MessageType type) {
             return "SSM";
         case MessageType::IpiCooperativeService:
             return "IPI-CooperativeService";
+        case MessageType::PSM:
+            return "PSM";
         default:
             return "unknown";
     }

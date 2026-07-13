@@ -113,6 +113,26 @@ private:
     std::uint8_t bit_offset{0};
 };
 
+void write_signed(BitWriter& writer, std::int64_t value, std::size_t bits) {
+    if (bits == 0 || bits >= 64) {
+        throw std::invalid_argument("write_signed requires between 1 and 63 bits");
+    }
+    const auto mask = (std::uint64_t{1} << bits) - 1U;
+    writer.write_uint(static_cast<std::uint64_t>(value) & mask, bits);
+}
+
+std::int64_t read_signed(BitReader& reader, std::size_t bits) {
+    if (bits == 0 || bits >= 64) {
+        throw std::invalid_argument("read_signed requires between 1 and 63 bits");
+    }
+    const auto raw = reader.read_uint(bits);
+    const auto signBit = std::uint64_t{1} << (bits - 1U);
+    if ((raw & signBit) == 0) {
+        return static_cast<std::int64_t>(raw);
+    }
+    return static_cast<std::int64_t>(raw - (std::uint64_t{1} << bits));
+}
+
 inline std::int32_t scale_lat(double degrees) {
     return static_cast<std::int32_t>(std::llround(degrees * 1e7));
 }
@@ -143,6 +163,22 @@ inline std::int32_t scale_accel(float accel_mps2) {
 
 inline float unscale_accel(std::int32_t scaled) {
     return static_cast<float>(scaled) * 0.01f;
+}
+
+inline std::int32_t scale_tenths(float value) {
+    return static_cast<std::int32_t>(std::round(value * 10.0F));
+}
+
+inline float unscale_tenths(std::int32_t scaled) {
+    return static_cast<float>(scaled) * 0.1F;
+}
+
+inline std::uint32_t scale_hundredths(float value) {
+    return static_cast<std::uint32_t>(std::round(value * 100.0F));
+}
+
+inline float unscale_hundredths(std::uint32_t scaled) {
+    return static_cast<float>(scaled) * 0.01F;
 }
 
 inline std::uint16_t scale_time_ms(std::uint16_t value) { return value; }
@@ -190,7 +226,7 @@ j2735::BasicSafetyMessage UperCodec::decode_bsm(const std::vector<std::uint8_t>&
     msg.speedMps = unscale_speed(static_cast<std::uint32_t>(reader.read_uint(16)));
     msg.headingDeg = unscale_heading(static_cast<std::uint32_t>(reader.read_uint(16)));
     if (reader.read_bool()) {
-        msg.accelerationMps2 = unscale_accel(static_cast<std::int32_t>(reader.read_uint(16)));
+        msg.accelerationMps2 = unscale_accel(static_cast<std::int32_t>(read_signed(reader, 16)));
     }
     if (reader.read_bool()) {
         msg.laneId = static_cast<std::uint16_t>(reader.read_uint(16));
@@ -198,6 +234,128 @@ j2735::BasicSafetyMessage UperCodec::decode_bsm(const std::vector<std::uint8_t>&
     msg.validate();
     if (ipi::debug::enabled()) {
         ipi::debug::log("[UPER][BSM] decoded ", msg.to_string());
+    }
+    return msg;
+}
+
+std::vector<std::uint8_t> UperCodec::encode(const j2735::PersonalSafetyMessage& msg) const {
+    msg.validate();
+
+    BitWriter writer;
+    writer.write_uint(static_cast<std::uint8_t>(msg.basicType), 3);
+    writer.write_uint(msg.secondMarkMs, 16);
+    writer.write_uint(msg.messageCount, 7);
+    writer.write_uint(msg.temporaryId, 32);
+    writer.write_uint(static_cast<std::uint32_t>(scale_lat(msg.latitude)), 32);
+    writer.write_uint(static_cast<std::uint32_t>(scale_lat(msg.longitude)), 32);
+    writer.write_uint(scale_speed(msg.speedMps), 13);
+    writer.write_uint(scale_heading(msg.headingDeg), 15);
+
+    writer.write_bool(msg.elevationM.has_value());
+    writer.write_bool(msg.horizontalAccuracyM.has_value());
+    writer.write_bool(msg.acceleration.has_value());
+    writer.write_bool(msg.pathPrediction.has_value());
+    writer.write_bool(msg.propulsion.has_value());
+
+    if (msg.elevationM) {
+        write_signed(writer, scale_tenths(*msg.elevationM), 17);
+    }
+    if (msg.horizontalAccuracyM) {
+        writer.write_uint(scale_hundredths(*msg.horizontalAccuracyM), 16);
+    }
+    if (msg.acceleration) {
+        write_signed(writer, scale_accel(msg.acceleration->longitudinalMps2), 12);
+        write_signed(writer, scale_accel(msg.acceleration->lateralMps2), 12);
+        write_signed(writer, scale_accel(msg.acceleration->verticalMps2), 12);
+        write_signed(writer, scale_accel(msg.acceleration->yawRateDegPerSec), 16);
+    }
+    if (msg.pathPrediction) {
+        write_signed(writer, msg.pathPrediction->radiusOfCurveM, 16);
+        writer.write_uint(msg.pathPrediction->confidence, 7);
+    }
+    if (msg.propulsion) {
+        writer.write_uint(static_cast<std::uint8_t>(msg.propulsion->kind), 2);
+        writer.write_uint(msg.propulsion->subtype, 8);
+    }
+
+    writer.write_uint(msg.pathHistory.size(), 5);
+    for (const auto& point : msg.pathHistory) {
+        write_signed(writer, point.latitudeOffset, 16);
+        write_signed(writer, point.longitudeOffset, 16);
+        write_signed(writer, point.elevationOffset, 16);
+        writer.write_uint(point.timeOffsetMs, 16);
+    }
+
+    auto out = writer.finish();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][PSM] encode ", msg.to_string(), " bytes=", out.size(),
+                        " hex=", ipi::debug::hex(out));
+    }
+    return out;
+}
+
+j2735::PersonalSafetyMessage UperCodec::decode_psm(const std::vector<std::uint8_t>& buffer) const {
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][PSM] decode bytes=", buffer.size(), " hex=", ipi::debug::hex(buffer));
+    }
+
+    BitReader reader(buffer);
+    j2735::PersonalSafetyMessage msg;
+    msg.basicType = static_cast<j2735::PersonalDeviceUserType>(reader.read_uint(3));
+    msg.secondMarkMs = static_cast<std::uint16_t>(reader.read_uint(16));
+    msg.messageCount = static_cast<std::uint8_t>(reader.read_uint(7));
+    msg.temporaryId = static_cast<std::uint32_t>(reader.read_uint(32));
+    msg.latitude = unscale_lat(static_cast<std::int32_t>(reader.read_uint(32)));
+    msg.longitude = unscale_lat(static_cast<std::int32_t>(reader.read_uint(32)));
+    msg.speedMps = unscale_speed(static_cast<std::uint32_t>(reader.read_uint(13)));
+    msg.headingDeg = unscale_heading(static_cast<std::uint32_t>(reader.read_uint(15)));
+
+    const bool hasElevation = reader.read_bool();
+    const bool hasAccuracy = reader.read_bool();
+    const bool hasAcceleration = reader.read_bool();
+    const bool hasPathPrediction = reader.read_bool();
+    const bool hasPropulsion = reader.read_bool();
+
+    if (hasElevation) {
+        msg.elevationM = unscale_tenths(static_cast<std::int32_t>(read_signed(reader, 17)));
+    }
+    if (hasAccuracy) {
+        msg.horizontalAccuracyM = unscale_hundredths(static_cast<std::uint32_t>(reader.read_uint(16)));
+    }
+    if (hasAcceleration) {
+        j2735::PersonalAccelerationSet values;
+        values.longitudinalMps2 = unscale_accel(static_cast<std::int32_t>(read_signed(reader, 12)));
+        values.lateralMps2 = unscale_accel(static_cast<std::int32_t>(read_signed(reader, 12)));
+        values.verticalMps2 = unscale_accel(static_cast<std::int32_t>(read_signed(reader, 12)));
+        values.yawRateDegPerSec = unscale_accel(static_cast<std::int32_t>(read_signed(reader, 16)));
+        msg.acceleration = values;
+    }
+    if (hasPathPrediction) {
+        j2735::PersonalPathPrediction prediction;
+        prediction.radiusOfCurveM = static_cast<std::int16_t>(read_signed(reader, 16));
+        prediction.confidence = static_cast<std::uint8_t>(reader.read_uint(7));
+        msg.pathPrediction = prediction;
+    }
+    if (hasPropulsion) {
+        j2735::PersonalPropelledInformation propulsion;
+        propulsion.kind = static_cast<j2735::PersonalPropulsionKind>(reader.read_uint(2));
+        propulsion.subtype = static_cast<std::uint8_t>(reader.read_uint(8));
+        msg.propulsion = propulsion;
+    }
+
+    const auto historyCount = static_cast<std::size_t>(reader.read_uint(5));
+    msg.pathHistory.reserve(historyCount);
+    for (std::size_t i = 0; i < historyCount; ++i) {
+        j2735::PersonalPathHistoryPoint point;
+        point.latitudeOffset = static_cast<std::int16_t>(read_signed(reader, 16));
+        point.longitudeOffset = static_cast<std::int16_t>(read_signed(reader, 16));
+        point.elevationOffset = static_cast<std::int16_t>(read_signed(reader, 16));
+        point.timeOffsetMs = static_cast<std::uint16_t>(reader.read_uint(16));
+        msg.pathHistory.push_back(point);
+    }
+    msg.validate();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][PSM] decoded ", msg.to_string());
     }
     return msg;
 }
@@ -393,6 +551,27 @@ j2735::SignalStatusMessage UperCodec::decode_ssm(const std::vector<std::uint8_t>
     if (ipi::debug::enabled()) {
         ipi::debug::log("[UPER][SSM] decoded ", msg.to_string());
     }
+    return msg;
+}
+
+std::vector<std::uint8_t> UperCodec::encode(const CooperativeServiceMessage& msg) const {
+    msg.validate();
+    auto out = msg.to_canonical_encoding();
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][IPI-CooperativeService] encode ", msg.to_string(),
+                        " bytes=", out.size(), " hex=", ipi::debug::hex(out));
+    }
+    return out;
+}
+
+CooperativeServiceMessage UperCodec::decode_ipi_cooperative_service(
+    const std::vector<std::uint8_t>& buffer) const {
+    if (ipi::debug::enabled()) {
+        ipi::debug::log("[UPER][IPI-CooperativeService] decode bytes=", buffer.size(),
+                        " hex=", ipi::debug::hex(buffer));
+    }
+    auto msg = CooperativeServiceMessage::from_canonical_encoding(buffer);
+    msg.validate();
     return msg;
 }
 

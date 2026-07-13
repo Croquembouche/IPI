@@ -2,7 +2,7 @@
 
 IPI links intelligent intersections with personal connected vehicles (PCVs), connected and autonomous vehicles (CAVs), pedestrians, cloud services, and neighboring intersections. The interface spans three coordinated communication planes, each optimized for its traffic pattern while remaining faithful to the SAE J2735 message set wherever possible:
 
-1. **RSU Broadcast Plane (RSU ↔ OBU)** – connectionless SAE J2735 broadcasts over DSRC or C-V2X. Reserved for safety-critical, “everyone hears it” messages such as SPaT, MAP, BSM, SRM, and SSM (supports F00-0000/F00-0001 and applications A00-0000..A00-0004).
+1. **RSU Broadcast Plane (RSU ↔ OBU)** – connectionless SAE J2735 broadcasts over DSRC or C-V2X. Reserved for safety-critical, “everyone hears it” messages such as SPaT, MAP, BSM, PSM, SRM, and SSM (supports F00-0000/F00-0001 and applications A00-0000..A00-0004).
 2. **5G Session Plane (Infrastructure ↔ CAV/advanced PCV)** – tunneled SAE J2735 `MessageFrame` objects carried over MQTT 5.0/TLS 1.3 on a 5G data channel. This delivers authenticated, stateful exchanges for service requests, acknowledgements, and telemetry (supports F01-0000..F02-0001, F04-0000..F04-0001, A01-0000..A06-0000).
 3. **Backhaul Control Plane (Infrastructure ↔ Cloud / Control Center)** – persistent HTTP/2 (REST or gRPC) sessions that exchange SAE J2735 payloads encapsulated in JSON or binary envelopes for configuration, analytics exports, and inter-intersection coordination (supports F05-0000, A05-0000, A06-0000).
 
@@ -18,6 +18,7 @@ Adapters MAY expose additional internal protocols (e.g., AMQP, Kafka), but the e
 * Receivers MUST treat any unrecognized `regional` extensions, supplemental elements, or additional JSON fields as optional and ignore them while continuing to process known data. Clients SHOULD log the presence of unknown data for observability but MUST NOT reject or drop the message solely because of it. This enables vendor-specific or future enhancements without requiring simultaneous upgrades across all participants.
 * Vehicles reuse existing J2735 message types for identification and simple service requests:
   * **BSM (Basic Safety Message)** carries vehicle identification, kinematics, and optional `SupplementalVehicleExtensions` to tag the desired service type. This applies even over 5G so that infrastructure can correlate radio and cellular footprints without inventing new headers.
+  * **PSM (Personal Safety Message)** carries pedestrian, cyclist, public-safety-worker, and animal-device position and motion. Phone gateways use PSM for vulnerable-road-user telemetry and trajectory-collision analysis.
   * **SRM (Signal Request Message)** remains the mechanism for priority/availability requests at intersections. PCVs use SRM along with a complementary **SSM** response for confirmation (A01-0000/A01-0001/A03-0000).
   * **TIM (Traveler Information Message)** distributes advisories or warnings (A04-0000) using the standard J2735 structure.
 * When the existing J2735 catalogue lacks a construct (e.g., guided planning/perception/control for CAVs), IPI defines an extension that still fits inside the J2735 `MessageFrame` using the `regional` extension mechanism.
@@ -31,6 +32,7 @@ The result: legacy vehicles can interpret broadcasts as before, 5G-connected veh
 | Functional Need | Message Type | Notes |
 | --- | --- | --- |
 | Vehicle self-identification, heartbeat | `BSM` (`MessageFrame.messageId = bsm(20)`) | Include `VehicleID`, `VehicleSize`, and `SupplementalVehicleExtensions.ipiServiceRequest` (see below). |
+| Vulnerable-road-user telemetry | `PSM` | Carries temporary device identity, position, motion, path prediction, and propulsion for pedestrian/cyclist safety applications. |
 | Priority / availability requests | `SRM` (`signalRequestMessage(28)`) | PCVs and emergency vehicles notify intersection; infrastructure responds with `SSM`. |
 | Pedestrian warnings | `TIM` (`travelerInformation(31)`) | TIM payload includes `itis` codes for warning categories; mirrored on RSU and MQTT. |
 | MAP/SPaT dissemination | `MAP`, `SPAT` | Standard V2X broadcasts. |
@@ -158,6 +160,7 @@ These extensions exist solely for advanced CAV cooperation. All other flows reus
 | Direction | PSID / Message | Description | QoS |
 | --- | --- | --- | --- |
 | Inbound | `0x20` (BSM) | Vehicle identification + `IPI-ServiceRequest` extension. | Mandatory |
+| Inbound | `PSM` | Pedestrian/cyclist position, motion, and predicted path. | Optional |
 | Inbound | `0x2C` (SRM) | Priority/availability requests. | Mandatory |
 | Outbound | `0x2B` (SPaT) | Signal phase & timing ≤100 ms cadence. | Mandatory |
 | Outbound | `0x2A` (MAP) | Lane geometry updates. | Optional |
@@ -183,7 +186,7 @@ These extensions exist solely for advanced CAV cooperation. All other flows reus
 | `ipi/{intersectionId}/session/{sessionId}/heartbeat` | vehicle → infrastructure | BSM heartbeat (no extension) every `heartbeatIntervalSeconds`. | F02-0000 |
 | `ipi/{intersectionId}/session/{sessionId}/service/request` | vehicle → infrastructure | `IPI-CooperativeService` (`guidanceStatus=request`). | F02-0000 |
 | `ipi/{intersectionId}/session/{sessionId}/service/update` | infrastructure → vehicle | `IPI-CooperativeService` (`guidanceStatus=update/complete`). | F02-0001 |
-| `ipi/{intersectionId}/session/{sessionId}/telemetry` | vehicle → infrastructure | BSM (primary), optional `IPI-CooperativeService` with `perceptionData`. | Enables A02-0000..A02-0006 |
+| `ipi/{intersectionId}/session/{sessionId}/telemetry` | vehicle/phone → infrastructure | BSM for vehicles, PSM for vulnerable road users, optional `IPI-CooperativeService` with `perceptionData`. | Enables A02-0000..A02-0006 |
 | `ipi/{intersectionId}/pcv/{vehicleId}/response` | infrastructure → vehicle | SSM/TIM mirrored over MQTT for reliable delivery. | F01-0001 |
 
 * **Session lifecycle** mirrors the earlier description but each control frame is a J2735 `MessageFrame`.
@@ -297,7 +300,7 @@ prototype against this design:
   `cpp/include`. The key namespaces mirror the concepts in this document:
   - `ipi::api` – `ReceiverApi` and `SenderApi` mirror the HTTP/MQTT planes.
   - `ipi::core` – `CooperativeServiceMessage` and related payloads.
-  - `ipi::v2x` – lightweight J2735 message models (BSM, MAP, SPaT, SRM, SSM).
+  - `ipi::v2x` – lightweight J2735 message models (BSM, PSM, MAP, SPaT, SRM, SSM), plus opaque UPER passthrough for other J2735 frames.
   - `ipi::mesh` – `MeshManager` for the Vehicle–Vehicle Local Mesh Mode and
     `TaskOffloader` for packaging `computationAid` requests/responses.
 
