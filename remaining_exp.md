@@ -275,8 +275,12 @@ configuration evidence:
 Online primary sources resolve terminology but not deployment-specific fields.
 3GPP TS 38.213 defines an NR TDD pattern using periodicity, full downlink and
 uplink slots, partial downlink and uplink symbols, and remaining flexible
-symbols. No public primary Airspan source was found that maps `40/40/20`,
-`30/60/10`, or `10D4G` to those fields. 3GPP TS 28.552 defines an active UE as
+symbols. No public primary Airspan source was found that maps `40/40/20` or
+`30/60/10` to those fields. The network administrator identifies `10D4G` as a
+fixed frame-packing setting used for coexistence with LTE systems. It is
+unchanged between the original and follow-up configurations, so retain it in
+the configuration record without treating it as an experimental variable or a
+cause of measured performance. 3GPP TS 28.552 defines an active UE as
 one with DRB data available for transmission and defines the standard average
 UE-throughput metric for bursts spanning multiple slots. Small one-slot bursts
 may instead be counted as unrestricted volume. These definitions explain why
@@ -320,8 +324,8 @@ scaling, rounding, and counter implementation still require confirmation.
     33 dBm cell transmit power, 34 dBm/MHz cell EIRP, SAS-sourced CPI data, and
     `0/4` PAL/GAA 10 MHz assignments for each cell. The CBRS configuration
     export identifies Federated Wireless as the enabled primary SAS provider.
-    Individual grant records, the definition of `10D4G`, and installation
-    azimuth/downtilt remain unresolved.
+    Individual grant records and installation azimuth/downtilt remain
+    unresolved.
 14. The signed structural analysis records an outdoor AirSpeed 2900 at a 20 ft
     antenna centerline on a 21 ft tripod/mount structure. Verify that the field
     installation matches that design, then record the compass azimuth,
@@ -1075,6 +1079,11 @@ definitive: TDD is the only parameter changed between the original and
 follow-up configurations. No additional configuration-diff evidence is
 required. The slash-separated values are frame allocations ordered as
 downlink, uplink, and dynamic.
+
+The network administrator identifies `10D4G` as an LTE-coexistence
+frame-packing setting. Because it is fixed across both configurations, R9
+neither varies nor evaluates it. The run manifests retain the value only for
+configuration reproducibility.
 
 This is an exploratory sensitivity experiment. The user does not expect the
 allocation change to alter the results substantially, and the experiment is

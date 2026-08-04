@@ -17,7 +17,9 @@ used the `40/40/20` TDD configuration, and the planned follow-up uses
 slash-separated components, in order, as downlink, uplink, and dynamic frame
 allocations. The original profile therefore contains 40 downlink, 40 uplink,
 and 20 dynamic frames; the follow-up contains 30 downlink, 60 uplink, and 10
-dynamic frames.
+dynamic frames. The network administrator clarifies that the unchanged
+`10D4G` value is frame packing for LTE coexistence. Record it for
+reproducibility, but do not analyze it as part of the TDD comparison.
 Header-verified per-cell carrier values and current
 RF power/EIRP are now available. The complete grant record and antenna
 azimuth/downtilt remain to be collected. The current SAS provider is now
@@ -140,8 +142,10 @@ in place because some retain historical run IDs and output paths.
   Applying the 3GPP NR-ARFCN mapping gives reference frequencies of 3569.880
   MHz and 3680.010 MHz, respectively. Cell 1 is active/unlocked and Cell 2 is
   intentionally locked. The 2026-07-31 network configuration export records
-  Cell 1 as `30/60/10` and Cell 2 as `40/40/20`, both with `10D4G`; the exact
-  slot/symbol semantics of these Airspan labels remain unresolved.
+  Cell 1 as `30/60/10` and Cell 2 as `40/40/20`, both with `10D4G`. The network
+  administrator identifies `10D4G` as a fixed frame-packing setting used for
+  coexistence with LTE systems. It is unchanged between the configurations and
+  is not an experimental variable or an explanation for measured performance.
 - The same active configuration export records a maximum of one uplink layer
   and two downlink layers for each cell, with downlink 256-QAM enabled. These
   are configured cell capabilities, not measured modulation, rank, or
@@ -167,8 +171,9 @@ in place because some retain historical run IDs and output paths.
   before/after configuration diff is not required to establish this fact. The
   user identifies the order as downlink, uplink, and dynamic frame allocation.
   The baseline therefore has 40 downlink, 40 uplink, and 20 dynamic frames; the
-  follow-up has 30 downlink, 60 uplink, and 10 dynamic frames. The meaning of
-  the separate `10D4G` field remains to be documented.
+  follow-up has 30 downlink, 60 uplink, and 10 dynamic frames. Retain the
+  separate `10D4G` value for reproducibility, but do not treat it as part of
+  the comparison.
 - Two ACP screenshots added on 2026-07-31 document gNodeB network and 5QI
   properties. The earlier network-properties screenshot displays
   `RLC Acknowledge Mode Support` as disabled, DSCP 48 for NG-C and Xn-C, DSCP
@@ -201,13 +206,14 @@ in place because some retain historical run IDs and output paths.
   the measurements as an isolated-deployment condition and do not introduce
   external-user load or inter-band interference as an explanation.
 - A primary-source web search did not find a public Airspan definition of the
-  `40/40/20`, `30/60/10`, or `10D4G` labels. The user provides the
+  `40/40/20` or `30/60/10` labels. The user provides the
   deployment-specific mapping of the slash-separated fields to downlink,
   uplink, and dynamic frame allocations. 3GPP defines a TDD pattern through
   its periodicity and counts of full downlink/uplink slots and partial
-  downlink/uplink symbols; remaining symbols are flexible. The exact Airspan
-  profile page or an Airspan definition is therefore still needed to map its
-  shorthand to the standard fields:
+  downlink/uplink symbols; remaining symbols are flexible. The network
+  administrator separately identifies `10D4G` as frame packing for LTE
+  coexistence. Because it remains fixed, the follow-up does not evaluate its
+  effects:
   <https://www.etsi.org/deliver/etsi_ts/138200_138299/138213/17.03.00_60/ts_138213v170300p.pdf>.
 - 3GPP TS 28.552 resolves part of the DU-counter interpretation. A mean active
   UE is a UE with DRB data available for uplink, downlink, or both, not every
@@ -419,8 +425,10 @@ in place because some retain historical run IDs and output paths.
   current per-cell RF/CBRS values recorded above. Those 23 files alone did not
   contain the TDD labels or current SAS provider; the later configuration
   exports resolve those values. User confirmation resolves the frame-allocation
-  mapping; the meaning of `10D4G` remains to be documented. Exact Cisco-core
-  and internal-path fields are outside the current paper scope.
+  mapping. The network administrator identifies `10D4G` as an unchanged
+  LTE-coexistence packing setting, so it is recorded but excluded from the
+  experimental comparison. Exact Cisco-core and internal-path fields are
+  outside the current paper scope.
 - Reviewed the two locally added ACP screenshots at original resolution. They
   resolve the configured gNodeB 5QI/RLC template values and control-interface
   DSCP/SCTP values. The screenshots alone do not resolve the active experiment
@@ -473,8 +481,7 @@ in place because some retain historical run IDs and output paths.
 ## Next Steps
 
 - Obtain administrator approval and car-side host access, then run the
-  phone/ACP validation pilot before the targeted follow-up experiments. Record
-  the Airspan definition of `10D4G` when it becomes available.
+  phone/ACP validation pilot before the targeted follow-up experiments.
 
 ## Subsequent Implementation Task: PSM and Cooperative J2735 Flow
 
