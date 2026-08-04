@@ -14,6 +14,8 @@ The repository root documentation is intentionally reduced to:
 - `current_task.md` - mutable handoff for the active task.
 - `setup.md` - build and deployment guide.
 - `experiment_summary.md` - detailed summary of the experiment results.
+- `remaining_exp.md` - pending private-5G experiment runbook, collection
+  protocol, acceptance criteria, and completion checklist.
 
 Nested Markdown files under result, source, benchmark, reference, or paper
 folders may exist and should remain in their respective locations.
@@ -70,8 +72,80 @@ For paper or experiment-claim changes, validate against current artifacts in
 - Do not use Spec Kit or superpowers for paper writing.
 - Do not reuse old Codex-generated paper prose as authority.
 - Start from the user's current draft files and instructions.
+- Do not take the easiest path for paper writing. Take the more correct path:
+  rebuild the section logic from the user's stated goal, the section
+  instruction, the three insights, the experiment evidence, and the necessary
+  citations. If existing prose is flawed or tainted by prior mistakes, discard
+  that structure instead of patching around it.
+- `Mocar` is the company/vendor name for devices or SDK components; do not use
+  it as the system name, paper title, or contribution.
+- `Edge4AV` is the title of the paper, not the name of the system.
+- This paper is not about building a testbed. Avoid testbed-construction
+  framing as the main contribution.
+- The target venue is MobiCom. Keep framing at a MobiCom networking/systems
+  level and do not switch to a MobiSys-style testbed paper unless instructed.
+- Each section may contain a brief user-written instruction for what that
+  section should cover. Read and follow that local section instruction strictly
+  before drafting or revising the section.
+- Preserve the user's intended claim structure before improving wording or
+  adding synthesis. Do not invent intermediate framings, replace the thesis, or
+  turn evidence interpretation from `experiment_summary.md` into the paper's
+  central logic unless the user explicitly requests that change.
+- Do not introduce terminology that is not common in the relevant technical
+  area. Avoid assistant-created shorthand such as compressed labels that are not
+  established CAV, V2X, private-5G, or networking terminology. Use explicit
+  wording from the user's draft, section instructions, repo docs, experiment
+  summaries, or established technical vocabulary.
+- Do not compress multi-step reasoning into one sentence when the reader needs
+  the steps spelled out. Avoid vague bridge phrases; make the logical link
+  between application categories, experiment results, and paper claims explicit.
+- For the abstract specifically, keep the controlling structure as the user
+  stated it: the paper asks whether today's edge communication technologies are
+  ready for tomorrow's CAV applications; it divides the task into stateless
+  applications and stateful/complex collaborative applications; and the results
+  lead to the three user-defined insights about V2X, private 5G, and the need
+  for new networking or communication technology.
+- Paper pass condition: the result must be a fully logical MobiCom research
+  paper with precise research word choices, readable sentence structure, clear
+  paragraph/section links, and claims that fully use the supported experimental
+  results.
+- Paper fail conditions: ambiguous wording, confusing sentence structure,
+  missing logical links between paragraphs or sections, and underclaiming
+  evidence-backed results.
 - Keep private-5G claims scoped to the measured deployment.
 - Use RTT for private-5G request/response timing unless clock synchronization is
   explicitly supported.
-- Treat V2X/Mocar claims as measured device-path results, with placement and
-  mobility caveats preserved.
+- In paper prose, use `private 5G` only on the first mention; after that, use
+  `5G networks` or `5G network paths`.
+- Treat V2X/Mocar claims as measured device-path results, with signal-strength
+  and mobility caveats preserved.
+- The V2X claim is a joint signal-strength and packet-size limit. The moving
+  runs provide normalized signal strength; the separate stationary sweeps show
+  that larger packets fail first as signal weakens and that even 1 KiB delivery
+  requires strong signal. Point 1 is building-obstructed NLOS. These results
+  lead to Insight 1: current V2X technologies cannot support complex CAV
+  applications.
+
+## Agent Operating Boundaries
+
+- Use root `AGENTS.md` for repo-specific guidance. Universal Codex preferences
+  belong in `~/.codex/AGENTS.md`; nested `AGENTS.md` files should be added only
+  when a subdirectory needs different rules.
+- Keep the root Markdown set limited to `AGENTS.md`, `agent_context.md`,
+  `current_task.md`, `setup.md`, `experiment_summary.md`, and
+  `remaining_exp.md`.
+- Do not copy a generic AGENTS/supporting-doc bundle into this repo. Add new
+  supporting Markdown only when it is project-specific and the user asks for it
+  or the task clearly needs it.
+- For large paper rewrites, experiment redesigns, migrations, refactors, or
+  architecture changes, avoid local-patch bias. First identify the intended end
+  state, affected files/subsystems, validation evidence, and checkpoint order.
+- For novel research or system-building work, separate observations,
+  inferences, assumptions, hypotheses, unknowns, risks, and decisions when those
+  distinctions affect the work.
+- Treat research as both discovery and system composition. When combining
+  existing modules, define the contracts, adapters, invariants, failure modes,
+  and the specific twist that makes the composition research-relevant.
+- Use subagents only for bounded read-heavy work such as mapping, triage,
+  logs, tests, paper-claim review, or risk review. Do not use them for
+  uncontrolled parallel editing.

@@ -46,7 +46,7 @@ Primary folders:
 
 Purpose: measure private-5G request/response RTT for compact SPaT-style and
 `IPI-CooperativeService` payloads over TCP and MQTT under different days,
-weather labels, and vehicle placements. The sender used 1000 probes per
+weather labels, and signal-strength conditions. The sender used 1000 probes per
 completed condition with a 200 ms interval in the main stationary sweeps.
 
 Main observations:
@@ -122,7 +122,7 @@ Primary folders:
 - `results/real_5g/20260701_qos_verification_run_1/`
 
 Purpose: test 1 KiB private-5G request/response traffic under background uplink
-load, multiple load streams, weak signal placement, and an application-level
+load, multiple load streams, weak signal strength, and an application-level
 `5qi-mapped` label.
 
 Good-signal load results:
@@ -254,7 +254,7 @@ Run status:
 - `20260702_multiclient_scalability_run_4` covers 1 through 100 clients in a
   cleaner full sweep.
 - `20260706_multiclient_scalability_weak_signal_run_1` repeats 1 through 100
-  clients under weak-signal placement.
+  clients under weak signal strength.
 
 Good-signal examples:
 
@@ -324,6 +324,10 @@ Summary:
   `mde_v2x_custom_send()` symbol was a no-op in this build.
 - The custom probe and RTT tools were rebuilt to send through
   `v2x_packet_data_send(payload, len, 0x1b)`.
+- Static analysis of the packet-data SDK installed on the OBU and RSU identified
+  a 4,080 B maximum application packet after vendor framing. This is a deployed
+  SDK limit, not a universal C-V2X limit and not the cause of the measured
+  delivery failures.
 - The folder preserves setup logs, custom RX debug notes, and local SPaT bridge
   sender evidence.
 
@@ -344,7 +348,7 @@ Primary folders:
 - `results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/`
 
 Purpose: measure Mocar custom radio RTT for compact payloads from 0 to 2048 B
-under stationary placements.
+under stationary LOS, NLOS, and obstruction conditions.
 
 Stable stationary evidence:
 
@@ -357,10 +361,12 @@ Stable stationary evidence:
 | consolidated sweep | 0 B | 1000 | 1000 | 99.939 | 106.873 | 111.814 |
 | consolidated sweep | 2048 B | 1000 | 1000 | 99.958 | 111.661 | 120.562 |
 
-Placement-sensitive July 4 sweeps:
+Stationary radio-condition sweeps from July 4:
 
 - `20260704_exp_01_payload_sweep_0_2kb_133527`: 0, 256, and 512 B mostly
-  succeeded; 1024 and 2048 B were treated as timeout after operator stop.
+  succeeded. The 1024 B phase recorded 900 observed attempts, all of which
+  timed out, before the run was stopped; the remaining 100 attempts and the
+  skipped 2048 B phase are analysis-only timeout entries.
 - `20260704_exp_01_payload_sweep_0_2kb_144149`: all payloads from 0 to 2048 B
   had 99.8-100.0% success, with p50 near 100 ms and p95 around 107-111 ms.
 - `20260704_exp_01_payload_sweep_0_2kb_151351`: 0-1024 B mostly succeeded,
@@ -372,8 +378,16 @@ Placement-sensitive July 4 sweeps:
   successful analysis attempts, and the remaining payloads were treated as
   timeouts or skipped timeout conditions.
 
-The Mocar payload results are therefore not only payload-dependent; placement
-and link condition are central to interpreting the radio path.
+The Mocar payload results show a joint limit from signal strength and packet
+size. As normalized signal strength decreased across Points 2-4, the 2 KiB
+failure rate increased from 0.2% to 99.2%, followed by 910/910 observed failures
+at the next point. The 1 KiB failure rate increased from 0% to 2.1% and 82.9%,
+while 256-512 B packets remained more reliable until the path became
+unavailable. Point 1 has low signal despite its short distance because a
+building blocks its direct LOS path to the RSU. These results show that even 1
+KiB delivery requires strong signal and that V2X cannot reliably deliver the
+multi-packet objects required by complex CAV applications. This is the evidence
+for Insight 1: current V2X technologies cannot support complex CAV applications.
 
 ### M03. OBU Signal Probe
 
@@ -395,7 +409,7 @@ Results:
   validates traffic success but does not provide a usable RSSI metric from the
   OBU diagnostic path.
 
-### M04. Radio Distance And Mobility
+### M04. Radio Coverage Along A Mobile Route
 
 Primary folders:
 
@@ -414,9 +428,12 @@ records with GNSS when available.
 | run 3 `182104` | 1000 | 591 | 0.591 | 29.204 | 43.923 | 54.317 | 96720 | 500 ms timeout threshold; clock probe did not return parseable device epoch values |
 | run 4 `183232` | 1000 | 716 | 0.716 | 28.276 | 41.621 | 50.651 | 83136 | includes OBU-local clock offset and V2X/GNSS send-time join |
 
-The mobility results show low RTT on successful packets in later runs, but
-success rate ranges from 59.1% to 76.3%, so reliability rather than successful-
-packet median RTT is the limiting observation.
+The mobility runs show low RTT on successful packets in later runs, but success
+rate ranges from 59.1% to 76.3% because the route moved through weak- or
+no-signal locations. Their GNSS-joined request latency and packet failures
+produce the normalized V2X signal-strength map. The limiting observation is
+spatially varying signal strength, not mobility by itself and not
+successful-packet median RTT.
 
 ## V2X Dataset And Benchmark Experiments
 
@@ -557,9 +574,9 @@ These are evidence summaries, not final paper claims:
 - Application-level `5qi-mapped` labels were collected, but current packet
   capture does not verify network-enforced QoS or 5QI behavior.
 - Mocar V2X compact payload RTT can be stable near 100 ms for successful
-  stationary links, but placement and mobility produce large reliability
-  differences. Successful-packet RTT alone is not enough; success rate is
-  central.
+  stationary links, but moving into weak- or no-signal locations produces large
+  reliability differences. Successful-packet RTT alone is not enough; success
+  rate and coverage are central.
 - V2X dataset experiments currently support workload realism, payload sizing,
   dataset plumbing, and detector-output generation. They do not by themselves
   prove wireless V2X or private-5G deployment performance.
