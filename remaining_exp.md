@@ -59,9 +59,10 @@ Run R1 across three consecutive 15-minute ACP bins:
 3. one controlled 25 Mbps edge-to-vehicle downlink stream.
 
 Export ACP and the phone log immediately afterward. Stop before R2-R4 if the
-traffic cannot be assigned to the expected cell and bins, the phone log has
-gaps, or achieved traffic differs materially from the intended direction or
-rate.
+traffic cannot be assigned to Airspan Cell 2 and the expected bins, the phone
+log has gaps, or achieved traffic differs materially from the intended
+direction or rate. Export both cells so that Cell 1's lack of experiment traffic
+can be verified rather than assumed.
 
 ### 4. Run The Required Follow-Up Matrix
 
@@ -72,8 +73,12 @@ with 100 clients. Keep TCP, MQTT, and UDP separate. Target 1,000 probes per
 transport and condition. Together with R1, the minimum collection occupies 15
 ACP bins, or 3 hours 45 minutes, excluding setup and placement transitions.
 
-The current Cell 1 configuration is `30/60/10`: 30 downlink, 60 uplink, and 10
-dynamic frames. Record this configuration in every new run manifest. The R1
+Both cells will use `30/60/10`: 30 downlink, 60 uplink, and 10 dynamic frames.
+Both cells remain administratively unlocked. Record the configuration and the
+phone-observed serving cell in every new run manifest. Current observations
+show that the vehicle UE is served by Airspan Cell 2 and that all experiment
+traffic occurs on Cell 2. Airspan Cell 2 is the radio cell; it is unrelated to
+experiment condition C2. The R1
 idle/uplink/downlink bins and the first valid C1 and C2 TCP runs also satisfy the
 traffic portion of the R9 diagnostic; do not repeat those probes solely for R9.
 They remain follow-up measurements under `30/60/10`, not relabeled repetitions
@@ -173,7 +178,7 @@ experiment matrix alone is not mistaken for completing the paper.
 | R6 | Path-segment measurements | Optional | Excluded from the current paper scope | Future delay decomposition; the current paper reports complete-path application RTT |
 | R7 | Additional ACP/per-UE counter export | Recommended | Availability unknown | Improve radio/RAN interpretation beyond DU Cell aggregates |
 | R8 | Validate payload direction and measure selected downlink responses | Required for bidirectional payload claims | Not run | Distinguish large vehicle-to-edge requests from large edge-to-vehicle responses |
-| R9 | Compare the historical `40/40/20` results with the `30/60/10` follow-up | Exploratory sensitivity study | Frame allocations established; blocked on administrator approval and car access | Quantify whether and by how much the changed TDD allocation affects application outcomes, then derive implications for future vehicular-radio and 6G design |
+| R9 | Compare the historical `40/40/20` results with the `30/60/10` follow-up | Exploratory sensitivity study | Both-cell configuration plan established; follow-up not run | Quantify whether and by how much the changed TDD allocation affects application outcomes, then derive implications for future vehicular-radio and 6G design |
 | P1 | Complete deployment and path documentation | Required | Not complete | Vendor attribution, reproducibility, equipment scope, and V2X/5G separation |
 | P2 | Validate and document the IPI contribution | Required | Partly implemented; final validation not recorded | Answer the request to strengthen IPI without changing the paper's central logic |
 | P3 | Close manuscript claims, citations, and submission checks | Required | Not complete | Qualified conclusions, related work, anonymity, format, and evidence traceability |
@@ -226,10 +231,12 @@ manuscript.
 
 Three configuration files retained on 2026-07-31 add the following evidence:
 
-- `Airspan_NetworkConfigExport_20260731_1234.xml` is the active gNodeB
-  configuration export. It records GNSS as the clock source, a 7-second UE
-  inactivity timer, enabled 15-minute statistics collection, Cell 1 at
-  `30/60/10` with `10D4G`, and Cell 2 at `40/40/20` with `10D4G`. The export
+- `Airspan_NetworkConfigExport_20260731_1234.xml` is a gNodeB configuration
+  export captured during reconfiguration. It records GNSS as the clock source,
+  a 7-second UE inactivity timer, enabled 15-minute statistics collection,
+  Cell 1 at `30/60/10` with `10D4G`, and Cell 2 at `40/40/20` with `10D4G`.
+  This intermediate state is neither the original experiment configuration nor
+  the planned follow-up configuration. The export
   also records one maximum uplink layer, two maximum downlink layers, and
   downlink 256-QAM enabled for each cell. These are configuration values, not
   measurements of the rank or modulation used by an experiment. The export
@@ -676,7 +683,9 @@ Keep unredacted originals in `CISCO_AIRSPAN_STATS/`, not in this result folder.
 Validate the measurement path before collecting paper-facing follow-up data.
 This pilot determines whether known traffic appears in the correct Airspan cell
 and time bin and whether the R1A-qualified phone provides usable, time-aligned
-private-5G NR context throughout the workload.
+private-5G NR context throughout the workload. The expected serving cell is
+Airspan Cell 2. Export both cells and verify that Cell 1 does not carry the
+experiment traffic.
 
 ### Duration
 
@@ -705,7 +714,7 @@ The pilot passes only if all of the following are true:
 5. Downlink traffic increases the expected downlink DRB volume/time counters.
 6. The observed Airspan volume is consistent with the offered rate and
    duration after accounting for protocol overhead.
-7. Any traffic in the other cell is explained.
+7. Cell 2 carries the experiment traffic; any Cell 1 traffic is explained.
 8. The phone export contains the private-5G serving-cell identity, RSRP, RSRQ,
    usable timestamps, and records throughout all three bins.
 9. The phone's configured and achieved sampling intervals, missing-value
@@ -811,7 +820,9 @@ For every transport and repetition, compute:
 - Co-located phone RSRP/RSRQ statistics and serving-cell identity over the
   application interval, with NR SINR included only if R1A validates that field.
 - Airspan uplink/downlink DRB volume, active time, derived throughput, RACH
-  counters, and availability for the matching cell/bin.
+  counters, and availability for both cells. Use Cell 2 for the application
+  comparison after confirming the phone serving-cell record and the absence of
+  experiment traffic on Cell 1.
 
 Do not correlate a request with an individual Airspan row. The valid unit is an
 application condition within a 15-minute cell-level bin.
@@ -820,7 +831,8 @@ application condition within a 15-minute cell-level bin.
 
 1. At least two valid bins exist for every required condition.
 2. Every application record maps to one declared ACP bin.
-3. Every bin maps to one identified serving cell.
+3. Every bin maps to Airspan Cell 2; any serving-cell change or Cell 1 traffic
+   is identified and reported.
 4. TCP, MQTT, and UDP retain separate application results.
 5. The stronger/weaker labels are supported by measured radio values.
 6. The load condition reaches and records its intended offered rate.
@@ -1092,26 +1104,18 @@ affects application latency, availability, or throughput, quantify the size of
 that effect, and determine what the result implies for future vehicular-radio
 and 6G uplink/downlink design.
 
-The user identifies the supplied ACP configuration record as covering the
-original experiments and confirms that both cells used `40/40/20` during those
-campaigns. For the follow-up, Cell 1 is changed to `30/60/10` and remains
-administratively unlocked, while Cell 2 is administratively locked. Only Cell
-1 will serve the new experiments. No additional historical log export is
-required.
+The user confirms that both cells used `40/40/20` during the original
+experiments. For the follow-up, both cells use `30/60/10` and remain
+administratively unlocked. The July 31 export captured an intermediate
+reconfiguration state and does not define either measured configuration. No
+additional historical log export is required.
 
-The baseline therefore uses 40 downlink, 40 uplink, and 20 dynamic frames; the
-follow-up uses 30 downlink, 60 uplink, and 10 dynamic frames. This test remains
-blocked until an administrator:
-
-1. records the exact patterns and all associated periodicity and special-slot
-   parameters;
-2. confirms whether both cells and any co-channel neighboring radios must use
-   the same pattern;
-3. approves a maintenance window and rollback procedure.
-
-Do not make an unapproved live configuration change. Record the selected TDD
-profile in the run metadata and restore the baseline immediately after the
-diagnostic run.
+The baseline therefore uses 40 downlink, 40 uplink, and 20 dynamic frames on
+both cells; the follow-up uses 30 downlink, 60 uplink, and 10 dynamic frames on
+both cells. Before the first measurement bin, export or capture the live cell
+status and verify that both cells are enabled, administratively unlocked, and
+using `30/60/10`. Record the selected TDD profile and the serving cell in the
+run metadata. Do not change either cell during the collection.
 
 ### Quick Diagnostic
 
@@ -1119,7 +1123,7 @@ Run the pilot first at one fixed stronger-signal location. Record quantitative
 RSRP, RSRQ, and NR SINR where available; a phone signal-bar display is not an
 experimental signal metric.
 
-For the approved `30/60/10` follow-up on Cell 1:
+For the `30/60/10` follow-up:
 
 1. collect a two-minute idle interval;
 2. collect 60 seconds of sustained vehicle-to-edge uplink throughput;
@@ -1132,8 +1136,10 @@ For the approved `30/60/10` follow-up on Cell 1:
 Keep the vehicle location and orientation, gateway and antenna placement,
 channel bandwidth, application host, traffic endpoints, request interval,
 timeout, DNN, and 5QI unchanged. Capture application logs, host telemetry,
-Android radio measurements, and an Airspan export covering the complete
-comparison.
+Android radio measurements, and Airspan DU Cell statistics for both cells
+covering the complete comparison. Use the phone serving-cell record to map each
+interval. Current observations indicate that Cell 2 carries all experiment
+traffic. Record any cell change, handover, or unexpected Cell 1 traffic.
 
 One execution is a diagnostic result only. Use at least three repetitions of
 the follow-up configuration. If the stronger-signal runs show a repeatable
@@ -1556,7 +1562,8 @@ The remaining experiment and paper-evidence work is complete when:
 - [x] R6 excluded; the paper reports complete-path application RTT.
 - [ ] R7 additional Airspan export obtained or documented unavailable.
 - [ ] R8 directional payload experiment completed or manuscript scope narrowed.
-- [ ] R9 approval, repeated `30/60/10` comparison, and rollback completed.
+- [ ] R9 both-cell configuration verified and repeated `30/60/10` comparison
+      completed.
 - [ ] P1 deployment inventory and V2X/5G path description completed.
 - [ ] P2 IPI implementation mapping and test validation completed.
 - [ ] P3 claim/citation/submission review completed.

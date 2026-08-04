@@ -34,8 +34,10 @@ The numeric QFI, any attempted nondefault 5QI assignment, and the ACP
 performance-counter scaling remain unresolved.
 The signed installation analysis now documents the outdoor mounting structure
 and antenna centerline height.
-The live follow-up is blocked on administrator approval and access to the
-car-side experiment host.
+The follow-up configuration plan is confirmed, but no new collection is yet
+recorded in the repository. Both cells will be configured and administratively
+unlocked at `30/60/10`; current observations indicate that the vehicle UE is
+served by Airspan Cell 2 and that all experiment traffic occurs on Cell 2.
 
 The pending experiment runbook now begins with a vehicle-day execution order.
 It requires a pull/build/test preflight, R1A phone qualification, the three-bin
@@ -126,13 +128,14 @@ in place because some retain historical run IDs and output paths.
   documentation. Retain them only in the locally excluded
   `CISCO_AIRSPAN_STATS/` evidence directory and redact them from manuscript
   material.
-- The user identifies the supplied ACP configuration record as covering the
-  original experiments and confirms that both cells used `40/40/20` with
-  `10D4G` during those campaigns. The follow-up configuration changes Cell 1
-  to `30/60/10` and locks Cell 2; only Cell 1 will serve the new experiments.
-  The later state reports Cell 1 as `All Active` and `All Ready` and Cell 2 as
-  `All Inactive` and `All Disabled` with a warning. The locked state is
-  intentional, not evidence of a radio failure. Both CBSD entries report
+- The user confirms that both cells used `40/40/20` with `10D4G` during the
+  original experiments. Both cells will use `30/60/10` with `10D4G` and remain
+  administratively unlocked during the follow-up. Current observations show
+  that Cell 2 serves the vehicle UE and carries the experiment traffic; Cell 1
+  remains configured but does not carry that traffic. The July 31 export reports
+  an intermediate reconfiguration state in which Cell 1 was active at
+  `30/60/10` and Cell 2 was locked at `40/40/20`; do not describe that snapshot
+  as either experiment configuration. Both CBSD entries report
   `Authorized` with successful SAS heartbeats. The software inventory marks
   `22.00-53-0.0` with platform `22.0-24-0.0` as the current package.
 - Header-bearing ACP exports dated 2026-07-31 confirm that both cells use band
@@ -140,9 +143,10 @@ in place because some retain historical run IDs and output paths.
   SSB periodicity. Cell 1 reports NR-ARFCN 637992 and SSB frequency
   3558.720 MHz; Cell 2 reports NR-ARFCN 645334 and SSB frequency 3669.600 MHz.
   Applying the 3GPP NR-ARFCN mapping gives reference frequencies of 3569.880
-  MHz and 3680.010 MHz, respectively. Cell 1 is active/unlocked and Cell 2 is
-  intentionally locked. The 2026-07-31 network configuration export records
-  Cell 1 as `30/60/10` and Cell 2 as `40/40/20`, both with `10D4G`. The network
+  MHz and 3680.010 MHz, respectively. The 2026-07-31 network configuration
+  export captured Cell 1 as active/unlocked at `30/60/10` and Cell 2 as
+  locked at `40/40/20`, both with `10D4G`. This was an intermediate
+  reconfiguration snapshot, not a measurement configuration. The network
   administrator identifies `10D4G` as a fixed frame-packing setting used for
   coexistence with LTE systems. It is unchanged between the configurations and
   is not an experimental variable or an explanation for measured performance.
@@ -165,10 +169,11 @@ in place because some retain historical run IDs and output paths.
   proxy enabled. It does not include the four individual grant records, so
   grant-level frequency and power evidence remains unresolved.
 - The user's definitive configuration record establishes that both cells used
-  `40/40/20` with `10D4G` during the original experiments and that the
-  follow-up uses Cell 1 at `30/60/10` with `10D4G` while Cell 2 is locked. TDD
-  is the only changed parameter. A Node Configuration Log or separate
-  before/after configuration diff is not required to establish this fact. The
+  `40/40/20` with `10D4G` during the original experiments and that both cells
+  will use `30/60/10` with `10D4G` while remaining administratively unlocked
+  during the follow-up. TDD is the only changed parameter. A Node Configuration
+  Log or separate before/after configuration diff is not required to establish
+  this fact. The
   user identifies the order as downlink, uplink, and dynamic frame allocation.
   The baseline therefore has 40 downlink, 40 uplink, and 20 dynamic frames; the
   follow-up has 30 downlink, 60 uplink, and 10 dynamic frames. Retain the
@@ -392,14 +397,21 @@ in place because some retain historical run IDs and output paths.
   Cisco/Airspan evidence directory remains excluded, and unrelated paper map
   and chart scripts are not part of this publication.
 - Verified that R9 treats the user's configuration record as definitive that
-  TDD is the only changed parameter, distinguishes the historical `40/40/20`
-  baseline from the planned `30/60/10` follow-up, requires approval and
-  rollback, separates uplink and downlink measurements, and treats one run as
-  diagnostic rather than manuscript evidence.
+  TDD is the only changed parameter, distinguishes the historical two-cell
+  `40/40/20` baseline from the planned two-cell `30/60/10` follow-up, separates
+  uplink and downlink measurements, and treats one run as diagnostic rather
+  than manuscript evidence.
 - Ran `git diff --check -- remaining_exp.md current_task.md`; no whitespace
   errors were reported.
-- No radio configuration or live experiment was run. The pilot remains blocked
-  on Airspan semantics/support, administrator approval, and car-side host access.
+- No follow-up experiment is yet recorded in the repository. Before collection,
+  verify that both cells are enabled, unlocked, and set to `30/60/10`; verify
+  from the phone and DU Cell export that Airspan Cell 2 serves the vehicle UE.
+  Export both cell rows so unexpected Cell 1 traffic or a serving-cell change
+  remains visible.
+- Updated the vehicle runbook after the current console observation: both cells
+  retain the same follow-up configuration, while Cell 2 is the observed serving
+  cell carrying the experiment traffic. The condition identifier C2 remains
+  distinct from Airspan Cell 2.
 - Reviewed all private-5G experiment families in `experiment_summary.md` and
   enumerated every top-level run directory under `results/real_5g/`.
 - Checked all private-5G sender CSV headers. They contain application identity,
