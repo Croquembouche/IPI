@@ -1,50 +1,57 @@
 # Current Task
 
-Last updated: 2026-08-04
+Last updated: 2026-08-05
 
 ## Task
 
 Publish a vehicle-ready private-5G follow-up runbook, record the deployment
-values needed to interpret the new measurements, and preserve the user's
-uplink-oriented paper framing and `30/60/10` TDD diagnostic while keeping
-observations, hypotheses, and untested improvements distinct.
+values needed to interpret the new measurements, and define a locked-cell
+`40/40/20` versus `70/20/10` TDD comparison while keeping observations,
+hypotheses, and untested improvements distinct.
 
 ## Status
 
 The static Airspan inventory is partially complete. The existing experiments
 used the `40/40/20` TDD configuration, and the planned follow-up uses
-`30/60/10`; both report a `10D4G` structure. The user identifies the three
-slash-separated components, in order, as downlink, uplink, and dynamic frame
-allocations. The original profile therefore contains 40 downlink, 40 uplink,
-and 20 dynamic frames; the follow-up contains 30 downlink, 60 uplink, and 10
-dynamic frames. The network administrator clarifies that the unchanged
-`10D4G` value is frame packing for LTE coexistence. Record it for
-reproducibility, but do not analyze it as part of the TDD comparison.
+`70/20/10`; both report a `10D4G` structure. The attempted `30/60/10`
+configuration did not support a usable collection and produced no valid
+experiment result. The user identifies the three slash-separated components,
+in order, as downlink, uplink, and dynamic frame allocations. The original
+profile therefore contains 40 downlink, 40 uplink, and 20 dynamic frames; the
+follow-up contains 70 downlink, 20 uplink, and 10 dynamic frames. The new
+profile is downlink-heavy and is not an uplink-enhanced configuration. The
+network administrator clarifies that the unchanged `10D4G` value is frame
+packing for LTE coexistence. Record it for reproducibility, but do not analyze
+it as part of the TDD comparison.
 Header-verified per-cell carrier values and current
 RF power/EIRP are now available. The complete grant record and antenna
 azimuth/downtilt remain to be collected. The current SAS provider is now
 identified from the 2026-07-31 CBRS configuration export. The vehicle CPE is
 now identified as a Cisco Meraki `MG52-HW`, and its placement, orientation,
-current firmware, and wired-link state are recorded below. The user's
-configuration record establishes that TDD is the only parameter changed
-between the original and follow-up configurations; no separate before/after
-configuration diff is required. The user confirms that the original
-experiments used DNN `cisco5g` and were assigned the default 5QI 9 treatment.
+current firmware, and wired-link state are recorded below. TDD is the only
+intended changed parameter for a newly collected same-cell comparison. A
+historical-to-follow-up comparison also spans collection dates and cannot be
+described as the same controlled causal comparison. The user confirms that
+the original experiments used DNN `cisco5g` and were assigned the default 5QI
+9 treatment.
 The numeric QFI, any attempted nondefault 5QI assignment, and the ACP
 performance-counter scaling remain unresolved.
 The signed installation analysis now documents the outdoor mounting structure
 and antenna centerline height.
 The follow-up configuration plan is confirmed, but no new collection is yet
-recorded in the repository. Both cells will be configured and administratively
-unlocked at `30/60/10`; current observations indicate that the vehicle UE is
-served by Airspan Cell 2 and that all experiment traffic occurs on Cell 2.
+recorded in the repository. The MG52 will be locked to one Airspan cell so that
+no handoff occurs. The runbook requires Cell 2 because current evidence places
+the original experiment traffic on Cell 2. If another cell is selected, a new
+`40/40/20` reference must be collected on that same cell before `70/20/10`.
 
 The pending experiment runbook now begins with a vehicle-day execution order.
 It requires a pull/build/test preflight, R1A phone qualification, the three-bin
-R1 validation, and then the two-repetition C1-C6 matrix. It also records that
-the current `30/60/10` R1/C1/C2 measurements can satisfy the R9 traffic
-diagnostic without duplicate probes. Historical result scripts must not be run
-in place because some retain historical run IDs and output paths.
+R1 validation, and then the two-repetition C1-C6 matrix. The `70/20/10`
+R1/C1/C2 measurements can supply the follow-up side of R9 without duplicate
+probes. A newly collected same-cell `40/40/20` reference is required for a
+controlled causal comparison; otherwise R9 remains a historical-to-follow-up
+sensitivity comparison. Historical result scripts must not be run in place
+because some retain historical run IDs and output paths.
 
 ## Cisco And Meraki Information Retrieval
 
@@ -129,15 +136,16 @@ in place because some retain historical run IDs and output paths.
   `CISCO_AIRSPAN_STATS/` evidence directory and redact them from manuscript
   material.
 - The user confirms that both cells used `40/40/20` with `10D4G` during the
-  original experiments. Both cells will use `30/60/10` with `10D4G` and remain
-  administratively unlocked during the follow-up. Current observations show
-  that Cell 2 serves the vehicle UE and carries the experiment traffic; Cell 1
-  remains configured but does not carry that traffic. The July 31 export reports
-  an intermediate reconfiguration state in which Cell 1 was active at
-  `30/60/10` and Cell 2 was locked at `40/40/20`; do not describe that snapshot
-  as either experiment configuration. Both CBSD entries report
-  `Authorized` with successful SAS heartbeats. The software inventory marks
-  `22.00-53-0.0` with platform `22.0-24-0.0` as the current package.
+  original experiments. The follow-up will use `70/20/10` with `10D4G` on the
+  selected serving cell, and the MG52 will be locked to that cell so no handoff
+  occurs. Use Cell 2 to preserve comparability with the original campaigns.
+  Current observations show that Cell 2 served the vehicle UE and carried the
+  original experiment traffic; Cell 1 did not carry that traffic. The July 31
+  export reports an intermediate reconfiguration state in which Cell 1 was
+  active at `30/60/10` and Cell 2 was locked at `40/40/20`; do not describe
+  that snapshot as either measured experiment configuration. Both CBSD entries
+  report `Authorized` with successful SAS heartbeats. The software inventory
+  marks `22.00-53-0.0` with platform `22.0-24-0.0` as the current package.
 - Header-bearing ACP exports dated 2026-07-31 confirm that both cells use band
   n48, TDD, 40 MHz bandwidth, 30 kHz PDCCH/SSB subcarrier spacing, and a 20 ms
   SSB periodicity. Cell 1 reports NR-ARFCN 637992 and SSB frequency
@@ -169,16 +177,17 @@ in place because some retain historical run IDs and output paths.
   proxy enabled. It does not include the four individual grant records, so
   grant-level frequency and power evidence remains unresolved.
 - The user's definitive configuration record establishes that both cells used
-  `40/40/20` with `10D4G` during the original experiments and that both cells
-  will use `30/60/10` with `10D4G` while remaining administratively unlocked
-  during the follow-up. TDD is the only changed parameter. A Node Configuration
-  Log or separate before/after configuration diff is not required to establish
-  this fact. The
+  `40/40/20` with `10D4G` during the original experiments. The current
+  follow-up uses `70/20/10` with `10D4G` on the MG52-locked serving cell. The
   user identifies the order as downlink, uplink, and dynamic frame allocation.
   The baseline therefore has 40 downlink, 40 uplink, and 20 dynamic frames; the
-  follow-up has 30 downlink, 60 uplink, and 10 dynamic frames. Retain the
-  separate `10D4G` value for reproducibility, but do not treat it as part of
-  the comparison.
+  follow-up has 70 downlink, 20 uplink, and 10 dynamic frames. TDD is the sole
+  intended changed parameter only when the same cell, channel, signal
+  condition, placement, endpoints, and application settings are retained. A
+  newly collected same-cell baseline permits that controlled interpretation;
+  a comparison only with historical results does not. Retain the separate
+  `10D4G` value for reproducibility, but do not treat it as part of the
+  comparison.
 - Two ACP screenshots added on 2026-07-31 document gNodeB network and 5QI
   properties. The earlier network-properties screenshot displays
   `RLC Acknowledge Mode Support` as disabled, DSCP 48 for NG-C and Xn-C, DSCP
@@ -211,7 +220,7 @@ in place because some retain historical run IDs and output paths.
   the measurements as an isolated-deployment condition and do not introduce
   external-user load or inter-band interference as an explanation.
 - A primary-source web search did not find a public Airspan definition of the
-  `40/40/20` or `30/60/10` labels. The user provides the
+  `40/40/20`, `30/60/10`, or `70/20/10` labels. The user provides the
   deployment-specific mapping of the slash-separated fields to downlink,
   uplink, and dynamic frame allocations. 3GPP defines a TDD pattern through
   its periodicity and counts of full downlink/uplink slots and partial
@@ -313,13 +322,14 @@ in place because some retain historical run IDs and output paths.
 - Recorded the safety boundary: do not propose relaxing RF-exposure rules.
   Higher power, gain, EIRP, and beamforming must remain within equipment,
   certification, CBRS, and exposure limits.
-- Added R9 as a baseline `40/40/20` versus follow-up `30/60/10` TDD pilot;
-  both configurations report `10D4G`. The slash-separated values are downlink,
-  uplink, and dynamic frame allocations: 40/40/20 for the baseline and
-  30/60/10 for the follow-up. R9 is an exploratory
-  sensitivity study: no substantial change is expected, and its purpose is to
-  quantify any effect and derive implications for future vehicular-radio and
-  6G uplink/downlink design. No live experiment was run.
+- Revised R9 to compare baseline `40/40/20` with follow-up `70/20/10` on an
+  MG52-locked serving cell; both configurations report `10D4G`. The
+  slash-separated values are downlink, uplink, and dynamic frame allocations:
+  40/40/20 for the baseline and 70/20/10 for the follow-up. The attempted
+  `30/60/10` configuration produced no usable measurement. R9 is an exploratory
+  directionality sensitivity study. Because `70/20/10` reduces uplink
+  allocation, it must not be presented as an uplink-enhanced profile. No live
+  comparison has yet been recorded.
 - Added primary standards, regulatory material, measurement literature, and
   vehicular-antenna/beamforming source leads for later manuscript review.
 
@@ -396,22 +406,22 @@ in place because some retain historical run IDs and output paths.
   `current_task.md`, `experiment_summary.md`, and `remaining_exp.md`. The local
   Cisco/Airspan evidence directory remains excluded, and unrelated paper map
   and chart scripts are not part of this publication.
-- Verified that R9 treats the user's configuration record as definitive that
-  TDD is the only changed parameter, distinguishes the historical two-cell
-  `40/40/20` baseline from the planned two-cell `30/60/10` follow-up, separates
-  uplink and downlink measurements, and treats one run as diagnostic rather
+- Verified that R9 distinguishes the historical `40/40/20` baseline from the
+  planned locked-cell `70/20/10` follow-up and separates uplink and downlink
+  measurements. A same-cell, newly collected baseline is required before TDD
+  can be treated as the only changed parameter; a historical-only comparison
+  is reported as a sensitivity comparison. One pair remains diagnostic rather
   than manuscript evidence.
 - Ran `git diff --check -- remaining_exp.md current_task.md`; no whitespace
   errors were reported.
 - No follow-up experiment is yet recorded in the repository. Before collection,
-  verify that both cells are enabled, unlocked, and set to `30/60/10`; verify
-  from the phone and DU Cell export that Airspan Cell 2 serves the vehicle UE.
-  Export both cell rows so unexpected Cell 1 traffic or a serving-cell change
-  remains visible.
-- Updated the vehicle runbook after the current console observation: both cells
-  retain the same follow-up configuration, while Cell 2 is the observed serving
-  cell carrying the experiment traffic. The condition identifier C2 remains
-  distinct from Airspan Cell 2.
+  verify `70/20/10` on the selected cell and verify that the MG52 is locked to
+  Airspan Cell 2. Export both cell rows so nonselected-cell traffic remains
+  visible. Treat the co-located phone's serving-cell record separately because
+  it does not establish the MG52 serving cell.
+- Updated the vehicle runbook after the configuration change: Cell 2 is the
+  required locked serving cell for comparison with the original campaign. The
+  condition identifier C2 remains distinct from Airspan Cell 2.
 - Reviewed all private-5G experiment families in `experiment_summary.md` and
   enumerated every top-level run directory under `results/real_5g/`.
 - Checked all private-5G sender CSV headers. They contain application identity,

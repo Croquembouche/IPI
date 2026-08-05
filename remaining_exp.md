@@ -1,6 +1,6 @@
 # Remaining Experiment Plan
 
-Last updated: 2026-08-04
+Last updated: 2026-08-05
 
 ## Purpose
 
@@ -59,10 +59,11 @@ Run R1 across three consecutive 15-minute ACP bins:
 3. one controlled 25 Mbps edge-to-vehicle downlink stream.
 
 Export ACP and the phone log immediately afterward. Stop before R2-R4 if the
-traffic cannot be assigned to Airspan Cell 2 and the expected bins, the phone
-log has gaps, or achieved traffic differs materially from the intended
-direction or rate. Export both cells so that Cell 1's lack of experiment traffic
-can be verified rather than assumed.
+traffic cannot be assigned to the MG52-locked Airspan cell and the expected
+bins, the phone log has gaps, or achieved traffic differs materially from the
+intended direction or rate. Use Cell 2 for direct comparison with the original
+campaigns. Export both cells so that the absence of experiment traffic on the
+nonselected cell can be verified rather than assumed.
 
 ### 4. Run The Required Follow-Up Matrix
 
@@ -73,16 +74,18 @@ with 100 clients. Keep TCP, MQTT, and UDP separate. Target 1,000 probes per
 transport and condition. Together with R1, the minimum collection occupies 15
 ACP bins, or 3 hours 45 minutes, excluding setup and placement transitions.
 
-Both cells will use `30/60/10`: 30 downlink, 60 uplink, and 10 dynamic frames.
-Both cells remain administratively unlocked. Record the configuration and the
-phone-observed serving cell in every new run manifest. Current observations
-show that the vehicle UE is served by Airspan Cell 2 and that all experiment
-traffic occurs on Cell 2. Airspan Cell 2 is the radio cell; it is unrelated to
-experiment condition C2. The R1
-idle/uplink/downlink bins and the first valid C1 and C2 TCP runs also satisfy the
-traffic portion of the R9 diagnostic; do not repeat those probes solely for R9.
-They remain follow-up measurements under `30/60/10`, not relabeled repetitions
-of the historical `40/40/20` runs.
+The selected serving cell will use `70/20/10`: 70 downlink, 20 uplink, and 10
+dynamic frames. Lock the MG52 to Airspan Cell 2 before collection so that no
+cell handoff occurs and the serving cell matches the cell observed during the
+original campaigns. Record the lock state, selected cell, both cells'
+configurations, and phone-observed serving cell in every new run manifest.
+Airspan Cell 2 is the radio cell; it is unrelated to experiment condition C2.
+The R1 idle/uplink/downlink bins and the first valid C1 and C2 TCP runs can
+supply the `70/20/10` measurements used by R9; do not repeat those probes solely
+for R9. They remain follow-up measurements under `70/20/10`, not relabeled
+repetitions of the historical `40/40/20` runs. The attempted `30/60/10`
+configuration did not produce a usable collection and is not an experiment
+condition.
 
 ### 5. Do Not Run Blocked Or Unnecessary Work
 
@@ -178,7 +181,7 @@ experiment matrix alone is not mistaken for completing the paper.
 | R6 | Path-segment measurements | Optional | Excluded from the current paper scope | Future delay decomposition; the current paper reports complete-path application RTT |
 | R7 | Additional ACP/per-UE counter export | Recommended | Availability unknown | Improve radio/RAN interpretation beyond DU Cell aggregates |
 | R8 | Validate payload direction and measure selected downlink responses | Required for bidirectional payload claims | Not run | Distinguish large vehicle-to-edge requests from large edge-to-vehicle responses |
-| R9 | Compare the historical `40/40/20` results with the `30/60/10` follow-up | Exploratory sensitivity study | Both-cell configuration plan established; follow-up not run | Quantify whether and by how much the changed TDD allocation affects application outcomes, then derive implications for future vehicular-radio and 6G design |
+| R9 | Compare the historical `40/40/20` results with the locked-cell `70/20/10` follow-up | Exploratory sensitivity study | Cell-lock plan established; follow-up not run | Quantify whether and by how much the changed downlink/uplink allocation is associated with application outcomes, then derive implications for future vehicular-radio and 6G design |
 | P1 | Complete deployment and path documentation | Required | Not complete | Vendor attribution, reproducibility, equipment scope, and V2X/5G separation |
 | P2 | Validate and document the IPI contribution | Required | Partly implemented; final validation not recorded | Answer the request to strengthen IPI without changing the paper's central logic |
 | P3 | Close manuscript claims, citations, and submission checks | Required | Not complete | Qualified conclusions, related work, anonymity, format, and evidence traceability |
@@ -236,14 +239,16 @@ Three configuration files retained on 2026-07-31 add the following evidence:
   a 7-second UE inactivity timer, enabled 15-minute statistics collection,
   Cell 1 at `30/60/10` with `10D4G`, and Cell 2 at `40/40/20` with `10D4G`.
   This intermediate state is neither the original experiment configuration nor
-  the planned follow-up configuration. The export
+  the current planned follow-up configuration. The `30/60/10` candidate was
+  subsequently found unsuitable for collection and produced no valid
+  experiment result. The export
   also records one maximum uplink layer, two maximum downlink layers, and
   downlink 256-QAM enabled for each cell. These are configuration values, not
   measurements of the rank or modulation used by an experiment. The export
   confirms the TDD labels. The user identifies the components, in order, as
   downlink, uplink, and dynamic frame allocations. The original profile has 40
-  downlink, 40 uplink, and 20 dynamic frames; the follow-up has 30 downlink, 60
-  uplink, and 10 dynamic frames.
+  downlink, 40 uplink, and 20 dynamic frames; the current follow-up profile has
+  70 downlink, 20 uplink, and 10 dynamic frames.
 - `CBRSConfiguration_20260731_1230.csv` identifies Federated Wireless as the
   enabled primary SAS connection, CBRS configuration version 1.2, and no
   enabled backup domain proxy. It does not contain the individual SAS grant
@@ -282,12 +287,13 @@ configuration evidence:
 Online primary sources resolve terminology but not deployment-specific fields.
 3GPP TS 38.213 defines an NR TDD pattern using periodicity, full downlink and
 uplink slots, partial downlink and uplink symbols, and remaining flexible
-symbols. No public primary Airspan source was found that maps `40/40/20` or
-`30/60/10` to those fields. The network administrator identifies `10D4G` as a
-fixed frame-packing setting used for coexistence with LTE systems. It is
-unchanged between the original and follow-up configurations, so retain it in
-the configuration record without treating it as an experimental variable or a
-cause of measured performance. 3GPP TS 28.552 defines an active UE as
+symbols. No public primary Airspan source was found that maps the deployment's
+`40/40/20`, `30/60/10`, or `70/20/10` labels to those fields. The network
+administrator identifies `10D4G` as a fixed frame-packing setting used for
+coexistence with LTE systems. It is unchanged between the original and
+follow-up configurations, so retain it in the configuration record without
+treating it as an experimental variable or a cause of measured performance.
+3GPP TS 28.552 defines an active UE as
 one with DRB data available for transmission and defines the standard average
 UE-throughput metric for bursts spanning multiple slots. Small one-slot bursts
 may instead be counted as unrestricted volume. These definitions explain why
@@ -526,7 +532,8 @@ do not pass.
 
 ## Common Collection Protocol
 
-Apply this protocol to R1-R6 unless an experiment below overrides it.
+Apply this protocol to R1-R5, R8, and R9 unless an experiment below overrides
+it.
 
 ### Required Execution Hosts
 
@@ -562,19 +569,22 @@ Apply this protocol to R1-R6 unless an experiment below overrides it.
 
 1. Keep other test UEs disconnected where possible.
 2. Record every UE that remains connected.
-3. Keep the gateway, antenna, phone, vehicle, and edge host unchanged within a
+3. Verify before each measurement bin that the MG52 cell lock is active and
+   selects Airspan Cell 2. Record the MG52 serving-cell evidence separately
+   from the phone's serving cell. A phone record cannot validate the MG52 lock.
+4. Keep the gateway, antenna, phone, vehicle, and edge host unchanged within a
    paired comparison except for the intended intervention.
-4. Keep the vehicle location and orientation fixed for the stronger/weaker
+5. Keep the vehicle location and orientation fixed for the stronger/weaker
    signal comparison.
-5. Keep the phone at a marked position beside the gateway/CPE antenna and
+6. Keep the phone at a marked position beside the gateway/CPE antenna and
    record its orientation.
-6. Record whether the gateway/CPE, antenna, and phone are inside or outside the
+7. Record whether the gateway/CPE, antenna, and phone are inside or outside the
    vehicle.
-7. Record weather and any temporary obstruction, but do not use weather as a
+8. Record weather and any temporary obstruction, but do not use weather as a
    causal explanation without evidence.
-8. Do not call a condition "cell edge" unless Cisco/Airspan provides a
+9. Do not call a condition "cell edge" unless Cisco/Airspan provides a
    deployment-specific definition and the measurements satisfy it.
-9. Keep phone data tests, speed tests, automatic uploads/downloads, and
+10. Keep phone data tests, speed tests, automatic uploads/downloads, and
    nonessential apps disabled. The phone should record radio context without
    creating the experimental load.
 
@@ -650,6 +660,10 @@ For every condition and repetition, preserve:
 - Exact condition start/end times.
 - Airspan DU Cell export covering at least one bin before, every experiment
   bin, and one bin after the collection.
+- MG52 or management-plane evidence showing the configured cell lock and the
+  MG52 serving cell for every measurement block.
+- Live Airspan configuration evidence showing the selected cell's TDD profile
+  before each R9 block.
 - Raw timestamped Android radio-log export for the same window and KML when
   supported.
 - A redacted Airspan derivative with node/internal identifiers removed.
@@ -657,8 +671,9 @@ For every condition and repetition, preserve:
   phone-number, local-IP, and precise-location fields removed or anonymized.
 - Condition metadata: location identifier, vehicle orientation, gateway and
   antenna placement, measured signal statistics, protocol order, payload,
-  client count, offered load, DNN, 5QI/QFI when applicable, phone/app versions,
-  configured and achieved phone sampling interval, and operator notes.
+  client count, offered load, selected Airspan cell, MG52 cell-lock state, TDD
+  profile, DNN, 5QI/QFI when applicable, phone/app versions, configured and
+  achieved phone sampling interval, and operator notes.
 
 Recommended result layout:
 
@@ -683,9 +698,10 @@ Keep unredacted originals in `CISCO_AIRSPAN_STATS/`, not in this result folder.
 Validate the measurement path before collecting paper-facing follow-up data.
 This pilot determines whether known traffic appears in the correct Airspan cell
 and time bin and whether the R1A-qualified phone provides usable, time-aligned
-private-5G NR context throughout the workload. The expected serving cell is
-Airspan Cell 2. Export both cells and verify that Cell 1 does not carry the
-experiment traffic.
+private-5G NR context throughout the workload. Lock the MG52 to Airspan Cell 2,
+which is the cell observed during the original campaigns. Export both cells and
+verify that Cell 1 does not carry the experiment traffic. A serving-cell change
+invalidates the affected bin.
 
 ### Duration
 
@@ -714,7 +730,8 @@ The pilot passes only if all of the following are true:
 5. Downlink traffic increases the expected downlink DRB volume/time counters.
 6. The observed Airspan volume is consistent with the offered rate and
    duration after accounting for protocol overhead.
-7. Cell 2 carries the experiment traffic; any Cell 1 traffic is explained.
+7. Cell 2 carries the experiment traffic, Cell 1 carries no experiment traffic,
+   and the MG52 remains locked without a serving-cell change.
 8. The phone export contains the private-5G serving-cell identity, RSRP, RSRQ,
    usable timestamps, and records throughout all three bins.
 9. The phone's configured and achieved sampling intervals, missing-value
@@ -820,9 +837,10 @@ For every transport and repetition, compute:
 - Co-located phone RSRP/RSRQ statistics and serving-cell identity over the
   application interval, with NR SINR included only if R1A validates that field.
 - Airspan uplink/downlink DRB volume, active time, derived throughput, RACH
-  counters, and availability for both cells. Use Cell 2 for the application
-  comparison after confirming the phone serving-cell record and the absence of
-  experiment traffic on Cell 1.
+  counters, and availability for both cells. Use the MG52-locked Cell 2 for the
+  application comparison after confirming the MG52 lock and serving-cell
+  evidence and the absence of experiment traffic on Cell 1. Treat the phone's
+  serving-cell record separately because the phone is another UE.
 
 Do not correlate a request with an individual Airspan row. The valid unit is an
 application condition within a 15-minute cell-level bin.
@@ -831,8 +849,8 @@ application condition within a 15-minute cell-level bin.
 
 1. At least two valid bins exist for every required condition.
 2. Every application record maps to one declared ACP bin.
-3. Every bin maps to Airspan Cell 2; any serving-cell change or Cell 1 traffic
-   is identified and reported.
+3. Every bin maps to the MG52-locked Airspan Cell 2; a serving-cell change or
+   experiment traffic on Cell 1 invalidates the affected comparison.
 4. TCP, MQTT, and UDP retain separate application results.
 5. The stronger/weaker labels are supported by measured radio values.
 6. The load condition reaches and records its intended offered rate.
@@ -1080,42 +1098,44 @@ same application size, protocol, signal condition, endpoints, and attempt
 policy. Directional asymmetry must be reported as an observed property of the
 measured deployment and TDD configuration, not as a universal 5G property.
 
-## R9. Provisional TDD Configuration Pilot
+## R9. Locked-Cell TDD Configuration Comparison
 
 ### Status And Interpretation
 
-The user confirms that the existing experiment campaigns used the `40/40/20`
-TDD configuration and that the planned follow-up will use `30/60/10`. Both
-configurations report a `10D4G` structure. This configuration record is
-definitive: TDD is the only parameter changed between the original and
-follow-up configurations. No additional configuration-diff evidence is
-required. The slash-separated values are frame allocations ordered as
-downlink, uplink, and dynamic.
+The existing experiment campaigns used the `40/40/20` TDD configuration. The
+new follow-up will use `70/20/10`. The attempted `30/60/10` configuration did
+not support a usable collection and produced no valid experiment result. Do
+not include it as a measured condition. The slash-separated values are frame
+allocations ordered as downlink, uplink, and dynamic.
 
 The network administrator identifies `10D4G` as an LTE-coexistence
 frame-packing setting. Because it is fixed across both configurations, R9
 neither varies nor evaluates it. The run manifests retain the value only for
 configuration reproducibility.
 
-This is an exploratory sensitivity experiment. The user does not expect the
-allocation change to alter the results substantially, and the experiment is
-not presented as a proposed fix. Its purpose is to measure whether the change
-affects application latency, availability, or throughput, quantify the size of
-that effect, and determine what the result implies for future vehicular-radio
-and 6G uplink/downlink design.
+The original profile allocates 40 downlink, 40 uplink, and 20 dynamic frames.
+The follow-up allocates 70 downlink, 20 uplink, and 10 dynamic frames. The new
+profile therefore increases the downlink allocation and reduces the uplink
+allocation. It is a directional sensitivity condition, not an uplink-enhanced
+configuration or a proposed fix.
 
-The user confirms that both cells used `40/40/20` during the original
-experiments. For the follow-up, both cells use `30/60/10` and remain
-administratively unlocked. The July 31 export captured an intermediate
-reconfiguration state and does not define either measured configuration. No
-additional historical log export is required.
+The MG52 will be locked to one Airspan cell so that no handoff occurs. Use Cell
+2 because the original experiment traffic was observed on Cell 2. Retain the
+same Cell 2 NR-ARFCN, bandwidth, RF configuration, gateway placement, and
+vehicle orientation across the comparison. Record the MG52 cell-lock setting
+and its serving-cell identity independently of the co-located phone, which is a
+separate UE and cannot prove which cell serves the MG52.
 
-The baseline therefore uses 40 downlink, 40 uplink, and 20 dynamic frames on
-both cells; the follow-up uses 30 downlink, 60 uplink, and 10 dynamic frames on
-both cells. Before the first measurement bin, export or capture the live cell
-status and verify that both cells are enabled, administratively unlocked, and
-using `30/60/10`. Record the selected TDD profile and the serving cell in the
-run metadata. Do not change either cell during the collection.
+If the MG52 is instead locked to Cell 1, collect a new `40/40/20` reference on
+Cell 1 before collecting `70/20/10`. Do not present a comparison between the
+historical Cell 2 results and a Cell 1 follow-up as a TDD-only comparison.
+
+The strongest comparison uses newly collected `40/40/20` and `70/20/10`
+blocks on the same locked cell. Put each configuration in a separate ACP
+15-minute bin, verify the live TDD profile and cell lock before the bin, and do
+not reconfigure the cell inside a measurement bin. If only the historical
+`40/40/20` data are used, describe R9 as a historical-to-follow-up sensitivity
+comparison rather than a controlled causal estimate of the TDD change.
 
 ### Quick Diagnostic
 
@@ -1123,7 +1143,7 @@ Run the pilot first at one fixed stronger-signal location. Record quantitative
 RSRP, RSRQ, and NR SINR where available; a phone signal-bar display is not an
 experimental signal metric.
 
-For the `30/60/10` follow-up:
+For each newly collected `40/40/20` reference and `70/20/10` follow-up block:
 
 1. collect a two-minute idle interval;
 2. collect 60 seconds of sustained vehicle-to-edge uplink throughput;
@@ -1137,42 +1157,44 @@ Keep the vehicle location and orientation, gateway and antenna placement,
 channel bandwidth, application host, traffic endpoints, request interval,
 timeout, DNN, and 5QI unchanged. Capture application logs, host telemetry,
 Android radio measurements, and Airspan DU Cell statistics for both cells
-covering the complete comparison. Use the phone serving-cell record to map each
-interval. Current observations indicate that Cell 2 carries all experiment
-traffic. Record any cell change, handover, or unexpected Cell 1 traffic.
+covering the complete comparison. Record the MG52 lock and serving-cell status
+for each interval. Record the phone's serving cell separately as co-located
+radio context. A loss of the MG52 lock, a serving-cell change, or experiment
+traffic on the nonselected cell invalidates the affected comparison.
 
-One execution is a diagnostic result only. Use at least three repetitions of
-the follow-up configuration. If the stronger-signal runs show a repeatable
-difference from the historical results, repeat the follow-up at one
-quantitatively defined lower-signal condition to test whether the difference
-depends on coverage.
+One pair is a diagnostic result only. Collect at least two valid matched pairs,
+with three preferred. Alternate configuration order when operationally
+possible, and record reconfiguration and reattachment intervals outside the
+measurement bins. If stronger-signal pairs show a repeatable difference,
+repeat the pair at one quantitatively defined lower-signal condition to test
+whether the difference depends on coverage.
 
-The comparison treats TDD as the sole changed parameter. Because the original
-and follow-up runs occur on different dates, report signal conditions, cell
-load, weather, vehicle placement, and all fixed controls for each repetition.
-These observations quantify run-to-run variation without reopening the
-established configuration comparison.
+For a matched pair, TDD allocation is the only intended changed parameter.
+Report signal conditions, cell load, weather, vehicle placement, serving cell,
+and all fixed controls for each block. A difference in cell, channel, signal
+condition, placement, offered traffic, or another network setting prevents a
+TDD-only interpretation.
 
 ### Analysis
 
 Report uplink and downlink throughput separately. For the application probes,
 report attempts, response availability, RTT p50/p95, and 100/500/1000 ms miss
-rates. For each metric, report the absolute and relative difference from the
-historical configuration with uncertainty, not only whether the direction is
-better or worse. Interpret practical importance against the application
-deadlines used elsewhere in the paper. Attribute a repeatable measured
-difference to the TDD change within this deployment, while avoiding a universal
-claim about all private 5G deployments.
+rates. For each metric, report the absolute and relative difference between
+configurations with repetition-level variation, not only whether the direction
+is better or worse. Interpret practical importance against the application
+deadlines used elsewhere in the paper. A repeated matched-cell difference may
+be attributed to the TDD allocation within this deployment. A historical-only
+comparison supports an association, not the same causal attribution.
 
-Either outcome is informative. A small effect would show that changing the
-frame allocation alone does not materially change the measured application
-outcomes and would motivate investigation of other uplink constraints,
-including link budget, vehicle antennas, scheduling, and QoS. A large effect
-would identify frame allocation as an important deployment and future-radio
-design lever. An effect that varies by payload, load, or signal condition would
-motivate adaptive, application-aware allocation. The experiment can inform a
-future vehicular-radio or 6G design argument, but it cannot by itself establish
-that a new radio generation is required.
+Either outcome is informative. A small matched-pair effect would show that this
+allocation change is not a dominant cause of the measured application outcomes
+and would motivate investigation of other constraints, including link budget,
+vehicle antennas, scheduling, and QoS. A large direction-specific effect would
+identify downlink/uplink allocation as an important deployment and future-radio
+design variable. An effect that varies by payload, load, or signal condition
+would motivate adaptive, application-aware allocation. The experiment can
+inform a future vehicular-radio or 6G design argument, but it cannot by itself
+establish that a new radio generation is required.
 
 ## P1. Deployment And Path Documentation
 
@@ -1336,8 +1358,10 @@ evidence is collected.
 1. **Uplink-oriented TDD resources.** More uplink slots or shorter uplink
    opportunities may improve uplink throughput or waiting time, but they trade
    against downlink resources and require synchronization and interference
-   coordination in production deployments. R9 tests this direction only in the
-   measured private network.
+   coordination in production deployments. R9 does not test an uplink-enhanced
+   profile: `70/20/10` reduces the uplink allocation relative to `40/40/20`.
+   It tests whether direction-specific application behavior is sensitive to
+   that reduction in the measured private network.
 2. **Verified QoS and scheduling.** A provisioned QoS flow, appropriate 5QI,
    configured scheduling behavior, or deadline-aware scheduling may protect
    compact CAV requests under contention. An application label alone does not
@@ -1501,6 +1525,8 @@ Complete this checklist before leaving the test site:
 - [ ] Record the final application-host, phone, and ACP times.
 - [ ] Export Airspan data covering one bin before through one bin after the
       day's experiments.
+- [ ] Preserve the MG52 cell-lock/serving-cell evidence and the live Airspan
+      TDD profile associated with every R9 block.
 - [ ] Export the Android logger's raw timestamped data and KML when supported.
 - [ ] Verify the phone log contains the expected serving cell, RSRP, RSRQ, and
       records across every experiment interval.
@@ -1562,8 +1588,8 @@ The remaining experiment and paper-evidence work is complete when:
 - [x] R6 excluded; the paper reports complete-path application RTT.
 - [ ] R7 additional Airspan export obtained or documented unavailable.
 - [ ] R8 directional payload experiment completed or manuscript scope narrowed.
-- [ ] R9 both-cell configuration verified and repeated `30/60/10` comparison
-      completed.
+- [ ] R9 Cell 2 lock and both TDD profiles verified; repeated `40/40/20` versus
+      `70/20/10` comparison completed.
 - [ ] P1 deployment inventory and V2X/5G path description completed.
 - [ ] P2 IPI implementation mapping and test validation completed.
 - [ ] P3 claim/citation/submission review completed.
