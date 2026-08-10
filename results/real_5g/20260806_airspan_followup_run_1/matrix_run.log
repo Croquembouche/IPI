@@ -1,0 +1,607 @@
+[2026-08-06T09:01:03-04:00] Starting matrix phase placement=outside conditions=C1 C2 C3 C4 count=500 interval_ms=200
+[2026-08-06T09:01:03-04:00] Scheduled C1 repetition 1 tcp for 2026-08-06T09:05:00-04:00 to 2026-08-06T09:10:00-04:00
+Preflight for C1 repetition 1 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:01:05-04:00] Preflight passed for C1 repetition 1 over tcp
+[2026-08-06T09:01:05-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:01:05-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:05:15-04:00] Starting workload at 2026-08-06T09:05:15-04:00
+[2026-08-06T09:07:59-04:00] Workload finished at 2026-08-06T09:07:59-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c1-rep1-tcp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T09:08:02-04:00] C1 repetition 1 tcp complete
+[2026-08-06T09:08:04-04:00] C1 repetition 1 tcp passed immediate validation
+[2026-08-06T09:08:04-04:00] Scheduled C1 repetition 1 mqtt for 2026-08-06T09:10:00-04:00 to 2026-08-06T09:15:00-04:00
+Preflight for C1 repetition 1 over mqtt
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:08:05-04:00] Preflight passed for C1 repetition 1 over mqtt
+[2026-08-06T09:08:05-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:08:06-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:10:15-04:00] Starting workload at 2026-08-06T09:10:15-04:00
+[2026-08-06T09:12:11-04:00] Workload finished at 2026-08-06T09:12:11-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c1-rep1-mqtt_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T09:12:14-04:00] C1 repetition 1 mqtt complete
+[2026-08-06T09:12:16-04:00] C1 repetition 1 mqtt passed immediate validation
+[2026-08-06T09:12:16-04:00] Scheduled C1 repetition 1 udp for 2026-08-06T09:15:00-04:00 to 2026-08-06T09:20:00-04:00
+Preflight for C1 repetition 1 over udp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:12:18-04:00] Preflight passed for C1 repetition 1 over udp
+[2026-08-06T09:12:18-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:12:18-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:15:15-04:00] Starting workload at 2026-08-06T09:15:15-04:00
+[2026-08-06T09:17:09-04:00] Workload finished at 2026-08-06T09:17:09-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c1-rep1-udp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T09:17:12-04:00] C1 repetition 1 udp complete
+[2026-08-06T09:17:14-04:00] C1 repetition 1 udp passed immediate validation
+[2026-08-06T09:17:14-04:00] Scheduled C1 repetition 2 udp for 2026-08-06T09:20:00-04:00 to 2026-08-06T09:25:00-04:00
+Preflight for C1 repetition 2 over udp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:17:15-04:00] Preflight passed for C1 repetition 2 over udp
+[2026-08-06T09:17:15-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:17:16-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:20:15-04:00] Starting workload at 2026-08-06T09:20:15-04:00
+[2026-08-06T09:22:08-04:00] Workload finished at 2026-08-06T09:22:08-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c1-rep2-udp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T09:22:11-04:00] C1 repetition 2 udp complete
+[2026-08-06T09:22:13-04:00] C1 repetition 2 udp passed immediate validation
+[2026-08-06T09:22:13-04:00] Scheduled C1 repetition 2 mqtt for 2026-08-06T09:25:00-04:00 to 2026-08-06T09:30:00-04:00
+Preflight for C1 repetition 2 over mqtt
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:22:15-04:00] Preflight passed for C1 repetition 2 over mqtt
+[2026-08-06T09:22:15-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:22:15-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:25:15-04:00] Starting workload at 2026-08-06T09:25:15-04:00
+[2026-08-06T09:27:11-04:00] Workload finished at 2026-08-06T09:27:11-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c1-rep2-mqtt_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T09:27:14-04:00] C1 repetition 2 mqtt complete
+[2026-08-06T09:27:17-04:00] C1 repetition 2 mqtt passed immediate validation
+[2026-08-06T09:27:17-04:00] Scheduled C1 repetition 2 tcp for 2026-08-06T09:30:00-04:00 to 2026-08-06T09:35:00-04:00
+Preflight for C1 repetition 2 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:27:18-04:00] Preflight passed for C1 repetition 2 over tcp
+[2026-08-06T09:27:18-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:27:19-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:30:15-04:00] Starting workload at 2026-08-06T09:30:15-04:00
+[2026-08-06T09:32:59-04:00] Workload finished at 2026-08-06T09:32:59-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c1-rep2-tcp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T09:33:02-04:00] C1 repetition 2 tcp complete
+[2026-08-06T09:33:04-04:00] C1 repetition 2 tcp passed immediate validation
+[2026-08-06T09:33:04-04:00] Scheduled C2 repetition 1 tcp for 2026-08-06T09:35:00-04:00 to 2026-08-06T09:40:00-04:00
+Preflight for C2 repetition 1 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:33:05-04:00] Preflight passed for C2 repetition 1 over tcp
+[2026-08-06T09:33:05-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:33:06-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:35:15-04:00] Starting workload at 2026-08-06T09:35:15-04:00
+[2026-08-06T09:37:36-04:00] Workload finished at 2026-08-06T09:37:36-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c2-rep1-tcp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T09:37:39-04:00] C2 repetition 1 tcp complete
+[2026-08-06T09:37:41-04:00] C2 repetition 1 tcp passed immediate validation
+[2026-08-06T09:37:41-04:00] Scheduled C2 repetition 1 mqtt for 2026-08-06T09:40:00-04:00 to 2026-08-06T09:45:00-04:00
+Preflight for C2 repetition 1 over mqtt
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:37:43-04:00] Preflight passed for C2 repetition 1 over mqtt
+[2026-08-06T09:37:43-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:37:43-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:40:15-04:00] Starting workload at 2026-08-06T09:40:15-04:00
+[2026-08-06T09:42:21-04:00] Workload finished at 2026-08-06T09:42:21-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c2-rep1-mqtt_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T09:42:24-04:00] C2 repetition 1 mqtt complete
+[2026-08-06T09:42:27-04:00] C2 repetition 1 mqtt passed immediate validation
+[2026-08-06T09:42:27-04:00] Scheduled C2 repetition 1 udp for 2026-08-06T09:45:00-04:00 to 2026-08-06T09:50:00-04:00
+Preflight for C2 repetition 1 over udp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:42:28-04:00] Preflight passed for C2 repetition 1 over udp
+[2026-08-06T09:42:28-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:42:29-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:45:15-04:00] Starting workload at 2026-08-06T09:45:15-04:00
+[2026-08-06T09:47:19-04:00] Workload finished at 2026-08-06T09:47:19-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c2-rep1-udp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T09:47:22-04:00] C2 repetition 1 udp complete
+[2026-08-06T09:47:25-04:00] C2 repetition 1 udp passed immediate validation
+[2026-08-06T09:47:25-04:00] Scheduled C2 repetition 2 udp for 2026-08-06T09:50:00-04:00 to 2026-08-06T09:55:00-04:00
+Preflight for C2 repetition 2 over udp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:47:26-04:00] Preflight passed for C2 repetition 2 over udp
+[2026-08-06T09:47:26-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:47:26-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:50:15-04:00] Starting workload at 2026-08-06T09:50:15-04:00
+[2026-08-06T09:52:20-04:00] Workload finished at 2026-08-06T09:52:20-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c2-rep2-udp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T09:52:23-04:00] C2 repetition 2 udp complete
+[2026-08-06T09:52:25-04:00] C2 repetition 2 udp passed immediate validation
+[2026-08-06T09:52:25-04:00] Scheduled C2 repetition 2 mqtt for 2026-08-06T09:55:00-04:00 to 2026-08-06T10:00:00-04:00
+Preflight for C2 repetition 2 over mqtt
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:52:26-04:00] Preflight passed for C2 repetition 2 over mqtt
+[2026-08-06T09:52:26-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:52:27-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:55:15-04:00] Starting workload at 2026-08-06T09:55:15-04:00
+[2026-08-06T09:57:22-04:00] Workload finished at 2026-08-06T09:57:22-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c2-rep2-mqtt_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T09:57:25-04:00] C2 repetition 2 mqtt complete
+[2026-08-06T09:57:28-04:00] C2 repetition 2 mqtt passed immediate validation
+[2026-08-06T09:57:28-04:00] Scheduled C2 repetition 2 tcp for 2026-08-06T10:00:00-04:00 to 2026-08-06T10:05:00-04:00
+Preflight for C2 repetition 2 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:57:29-04:00] Preflight passed for C2 repetition 2 over tcp
+[2026-08-06T09:57:29-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T09:57:29-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:00:15-04:00] Starting workload at 2026-08-06T10:00:15-04:00
+[2026-08-06T10:02:36-04:00] Workload finished at 2026-08-06T10:02:36-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c2-rep2-tcp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T10:02:39-04:00] C2 repetition 2 tcp complete
+[2026-08-06T10:02:41-04:00] C2 repetition 2 tcp passed immediate validation
+[2026-08-06T10:02:41-04:00] Scheduled C3 repetition 1 tcp for 2026-08-06T10:05:00-04:00 to 2026-08-06T10:10:00-04:00
+Preflight for C3 repetition 1 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:02:43-04:00] Preflight passed for C3 repetition 1 over tcp
+[2026-08-06T10:02:43-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:02:43-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:05:18-04:00] Starting workload at 2026-08-06T10:05:18-04:00
+[2026-08-06T10:09:38-04:00] Workload finished at 2026-08-06T10:09:38-04:00
+{"accepted": 495, "complete_files": 0, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c3-rep1-tcp_veh-001_sender.csv": {"accepted": 495, "complete": false, "rows": 495}}, "rows": 495}
+[2026-08-06T10:09:42-04:00] One or more sender processes exited nonzero; artifacts were preserved
+[2026-08-06T10:09:44-04:00] C3 repetition 1 tcp failed with rc=1; stopping matrix
+[2026-08-06T10:11:11-04:00] Starting matrix phase placement=outside conditions=C3 C4 count=500 interval_ms=200
+[2026-08-06T10:11:11-04:00] Scheduled C3 repetition 1 tcp for 2026-08-06T10:15:00-04:00 to 2026-08-06T10:20:00-04:00
+Preflight for C3 repetition 1 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:11:12-04:00] Preflight passed for C3 repetition 1 over tcp
+[2026-08-06T10:11:12-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:11:13-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:15:19-04:00] Starting workload at 2026-08-06T10:15:19-04:00
+[2026-08-06T10:19:44-04:00] Workload finished at 2026-08-06T10:19:44-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c3-rep1-tcp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T10:19:47-04:00] C3 repetition 1 tcp complete
+[2026-08-06T10:19:50-04:00] C3 repetition 1 tcp passed immediate validation
+[2026-08-06T10:19:50-04:00] Scheduled C3 repetition 1 mqtt for 2026-08-06T10:25:00-04:00 to 2026-08-06T10:30:00-04:00
+Preflight for C3 repetition 1 over mqtt
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:19:51-04:00] Preflight passed for C3 repetition 1 over mqtt
+[2026-08-06T10:19:51-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:19:52-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:25:19-04:00] Starting workload at 2026-08-06T10:25:19-04:00
+[2026-08-06T10:28:09-04:00] Workload finished at 2026-08-06T10:28:09-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c3-rep1-mqtt_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T10:28:13-04:00] C3 repetition 1 mqtt complete
+<repo-root>/scripts/run_airspan_followup_condition.sh: line 698: unexpected EOF while looking for matching `''
+[2026-08-06T10:28:15-04:00] C3 repetition 1 mqtt failed with rc=2; stopping matrix
+[2026-08-06T10:30:02-04:00] Starting matrix phase placement=outside conditions=C3 C4 count=500 interval_ms=200
+[2026-08-06T10:30:03-04:00] Skipping already validated C3 repetition 1 tcp
+[2026-08-06T10:30:03-04:00] Scheduled C3 repetition 1 mqtt for 2026-08-06T10:35:00-04:00 to 2026-08-06T10:40:00-04:00
+Preflight for C3 repetition 1 over mqtt
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:30:04-04:00] Preflight passed for C3 repetition 1 over mqtt
+[2026-08-06T10:30:04-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:30:05-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:35:19-04:00] Starting workload at 2026-08-06T10:35:19-04:00
+[2026-08-06T10:38:09-04:00] Workload finished at 2026-08-06T10:38:09-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c3-rep1-mqtt_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T10:39:50-04:00] C3 repetition 1 mqtt complete
+[2026-08-06T10:39:53-04:00] C3 repetition 1 mqtt passed immediate validation
+[2026-08-06T10:39:53-04:00] Scheduled C3 repetition 1 udp for 2026-08-06T10:45:00-04:00 to 2026-08-06T10:50:00-04:00
+Preflight for C3 repetition 1 over udp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:39:54-04:00] Preflight passed for C3 repetition 1 over udp
+[2026-08-06T10:39:54-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:39:55-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:45:19-04:00] Starting workload at 2026-08-06T10:45:19-04:00
+[2026-08-06T10:48:12-04:00] Workload finished at 2026-08-06T10:48:12-04:00
+{"accepted": 499, "complete_files": 1, "expected_rows_per_file": 500, "failed": 1, "files": 1, "per_file": {"c3-rep1-udp_veh-001_sender.csv": {"accepted": 499, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T10:49:50-04:00] C3 repetition 1 udp complete
+[2026-08-06T10:49:53-04:00] C3 repetition 1 udp passed immediate validation
+[2026-08-06T10:49:53-04:00] Scheduled C3 repetition 2 udp for 2026-08-06T10:55:00-04:00 to 2026-08-06T11:00:00-04:00
+Preflight for C3 repetition 2 over udp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:49:54-04:00] Preflight passed for C3 repetition 2 over udp
+[2026-08-06T10:49:54-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:49:55-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:55:19-04:00] Starting workload at 2026-08-06T10:55:19-04:00
+[2026-08-06T10:58:29-04:00] Workload finished at 2026-08-06T10:58:29-04:00
+{"accepted": 496, "complete_files": 1, "expected_rows_per_file": 500, "failed": 4, "files": 1, "per_file": {"c3-rep2-udp_veh-001_sender.csv": {"accepted": 496, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T10:59:50-04:00] C3 repetition 2 udp complete
+[2026-08-06T10:59:53-04:00] C3 repetition 2 udp passed immediate validation
+[2026-08-06T10:59:53-04:00] Scheduled C3 repetition 2 mqtt for 2026-08-06T11:05:00-04:00 to 2026-08-06T11:10:00-04:00
+Preflight for C3 repetition 2 over mqtt
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:59:54-04:00] Preflight passed for C3 repetition 2 over mqtt
+[2026-08-06T10:59:54-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T10:59:55-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:05:19-04:00] Starting workload at 2026-08-06T11:05:19-04:00
+[2026-08-06T11:08:11-04:00] Workload finished at 2026-08-06T11:08:11-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c3-rep2-mqtt_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T11:09:50-04:00] C3 repetition 2 mqtt complete
+[2026-08-06T11:09:52-04:00] C3 repetition 2 mqtt passed immediate validation
+[2026-08-06T11:09:52-04:00] Scheduled C3 repetition 2 tcp for 2026-08-06T11:15:00-04:00 to 2026-08-06T11:20:00-04:00
+Preflight for C3 repetition 2 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:09:54-04:00] Preflight passed for C3 repetition 2 over tcp
+[2026-08-06T11:09:54-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:09:54-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:15:18-04:00] Starting workload at 2026-08-06T11:15:18-04:00
+[2026-08-06T11:19:45-04:00] Workload finished at 2026-08-06T11:19:44-04:00
+{"accepted": 489, "complete_files": 0, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c3-rep2-tcp_veh-001_sender.csv": {"accepted": 489, "complete": false, "rows": 489}}, "rows": 489}
+[2026-08-06T11:19:48-04:00] Load-generator artifact validation failed; artifacts were preserved
+[2026-08-06T11:19:48-04:00] One or more sender processes exited nonzero; artifacts were preserved
+[2026-08-06T11:19:50-04:00] C3 repetition 2 tcp failed with rc=1; stopping matrix
+[2026-08-06T11:20:33-04:00] Starting matrix phase placement=outside conditions=C3 C4 count=500 interval_ms=200
+[2026-08-06T11:20:34-04:00] Skipping already validated C3 repetition 1 tcp
+[2026-08-06T11:20:34-04:00] Skipping already validated C3 repetition 1 mqtt
+[2026-08-06T11:20:34-04:00] Skipping already validated C3 repetition 1 udp
+[2026-08-06T11:20:35-04:00] Skipping already validated C3 repetition 2 udp
+[2026-08-06T11:20:35-04:00] Skipping already validated C3 repetition 2 mqtt
+[2026-08-06T11:20:35-04:00] Scheduled C3 repetition 2 tcp for 2026-08-06T11:25:00-04:00 to 2026-08-06T11:30:00-04:00
+Preflight for C3 repetition 2 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:20:36-04:00] Preflight passed for C3 repetition 2 over tcp
+[2026-08-06T11:20:36-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:20:37-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:25:12-04:00] Starting workload at 2026-08-06T11:25:12-04:00
+[2026-08-06T11:29:36-04:00] Workload finished at 2026-08-06T11:29:36-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c3-rep2-tcp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T11:29:51-04:00] C3 repetition 2 tcp complete
+[2026-08-06T11:29:53-04:00] C3 repetition 2 tcp passed immediate validation
+[2026-08-06T11:29:53-04:00] Scheduled C4 repetition 1 tcp for 2026-08-06T11:35:00-04:00 to 2026-08-06T11:40:00-04:00
+Preflight for C4 repetition 1 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:29:55-04:00] Preflight passed for C4 repetition 1 over tcp
+[2026-08-06T11:29:55-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:29:55-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:35:09-04:00] Starting workload at 2026-08-06T11:35:09-04:00
+[2026-08-06T11:39:00-04:00] Workload finished at 2026-08-06T11:39:00-04:00
+{"accepted": 50000, "complete_files": 100, "expected_rows_per_file": 500, "failed": 0, "files": 100, "per_file": {"c4-rep1-tcp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-002_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-003_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-004_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-005_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-006_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-007_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-008_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-009_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-010_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-011_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-012_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-013_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-014_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-015_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-016_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-017_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-018_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-019_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-020_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-021_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-022_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-023_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-024_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-025_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-026_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-027_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-028_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-029_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-030_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-031_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-032_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-033_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-034_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-035_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-036_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-037_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-038_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-039_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-040_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-041_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-042_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-043_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-044_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-045_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-046_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-047_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-048_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-049_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-050_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-051_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-052_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-053_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-054_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-055_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-056_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-057_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-058_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-059_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-060_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-061_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-062_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-063_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-064_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-065_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-066_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-067_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-068_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-069_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-070_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-071_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-072_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-073_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-074_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-075_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-076_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-077_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-078_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-079_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-080_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-081_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-082_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-083_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-084_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-085_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-086_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-087_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-088_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-089_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-090_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-091_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-092_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-093_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-094_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-095_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-096_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-097_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-098_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-099_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-tcp_veh-100_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 50000}
+[2026-08-06T11:39:04-04:00] C4 repetition 1 tcp complete
+[2026-08-06T11:39:06-04:00] C4 repetition 1 tcp passed immediate validation
+[2026-08-06T11:39:06-04:00] Scheduled C4 repetition 1 mqtt for 2026-08-06T11:45:00-04:00 to 2026-08-06T11:50:00-04:00
+Preflight for C4 repetition 1 over mqtt
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:39:08-04:00] Preflight passed for C4 repetition 1 over mqtt
+[2026-08-06T11:39:08-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:39:08-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:45:08-04:00] Starting workload at 2026-08-06T11:45:08-04:00
+[2026-08-06T11:48:15-04:00] Workload finished at 2026-08-06T11:48:15-04:00
+{"accepted": 50000, "complete_files": 100, "expected_rows_per_file": 500, "failed": 0, "files": 100, "per_file": {"c4-rep1-mqtt_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-002_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-003_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-004_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-005_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-006_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-007_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-008_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-009_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-010_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-011_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-012_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-013_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-014_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-015_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-016_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-017_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-018_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-019_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-020_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-021_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-022_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-023_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-024_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-025_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-026_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-027_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-028_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-029_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-030_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-031_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-032_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-033_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-034_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-035_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-036_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-037_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-038_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-039_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-040_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-041_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-042_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-043_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-044_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-045_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-046_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-047_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-048_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-049_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-050_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-051_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-052_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-053_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-054_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-055_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-056_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-057_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-058_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-059_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-060_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-061_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-062_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-063_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-064_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-065_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-066_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-067_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-068_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-069_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-070_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-071_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-072_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-073_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-074_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-075_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-076_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-077_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-078_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-079_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-080_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-081_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-082_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-083_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-084_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-085_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-086_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-087_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-088_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-089_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-090_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-091_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-092_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-093_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-094_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-095_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-096_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-097_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-098_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-099_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep1-mqtt_veh-100_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 50000}
+[2026-08-06T11:48:19-04:00] C4 repetition 1 mqtt complete
+[2026-08-06T11:48:22-04:00] C4 repetition 1 mqtt passed immediate validation
+[2026-08-06T11:48:22-04:00] Scheduled C4 repetition 1 udp for 2026-08-06T11:50:00-04:00 to 2026-08-06T11:55:00-04:00
+Preflight for C4 repetition 1 over udp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:48:23-04:00] Preflight passed for C4 repetition 1 over udp
+[2026-08-06T11:48:23-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:48:24-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:50:08-04:00] Starting workload at 2026-08-06T11:50:08-04:00
+[2026-08-06T11:53:31-04:00] Workload finished at 2026-08-06T11:53:31-04:00
+{"accepted": 49386, "complete_files": 100, "expected_rows_per_file": 500, "failed": 614, "files": 100, "per_file": {"c4-rep1-udp_veh-001_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep1-udp_veh-002_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-003_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep1-udp_veh-004_sender.csv": {"accepted": 497, "complete": true, "rows": 500}, "c4-rep1-udp_veh-005_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep1-udp_veh-006_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep1-udp_veh-007_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-008_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-009_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-010_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep1-udp_veh-011_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep1-udp_veh-012_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-013_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-014_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-015_sender.csv": {"accepted": 497, "complete": true, "rows": 500}, "c4-rep1-udp_veh-016_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep1-udp_veh-017_sender.csv": {"accepted": 489, "complete": true, "rows": 500}, "c4-rep1-udp_veh-018_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep1-udp_veh-019_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-020_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep1-udp_veh-021_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-022_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-023_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-024_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep1-udp_veh-025_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-026_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep1-udp_veh-027_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-028_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-029_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-030_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-031_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep1-udp_veh-032_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep1-udp_veh-033_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-034_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-035_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-036_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-037_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-038_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-039_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep1-udp_veh-040_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-041_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep1-udp_veh-042_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep1-udp_veh-043_sender.csv": {"accepted": 497, "complete": true, "rows": 500}, "c4-rep1-udp_veh-044_sender.csv": {"accepted": 498, "complete": true, "rows": 500}, "c4-rep1-udp_veh-045_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-046_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-047_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep1-udp_veh-048_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-049_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-050_sender.csv": {"accepted": 489, "complete": true, "rows": 500}, "c4-rep1-udp_veh-051_sender.csv": {"accepted": 498, "complete": true, "rows": 500}, "c4-rep1-udp_veh-052_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-053_sender.csv": {"accepted": 497, "complete": true, "rows": 500}, "c4-rep1-udp_veh-054_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-055_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-056_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep1-udp_veh-057_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-058_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-059_sender.csv": {"accepted": 497, "complete": true, "rows": 500}, "c4-rep1-udp_veh-060_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-061_sender.csv": {"accepted": 497, "complete": true, "rows": 500}, "c4-rep1-udp_veh-062_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep1-udp_veh-063_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-064_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-065_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep1-udp_veh-066_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep1-udp_veh-067_sender.csv": {"accepted": 489, "complete": true, "rows": 500}, "c4-rep1-udp_veh-068_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-069_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-070_sender.csv": {"accepted": 498, "complete": true, "rows": 500}, "c4-rep1-udp_veh-071_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep1-udp_veh-072_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep1-udp_veh-073_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-074_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-075_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-076_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-077_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-078_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep1-udp_veh-079_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep1-udp_veh-080_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-081_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep1-udp_veh-082_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep1-udp_veh-083_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-084_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep1-udp_veh-085_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-086_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep1-udp_veh-087_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep1-udp_veh-088_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep1-udp_veh-089_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-090_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep1-udp_veh-091_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep1-udp_veh-092_sender.csv": {"accepted": 497, "complete": true, "rows": 500}, "c4-rep1-udp_veh-093_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-094_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep1-udp_veh-095_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep1-udp_veh-096_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-097_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep1-udp_veh-098_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep1-udp_veh-099_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep1-udp_veh-100_sender.csv": {"accepted": 494, "complete": true, "rows": 500}}, "rows": 50000}
+[2026-08-06T11:53:35-04:00] C4 repetition 1 udp complete
+[2026-08-06T11:53:38-04:00] C4 repetition 1 udp passed immediate validation
+[2026-08-06T11:53:38-04:00] Scheduled C4 repetition 2 udp for 2026-08-06T11:55:00-04:00 to 2026-08-06T12:00:00-04:00
+Preflight for C4 repetition 2 over udp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:53:39-04:00] Preflight passed for C4 repetition 2 over udp
+[2026-08-06T11:53:39-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:53:40-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:55:08-04:00] Starting workload at 2026-08-06T11:55:08-04:00
+[2026-08-06T11:58:42-04:00] Workload finished at 2026-08-06T11:58:42-04:00
+{"accepted": 49281, "complete_files": 100, "expected_rows_per_file": 500, "failed": 719, "files": 100, "per_file": {"c4-rep2-udp_veh-001_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep2-udp_veh-002_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-003_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep2-udp_veh-004_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep2-udp_veh-005_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep2-udp_veh-006_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep2-udp_veh-007_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep2-udp_veh-008_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-009_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep2-udp_veh-010_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-011_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep2-udp_veh-012_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep2-udp_veh-013_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-014_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-015_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-016_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-017_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep2-udp_veh-018_sender.csv": {"accepted": 489, "complete": true, "rows": 500}, "c4-rep2-udp_veh-019_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep2-udp_veh-020_sender.csv": {"accepted": 489, "complete": true, "rows": 500}, "c4-rep2-udp_veh-021_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-022_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-023_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-024_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep2-udp_veh-025_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep2-udp_veh-026_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep2-udp_veh-027_sender.csv": {"accepted": 487, "complete": true, "rows": 500}, "c4-rep2-udp_veh-028_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep2-udp_veh-029_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep2-udp_veh-030_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep2-udp_veh-031_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep2-udp_veh-032_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-033_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep2-udp_veh-034_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-035_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-036_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-037_sender.csv": {"accepted": 489, "complete": true, "rows": 500}, "c4-rep2-udp_veh-038_sender.csv": {"accepted": 499, "complete": true, "rows": 500}, "c4-rep2-udp_veh-039_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep2-udp_veh-040_sender.csv": {"accepted": 489, "complete": true, "rows": 500}, "c4-rep2-udp_veh-041_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep2-udp_veh-042_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep2-udp_veh-043_sender.csv": {"accepted": 489, "complete": true, "rows": 500}, "c4-rep2-udp_veh-044_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-045_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-046_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep2-udp_veh-047_sender.csv": {"accepted": 497, "complete": true, "rows": 500}, "c4-rep2-udp_veh-048_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep2-udp_veh-049_sender.csv": {"accepted": 497, "complete": true, "rows": 500}, "c4-rep2-udp_veh-050_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep2-udp_veh-051_sender.csv": {"accepted": 489, "complete": true, "rows": 500}, "c4-rep2-udp_veh-052_sender.csv": {"accepted": 497, "complete": true, "rows": 500}, "c4-rep2-udp_veh-053_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-054_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-055_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-056_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-057_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep2-udp_veh-058_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep2-udp_veh-059_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep2-udp_veh-060_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep2-udp_veh-061_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep2-udp_veh-062_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep2-udp_veh-063_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-064_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-065_sender.csv": {"accepted": 498, "complete": true, "rows": 500}, "c4-rep2-udp_veh-066_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep2-udp_veh-067_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-068_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-069_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep2-udp_veh-070_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep2-udp_veh-071_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep2-udp_veh-072_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep2-udp_veh-073_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep2-udp_veh-074_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-075_sender.csv": {"accepted": 496, "complete": true, "rows": 500}, "c4-rep2-udp_veh-076_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep2-udp_veh-077_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-078_sender.csv": {"accepted": 497, "complete": true, "rows": 500}, "c4-rep2-udp_veh-079_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-080_sender.csv": {"accepted": 497, "complete": true, "rows": 500}, "c4-rep2-udp_veh-081_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep2-udp_veh-082_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep2-udp_veh-083_sender.csv": {"accepted": 492, "complete": true, "rows": 500}, "c4-rep2-udp_veh-084_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep2-udp_veh-085_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-086_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep2-udp_veh-087_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-088_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-089_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep2-udp_veh-090_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-091_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep2-udp_veh-092_sender.csv": {"accepted": 491, "complete": true, "rows": 500}, "c4-rep2-udp_veh-093_sender.csv": {"accepted": 489, "complete": true, "rows": 500}, "c4-rep2-udp_veh-094_sender.csv": {"accepted": 493, "complete": true, "rows": 500}, "c4-rep2-udp_veh-095_sender.csv": {"accepted": 494, "complete": true, "rows": 500}, "c4-rep2-udp_veh-096_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep2-udp_veh-097_sender.csv": {"accepted": 495, "complete": true, "rows": 500}, "c4-rep2-udp_veh-098_sender.csv": {"accepted": 490, "complete": true, "rows": 500}, "c4-rep2-udp_veh-099_sender.csv": {"accepted": 489, "complete": true, "rows": 500}, "c4-rep2-udp_veh-100_sender.csv": {"accepted": 491, "complete": true, "rows": 500}}, "rows": 50000}
+[2026-08-06T11:58:46-04:00] C4 repetition 2 udp complete
+[2026-08-06T11:58:49-04:00] C4 repetition 2 udp passed immediate validation
+[2026-08-06T11:58:49-04:00] Scheduled C4 repetition 2 mqtt for 2026-08-06T12:05:00-04:00 to 2026-08-06T12:10:00-04:00
+Preflight for C4 repetition 2 over mqtt
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:58:50-04:00] Preflight passed for C4 repetition 2 over mqtt
+[2026-08-06T11:58:50-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T11:58:51-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T12:05:08-04:00] Starting workload at 2026-08-06T12:05:08-04:00
+[2026-08-06T12:08:22-04:00] Workload finished at 2026-08-06T12:08:22-04:00
+{"accepted": 50000, "complete_files": 100, "expected_rows_per_file": 500, "failed": 0, "files": 100, "per_file": {"c4-rep2-mqtt_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-002_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-003_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-004_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-005_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-006_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-007_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-008_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-009_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-010_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-011_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-012_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-013_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-014_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-015_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-016_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-017_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-018_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-019_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-020_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-021_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-022_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-023_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-024_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-025_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-026_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-027_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-028_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-029_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-030_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-031_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-032_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-033_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-034_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-035_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-036_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-037_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-038_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-039_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-040_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-041_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-042_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-043_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-044_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-045_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-046_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-047_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-048_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-049_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-050_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-051_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-052_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-053_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-054_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-055_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-056_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-057_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-058_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-059_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-060_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-061_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-062_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-063_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-064_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-065_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-066_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-067_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-068_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-069_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-070_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-071_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-072_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-073_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-074_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-075_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-076_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-077_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-078_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-079_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-080_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-081_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-082_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-083_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-084_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-085_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-086_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-087_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-088_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-089_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-090_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-091_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-092_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-093_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-094_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-095_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-096_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-097_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-098_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-099_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-mqtt_veh-100_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 50000}
+[2026-08-06T12:08:26-04:00] C4 repetition 2 mqtt complete
+[2026-08-06T12:08:29-04:00] C4 repetition 2 mqtt passed immediate validation
+[2026-08-06T12:08:29-04:00] Scheduled C4 repetition 2 tcp for 2026-08-06T12:10:00-04:00 to 2026-08-06T12:15:00-04:00
+Preflight for C4 repetition 2 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T12:08:31-04:00] Preflight passed for C4 repetition 2 over tcp
+[2026-08-06T12:08:31-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T12:08:31-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T12:10:08-04:00] Starting workload at 2026-08-06T12:10:08-04:00
+[2026-08-06T12:14:03-04:00] Workload finished at 2026-08-06T12:14:03-04:00
+{"accepted": 50000, "complete_files": 100, "expected_rows_per_file": 500, "failed": 0, "files": 100, "per_file": {"c4-rep2-tcp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-002_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-003_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-004_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-005_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-006_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-007_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-008_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-009_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-010_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-011_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-012_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-013_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-014_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-015_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-016_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-017_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-018_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-019_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-020_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-021_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-022_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-023_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-024_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-025_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-026_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-027_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-028_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-029_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-030_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-031_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-032_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-033_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-034_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-035_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-036_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-037_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-038_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-039_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-040_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-041_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-042_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-043_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-044_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-045_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-046_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-047_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-048_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-049_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-050_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-051_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-052_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-053_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-054_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-055_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-056_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-057_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-058_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-059_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-060_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-061_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-062_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-063_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-064_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-065_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-066_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-067_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-068_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-069_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-070_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-071_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-072_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-073_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-074_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-075_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-076_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-077_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-078_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-079_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-080_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-081_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-082_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-083_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-084_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-085_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-086_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-087_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-088_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-089_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-090_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-091_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-092_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-093_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-094_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-095_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-096_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-097_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-098_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-099_sender.csv": {"accepted": 500, "complete": true, "rows": 500}, "c4-rep2-tcp_veh-100_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 50000}
+[2026-08-06T12:14:06-04:00] C4 repetition 2 tcp complete
+[2026-08-06T12:14:09-04:00] C4 repetition 2 tcp passed immediate validation
+[2026-08-06T12:14:09-04:00] Matrix phase complete placement=outside conditions=C3 C4

@@ -1,0 +1,48 @@
+[INFO] [launch]: All log files can be found below /home/car/.ros/log/2026-08-06-09-27-19-707629-car-81550
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [novatel_oem7_driver_exe-1]: process started with pid [81608]
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.906364612] [novatel.oem7.main]: Oem7RawMsg:  topic [oem7raw]: frame_id: 'gps'; q size: 200
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.908117098] [novatel.oem7.main]: Oem7MessageNode v.; Feb 19 2026 03:29:00
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.912999455] [novatel.oem7.main]: Oem7MessageDecoderLib version: 10.1.0
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.913536211] [novatel.oem7.main]: PPPPOS:  topic [ppppos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.913982923] [novatel.oem7.main]: BESTPOS:  topic [bestpos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.914328249] [novatel.oem7.main]: BESTVEL:  topic [bestvel]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.914638828] [novatel.oem7.main]: BESTGNSSVEL:  topic [bestgnssvel]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.914928613] [novatel.oem7.main]: BESTUTM:  topic [bestutm]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.915280483] [novatel.oem7.main]: BESTGNSSPOS:  topic [bestgnsspos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.915603698] [novatel.oem7.main]: INSPVA:  topic [inspva]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.915896268] [novatel.oem7.main]: GPSFix:  topic [gps]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.916395614] [novatel.oem7.main]: NavSatFix:  topic [fix]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.917059265] [novatel.oem7.main]: GPSFix position source: BESTPOS or INSPVAS based on quality
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.917199917] [novatel.oem7.main]: IMU:  topic [imu/data]: frame_id: 'imu_link'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.917600884] [novatel.oem7.main]: RAWIMU:  topic [imu/data_raw]: frame_id: 'imu_link'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.917890029] [novatel.oem7.main]: CORRIMU:  topic [corrimu]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.918177672] [novatel.oem7.main]: INSSTDEV:  topic [insstdev]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.918480529] [novatel.oem7.main]: INSPVAX:  topic [inspvax]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.918800170] [novatel.oem7.main]: INSCONFIG:  topic [insconfig]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [WARN] [1786022839.919193475] [novatel.oem7.main]: Message 'RAWIMUSX' will not be published.
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.919341224] [novatel.oem7.main]: HEADING2:  topic [heading2]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.919670271] [novatel.oem7.main]: RXSTATUS:  topic [rxstatus]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.920053758] [novatel.oem7.main]: TERRASTARINFO:  topic [terrastarinfo]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.920347792] [novatel.oem7.main]: TERRASTARSTATUS:  topic [terrastarstatus]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.920645252] [novatel.oem7.main]: TIME:  topic [time]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [WARN] [1786022839.920946389] [novatel.oem7.main]: Message 'NMEA_Sentence' will not be published.
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.921065106] [novatel.oem7.main]: Odometry:  topic [odom]: frame_id: 'odom'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.921552284] [novatel.oem7.main]: OdometryOrigin:  topic [odom_origin]: frame_id: 'odom'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.924309187] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [INFO] [1786022839.973332738] [novatel.oem7.main]: Standard Receiver Initialization:
+[novatel_oem7_driver_exe-1] [ERROR] [1786022973.053493519] [novatel.oem7.main]: Oem7Receiver: write error: 110; endpoint open: 1
+[novatel_oem7_driver_exe-1] [INFO] [1786022973.053493502] [novatel.oem7.main]: Oem7Net socket open: '1; OS error= 103
+[novatel_oem7_driver_exe-1] [ERROR] [1786022973.053666438] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [ERROR] [1786022973.053695224] [novatel.oem7.main]: Oem7Receiver: read error: 9; endpoint open: 0 errors/max: 2/10
+[novatel_oem7_driver_exe-1] [ERROR] [1786022973.053743566] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [INFO] [1786022974.053842135] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [INFO] [1786022974.053855055] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [INFO] [1786023108.221476455] [novatel.oem7.main]: Oem7Net socket open: '1; OS error= 110
+[novatel_oem7_driver_exe-1] [INFO] [1786023108.221485385] [novatel.oem7.main]: Oem7Net socket open: '1; OS error= 110
+[novatel_oem7_driver_exe-1] [ERROR] [1786023108.221592825] [novatel.oem7.main]: Oem7Receiver: read error: 107; endpoint open: 1 errors/max: 3/10
+[novatel_oem7_driver_exe-1] [ERROR] [1786023108.221655462] [novatel.oem7.main]: Oem7Receiver: write error: 32; endpoint open: 1
+[novatel_oem7_driver_exe-1] [ERROR] [1786023108.221743152] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [ERROR] [1786023108.221767020] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [INFO] [1786023109.221923903] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [ERROR] [1786023112.222016943] [novatel.oem7.main]: AACmd 'UNLOGALL THISPORT': Attempt 0: timed out waiting for response.

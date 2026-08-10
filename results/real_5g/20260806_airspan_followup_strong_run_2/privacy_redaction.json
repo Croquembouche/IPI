@@ -1,0 +1,14 @@
+{
+  "schema": "edge4av-followup-repository-redaction-v1",
+  "host_telemetry": {
+    "files": 24,
+    "rows": 6862,
+    "hostname_policy": "Repository-facing hostnames use the logical roles car and d1.",
+    "process_policy": "Process resource counters are retained; process command lines are omitted.",
+    "removed_process_cmdline_fields": 14432
+  },
+  "text_artifacts": {
+    "policy": "Deployment-specific endpoint addresses, hostnames, absolute paths, private IP addresses, and MAC addresses are replaced with logical placeholders."
+  },
+  "raw_recovery": "The original files remain recoverable from the locally excluded, checksum-verified unredacted run backup."
+}

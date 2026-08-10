@@ -1,13 +1,16 @@
 # Current Task
 
-Last updated: 2026-08-05
+Last updated: 2026-08-10
 
 ## Task
 
-Publish a vehicle-ready private-5G follow-up runbook, record the deployment
-values needed to interpret the new measurements, and define a locked-cell
-`40/40/20` versus `70/20/10` TDD comparison while keeping observations,
-hypotheses, and untested improvements distinct.
+Validate and preserve the completed medium/typical-location C1-C4, second
+common/typical-location C1/C2, weak-location C1/C2, and newly completed strong-
+location C1/C2 private-5G blocks. Align each block with its matching ACP Cell 2
+and MG52 radio exports before paper-facing use. Keep the MG52 placement fixed,
+use RTT only, and retain the locked-cell `70/20/10` controls while keeping
+application observations, operator classifications, and artifact-validated
+radio claims distinct.
 
 ## Status
 
@@ -38,11 +41,142 @@ The numeric QFI, any attempted nondefault 5QI assignment, and the ACP
 performance-counter scaling remain unresolved.
 The signed installation analysis now documents the outdoor mounting structure
 and antenna centerline height.
-The follow-up configuration plan is confirmed, but no new collection is yet
-recorded in the repository. The MG52 will be locked to one Airspan cell so that
-no handoff occurs. The runbook requires Cell 2 because current evidence places
-the original experiment traffic on Cell 2. If another cell is selected, a new
-`40/40/20` reference must be collected on that same cell before `70/20/10`.
+The follow-up configuration plan is confirmed, and the host-side R1 validation
+traffic and telemetry are now recorded under
+`results/real_5g/20260805_airspan_r1_run_1/`. The MG52 must remain locked to one
+Airspan cell so that no handoff occurs. The runbook requires Cell 2 because
+current evidence places the original experiment traffic on Cell 2. If another
+cell is selected, a new `40/40/20` reference must be collected on that same
+cell before `70/20/10`.
+
+On 2026-08-05, the user authorized installing the current IPI receiver-side
+deployment on `d1` and directed the active collection to use RTT only. The user
+waived R1A and the phone logger for this collection, reports that ACP and the
+MG52 configuration have already been verified, designated the 11:15-11:30 EDT
+ACP interval as R1 V1, and directed this host to collect V2 and V3 before the
+then-planned C1-C5 block. The host-side collection is stored, but treat the
+configuration and V1 state as operator-reported facts until the ACP and MG52
+artifacts are stored and inspected. Do not claim phone-derived radio context or
+one-way latency for this collection.
+
+On 2026-08-06, the fixed-location C1-C4 block completed under the operator-
+reported `70/20/10`, `10D4G`, and Cell 2 lock controls. The MG52 remained flat
+on the trunk floor with its front face upward. The user corrected the current
+location from the planned stronger label to `medium_typical_deployment`: it is
+intended to represent the common signal strength a device might receive in a
+real deployment. This classification remains operator-reported until the MG52
+radio export is aligned. Raw per-transport `stronger/outside` fields are
+retained only as collection-history provenance and are superseded by
+`metadata_corrections.json`.
+
+The valid matrix contains all 24 expected C1-C4 samples: two repetitions of
+TCP, MQTT, and UDP in separate five-minute ACP bins. It ran from the 09:05 EDT
+bin through a final workload finish at 12:14:03 EDT. The matrix records 309,000
+attempts, 307,662 accepted requests, and 1,338 failures, for 99.566990% overall
+success. Three incomplete or recorder-transition attempts are preserved and
+excluded from the valid repeats. Because the sender sleeps for 200 ms after
+each completed request, the block used 500 probes per client; C4 therefore
+contains 50,000 attempts per repetition and transport. One-way latency remains
+invalid because the endpoint clocks were not synchronized.
+
+Automatic GNSS initially could not connect and recovered at 10:39:02 EDT. Ten
+of the 24 valid samples contain in-window ROS-derived positions; the fixed
+location for the earlier samples is supported by the operator-reported
+coordinate. Exact operator and ROS coordinates plus rosbag databases remain in
+the locally excluded raw backup. Repository-facing coordinates are rounded to
+0.001 degree and the repository-facing rosbag copies are omitted.
+
+At 14:24 EDT on 2026-08-06, the user confirmed that the vehicle was stationary
+at the weak location. The preflight found the local and edge experiment ports
+idle, no experiment processes, the intended run roots absent, the edge route
+on `eno2`, successful edge and GNSS reachability, and an open GNSS receiver
+data port. A short ROS capture produced a position fix. The exact fix remains
+in the excluded raw evidence directory; the repository context records only a
+0.001-degree coordinate.
+
+The weak-location C1/C2 matrix then completed from the 14:30 EDT bin through a
+15:28:15 EDT final workload finish. All 12 expected samples passed: two
+repetitions of TCP, MQTT, and UDP for each workload in separate five-minute ACP
+bins. Across 6,000 attempts, 5,994 were accepted and six failed, for 99.9%
+overall success. C1, C2/TCP, and C2/MQTT accepted every attempt. C2/UDP accepted
+497/500 attempts in each repetition; all six failed rows report UDP
+acknowledgment timeouts. The failures are retained as a repeatable observation
+and are not replaced by retries. Automatic GNSS supplied in-window positions
+for all 12 samples. The redacted result is stored under
+`results/real_5g/20260806_airspan_followup_weak_run_1/`, and the excluded raw
+backup retains exact GNSS and deployment details. Treat `weak` as an operator-
+reported classification pending the matching MG52 radio export.
+
+At 15:53 EDT on 2026-08-06, the user reported that the vehicle had moved to an
+intended strong location. A short ROS preflight produced a position fix and a
+median horizontal speed below 0.003 m/s, confirming that the vehicle was
+stationary.
+The local and edge experiment processes and ports were idle, the edge and GNSS
+receivers were reachable, all seven CTests passed, and TCP, MQTT, and UDP
+preflight checks passed. The C1/C2 matrix completed with 12 declared ACP
+samples spanning 16:00-17:00 EDT, with application workloads from 16:00:15
+through 16:57:42 EDT. All 12 samples passed validation. Across 6,000 attempts, 5,999
+were accepted and one failed, for 99.983333% overall success. C1 and C2 TCP and
+MQTT were lossless; C2/UDP accepted 999/1,000 attempts, with the single failed
+row reporting a UDP acknowledgment timeout in repetition 2. All 12 samples
+contain in-window GNSS positions. Exact coordinates and deployment details are
+checksum-verified in the excluded raw backup; the repository copy is sanitized,
+uses 0.001-degree GNSS precision, and omits serialized rosbags. Both hosts were
+clean after collection.
+
+At 17:14 EDT, the user reported inspecting RSRP for this block and the original
+common/typical block and finding the same 109-110 range for both. The attempted
+strong location therefore did not create a distinct radio condition. This
+block is corrected to a second `medium_typical_deployment` observation under
+`results/real_5g/20260806_airspan_followup_common_typical_run_2/`. Its original
+`strong` run name, location ID, manifests, schedule entries, and sender labels
+remain unchanged inside the collected artifacts as acquisition provenance;
+`operator_context.json` and `metadata_corrections.json` supersede those fields
+for every analysis and comparison. The corresponding excluded raw backup was
+renamed without modifying its contents, and its original checksum manifest
+still verifies. The MG52 artifact containing the reported RSRP values remains
+to be imported. A genuinely radio-distinct strong-location C1/C2 block is still
+pending after the user's next vehicle move.
+
+At 17:49 EDT, the user directed the next candidate strong-location experiment
+to start. Preflight for
+`20260806_airspan_followup_strong_run_2` passed: the repository matches
+`origin/main`, the C++ build and all seven CTests pass, required scripts compile
+or pass shell syntax validation, the local and edge experiment processes and
+ports are idle, the intended local and remote run roots were absent, the d1
+route uses `eno2`, and the edge and GNSS endpoints are reachable. Authenticated
+TCP, MQTT, and UDP runner preflights also pass. A 25-second ROS GNSS capture in
+the excluded raw evidence directory produced 5,387 position rows, a median
+horizontal speed of 0.0014 m/s, a 95th-percentile speed of 0.0023 m/s, and less
+than 0.7 m coordinate spread, confirming that the vehicle is stationary. The
+operator then reported a current MG52 RSRP reading of 101, distinct from the
+109-110 range that identified both prior common/typical observations. Treat the
+signal classification as operator-reported until the matching MG52 export is
+stored and inspected. The C1/C2 matrix started at 17:59 EDT and used all 12
+declared five-minute ACP samples from 18:00-19:00 EDT. Its application workloads
+ran from 18:00:15 through 18:57:33 EDT. All 12 samples passed validation and all
+6,000 attempts were accepted, for 100% application success with no preserved
+invalid attempt. Automatic GNSS supplied in-window positions for every sample.
+The exact-data backup and repository copy are independently checksum-verified;
+the repository copy is sanitized, uses 0.001-degree GNSS precision, and omits
+serialized rosbags. All 12 public sender CSVs remain byte-identical to the raw
+backup, and both hosts were clean after collection. The block is stored under
+`results/real_5g/20260806_airspan_followup_strong_run_2/`; its paper-facing
+status remains blocked only on the matching ACP Cell 2 and MG52 export.
+
+On 2026-08-10, the repository-facing R1 and four Airspan follow-up result trees
+were included in this publication update together with their analyzers, collection
+scripts, run summaries, and updated experiment documentation. All stored
+checksums, the C++ build and seven CTests, Python compilation, Bash syntax, and
+source/documentation whitespace checks pass. Captured raw SSH logs retain their
+original CRLF and trailing whitespace because rewriting them would invalidate
+their manifests. A scan of 1.37 GB of publishable artifacts found no
+credential, deployment RFC1918 or link-local address, raw hostname, exact
+deployment path, or non-coarsened GNSS coordinate. Generic loopback and
+unspecified listener literals remain because they disclose no deployment
+address. The 3.6 GB exact-data backups under `CISCO_AIRSPAN_STATS/`, serialized
+rosbags, and local compiled Mocar objects/binaries remain excluded from version
+control. Repository-facing GNSS CSVs retain only 0.001-degree coordinates.
 
 The pending experiment runbook now begins with a vehicle-day execution order.
 It requires a pull/build/test preflight, R1A phone qualification, the three-bin
@@ -162,11 +296,14 @@ because some retain historical run IDs and output paths.
   and two downlink layers for each cell, with downlink 256-QAM enabled. These
   are configured cell capabilities, not measured modulation, rank, or
   throughput during an application run.
-- ACP statistics collection is enabled at a 15-minute granularity. The active
-  configuration enables KPI families for PRB usage, DRB UE throughput, RACH,
-  QoS flows, and L1 measurements, among others. This establishes that ACP is
-  configured to collect those KPI families, but it does not establish the
-  exact counters, dimensions, or per-UE fields available from an export.
+- The 2026-07-31 configuration export records ACP statistics collection at a
+  15-minute granularity. For the 2026-08-05 R1 run, the operator reports that
+  the current interval is five minutes; the matching current export is still
+  pending. The active configuration enables KPI families for PRB usage, DRB UE
+  throughput, RACH, QoS flows, and L1 measurements, among others. This
+  establishes which KPI families were enabled in the stored configuration, but
+  it does not establish the current interval or the exact counters, dimensions,
+  and per-UE fields available from an export.
 - The header-bearing CBSD export reports, for each cell, 40 MHz bandwidth,
   33 dBm cell transmit power, 34 dBm/MHz cell EIRP, `0/4` under
   `PAL/GAA Count (10MHz)`, one requested and authorized grant, no suspended
@@ -345,7 +482,20 @@ because some retain historical run IDs and output paths.
 ## Files Touched In Current Task
 
 - `current_task.md`
+- `experiment_summary.md`
 - `remaining_exp.md`
+- `scripts/collect_host_telemetry.py`
+- `scripts/analyze_airspan_followup_run.py`
+- `scripts/analyze_edge4av_deadlines.py`
+- `scripts/redact_followup_gnss.py`
+- `scripts/sanitize_airspan_followup_results.py`
+- `scripts/run_airspan_followup_condition.sh`
+- `scripts/run_airspan_followup_matrix.sh`
+- `results/real_5g/20260805_airspan_r1_run_1/`
+- `results/real_5g/20260806_airspan_followup_run_1/`
+- `results/real_5g/20260806_airspan_followup_weak_run_1/`
+- `results/real_5g/20260806_airspan_followup_common_typical_run_2/`
+- `results/real_5g/20260806_airspan_followup_strong_run_2/`
 
 ## Existing Experiments Relevant To The Proposed Work
 
@@ -395,6 +545,162 @@ because some retain historical run IDs and output paths.
 
 ## Validation
 
+- On 2026-08-05, completed a read-only car-host-to-`d1` readiness audit for
+  the follow-up matrix. The car host routed `d1` traffic through `eno2`; five ICMP probes
+  completed without loss, with a 15.5-26.3 ms diagnostic RTT range. Both the
+  car-side `eno2` link and the `d1` wired link reported carrier up at
+  1000 Mbit/s full duplex. This is a connectivity preflight, not an experiment
+  result or a path-segment latency measurement.
+- `d1` has the required TCP and UDP receiver executables, matching copies of
+  the current root-level MQTT broker and load-generator helpers, a compatible
+  CMake/C++17 toolchain, sufficient free CPU/memory/disk capacity, and no
+  process or listener occupying the planned TCP, UDP, MQTT, or load-generator
+  ports. The receiver help paths and helper-script syntax checks passed. No
+  receiver, broker, load generator, or experiment collection was started.
+- Preserved the stale, dirty historical `d1` checkout at `cb1e2b7` without
+  pulling, cleaning, or rebuilding it. Staged the current `2c043b3` C++ source
+  and helper programs in the separate deployment tree
+  `/home/d1/edge4av_followup/ipi_2c043b3`; an rsync checksum dry run reported
+  no source difference, and both helper hashes match the car-host copies.
+- Configured and built the clean `d1` deployment with tests enabled. Because
+  the installed CTest 3.16 does not support `--test-dir`, reran CTest from the
+  build directory; all seven tests passed. The new TCP and MQTT receivers and
+  the fragmented-UDP receiver have no missing dynamic libraries.
+- Ran isolated `d1`-local deployment smoke probes without using the private-5G
+  path or affecting R1. TCP and MQTT each accepted one 1024 B request, and UDP
+  accepted one application-fragmented 23,968 B request. No smoke-test listener
+  or process remained afterward.
+- The `d1` clock reports a local chrony reference with no configured time
+  source, so it is not verified as cross-host synchronized. The user has
+  explicitly limited the active collection to RTT, for which cross-host clock
+  synchronization is not required; keep `clock_sync_state=unsynced` and do not
+  report one-way latency. `vmstat` is available, but `mpstat`, `pidstat`, and
+  `sar` are absent. Added and deployed `scripts/collect_host_telemetry.py`, a
+  one-second `/proc` collector for per-core CPU counters, memory, interface
+  counters, and selected process counters. Three-sample smoke checks passed on
+  both the car host and `d1`.
+- `d1` cannot verify the Airspan TDD configuration or the MG52 serving-cell
+  lock. The user reports that `70/20/10` and the MG52 configuration have been
+  verified. Retain the ACP and MG52 management-plane artifacts when the user
+  uploads the matching exports before treating any current application bin as
+  paper-facing evidence.
+- Added `scripts/run_airspan_followup_condition.sh` for one C1-C6 transport and
+  repetition per declared ACP bin. It refuses existing result paths, uses only
+  the clean `d1` deployment, keeps credentials and the edge address out of
+  result metadata, records RTT with unsynchronized-clock labels, captures
+  car/edge telemetry, supports C3's 25 Mbps offered uplink load and C4's 100
+  clients, and preserves partial or failed sender files. The runner requires
+  an exact 300-second ACP interval, reserves 15-second pre/post margins, caps
+  sender execution at 260 seconds, and rejects a setup that misses the declared
+  start tolerance or cannot fit the guarded sample. It now requires explicit
+  `SIGNAL_CLASS`, `LOCATION_ID`, and `PHYSICAL_PLACEMENT` values so C1/C2 can be
+  repeated at medium, weak, and strong locations without inheriting an
+  incorrect signal label from the condition number. C6 now supplies the
+  23,968 B weak-location workload missing from the original launcher.
+- Added `scripts/run_airspan_followup_matrix.sh` to schedule exact five-minute
+  boundaries, use forward/reverse transport order across two repetitions,
+  reserve additional setup lead for C4/MQTT, stop on the first failed or
+  incomplete transport, validate attempt counts, workload timestamps, signal
+  class, location ID, and physical placement, and append a top-level schedule
+  without recording credentials or endpoint addresses.
+- The medium/typical C1-C4 application matrix passed 24/24 sample validation.
+  Across 309,000 attempts, 307,662 were accepted and 1,338 failed. All 1,000
+  pooled C1 and C2 attempts per transport succeeded. C3 had five UDP timeouts;
+  C4 TCP and MQTT accepted all 100,000 attempts per transport, while C4 UDP
+  accepted 98,667 of 100,000. C4 UDP accepted-count Jain fairness was 0.999980
+  in repetition 1 and 0.999978 in repetition 2. Deadline rates include every
+  attempt in the denominator, so timeout rows count as misses.
+- Three non-primary attempts are preserved and explicitly excluded: two
+  incomplete C3/TCP timeout-guard attempts and one C3/MQTT recorder-transition
+  attempt. C3 repetition 1 TCP has no end-of-run load CSV; its achieved-uplink
+  estimate comes from interface counters. The offered C3 load remains 25 Mbps,
+  while achieved rates are reported separately and must not be called achieved
+  25 Mbps.
+- `scripts/analyze_airspan_followup_run.py` regenerated the 24-sample,
+  condition/transport, C4 per-client/fairness, GNSS, invalid-attempt, run
+  manifest, and validation summaries. Python compilation, live deadline-
+  denominator validation on a C3/UDP file, Bash syntax checks, dry-run checks
+  for C1, C2, C4, and C6 at explicit location classes, a missing-signal-class
+  negative check, and `git diff --check` passed. ShellCheck is not installed.
+- Automatic GNSS recovery and 10/24 samples with in-window positions are
+  recorded. `scripts/redact_followup_gnss.py` verified 66 GNSS artifacts
+  against the excluded raw backup, rounded 39 repository-facing GNSS CSVs to
+  0.001-degree precision, and removed 27 repository-facing rosbag databases.
+  The original exact CSVs and rosbags remain recoverable from the excluded raw
+  backup.
+- The excluded unredacted backup contains 2,601 checksum-verified files. The
+  repository-facing copy contains 2,586 checksum-verified files plus its
+  checksum manifest. A binary-inclusive scan found no endpoint credential,
+  private endpoint address, user home path, raw hostname, MAC address, or exact
+  GNSS coordinate in the repository-facing tree. No local experiment process
+  or planned listener remained after collection.
+- The weak-location C1/C2 matrix passed all 12 application-sample checks. It
+  records 6,000 attempts, 5,994 accepted requests, and six failures. C1 and the
+  C2 TCP/MQTT groups were lossless; C2/UDP accepted 497/500 attempts in each of
+  its two repetitions, with all six failed rows reporting UDP acknowledgment
+  timeouts. All 12 samples contain in-window GNSS positions, and no partial or
+  transition attempt was created.
+- The weak result was copied to an excluded unredacted backup before analysis.
+  `scripts/redact_followup_gnss.py` verified the GNSS sources against that
+  backup, rounded 24 public GNSS CSVs to 0.001-degree precision, and removed 12
+  public rosbag databases. `scripts/sanitize_airspan_followup_results.py`
+  normalized 24 host-telemetry files, removed process command lines, and
+  replaced deployment-specific endpoints, hostnames, and paths. The exact
+  originals remain checksum-verified and recoverable from the excluded backup.
+  The repository-facing manifest verifies 352 files (353 including the
+  manifest); the excluded raw manifest verifies 363 files (364 including the
+  manifest). All 12 sender CSVs remain byte-identical to the raw backup, the
+  public privacy and coordinate-precision scans passed, and no local or edge
+  experiment process or planned listener remained after the block.
+- The second common/typical-location C1/C2 matrix passed all 12 application-
+  sample checks. It records 6,000 attempts, 5,999 accepted requests, and one
+  failure, for
+  99.983333% overall success. C1 and C2 TCP/MQTT were lossless; C2/UDP accepted
+  999/1,000, with one repetition-2 UDP acknowledgment timeout. The failed row
+  is preserved rather than replaced by a retry. All 12 samples contain in-
+  window GNSS positions and fit their declared 16:00-17:00 EDT ACP bins.
+- The second common/typical result was copied to an excluded unredacted backup
+  before public redaction. The public GNSS pass rounded 24 CSVs and 791,434
+  position rows to
+  0.001-degree precision and omitted 12 rosbag databases. Public sanitization
+  normalized 24 host-telemetry files containing 7,260 rows, removed 15,166
+  process-command-line fields, and sanitized 69 other text artifacts. The
+  public checksum manifest verifies 353 files (354 including the manifest),
+  while the excluded raw manifest verifies 363 files (364 including the
+  manifest). All 12 sender CSVs remain byte-identical to the raw backup; the
+  binary-inclusive privacy and coordinate audit passed; and no local or edge
+  experiment process or planned listener remained. A post-run CMake build, all
+  seven CTests, Python compilation, Bash syntax checks, checksum verification,
+  and `git diff --check` passed.
+- The user subsequently inspected MG52 RSRP for this block and the original
+  common/typical block and reported the same 109-110 range. The repository run
+  root, operator context, generated analysis, and correction metadata now label
+  this as `medium_typical_deployment`; original `strong` collection fields are
+  retained as provenance. The later radio-distinct candidate strong-location
+  workload is complete under
+  `results/real_5g/20260806_airspan_followup_strong_run_2/`.
+- Collected the host-side R1 validation run on 2026-08-05 and stored its
+  redacted artifacts under
+  `results/real_5g/20260805_airspan_r1_run_1/`. V1 is the operator-designated
+  idle window 11:15-11:30 EDT. V2 ran from the 13:15 boundary through 13:30 as
+  one 25 Mbps-offered car-to-edge TCP stream. TCP backpressure limited its
+  full-window application rate to 13.118 Mbps; the client and server both
+  recorded exactly 1,475,758,800 B. V3 ran from the 13:35 boundary through
+  13:50 as one edge-to-car TCP stream and sustained 25.000 Mbps; both endpoints
+  recorded exactly 2,812,500,000 B. Do not describe V2 as an achieved 25 Mbps
+  condition.
+- Both hosts produced all 910 expected one-second telemetry samples for each
+  traffic window. Every load-generator, server, and local telemetry exit code
+  was zero; sender/receiver byte totals matched exactly; interface error and
+  drop counters did not increase; and no R1 listener, load generator, or
+  collector remained afterward. The controller clock defines ACP alignment.
+  The unsynchronized `d1` wall clock was approximately 173.9 seconds behind,
+  so its raw timestamps cannot support one-way latency.
+- Preserved the unredacted R1 host artifacts under the locally excluded
+  `CISCO_AIRSPAN_STATS/20260805_airspan_r1_run_1_unredacted/` directory. The
+  result copy uses logical endpoint labels and removes process command lines;
+  a scan found no endpoint address, credential, user home path, or raw hostname
+  in the redacted directory.
 - On 2026-08-04, configured and built `cpp/` with tests enabled and ran all
   seven CTest targets successfully.
 - Ran `bash -n` on the current load/QoS, multiclient, detector-output TCP/MQTT,
@@ -414,11 +720,12 @@ because some retain historical run IDs and output paths.
   than manuscript evidence.
 - Ran `git diff --check -- remaining_exp.md current_task.md`; no whitespace
   errors were reported.
-- No follow-up experiment is yet recorded in the repository. Before collection,
-  verify `70/20/10` on the selected cell and verify that the MG52 is locked to
-  Airspan Cell 2. Export both cell rows so nonselected-cell traffic remains
-  visible. Treat the co-located phone's serving-cell record separately because
-  it does not establish the MG52 serving cell.
+- R1 host-side traffic and telemetry are recorded, but the R1 validation is not
+  complete. The user reports that `70/20/10` and the MG52 configuration are
+  verified and will export the matching ACP DU-cell results. Retain and inspect
+  the ACP/MG52 artifacts before paper-facing analysis; do not infer
+  phone-derived serving-cell or radio measurements because the user waived the
+  phone logger for this collection.
 - Updated the vehicle runbook after the configuration change: Cell 2 is the
   required locked serving cell for comparison with the original campaign. The
   condition identifier C2 remains distinct from Airspan Cell 2.
@@ -502,8 +809,30 @@ because some retain historical run IDs and output paths.
 
 ## Next Steps
 
-- Obtain administrator approval and car-side host access, then run the
-  phone/ACP validation pilot before the targeted follow-up experiments.
+- Import and inspect the user's ACP DU-cell and MG52/configuration exports for
+  V1 11:15-11:30 EDT, V2 13:15-13:30 EDT, and V3 13:35-13:50 EDT. Confirm the
+  idle/traffic distinction, directional counters and byte scaling, Cell 2
+  attribution, Cell 1 negative control, lock state, and `70/20/10` profile
+  before marking R1 complete.
+- Import the matching 2026-08-06 ACP Cell 1/Cell 2 and MG52 radio exports for
+  the 09:05-12:15 EDT medium/typical block. Use them to validate the operator's
+  medium classification and the locked-cell/network controls before using the
+  application results in the paper.
+- Import the matching 2026-08-06 ACP Cell 1/Cell 2 and MG52 radio exports for
+  the 14:30-15:30 EDT weak-location bins. Use them to validate the operator's
+  weak classification and the locked-cell/network controls before paper-facing
+  comparison.
+- Import the matching 2026-08-06 ACP Cell 1/Cell 2 and MG52 radio exports for
+  the 16:00-17:00 EDT second common/typical block. Preserve the reported RSRP
+  equality with the original common block and validate the locked-cell/network
+  controls.
+- After the user confirms that the vehicle is stationary at the new candidate
+  strong location, record a fresh GNSS preflight and MG52 radio reading. Start
+  a new 12-sample C1/C2 block only after the observed RSRP is distinct from the
+  common/typical 109-110 range; use a new run name because the original remote
+  acquisition path remains preserved.
+- Preserve the ACP/MG52 evidence before final analysis; do not mark R1 complete
+  merely from the operator report or the validated host-side byte totals.
 
 ## Subsequent Implementation Task: PSM and Cooperative J2735 Flow
 

@@ -1,0 +1,38 @@
+{
+  "schema": "edge4av-operator-context-v1",
+  "run_name": "20260806_airspan_followup_run_1",
+  "reported_at": "2026-08-06T10:36:40-04:00",
+  "location": {
+    "location_id": "medium_typical_location_1",
+    "latitude_deg": 39.664,
+    "longitude_deg": -75.757,
+    "provenance": "operator_reported",
+    "receiver_derived": false,
+    "repository_coordinate_precision_deg": 0.001,
+    "coordinate_privacy": "rounded_for_repository_copy; exact operator and ROS coordinates retained only in the excluded raw backup",
+    "automatic_gnss_status": "connection_timed_out_initially_then_recovered_at_2026-08-06T10:39:02-04:00",
+    "applies_to_conditions": [
+      "C1",
+      "C2",
+      "C3",
+      "C4"
+    ],
+    "physical_placement": "mg52_on_trunk_floor_front_face_up_toward_sky",
+    "signal_class": "medium_typical_deployment",
+    "qualification": "Applies to the current fixed medium-signal C1-C4 phase unless the operator later reports a location change."
+  },
+  "signal_condition_grouping": {
+    "current_medium_typical": [
+      "C1",
+      "C2",
+      "C3",
+      "C4"
+    ],
+    "future_c1_c2_location_repeats": [
+      "weak",
+      "strong"
+    ],
+    "future_location_phases_started": false,
+    "operator_plan": "Finish the current medium phase, then move the vehicle to a weak location and subsequently to a strong location. Repeat the C1/C2 workload pair as separately labeled blocks."
+  }
+}

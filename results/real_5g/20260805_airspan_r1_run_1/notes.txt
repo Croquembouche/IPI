@@ -1,0 +1,30 @@
+R1 collection notes, 2026-08-05 (America/New_York)
+
+V1 was designated by the operator as the idle ACP window from 11:15 to 11:30.
+No host telemetry was running for this historical window, so its idle state must
+be checked in the pending ACP export.
+
+V2 was one 25 Mbps-offered TCP stream from the car host to the edge host. It
+ran from the 13:15 boundary through the 13:30 boundary. TCP backpressure limited
+the measured application rate to 13.118 Mbps. Sender and receiver byte totals
+match exactly.
+
+V3 was one 25 Mbps TCP stream from the edge host to the car host. It ran from
+the 13:35 boundary through the 13:50 boundary and sustained 25.000 Mbps. Sender
+and receiver byte totals match exactly. The 13:30-13:35 interval was reserved
+as a transition and artifact-retrieval interval, not an R1 condition.
+
+The controller clock defines the ACP windows. The edge host clock was about
+173.9 seconds behind and was not synchronized, so raw cross-host wall-clock
+timestamps cannot support one-way latency. This does not affect the monotonic
+900-second load durations or later application RTT measurements.
+
+Phone logging and R1A were waived by the operator for this collection. The user
+will provide the ACP DU-cell export and MG52/configuration evidence. Until those
+artifacts are inspected, only the host-side R1 workload and telemetry collection
+is validated.
+
+An unredacted local backup is retained under the Git-excluded
+CISCO_AIRSPAN_STATS directory. Files in this result directory use logical
+endpoint labels and remove process command lines that could disclose internal
+addresses or paths.

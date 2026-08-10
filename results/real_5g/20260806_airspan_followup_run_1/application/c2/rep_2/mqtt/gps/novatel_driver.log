@@ -1,0 +1,48 @@
+[INFO] [launch]: All log files can be found below /home/car/.ros/log/2026-08-06-09-52-28-203219-car-141511
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [novatel_oem7_driver_exe-1]: process started with pid [141566]
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.350790458] [novatel.oem7.main]: Oem7RawMsg:  topic [oem7raw]: frame_id: 'gps'; q size: 200
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.352000106] [novatel.oem7.main]: Oem7MessageNode v.; Feb 19 2026 03:29:00
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.356927593] [novatel.oem7.main]: Oem7MessageDecoderLib version: 10.1.0
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.357571303] [novatel.oem7.main]: PPPPOS:  topic [ppppos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.358050528] [novatel.oem7.main]: BESTPOS:  topic [bestpos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.358559431] [novatel.oem7.main]: BESTVEL:  topic [bestvel]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.358947871] [novatel.oem7.main]: BESTGNSSVEL:  topic [bestgnssvel]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.359343889] [novatel.oem7.main]: BESTUTM:  topic [bestutm]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.359776628] [novatel.oem7.main]: BESTGNSSPOS:  topic [bestgnsspos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.360213144] [novatel.oem7.main]: INSPVA:  topic [inspva]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.360617163] [novatel.oem7.main]: GPSFix:  topic [gps]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.361250011] [novatel.oem7.main]: NavSatFix:  topic [fix]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.362033920] [novatel.oem7.main]: GPSFix position source: BESTPOS or INSPVAS based on quality
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.362236006] [novatel.oem7.main]: IMU:  topic [imu/data]: frame_id: 'imu_link'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.362651588] [novatel.oem7.main]: RAWIMU:  topic [imu/data_raw]: frame_id: 'imu_link'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.363039392] [novatel.oem7.main]: CORRIMU:  topic [corrimu]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.363430098] [novatel.oem7.main]: INSSTDEV:  topic [insstdev]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.363836266] [novatel.oem7.main]: INSPVAX:  topic [inspvax]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.364303199] [novatel.oem7.main]: INSCONFIG:  topic [insconfig]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [WARN] [1786024348.364817019] [novatel.oem7.main]: Message 'RAWIMUSX' will not be published.
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.364972379] [novatel.oem7.main]: HEADING2:  topic [heading2]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.365390189] [novatel.oem7.main]: RXSTATUS:  topic [rxstatus]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.365792806] [novatel.oem7.main]: TERRASTARINFO:  topic [terrastarinfo]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.366147143] [novatel.oem7.main]: TERRASTARSTATUS:  topic [terrastarstatus]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.366530336] [novatel.oem7.main]: TIME:  topic [time]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [WARN] [1786024348.366868146] [novatel.oem7.main]: Message 'NMEA_Sentence' will not be published.
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.366997483] [novatel.oem7.main]: Odometry:  topic [odom]: frame_id: 'odom'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.367548036] [novatel.oem7.main]: OdometryOrigin:  topic [odom_origin]: frame_id: 'odom'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.370362692] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [INFO] [1786024348.419316272] [novatel.oem7.main]: Standard Receiver Initialization:
+[novatel_oem7_driver_exe-1] [INFO] [1786024484.477528676] [novatel.oem7.main]: Oem7Net socket open: '1; OS error= 110
+[novatel_oem7_driver_exe-1] [ERROR] [1786024484.477530073] [novatel.oem7.main]: Oem7Receiver: write error: 32; endpoint open: 1
+[novatel_oem7_driver_exe-1] [ERROR] [1786024484.477709648] [novatel.oem7.main]: Oem7Receiver: read error: 107; endpoint open: 1 errors/max: 2/10
+[novatel_oem7_driver_exe-1] [ERROR] [1786024484.477870710] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [ERROR] [1786024484.477891424] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [INFO] [1786024485.478100376] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [INFO] [1786024485.478131310] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [INFO] [1786024619.645523176] [novatel.oem7.main]: Oem7Net socket open: '1; OS error= 110
+[novatel_oem7_driver_exe-1] [ERROR] [1786024619.645672068] [novatel.oem7.main]: Oem7Receiver: read error: 107; endpoint open: 1 errors/max: 3/10
+[novatel_oem7_driver_exe-1] [INFO] [1786024619.645700306] [novatel.oem7.main]: Oem7Net socket open: '1; OS error= 110
+[novatel_oem7_driver_exe-1] [ERROR] [1786024619.645731055] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [ERROR] [1786024619.646401073] [novatel.oem7.main]: Oem7Receiver: write error: 9; endpoint open: 0
+[novatel_oem7_driver_exe-1] [ERROR] [1786024619.646676227] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [INFO] [1786024620.646530930] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [ERROR] [1786024623.647009300] [novatel.oem7.main]: AACmd 'UNLOGALL THISPORT': Attempt 0: timed out waiting for response.

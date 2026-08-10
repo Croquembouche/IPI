@@ -1,6 +1,6 @@
 # Remaining Experiment Plan
 
-Last updated: 2026-08-05
+Last updated: 2026-08-06
 
 ## Purpose
 
@@ -9,6 +9,135 @@ before the Edge4AV paper can answer the current coauthor comments. It is a
 runbook and decision record. Use it to prepare each collection, name and
 preserve the artifacts, determine whether a run is valid, and prevent
 unnecessary repetition of experiments that are already complete.
+
+## 2026-08-06 Application Blocks And Multi-Location Override
+
+The medium/typical application block is complete and must be classified as
+`medium_typical_deployment`, not stronger signal. The MG52 remained flat on the
+vehicle trunk floor with its front face upward. C1-C4 each have two valid
+repetitions of TCP, MQTT, and UDP in separate five-minute ACP bins: 24/24 valid
+samples, 309,000 attempts, 307,662 accepted requests, 1,338 failures, and
+99.566990% overall success. The collection spans the 09:05 EDT bin through a
+12:14:03 EDT final workload finish. Three non-primary attempts remain preserved
+and excluded. ACP Cell 2 and MG52 exports are still pending, so the medium label
+is operator-reported rather than radio-validated and the run is not yet paper-
+facing.
+
+The location-based weak C1/C2 application block is now complete. The MG52
+placement/orientation remained the trunk-floor, front-face-up configuration.
+All 12 five-minute samples passed: two workloads, two repetitions, and three
+transports. The block records 6,000 attempts, 5,994 accepted requests, and six
+failures. C1, C2/TCP, and C2/MQTT were lossless; C2/UDP accepted 497/500 in each
+repetition, with all six failed rows reporting UDP acknowledgment timeouts. All
+12 samples include in-window GNSS positions. Exact coordinates, rosbags,
+endpoints, and host details remain in the excluded raw backup; the repository-
+facing result is sanitized and uses 0.001-degree GNSS precision.
+ACP Cell 2 and MG52 radio exports remain pending, so `weak` is still an operator-
+reported location class rather than a radio-validated signal claim.
+
+The block collected at the intended strong location is complete with the same
+1,024 B and 23,968 B idle, one-client workloads, two repetitions, and all three
+transports. All 12 five-minute samples passed. The block records 6,000 attempts,
+5,999 accepted requests, and one C2 repetition-2 UDP acknowledgment timeout,
+for 99.983333% overall success. C1 and C2 TCP/MQTT were lossless; C2/UDP
+accepted 999/1,000 attempts. All 12 samples include in-window GNSS positions.
+The excluded raw backup is checksum-verified, while the repository-facing result
+is sanitized, uses 0.001-degree GNSS precision, and omits serialized rosbags.
+After collection, the user inspected MG52 RSRP for this block and the original
+common/typical block and reported the same 109-110 range for both. The attempted
+strong location therefore did not produce a distinct strong-signal condition.
+The result is corrected to a second `medium_typical_deployment` observation
+under `results/real_5g/20260806_airspan_followup_common_typical_run_2/`.
+Original `strong` acquisition fields remain preserved and are superseded by
+the run-level correction metadata. Import the supporting MG52 artifact before
+paper-facing use.
+
+The actual strong-location C1/C2 application block is now complete under
+`results/real_5g/20260806_airspan_followup_strong_run_2/`. Before collection,
+a fresh GNSS preflight confirmed that the vehicle was stationary, and the
+operator reported a current MG52 RSRP reading of 101, distinct from the
+common/typical 109-110 range. All 12 five-minute samples passed: 6,000/6,000
+attempts were accepted across both workloads, both repetitions, and all three
+transports. Every sample contains in-window GNSS positions. The exact-data
+backup is checksum-verified; the repository copy is sanitized, uses 0.001-
+degree GNSS precision, and omits serialized rosbags. The `strong` label remains
+operator-reported, and the dashboard sign convention, RSRP observation, Cell 2
+lock, `70/20/10`, and `10D4G` controls still require validation from the
+matching MG52 and ACP exports before paper-facing use.
+
+Automatic GNSS for the medium block recovered at 10:39:02 EDT. Ten of 24 valid
+samples contain in-window ROS positions; earlier samples use the operator-
+reported fixed location. Exact coordinates and rosbag databases are retained
+only in the locally excluded unredacted backup. Repository-facing coordinates
+are rounded to 0.001 degree.
+
+## Active Collection Override: 2026-08-05
+
+For the current `70/20/10` follow-up collection, the user explicitly directs the
+following bounded exception to the general protocol below:
+
+- Use application RTT as the timing metric. Cross-host clock synchronization
+  is not required; record `clock_sync_state=unsynced` and do not report one-way
+  latency.
+- Skip R1A and do not use the Android phone logger. This collection therefore
+  provides no phone-derived, co-located radio context, and no later analysis
+  may imply that it does.
+- The user reports that the ACP configuration and MG52 configuration have
+  already been verified. Preserve their exported evidence with the collection;
+  the report alone does not substitute for the artifacts.
+- R1 host-side traffic and telemetry were collected before the then-planned
+  C1-C5 block on 2026-08-05.
+  The operator designated V1 as 11:15-11:30 EDT; V2 used a 25 Mbps-offered
+  uplink from 13:15-13:30; and V3 used a 25 Mbps downlink from 13:35-13:50.
+  The user will export the matching ACP DU-cell and MG52/configuration evidence.
+  Do not mark R1 complete or perform final paper-facing analysis until those
+  artifacts are inspected.
+- Use MG52 management-plane radio measurements or other stored gateway-side
+  evidence to validate medium/weak/strong signal labels because phone
+  measurements are intentionally omitted.
+
+This section overrides only the R1A/phone, clock-synchronization, and R1-upload
+ordering requirements for this collection. All condition definitions,
+separate transport logs, ACP-bin boundaries, repetitions, cell-lock evidence,
+host telemetry, artifact preservation, and failure-reporting rules remain in
+force.
+
+The current execution path uses
+`scripts/run_airspan_followup_condition.sh <C1-C6> <repetition> <transport>`
+from the car host and the isolated `d1` deployment staged under
+`/home/d1/edge4av_followup/ipi_2c043b3`. Run one transport per assigned ACP bin
+so a slow or failed transport cannot cross into another bin. The runner uses
+`scripts/collect_host_telemetry.py` on both hosts, requires explicit signal
+class, location ID, and physical placement fields, records RTT with
+`clock_sync_state=unsynced`, and refuses to overwrite an existing local or
+remote condition directory. It requires an exact five-minute ACP interval,
+starts the workload 15 seconds into the sample, reserves a 15-second end guard,
+caps sender execution at 260 seconds, and refuses a late or statically over-
+budget workload. Invoke it early enough to finish receiver setup before the
+assigned sample; C4/MQTT requires the longest setup lead because it starts 100
+logical receivers.
+
+For the current five-minute collection, TCP, MQTT, and UDP occupy three
+separate consecutive samples. One condition/repetition therefore takes 15
+minutes. The completed medium C1-C4 block used 24 five-minute samples, and the
+completed weak, second common/typical, and strong C1/C2 blocks each used 12.
+Generic duration calculations later in this document that assume 15-minute ACP
+bins do not apply to this active override.
+
+The active five-minute matrix predeclares 500 probes per client for every
+transport and repetition. The sender's 200 ms delay occurs after each completed
+request, so RTT adds to runtime and the original 1,000 sequential probes cannot
+reliably fit the shorter sample. C4 therefore produces 50,000 aggregate
+attempts per transport. A recorded timeout is a failed attempt and deadline
+miss; an incomplete sender file invalidates that sample. Do not silently pool
+a partial run with complete repetitions.
+
+For this collection the operator reports that ACP records at five-minute
+intervals. Each 15-minute R1 condition therefore spans three ACP samples. The
+2026-08-05 windows are not consecutive: V1 was designated retrospectively,
+and a five-minute transition separates V2 and V3. This is an operator-directed
+deviation from the general consecutive-bin protocol and must remain explicit
+in analysis.
 
 ## Vehicle Collection Start Order
 
@@ -67,12 +196,15 @@ nonselected cell can be verified rather than assumed.
 
 ### 4. Run The Required Follow-Up Matrix
 
-After R1 passes, collect C1-C6 in the two-repetition order in the R2-R4 section.
-The minimum paper-facing matrix is 12 ACP bins: stronger/weaker signal at 1 KiB
-and 23,968 B, stronger signal under 25 Mbps uplink load, and stronger signal
-with 100 clients. Keep TCP, MQTT, and UDP separate. Target 1,000 probes per
-transport and condition. Together with R1, the minimum collection occupies 15
-ACP bins, or 3 hours 45 minutes, excluding setup and placement transitions.
+For the active five-minute override, the medium/typical C1-C4, second
+common/typical C1/C2, weak-location C1/C2, and radio-distinct candidate strong-
+location C1/C2 application blocks are collected. The earlier attempted strong
+block was reclassified as common/typical after its RSRP matched the original
+common run; the later block used the operator-reported distinct RSRP reading of
+101. Do not rerun the completed blocks solely to change their collection order.
+The older generic C1-C6 table below remains useful for workload mapping, but
+its planned stronger/outside and weaker/inside intervention is superseded for
+this run by the explicit multi-location directive above.
 
 The selected serving cell will use `70/20/10`: 70 downlink, 20 uplink, and 10
 dynamic frames. Lock the MG52 to Airspan Cell 2 before collection so that no
@@ -173,15 +305,15 @@ experiment matrix alone is not mistaken for completing the paper.
 |---|---|---:|---|---|
 | R0 | Resolve Airspan counter and configuration questions | Required | Partially complete; active configuration and SAS provider retained | Correct interpretation of every new Airspan export |
 | R1A | Qualify the Android phone and installed radio app | Required before R1 | Not run | Establish whether the phone can observe and export the private-5G NR fields |
-| R1 | ACP and Android radio-logger validation pilot | Required | Not run | Validate cell mapping, timing, traffic attribution, and current phone fields |
-| R2 | Stronger/weaker-signal payload follow-up | Required | Not run | Relate signal and payload size to application and cell-level behavior |
-| R3 | Background-load follow-up | Required | Not run | Relate application tail growth to contemporaneous cell traffic |
-| R4 | 100-client follow-up | Required | Not run | Add cell context to the representative scalability endpoint |
+| R1 | ACP and Android radio-logger validation pilot | Required | Host V1-V3 collected; ACP/MG52 export pending; Android logger waived for this run | Validate cell mapping, timing, and traffic attribution |
+| R2 | Multi-location payload follow-up | Required | Original and repeated common/typical, weak, and new candidate strong C1/C2 application blocks complete; ACP/MG52 alignment and radio-class validation pending | Relate signal location and payload size to application and cell-level behavior |
+| R3 | Background-load follow-up | Required | Medium C3 application block complete; ACP/MG52 alignment pending | Relate application tail growth to contemporaneous cell traffic |
+| R4 | 100-client follow-up | Required | Medium C4 application block complete; ACP/MG52 alignment pending | Add cell context to the representative scalability endpoint |
 | R5 | Verified default-versus-new QoS comparison | Required only if Cisco enables it | Blocked on Cisco configuration | Determine whether network-enforced QoS changes results |
 | R6 | Path-segment measurements | Optional | Excluded from the current paper scope | Future delay decomposition; the current paper reports complete-path application RTT |
 | R7 | Additional ACP/per-UE counter export | Recommended | Availability unknown | Improve radio/RAN interpretation beyond DU Cell aggregates |
 | R8 | Validate payload direction and measure selected downlink responses | Required for bidirectional payload claims | Not run | Distinguish large vehicle-to-edge requests from large edge-to-vehicle responses |
-| R9 | Compare the historical `40/40/20` results with the locked-cell `70/20/10` follow-up | Exploratory sensitivity study | Cell-lock plan established; follow-up not run | Quantify whether and by how much the changed downlink/uplink allocation is associated with application outcomes, then derive implications for future vehicular-radio and 6G design |
+| R9 | Compare the historical `40/40/20` results with the locked-cell `70/20/10` follow-up | Exploratory sensitivity study | `70/20/10` host/application follow-up collected; ACP/MG52 verification and controlled comparison remain | Quantify whether and by how much the changed downlink/uplink allocation is associated with application outcomes, then derive implications for future vehicular-radio and 6G design |
 | P1 | Complete deployment and path documentation | Required | Not complete | Vendor attribution, reproducibility, equipment scope, and V2X/5G separation |
 | P2 | Validate and document the IPI contribution | Required | Partly implemented; final validation not recorded | Answer the request to strengthen IPI without changing the paper's central logic |
 | P3 | Close manuscript claims, citations, and submission checks | Required | Not complete | Qualified conclusions, related work, anonymity, format, and evidence traceability |
@@ -202,8 +334,8 @@ No new V2X experiment is required solely for these private-5G follow-ups.
 | Qualify conclusions to the equipment and explain what failed | Separate observed endpoint behavior from unverified radio causes; scope conclusions to the measured deployment and identify improvements as requirements unless a follow-up validates a mechanism | R1-R5, R7, P3 |
 | Consider the BREAKING-LOW/DRIVE-SAFE work | Read and cite relevant technical publications; use the project page only as motivation, not as experimental evidence | P3 |
 | Use G-NetTrack Pro for continuous logging and exports | First qualify the installed Lite build and phone. Use Pro if Lite cannot export a usable raw, timestamped log | R1A, R1 |
-| Change signal strength by reducing gNodeB power | Do not perform this intervention because UD prohibits power adjustment; use a passive, fixed-location inside/outside comparison | R2 |
-| Compare gateway/antenna placement inside and outside the vehicle | Run only the representative paired conditions, with fixed location/orientation and measured signal values | R2 |
+| Change signal strength by reducing gNodeB power | Do not perform this intervention because UD prohibits power adjustment; use the user-directed multi-location field comparison with unchanged MG52 placement | R2 |
+| Compare gateway/antenna placement inside and outside the vehicle | Not performed in the active run: the MG52 remains on the trunk floor, front face up. Do not claim an inside/outside comparison from the location repeats | R2, P3 |
 | Use other campus vehicles | Not required for the current paper. Add only if the research question changes to vehicle-body generalization | No current experiment |
 | Ping from Airspan toward the MX250-connected laptop | Optional and outside the current paper scope; do not call the result over-the-air latency unless the compared paths isolate that segment | R6 |
 | Configure a nondefault 5QI | Use a second Cisco-provisioned DNN with core-side proof; do not infer 5QI from IP TOS or an application label | R5 |
@@ -751,78 +883,78 @@ to the correct ACP bin and cell.
 
 | Condition | Signal condition | Network load | Application payload | Client count | Transports |
 |---|---|---|---:|---:|---|
-| C1 | Stronger measured signal | Idle | 1024 B | 1 | TCP, MQTT, UDP |
-| C2 | Stronger measured signal | Idle | 23968 B | 1 | TCP, MQTT, UDP |
-| C3 | Stronger measured signal | 25 Mbps uplink | 1024 B | 1 | TCP, MQTT, UDP |
-| C4 | Stronger measured signal | Existing test background only | 1024 B | 100 | TCP, MQTT, UDP |
-| C5 | Weaker measured signal | Idle | 1024 B | 1 | TCP, MQTT, UDP |
-| C6 | Weaker measured signal | Idle | 23968 B | 1 | TCP, MQTT, UDP |
+| C1 | Explicit per-run location class | Idle | 1024 B | 1 | TCP, MQTT, UDP |
+| C2 | Explicit per-run location class | Idle | 23968 B | 1 | TCP, MQTT, UDP |
+| C3 | Medium/typical for the completed block | 25 Mbps offered uplink | 1024 B | 1 | TCP, MQTT, UDP |
+| C4 | Medium/typical for the completed block | Existing test background only | 1024 B | 100 | TCP, MQTT, UDP |
+| C5 | Weaker measured signal; analytical equivalent of weak-location C1 | Idle | 1024 B | 1 | TCP, MQTT, UDP |
+| C6 | Weaker measured signal; analytical equivalent of weak-location C2 | Idle | 23968 B | 1 | TCP, MQTT, UDP |
+
+For the active multi-location override, preserve C1/C2 as the raw workload IDs
+at medium, weak, and strong locations. Map weak-location C1/C2 to the C5/C6
+analytical conditions only after the radio export validates that the location
+is weaker. Never infer signal class from the condition number alone.
 
 ### Repetitions
 
 - One ACP bin per condition is sufficient only for diagnosis.
 - Two bins per condition are the minimum synchronized follow-up dataset.
 - Three bins per condition are preferred for paper-facing comparisons.
-- Keep the original per-condition target of 1000 application probes per
-  transport where execution time permits.
+- The active five-minute protocol uses 500 application probes per client and
+  transport. Do not mix it with a 1,000-probe repetition.
 
-With two bins per condition:
+At one location with two repetitions:
 
-- Six conditions require 12 bins, or 3 hours.
-- The R1 validation pilot adds 45 minutes.
-- Total minimum collection time is approximately 3 hours 45 minutes, excluding
-  setup and transitions.
+- C1 and C2 require 12 five-minute samples because TCP, MQTT, and UDP each use
+  a separate sample.
+- Measurement time is 60 minutes, excluding setup and the location transition.
 
-With three bins per condition, total time including the pilot is approximately
-5 hours 15 minutes.
+The weak phase, two common/typical observations, and candidate strong phase are
+complete. Each C1/C2 location block used 60 minutes of declared measurement
+bins, excluding preflight and the location transition.
 
 ### Signal Pair
 
-Create the stronger/weaker signal pair at one fixed vehicle location and
-orientation. The planned intervention is:
+The active intervention is vehicle location, not gateway placement. Keep the
+same vehicle and leave the MG52 flat on the trunk floor with its front face
+upward. Keep its cables, power, experiment computer, software, Cell 2 lock,
+TDD/frame configuration, and application settings unchanged. At every stop,
+record a non-sensitive location ID, exact GNSS only in the excluded raw backup,
+vehicle orientation if available, stationary start/end times, and the matching
+MG52 radio export.
 
-- Stronger condition: gateway/CPE antenna in the marked outside position.
-- Weaker condition: gateway/CPE antenna in the marked inside position.
+The user-directed order began medium/typical, weak, then an intended strong
+location. Because the first intended strong location matched the common RSRP
+range, it is retained as a second common/typical observation. The later
+candidate strong location was collected after the operator reported a distinct
+RSRP reading of 101.
+Collect a short idle radio baseline after each move and before application
+traffic. The comparison is valid as a field comparison only if MG52 radio
+measurements show separated medium/weak/strong distributions. If they overlap,
+retain the location labels and report the overlap instead of assigning signal-
+strength classes.
 
-The MG52 uses integrated internal antennas, so mark the complete gateway
-position and front-face orientation for both conditions and record that moving
-the gateway is the required intervention. Keep its cables, power, computer,
-software, vehicle location, and vehicle orientation unchanged. Keep the phone
-in the corresponding marked position beside the gateway. Do not use a
-different vehicle for this pair.
-
-Use the original trunk-floor, front-face-up placement as the inside-vehicle
-baseline unless the paired-run protocol explicitly selects another documented
-inside position.
-
-Collect a short idle baseline after each placement change. The comparison is
-valid only if RSRP/RSRQ show a repeatable separation between placements. If the
-radio distributions overlap substantially, do not label the runs as
-stronger/weaker signal; adjust the passive obstruction method or location
-without changing gNodeB power.
-
-Use an interleaved order when practical. For two repetitions of a paired
-condition, prefer stronger-weaker-weaker-stronger rather than collecting all
-stronger runs on one day and all weaker runs on another day.
+Changing location also changes propagation geometry and possibly interference,
+not only received signal strength. Treat this as a representative multi-
+location field comparison, not a controlled causal attenuation experiment.
 
 ### Suggested Two-Repetition Order
 
-| Bin group | Condition |
+| Block | Samples |
 |---|---|
-| 1-3 | R1 validation: idle, uplink, downlink |
-| 4 | C1 stronger, 1024 B |
-| 5 | C5 weaker, 1024 B |
-| 6 | C5 weaker, 1024 B repeat |
-| 7 | C1 stronger, 1024 B repeat |
-| 8 | C2 stronger, 23968 B |
-| 9 | C6 weaker, 23968 B |
-| 10 | C6 weaker, 23968 B repeat |
-| 11 | C2 stronger, 23968 B repeat |
-| 12-13 | C3 stronger, loaded, two repetitions |
-| 14-15 | C4 stronger, 100 clients, two repetitions |
+| Medium/typical | C1-C4 complete; do not rerun solely for ordering |
+| Weak, samples 1-3 | C1 repetition 1: TCP, MQTT, UDP |
+| Weak, samples 4-6 | C1 repetition 2: UDP, MQTT, TCP |
+| Weak, samples 7-9 | C2 repetition 1: TCP, MQTT, UDP |
+| Weak, samples 10-12 | C2 repetition 2: UDP, MQTT, TCP |
+| Common/typical repeat | Formerly planned strong samples 1-12; complete and reclassified after matching RSRP |
+| New strong, samples 1-3 | C1 repetition 1: TCP, MQTT, UDP |
+| New strong, samples 4-6 | C1 repetition 2: UDP, MQTT, TCP |
+| New strong, samples 7-9 | C2 repetition 1: TCP, MQTT, UDP |
+| New strong, samples 10-12 | C2 repetition 2: UDP, MQTT, TCP |
 
-This order requires 15 ACP bins, or 3 hours 45 minutes. Add setup and placement
-transition time outside the assigned bins.
+Each location requires 12 five-minute samples, or 60 minutes. Complete backup,
+validation, and the location transition outside the assigned samples.
 
 ### Per-Condition Evaluation
 
@@ -834,16 +966,18 @@ For every transport and repetition, compute:
 - Achieved load and load-generator loss/errors where applicable.
 - For 100 clients: per-client success, p50/p95/p99, aggregate success, and
   fairness.
-- Co-located phone RSRP/RSRQ statistics and serving-cell identity over the
-  application interval, with NR SINR included only if R1A validates that field.
+- MG52 management-plane radio statistics and serving-cell identity over each
+  application interval. The Android logger is waived for this collection, so
+  do not imply phone-derived or per-request radio context.
 - Airspan uplink/downlink DRB volume, active time, derived throughput, RACH
   counters, and availability for both cells. Use the MG52-locked Cell 2 for the
   application comparison after confirming the MG52 lock and serving-cell
   evidence and the absence of experiment traffic on Cell 1. Treat the phone's
   serving-cell record separately because the phone is another UE.
 
-Do not correlate a request with an individual Airspan row. The valid unit is an
-application condition within a 15-minute cell-level bin.
+Do not correlate a request with an individual Airspan row. The valid unit for
+this override is one transport workload within its declared five-minute cell-
+level sample.
 
 ### Acceptance Criteria
 
@@ -852,7 +986,8 @@ application condition within a 15-minute cell-level bin.
 3. Every bin maps to the MG52-locked Airspan Cell 2; a serving-cell change or
    experiment traffic on Cell 1 invalidates the affected comparison.
 4. TCP, MQTT, and UDP retain separate application results.
-5. The stronger/weaker labels are supported by measured radio values.
+5. The medium/weak/strong labels are supported by measured MG52 radio values;
+   otherwise retain only location IDs and operator descriptions.
 6. The load condition reaches and records its intended offered rate.
 7. The 100-client condition starts the declared number of clients and reports
    every failed or missing client.
@@ -1007,15 +1142,18 @@ Request an actual sample export before promising any of these fields:
 - Applied DNN, QFI, and 5QI.
 - Report interval and counter reset behavior.
 
-The 2026-07-31 network configuration export confirms that ACP statistics are
+The 2026-07-31 network configuration export confirms that ACP statistics were
 enabled at a 15-minute granularity and that KPI families for PRB usage, DRB UE
-throughput, RACH, QoS flows, and L1 measurements are enabled. This does not
-show which counters or per-UE dimensions the current ACP interface can export.
-Use the configuration as a guide for locating the report, not as a substitute
-for a sample data export.
+throughput, RACH, QoS flows, and L1 measurements were enabled. The operator
+reports a five-minute interval for the 2026-08-05 R1 collection; retain the
+current export before treating that interval as artifact-verified. Neither fact
+alone shows which counters or per-UE dimensions the current ACP interface can
+export. Use the configuration as a guide for locating the report, not as a
+substitute for a sample data export.
 
-If unavailable, state that Airspan evidence is limited to 15-minute cell-level
-DRB, RACH, and availability counters. Do not infer unavailable lower-layer
+If the new export is unavailable, state separately that the stored 2026-07-31
+configuration supports 15-minute cell-level collection and that the five-minute
+2026-08-05 interval is operator-reported. Do not infer unavailable lower-layer
 metrics from application RTT.
 
 ## R8. Payload-Direction Validation
@@ -1210,8 +1348,8 @@ The inventory must include:
   or B, GAA/PAL status, TDD pattern, transmit power/EIRP, and gNodeB antenna
   configuration.
 - Gateway/CPE model and firmware, the scope of any receiver-sensitivity value,
-  integrated/external antenna, antenna/cable details, and inside/outside
-  placement and orientation for every condition. For this deployment, record
+  integrated/external antenna, antenna/cable details, and the placement,
+  orientation, and location class for every condition. For this deployment, record
   the internal-antenna `MG52-HW`, its trunk-floor/front-face-up placement, and
   distinguish the FN990A40 modem's conducted sensitivity from whole-gateway
   performance.
@@ -1577,13 +1715,29 @@ The remaining experiment and paper-evidence work is complete when:
 
 - [ ] R0 Airspan counter/configuration questions answered.
 - [ ] R1A phone/app/private-5G qualification completed.
-- [ ] R1 ACP/Android radio-logger validation pilot completed.
-- [ ] C1 stronger signal, idle, 1024 B completed.
-- [ ] C2 stronger signal, idle, 23968 B completed.
-- [ ] C3 stronger signal, loaded, 1024 B completed.
-- [ ] C4 stronger signal, 100 clients, 1024 B completed.
-- [ ] C5 weaker signal, idle, 1024 B completed.
-- [ ] C6 weaker signal, idle, 23968 B completed.
+- [ ] R1 validation pilot completed; host workload/telemetry collected, ACP and
+      MG52/configuration checks pending, Android logger waived for this run.
+- [x] Medium/typical C1, idle, 1024 B application block completed (2 reps, all
+      transports; ACP/MG52 alignment pending).
+- [x] Medium/typical C2, idle, 23968 B application block completed (2 reps, all
+      transports; ACP/MG52 alignment pending).
+- [x] Medium/typical C3, offered uplink load, 1024 B application block completed
+      (2 reps, all transports; ACP/MG52 alignment pending).
+- [x] Medium/typical C4, 100 clients, 1024 B application block completed (2
+      reps, all transports; ACP/MG52 alignment pending).
+- [x] Weak-location C1/C2 application workloads completed (2 reps, all
+      transports; these supply the C5/C6 payload equivalents).
+- [ ] Weak-location radio classification and Cell 2 controls validated from the
+      matching ACP/MG52 exports.
+- [x] Second common/typical-location C1/C2 application workloads completed (2
+      reps, all transports; originally collected with a `strong` planning label).
+- [ ] Supporting MG52 export for the second common/typical block imported and
+      its reported RSRP match plus Cell 2 controls validated.
+- [x] New strong-location C1/C2 application workloads completed at a radio-
+      distinct candidate location (2 reps, all transports; 6,000/6,000
+      accepted).
+- [ ] New strong-location radio classification and Cell 2 controls validated
+      from the matching ACP/MG52 exports.
 - [ ] R5 Cisco-approved QoS comparison completed or formally blocked.
 - [x] R6 excluded; the paper reports complete-path application RTT.
 - [ ] R7 additional Airspan export obtained or documented unavailable.

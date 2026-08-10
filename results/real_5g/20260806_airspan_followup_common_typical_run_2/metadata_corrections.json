@@ -1,0 +1,27 @@
+{
+  "classification_evidence": {
+    "comparison_run": "20260806_airspan_followup_run_1",
+    "corrected_signal_class": "medium_typical_deployment",
+    "evidence_state": "operator_inspected_mg52_values_artifact_not_yet_imported",
+    "previous_signal_class": "strong",
+    "reason": "The operator inspected RSRP for this block and the original common/typical block and reported the same 109-110 range for both, so the attempted strong location did not create a distinct strong-signal condition.",
+    "reported_metric": "RSRP",
+    "reported_range_text": "109-110 for both this block and the original common/typical block"
+  },
+  "operator_corrected_fields": {
+    "physical_placement": "mg52_on_trunk_floor_front_face_up_toward_sky",
+    "signal_class": "medium_typical_deployment"
+  },
+  "raw_planned_fields": {
+    "physical_or_signal_placement": [
+      "mg52_on_trunk_floor_front_face_up_toward_sky"
+    ],
+    "signal_class": [
+      "strong"
+    ]
+  },
+  "reason": "The operator inspected RSRP for this block and the original common/typical block and reported the same 109-110 range for both, so the attempted strong location did not create a distinct strong-signal condition.",
+  "rule": "Use the operator-corrected fields for every analysis and comparison; retain raw manifest fields only as collection-history provenance.",
+  "schema": "edge4av-airspan-metadata-correction-v1",
+  "scope": "all application samples, preserved attempts, run manifests, and matrix schedule entries in this run"
+}

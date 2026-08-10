@@ -1,0 +1,55 @@
+[INFO] [launch]: All log files can be found below /home/car/.ros/log/2026-08-06-10-19-52-846794-car-178190
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [novatel_oem7_driver_exe-1]: process started with pid [178235]
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.015772550] [novatel.oem7.main]: Oem7RawMsg:  topic [oem7raw]: frame_id: 'gps'; q size: 200
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.016799175] [novatel.oem7.main]: Oem7MessageNode v.; Feb 19 2026 03:29:00
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.020551224] [novatel.oem7.main]: Oem7MessageDecoderLib version: 10.1.0
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.020960122] [novatel.oem7.main]: PPPPOS:  topic [ppppos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.021256663] [novatel.oem7.main]: BESTPOS:  topic [bestpos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.021545193] [novatel.oem7.main]: BESTVEL:  topic [bestvel]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.021793511] [novatel.oem7.main]: BESTGNSSVEL:  topic [bestgnssvel]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.022034831] [novatel.oem7.main]: BESTUTM:  topic [bestutm]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.022310279] [novatel.oem7.main]: BESTGNSSPOS:  topic [bestgnsspos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.022589968] [novatel.oem7.main]: INSPVA:  topic [inspva]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.022835374] [novatel.oem7.main]: GPSFix:  topic [gps]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.023271136] [novatel.oem7.main]: NavSatFix:  topic [fix]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.023860507] [novatel.oem7.main]: GPSFix position source: BESTPOS or INSPVAS based on quality
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.023971167] [novatel.oem7.main]: IMU:  topic [imu/data]: frame_id: 'imu_link'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.024222533] [novatel.oem7.main]: RAWIMU:  topic [imu/data_raw]: frame_id: 'imu_link'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.024470763] [novatel.oem7.main]: CORRIMU:  topic [corrimu]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.024704373] [novatel.oem7.main]: INSSTDEV:  topic [insstdev]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.024952931] [novatel.oem7.main]: INSPVAX:  topic [inspvax]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.025234917] [novatel.oem7.main]: INSCONFIG:  topic [insconfig]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [WARN] [1786025993.025591977] [novatel.oem7.main]: Message 'RAWIMUSX' will not be published.
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.025718720] [novatel.oem7.main]: HEADING2:  topic [heading2]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.026012094] [novatel.oem7.main]: RXSTATUS:  topic [rxstatus]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.026319491] [novatel.oem7.main]: TERRASTARINFO:  topic [terrastarinfo]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.026579676] [novatel.oem7.main]: TERRASTARSTATUS:  topic [terrastarstatus]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.026832966] [novatel.oem7.main]: TIME:  topic [time]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [WARN] [1786025993.027088988] [novatel.oem7.main]: Message 'NMEA_Sentence' will not be published.
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.027198154] [novatel.oem7.main]: Odometry:  topic [odom]: frame_id: 'odom'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.027634145] [novatel.oem7.main]: OdometryOrigin:  topic [odom_origin]: frame_id: 'odom'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.030178737] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [INFO] [1786025993.079190629] [novatel.oem7.main]: Standard Receiver Initialization:
+[novatel_oem7_driver_exe-1] [ERROR] [1786026126.973511484] [novatel.oem7.main]: Oem7Receiver: write error: 110; endpoint open: 1
+[novatel_oem7_driver_exe-1] [INFO] [1786026126.973526337] [novatel.oem7.main]: Oem7Net socket open: '1; OS error= 103
+[novatel_oem7_driver_exe-1] [ERROR] [1786026126.973696333] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [ERROR] [1786026126.973798920] [novatel.oem7.main]: Oem7Receiver: read error: 9; endpoint open: 0 errors/max: 2/10
+[novatel_oem7_driver_exe-1] [ERROR] [1786026126.973889833] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [INFO] [1786026127.973976566] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [INFO] [1786026127.974061693] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [INFO] [1786026262.141768655] [novatel.oem7.main]: Oem7Net socket open: '1; OS error= 110
+[novatel_oem7_driver_exe-1] [INFO] [1786026262.142512230] [novatel.oem7.main]: Oem7Net socket open: '1; OS error= 103
+[novatel_oem7_driver_exe-1] [ERROR] [1786026262.142512103] [novatel.oem7.main]: Oem7Receiver: write error: 32; endpoint open: 1
+[novatel_oem7_driver_exe-1] [ERROR] [1786026262.142753573] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [ERROR] [1786026262.142667692] [novatel.oem7.main]: Oem7Receiver: read error: 107; endpoint open: 1 errors/max: 4/10
+[novatel_oem7_driver_exe-1] [ERROR] [1786026262.142887314] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [INFO] [1786026263.143000037] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [ERROR] [1786026266.143011855] [novatel.oem7.main]: AACmd 'UNLOGALL THISPORT': Attempt 0: timed out waiting for response.
+[novatel_oem7_driver_exe-1] [INFO] [1786026397.309497698] [novatel.oem7.main]: Oem7Net socket open: '1; OS error= 103
+[novatel_oem7_driver_exe-1] [ERROR] [1786026397.309497545] [novatel.oem7.main]: Oem7Receiver: write error: 110; endpoint open: 1
+[novatel_oem7_driver_exe-1] [ERROR] [1786026397.309659535] [novatel.oem7.main]: Oem7Receiver: read error: 107; endpoint open: 1 errors/max: 6/10
+[novatel_oem7_driver_exe-1] [ERROR] [1786026397.309761952] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [ERROR] [1786026397.309776579] [novatel.oem7.main]: Oem7Receiver: close error: 0
+[novatel_oem7_driver_exe-1] [INFO] [1786026398.309939671] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [INFO] [1786026398.309953971] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]

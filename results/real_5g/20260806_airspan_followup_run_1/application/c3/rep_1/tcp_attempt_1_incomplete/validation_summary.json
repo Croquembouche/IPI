@@ -1,0 +1,15 @@
+{
+  "accepted": 495,
+  "complete_files": 0,
+  "expected_rows_per_file": 500,
+  "failed": 0,
+  "files": 1,
+  "per_file": {
+    "c3-rep1-tcp_veh-001_sender.csv": {
+      "accepted": 495,
+      "complete": false,
+      "rows": 495
+    }
+  },
+  "rows": 495
+}

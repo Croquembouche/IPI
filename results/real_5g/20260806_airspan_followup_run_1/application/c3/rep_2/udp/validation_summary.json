@@ -1,0 +1,15 @@
+{
+  "accepted": 496,
+  "complete_files": 1,
+  "expected_rows_per_file": 500,
+  "failed": 4,
+  "files": 1,
+  "per_file": {
+    "c3-rep2-udp_veh-001_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    }
+  },
+  "rows": 500
+}

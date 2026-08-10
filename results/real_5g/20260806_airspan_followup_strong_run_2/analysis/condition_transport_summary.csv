@@ -1,0 +1,7 @@
+condition,transport,corrected_signal_class,attempts,accepted,failed,success_rate_pct,rtt_count,rtt_p50_ms,rtt_p95_ms,rtt_p99_ms,rtt_max_ms,deadline_hits_100ms,deadline_hit_rate_100ms_pct,deadline_hits_120ms,deadline_hit_rate_120ms_pct,deadline_hits_400ms,deadline_hit_rate_400ms_pct,deadline_hits_500ms,deadline_hit_rate_500ms_pct,deadline_hits_1000ms,deadline_hit_rate_1000ms_pct,deadline_hits_5000ms,deadline_hit_rate_5000ms_pct
+C1,tcp,strong,1000,1000,0,100,1000,117.863,137.309,145.868,173.944,46,4.6,601,60.1,1000,100,1000,100,1000,100,1000,100
+C1,mqtt,strong,1000,1000,0,100,1000,28.016,39.955,47.855,87.752,1000,100,1000,100,1000,100,1000,100,1000,100,1000,100
+C1,udp,strong,1000,1000,0,100,1000,26.632,39.2,43.923,69.729,1000,100,1000,100,1000,100,1000,100,1000,100,1000,100
+C2,tcp,strong,1000,1000,0,100,1000,75.388,93.605,107.415,140.755,978,97.8,997,99.7,1000,100,1000,100,1000,100,1000,100
+C2,mqtt,strong,1000,1000,0,100,1000,49.753,59.721,67.663,132.626,997,99.7,998,99.8,1000,100,1000,100,1000,100,1000,100
+C2,udp,strong,1000,1000,0,100,1000,47.947,56.947,63.586,85.116,1000,100,1000,100,1000,100,1000,100,1000,100,1000,100

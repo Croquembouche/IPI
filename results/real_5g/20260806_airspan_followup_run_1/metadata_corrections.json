@@ -1,0 +1,14 @@
+{
+  "operator_corrected_fields": {
+    "physical_placement": "mg52_on_trunk_floor_front_face_up_toward_sky",
+    "signal_class": "medium_typical_deployment"
+  },
+  "raw_planned_fields": {
+    "signal_class": "stronger",
+    "signal_placement": "outside"
+  },
+  "reason": "The operator clarified during collection that the current fixed location represents medium/typical deployment signal, not the planned stronger location.",
+  "rule": "Use the operator-corrected fields for every analysis and comparison; retain raw manifest fields only as collection-history provenance.",
+  "schema": "edge4av-airspan-metadata-correction-v1",
+  "scope": "all application samples and preserved attempts in this run"
+}

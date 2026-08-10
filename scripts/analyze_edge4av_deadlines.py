@@ -23,7 +23,7 @@ def read_rows(paths: list[Path]) -> list[dict]:
     for path in paths:
         with path.open("r", encoding="utf-8", newline="") as handle:
             reader = csv.DictReader(handle)
-            rows.extend(row for row in reader if row.get("rtt_ms"))
+            rows.extend(reader)
     return rows
 
 
@@ -36,7 +36,8 @@ def main() -> int:
 
     rows = read_rows(args.csv)
     accepted_rows = [row for row in rows if row.get("accepted") == "true"]
-    rtts = [float(row["rtt_ms"]) for row in accepted_rows]
+    accepted_rows_with_rtt = [row for row in accepted_rows if row.get("rtt_ms")]
+    rtts = [float(row["rtt_ms"]) for row in accepted_rows_with_rtt]
     deadline_hits = [value for value in rtts if value <= args.deadline_ms]
 
     summary = {

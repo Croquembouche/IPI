@@ -1,0 +1,7 @@
+condition,transport,corrected_signal_class,attempts,accepted,failed,success_rate_pct,rtt_count,rtt_p50_ms,rtt_p95_ms,rtt_p99_ms,rtt_max_ms,deadline_hits_100ms,deadline_hit_rate_100ms_pct,deadline_hits_120ms,deadline_hit_rate_120ms_pct,deadline_hits_400ms,deadline_hit_rate_400ms_pct,deadline_hits_500ms,deadline_hit_rate_500ms_pct,deadline_hits_1000ms,deadline_hit_rate_1000ms_pct,deadline_hits_5000ms,deadline_hit_rate_5000ms_pct
+C1,tcp,medium_typical_deployment,1000,1000,0,100,1000,122.602,149.607,163.753,361.621,12,1.2,367,36.7,1000,100,1000,100,1000,100,1000,100
+C1,mqtt,medium_typical_deployment,1000,1000,0,100,1000,30.389,41.358,57.186,125.078,998,99.8,999,99.9,1000,100,1000,100,1000,100,1000,100
+C1,udp,medium_typical_deployment,1000,1000,0,100,1000,30.149,40.706,47.717,120.388,995,99.5,999,99.9,1000,100,1000,100,1000,100,1000,100
+C2,tcp,medium_typical_deployment,1000,1000,0,100,1000,90.217,109.833,191.95,322.468,812,81.2,974,97.4,1000,100,1000,100,1000,100,1000,100
+C2,mqtt,medium_typical_deployment,1000,1000,0,100,1000,66.861,77.944,102.46,303.765,989,98.9,992,99.2,1000,100,1000,100,1000,100,1000,100
+C2,udp,medium_typical_deployment,1000,999,1,99.9,999,60.753,72.847,80.34,149.827,994,99.4,995,99.5,999,99.9,999,99.9,999,99.9,999,99.9

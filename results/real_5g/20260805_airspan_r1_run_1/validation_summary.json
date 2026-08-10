@@ -1,0 +1,74 @@
+{
+  "schema": "edge4av-airspan-r1-validation-v1",
+  "host_side_collection_status": "pass",
+  "overall_r1_status": "pending_airspan_and_mg52_artifacts",
+  "checks": {
+    "v1_operator_window_recorded": true,
+    "v1_idle_confirmed_from_acp": null,
+    "v2_client_exit_zero": true,
+    "v2_server_exit_zero": true,
+    "v2_sender_receiver_bytes_equal": true,
+    "v2_offered_target_achieved": false,
+    "v3_client_exit_zero": true,
+    "v3_server_exit_zero": true,
+    "v3_sender_receiver_bytes_equal": true,
+    "v3_offered_target_achieved": true,
+    "car_telemetry_expected_samples_each_window": true,
+    "edge_telemetry_expected_samples_each_window": true,
+    "interface_error_or_drop_delta_observed": false,
+    "load_or_collector_process_left_running": false,
+    "acp_time_alignment_validated": null,
+    "serving_cell_validated": null,
+    "cell_lock_validated_from_artifact": null,
+    "directional_drb_counters_validated": null
+  },
+  "load_results": {
+    "V2": {
+      "offered_mbps": 25.0,
+      "achieved_mbps": 13.118,
+      "bytes": 1475758800,
+      "sender_receiver_byte_difference": 0,
+      "interpretation": "The TCP sender was backpressured and the offered target was not reached; use 13.118 Mbps and the measured byte total for ACP-volume comparison."
+    },
+    "V3": {
+      "offered_mbps": 25.0,
+      "achieved_mbps": 25.0,
+      "bytes": 2812500000,
+      "sender_receiver_byte_difference": 0,
+      "interpretation": "The configured application payload rate was sustained for the full client duration."
+    }
+  },
+  "telemetry": {
+    "sample_interval_seconds": 1,
+    "samples_per_host_per_window": 910,
+    "V2": {
+      "car_interface_rx_bytes_delta": 38180508,
+      "car_interface_tx_bytes_delta": 1564471531,
+      "edge_interface_rx_bytes_delta": 1548708663,
+      "edge_interface_tx_bytes_delta": 18416723
+    },
+    "V3": {
+      "car_interface_rx_bytes_delta": 2961387131,
+      "car_interface_tx_bytes_delta": 48285325,
+      "edge_interface_rx_bytes_delta": 30544944,
+      "edge_interface_tx_bytes_delta": 2951926862
+    }
+  },
+  "timing": {
+    "controller_timezone": "America/New_York",
+    "clock_sync_state": "unsynced",
+    "edge_clock_relative_to_controller": "approximately_173.9_seconds_behind",
+    "cross_host_timestamp_interpretation": "Do not compare raw wall-clock timestamps as synchronized or derive one-way latency.",
+    "v3_trigger_alignment": "The edge trigger used a pre-window midpoint clock-offset estimate; controller and edge trigger records are retained for audit."
+  },
+  "pending_operator_artifacts_and_checks": [
+    "ACP DU-cell export covering V1, V2, and V3",
+    "ACP evidence that V1 is distinguishable from the traffic windows",
+    "ACP evidence that V2 increases uplink DRB volume/time counters",
+    "ACP evidence that V3 increases downlink DRB volume/time counters",
+    "Cell 2 traffic attribution and Cell 1 negative control",
+    "MG52 cell-lock and serving-cell evidence",
+    "live 70/20/10 and 10D4G configuration evidence"
+  ],
+  "claim_boundary": "The host-side traffic and telemetry collection passed. R1 is not complete and is not paper-facing until the pending management-plane artifacts are inspected."
+}

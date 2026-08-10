@@ -1,16 +1,19 @@
 # Experiment Summary
 
-Last updated: 2026-07-08.
+Last updated: 2026-08-10.
 
 This file summarizes the experiments currently present under `results/`. It is
-based on the current result artifacts, not on prior generated paper prose. Raw
-CSV, JSON, log, GPS, and receiver artifacts remain under `results/`.
+based on the current result artifacts, not on prior generated paper prose.
+Repository-facing CSV, JSON, log, GPS, and receiver artifacts remain under
+`results/`. Exact GNSS, endpoint, hostname, and deployment-path copies from the
+2026-08-05 and 2026-08-06 follow-up remain only in the locally excluded
+`CISCO_AIRSPAN_STATS/` backups.
 
 ## Inventory
 
 | Result area | Scope | Current folders |
 |---|---|---:|
-| `results/real_5g/` | Private-5G TCP/MQTT/UDP latency, payload sweeps, load/QoS labels, detector-output replay, multiclient scaling, failure/fallback, deadline analysis, GPS, and signal maps | 24 run folders plus derived signal-map artifacts |
+| `results/real_5g/` | Private-5G TCP/MQTT/UDP latency, payload sweeps, load/QoS labels, detector-output replay, multiclient scaling, failure/fallback, deadline analysis, GPS, and signal maps | 30 dated run folders plus derived signal-map artifacts |
 | `results/mocar_v2x/` | Mocar C-V2X setup, custom RTT, stationary payload sweeps, signal probe, and radio-distance/mobility runs | 17 run folders |
 | `results/v2x_benchmarks/` | Public V2X dataset loopback, dataset/GPU processing, OpenCOOD smoke checks, and V2X-Radar detector benchmark runs | 9 result folders |
 | `results/local_loopback/` | Local loopback placeholder | present but empty |
@@ -303,6 +306,74 @@ requests over TCP, MQTT, and UDP.
 
 These runs show that restart/failure events mainly appear as missed requests
 and tail spikes rather than median shifts.
+
+### E08. Airspan `70/20/10` Validation And Multi-Location Follow-Up
+
+Primary folders:
+
+- `results/real_5g/20260805_airspan_r1_run_1/`
+- `results/real_5g/20260806_airspan_followup_run_1/`
+- `results/real_5g/20260806_airspan_followup_weak_run_1/`
+- `results/real_5g/20260806_airspan_followup_common_typical_run_2/`
+- `results/real_5g/20260806_airspan_followup_strong_run_2/`
+
+Purpose: collect host-side direction controls and repeated C1/C2 application
+workloads at multiple stationary vehicle locations under the operator-reported
+Cell 2 lock, `70/20/10` TDD profile, and unchanged `10D4G` frame packing. The
+MG52 remained on the trunk floor with its front face upward. Every application
+transport occupied a separate five-minute ACP interval, used 500 sequential
+RTT probes per repetition, and retained `clock_sync_state=unsynced`; one-way
+latency is therefore excluded.
+
+The R1 host-side direction controls passed artifact validation. V2 was a
+car-to-edge TCP stream from 13:15-13:30 EDT and transferred 1,475,758,800 bytes
+at 13.118 Mbps. TCP backpressure prevented it from reaching the configured
+25 Mbps target. V3 was an edge-to-car TCP stream from 13:35-13:50 EDT and
+transferred 2,812,500,000 bytes at the configured 25 Mbps. V1 is the operator-
+designated 11:15-11:30 EDT idle window and has no host telemetry. R1 remains
+pending until the matching ACP and MG52 artifacts validate the idle state,
+directional cell counters, Cell 2 attribution, cell lock, and live radio
+configuration.
+
+Application-block validation:
+
+| Location block | Conditions | Valid samples | Attempts | Accepted | Failed | Success |
+|---|---|---:|---:|---:|---:|---:|
+| Medium/typical | C1-C4 | 24/24 | 309000 | 307662 | 1338 | 99.566990% |
+| Weak candidate | C1-C2 | 12/12 | 6000 | 5994 | 6 | 99.900000% |
+| Common/typical repeat | C1-C2 | 12/12 | 6000 | 5999 | 1 | 99.983333% |
+| Strong candidate | C1-C2 | 12/12 | 6000 | 6000 | 0 | 100.000000% |
+
+The medium block includes the offered-uplink C3 workload and the 100-client C4
+workload. C3 produced five UDP timeouts. C4 TCP and MQTT accepted all 100,000
+attempts per transport, while C4 UDP accepted 98,667/100,000. The weak block's
+six failures and the common repeat's one failure are all C2 UDP acknowledgment
+timeouts. All failed rows remain in the result artifacts rather than being
+replaced by retries.
+
+The operator reported an MG52 RSRP display value of 109-110 for the original
+and repeated common/typical blocks and 101 for the strong candidate. Using the
+two common C1/C2 blocks as one descriptive reference distribution, the strong
+candidate had lower matched RTT percentiles in every condition/transport
+aggregate:
+
+| Workload | Transport | Common p50 ms | Strong p50 ms | p50 change | Common p95 ms | Strong p95 ms | p95 change |
+|---|---|---:|---:|---:|---:|---:|---:|
+| C1 | TCP | 123.729 | 117.863 | -4.74% | 149.913 | 137.309 | -8.41% |
+| C1 | MQTT | 30.428 | 28.016 | -7.93% | 41.632 | 39.955 | -4.03% |
+| C1 | UDP | 29.706 | 26.632 | -10.35% | 40.347 | 39.200 | -2.84% |
+| C2 | TCP | 85.477 | 75.388 | -11.80% | 106.971 | 93.605 | -12.49% |
+| C2 | MQTT | 59.790 | 49.753 | -16.79% | 75.752 | 59.721 | -21.16% |
+| C2 | UDP | 56.623 | 47.947 | -15.32% | 70.541 | 56.947 | -19.27% |
+
+This supports an application-layer association between the strong-candidate
+location and lower RTT, especially for C2. It does not yet establish that RSRP
+alone caused the change: the field blocks were sequential, contain two
+repetitions per transport, and still require aligned MG52 and ACP exports to
+validate radio-class separation, serving-cell lock, and contemporaneous cell
+load. Repository-facing GNSS coordinates are rounded to 0.001 degree and
+serialized rosbags are omitted; the exact-data backups remain excluded from
+version control.
 
 ## Mocar V2X Experiments
 

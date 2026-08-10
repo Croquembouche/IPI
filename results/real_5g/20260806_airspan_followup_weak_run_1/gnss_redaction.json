@@ -1,0 +1,7 @@
+{
+  "schema": "edge4av-gnss-repository-redaction-v1",
+  "coordinate_precision_deg": 0.001,
+  "coordinate_policy": "Exact operator and ROS coordinates are sensitive. Repository-facing GNSS CSV coordinates are rounded to 0.001 degree.",
+  "rosbag_policy": "Repository-facing rosbag databases are omitted because serialized messages retain exact coordinates.",
+  "raw_recovery": "Exact GNSS CSVs and all rosbag databases remain recoverable from the locally excluded unredacted run backup."
+}

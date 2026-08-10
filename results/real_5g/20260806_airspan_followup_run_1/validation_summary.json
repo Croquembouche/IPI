@@ -1,0 +1,31 @@
+{
+  "accepted": 307662,
+  "acp_mg52_artifacts_present": false,
+  "application_matrix_passed": true,
+  "attempts": 309000,
+  "expected_application_samples": 24,
+  "failed": 1338,
+  "gnss_coordinates_repository_precision_deg": 0.001,
+  "gnss_initial_outage_recorded": true,
+  "gnss_recovered_at": "2026-08-06T10:39:02-04:00",
+  "gnss_samples_with_in_window_positions": 10,
+  "gnss_samples_without_in_window_positions": 14,
+  "known_anomalies": [
+    "Automatic GNSS was unavailable before 2026-08-06T10:39:02-04:00; the operator-reported coordinate covers the fixed location.",
+    "C3 repetition 1 TCP has no end-of-run load CSV; interface counters provide its achieved-uplink estimate.",
+    "Three non-primary attempts are preserved and excluded from valid-repeat summaries."
+  ],
+  "metadata_correction_applied": true,
+  "missing_samples": [],
+  "one_way_metrics_excluded": true,
+  "paper_facing_blockers": [
+    "ACP Cell 2 and MG52 radio exports have not yet been aligned to the declared bins.",
+    "The operator-corrected medium signal class still requires radio-metric confirmation."
+  ],
+  "paper_facing_passed": false,
+  "preserved_invalid_attempts": 3,
+  "schema": "edge4av-airspan-followup-validation-v1",
+  "success_rate_pct": 99.56699029126213,
+  "valid_application_samples": 24,
+  "validation_errors": []
+}

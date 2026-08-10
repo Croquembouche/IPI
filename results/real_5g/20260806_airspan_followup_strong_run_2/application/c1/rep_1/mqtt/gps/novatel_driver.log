@@ -1,0 +1,574 @@
+[INFO] [launch]: All log files can be found below /home/car/.ros/log/2026-08-06-18-03-02-359620-car-804003
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [novatel_oem7_driver_exe-1]: process started with pid [804056]
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.570699150] [novatel.oem7.main]: Oem7RawMsg:  topic [oem7raw]: frame_id: 'gps'; q size: 200
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.571744430] [novatel.oem7.main]: Oem7MessageNode v.; Feb 19 2026 03:29:00
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.575720603] [novatel.oem7.main]: Oem7MessageDecoderLib version: 10.1.0
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.576156477] [novatel.oem7.main]: PPPPOS:  topic [ppppos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.576519965] [novatel.oem7.main]: BESTPOS:  topic [bestpos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.576864692] [novatel.oem7.main]: BESTVEL:  topic [bestvel]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.577176529] [novatel.oem7.main]: BESTGNSSVEL:  topic [bestgnssvel]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.577620276] [novatel.oem7.main]: BESTUTM:  topic [bestutm]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.577963687] [novatel.oem7.main]: BESTGNSSPOS:  topic [bestgnsspos]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.578292203] [novatel.oem7.main]: INSPVA:  topic [inspva]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.578620151] [novatel.oem7.main]: GPSFix:  topic [gps]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.579129497] [novatel.oem7.main]: NavSatFix:  topic [fix]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.579803357] [novatel.oem7.main]: GPSFix position source: BESTPOS or INSPVAS based on quality
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.579930796] [novatel.oem7.main]: IMU:  topic [imu/data]: frame_id: 'imu_link'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.580248312] [novatel.oem7.main]: RAWIMU:  topic [imu/data_raw]: frame_id: 'imu_link'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.580553874] [novatel.oem7.main]: CORRIMU:  topic [corrimu]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.580850231] [novatel.oem7.main]: INSSTDEV:  topic [insstdev]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.581167730] [novatel.oem7.main]: INSPVAX:  topic [inspvax]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.581511869] [novatel.oem7.main]: INSCONFIG:  topic [insconfig]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [WARN] [1786053782.581935040] [novatel.oem7.main]: Message 'RAWIMUSX' will not be published.
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.582072627] [novatel.oem7.main]: HEADING2:  topic [heading2]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.582407948] [novatel.oem7.main]: RXSTATUS:  topic [rxstatus]: frame_id: 'gps'; q size: 10
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.582799387] [novatel.oem7.main]: TERRASTARINFO:  topic [terrastarinfo]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.583112906] [novatel.oem7.main]: TERRASTARSTATUS:  topic [terrastarstatus]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.583438149] [novatel.oem7.main]: TIME:  topic [time]: frame_id: 'gps'; q size: 100
+[novatel_oem7_driver_exe-1] [WARN] [1786053782.583748277] [novatel.oem7.main]: Message 'NMEA_Sentence' will not be published.
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.583869086] [novatel.oem7.main]: Odometry:  topic [odom]: frame_id: 'odom'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.584447504] [novatel.oem7.main]: OdometryOrigin:  topic [odom_origin]: frame_id: 'odom'; q size: 100
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.587133687] [novatel.oem7.main]: Oem7Net TCP['<gnss-receiver>' : 3001]
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.587550412] [novatel.oem7.main]: Oem7Net socket open: '1; OS error= 0
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.636199663] [novatel.oem7.main]: Standard Receiver Initialization:
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.641970937] [novatel.oem7.main]: AACmd 'UNLOGALL THISPORT' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.646261918] [novatel.oem7.main]: AACmd 'LOG INSCONFIGB ONCE' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.651788419] [novatel.oem7.main]: AACmd 'LOG TERRASTARINFOB ONCE' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.846456196] [novatel.oem7.main]: AACmd 'LOG TERRASTARSTATUSB ONCE' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053782.851544236] [novatel.oem7.main]: AACmd 'LOG TERRASTARINFOB ONTIME 300' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.047869841] [novatel.oem7.main]: AACmd 'LOG TERRASTARSTATUSB ONTIME 300' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.246951482] [novatel.oem7.main]: AACmd 'LOG INSCONFIGB ONTIME 300' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.446523093] [novatel.oem7.main]: AACmd 'LOG RXSTATUSB ONCHANGED' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.451702852] [novatel.oem7.main]: AACmd 'LOG BESTPOSB ONTIME 0.1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.458590058] [novatel.oem7.main]: AACmd 'LOG BESTVELB ONTIME 0.1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.463657426] [novatel.oem7.main]: AACmd 'LOG BESTGNSSVELB ONTIME 0.1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.468585115] [novatel.oem7.main]: AACmd 'LOG BESTUTMB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.473398023] [novatel.oem7.main]: AACmd 'LOG BESTGNSSPOSB ONTIME 0.1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.477628923] [novatel.oem7.main]: AACmd 'LOG PPPPOSB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.483008542] [novatel.oem7.main]: AACmd 'LOG HEADING2B ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.512226736] [novatel.oem7.main]: AACmd 'LOG PSRDOP2B ONCHANGED' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.518122175] [novatel.oem7.main]: AACmd 'LOG INSPVASB ONTIME 0.02' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.522237224] [novatel.oem7.main]: AACmd 'LOG INSPVAXB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.527727388] [novatel.oem7.main]: AACmd 'LOG CORRIMUSB ONTIME 0.01' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.537345797] [novatel.oem7.main]: AACmd 'LOG INSSTDEVB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.541332773] [novatel.oem7.main]: AACmd 'LOG RAWIMUSXB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.547839870] [novatel.oem7.main]: AACmd 'LOG TIMEB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.557566808] [novatel.oem7.main]: AACmd 'LOG VERSIONB ONCE' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.563049324] [novatel.oem7.main]: AACmd 'LOG INSUPDATESTATUSB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.569083958] [novatel.oem7.main]: AACmd 'LOG RAWEPHEMB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.577030175] [novatel.oem7.main]: AACmd 'LOG GLOEPHEMERISB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.587386273] [novatel.oem7.main]: AACmd 'LOG BDSEPHEMERISB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.592134811] [novatel.oem7.main]: AACmd 'LOG GALFNAVEPHEMERISB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.596807946] [novatel.oem7.main]: AACmd 'LOG GALINAVEPHEMERISB ONNEW' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.608640275] [novatel.oem7.main]: AACmd 'LOG RANGEB ONTIME 1' : 'OK'
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.608686323] [novatel.oem7.main]: Extended Receiver Initialization:
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.608723393] [novatel.oem7.main]: Receiver Initialization completed, errors= 0
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.609880780] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation for odometry
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.624388089] [novatel.oem7.main]: GPSFix position source= INSPVA: 0 --> 0 at GPSTime[2430 425001620]
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.624466144] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.624960891] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation for odometry
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.632461884] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation for odometry
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.644101093] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.644531596] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation for odometry
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.653614518] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation for odometry
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.664167126] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.664670272] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation for odometry
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.673474732] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation for odometry
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.684051922] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.684364201] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation for odometry
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.692442810] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation for odometry
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.704719019] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation
+[novatel_oem7_driver_exe-1] [ERROR] [1786053783.705346997] [novatel.oem7.main]: No BESTPOS or INSPVAX to get undulation for odometry
+[novatel_oem7_driver_exe-1] [INFO] [1786053783.713760521] [novatel.oem7.main]: UTM new Zone:  -1 --> 31; N: 1 X: 166021 Y: 0
+[novatel_oem7_driver_exe-1] [WARN] [1786053783.733268138] [novatel.oem7.main]: Failed Conversion (tot: 1) Lat: 39.6664 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [INFO] [1786053784.024797787] [novatel.oem7.main]: GPSFix position source= INSPVA: 0 --> 1 at GPSTime[2430 425002020]
+[novatel_oem7_driver_exe-1] [WARN] [1786053784.733487893] [novatel.oem7.main]: Failed Conversion (tot: 102) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053785.734325712] [novatel.oem7.main]: Failed Conversion (tot: 202) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053786.745160897] [novatel.oem7.main]: Failed Conversion (tot: 303) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053787.753657409] [novatel.oem7.main]: Failed Conversion (tot: 404) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053788.753701841] [novatel.oem7.main]: Failed Conversion (tot: 504) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053789.764522185] [novatel.oem7.main]: Failed Conversion (tot: 605) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053790.765493403] [novatel.oem7.main]: Failed Conversion (tot: 705) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053791.772471050] [novatel.oem7.main]: Failed Conversion (tot: 806) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053792.772705946] [novatel.oem7.main]: Failed Conversion (tot: 906) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053793.785156020] [novatel.oem7.main]: Failed Conversion (tot: 1007) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053794.793412317] [novatel.oem7.main]: Failed Conversion (tot: 1108) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053795.793896340] [novatel.oem7.main]: Failed Conversion (tot: 1208) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053796.806645354] [novatel.oem7.main]: Failed Conversion (tot: 1309) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053797.813626971] [novatel.oem7.main]: Failed Conversion (tot: 1410) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053798.813634050] [novatel.oem7.main]: Failed Conversion (tot: 1510) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053799.824454546] [novatel.oem7.main]: Failed Conversion (tot: 1611) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053800.824972506] [novatel.oem7.main]: Failed Conversion (tot: 1711) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053801.833479627] [novatel.oem7.main]: Failed Conversion (tot: 1812) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053802.844742058] [novatel.oem7.main]: Failed Conversion (tot: 1913) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053803.853555110] [novatel.oem7.main]: Failed Conversion (tot: 2014) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053804.853568084] [novatel.oem7.main]: Failed Conversion (tot: 2114) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053805.853621561] [novatel.oem7.main]: Failed Conversion (tot: 2214) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053806.853755781] [novatel.oem7.main]: Failed Conversion (tot: 2314) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053807.865209264] [novatel.oem7.main]: Failed Conversion (tot: 2415) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053808.865413484] [novatel.oem7.main]: Failed Conversion (tot: 2515) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053809.872599494] [novatel.oem7.main]: Failed Conversion (tot: 2616) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053810.872847465] [novatel.oem7.main]: Failed Conversion (tot: 2716) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053811.884481907] [novatel.oem7.main]: Failed Conversion (tot: 2817) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053812.885393722] [novatel.oem7.main]: Failed Conversion (tot: 2917) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053813.892488602] [novatel.oem7.main]: Failed Conversion (tot: 3018) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053814.892652103] [novatel.oem7.main]: Failed Conversion (tot: 3118) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053815.905342270] [novatel.oem7.main]: Failed Conversion (tot: 3219) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053816.913513972] [novatel.oem7.main]: Failed Conversion (tot: 3320) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053817.913595389] [novatel.oem7.main]: Failed Conversion (tot: 3420) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053818.913666596] [novatel.oem7.main]: Failed Conversion (tot: 3520) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053819.923611971] [novatel.oem7.main]: Failed Conversion (tot: 3621) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053820.924582554] [novatel.oem7.main]: Failed Conversion (tot: 3721) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053821.924793667] [novatel.oem7.main]: Failed Conversion (tot: 3821) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053822.933611973] [novatel.oem7.main]: Failed Conversion (tot: 3922) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053823.936874258] [novatel.oem7.main]: Failed Conversion (tot: 4022) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053824.944482586] [novatel.oem7.main]: Failed Conversion (tot: 4123) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053825.953662283] [novatel.oem7.main]: Failed Conversion (tot: 4224) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053826.953785518] [novatel.oem7.main]: Failed Conversion (tot: 4324) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053827.963971655] [novatel.oem7.main]: Failed Conversion (tot: 4425) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053828.967242970] [novatel.oem7.main]: Failed Conversion (tot: 4525) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053829.973469793] [novatel.oem7.main]: Failed Conversion (tot: 4626) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053830.973597933] [novatel.oem7.main]: Failed Conversion (tot: 4726) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053831.985556206] [novatel.oem7.main]: Failed Conversion (tot: 4827) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053832.992487093] [novatel.oem7.main]: Failed Conversion (tot: 4928) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053833.994461118] [novatel.oem7.main]: Failed Conversion (tot: 5028) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053835.008468522] [novatel.oem7.main]: Failed Conversion (tot: 5129) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053836.014656659] [novatel.oem7.main]: Failed Conversion (tot: 5230) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053837.014928398] [novatel.oem7.main]: Failed Conversion (tot: 5330) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053838.025875561] [novatel.oem7.main]: Failed Conversion (tot: 5431) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053839.033705777] [novatel.oem7.main]: Failed Conversion (tot: 5532) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053840.033798311] [novatel.oem7.main]: Failed Conversion (tot: 5632) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053841.045710435] [novatel.oem7.main]: Failed Conversion (tot: 5733) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053842.054588709] [novatel.oem7.main]: Failed Conversion (tot: 5834) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053843.065182989] [novatel.oem7.main]: Failed Conversion (tot: 5935) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053844.073523149] [novatel.oem7.main]: Failed Conversion (tot: 6036) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053845.073857638] [novatel.oem7.main]: Failed Conversion (tot: 6136) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053846.084976716] [novatel.oem7.main]: Failed Conversion (tot: 6237) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053847.085020015] [novatel.oem7.main]: Failed Conversion (tot: 6337) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053848.092991271] [novatel.oem7.main]: Failed Conversion (tot: 6438) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053849.105310940] [novatel.oem7.main]: Failed Conversion (tot: 6539) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053850.105879364] [novatel.oem7.main]: Failed Conversion (tot: 6639) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053851.106604947] [novatel.oem7.main]: Failed Conversion (tot: 6739) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053852.112645204] [novatel.oem7.main]: Failed Conversion (tot: 6840) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053853.112767171] [novatel.oem7.main]: Failed Conversion (tot: 6940) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053854.124735961] [novatel.oem7.main]: Failed Conversion (tot: 7041) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053855.124875715] [novatel.oem7.main]: Failed Conversion (tot: 7141) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053856.133909109] [novatel.oem7.main]: Failed Conversion (tot: 7242) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053857.145388592] [novatel.oem7.main]: Failed Conversion (tot: 7343) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053858.154223345] [novatel.oem7.main]: Failed Conversion (tot: 7444) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053859.154297245] [novatel.oem7.main]: Failed Conversion (tot: 7544) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053860.164845099] [novatel.oem7.main]: Failed Conversion (tot: 7645) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053861.173633246] [novatel.oem7.main]: Failed Conversion (tot: 7746) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053862.173734714] [novatel.oem7.main]: Failed Conversion (tot: 7846) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053863.185525136] [novatel.oem7.main]: Failed Conversion (tot: 7947) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053864.192891777] [novatel.oem7.main]: Failed Conversion (tot: 8048) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053865.193110010] [novatel.oem7.main]: Failed Conversion (tot: 8148) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053866.204914535] [novatel.oem7.main]: Failed Conversion (tot: 8249) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053867.213079576] [novatel.oem7.main]: Failed Conversion (tot: 8350) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053868.224675941] [novatel.oem7.main]: Failed Conversion (tot: 8451) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053869.224761619] [novatel.oem7.main]: Failed Conversion (tot: 8551) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053870.225124264] [novatel.oem7.main]: Failed Conversion (tot: 8651) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053871.234369805] [novatel.oem7.main]: Failed Conversion (tot: 8752) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053872.244204470] [novatel.oem7.main]: Failed Conversion (tot: 8853) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053873.253854286] [novatel.oem7.main]: Failed Conversion (tot: 8954) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053874.254988783] [novatel.oem7.main]: Failed Conversion (tot: 9054) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053875.264944314] [novatel.oem7.main]: Failed Conversion (tot: 9155) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053876.265979367] [novatel.oem7.main]: Failed Conversion (tot: 9255) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053877.273798637] [novatel.oem7.main]: Failed Conversion (tot: 9356) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053878.285124471] [novatel.oem7.main]: Failed Conversion (tot: 9457) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053879.292951652] [novatel.oem7.main]: Failed Conversion (tot: 9558) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053880.305809044] [novatel.oem7.main]: Failed Conversion (tot: 9659) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053881.305871449] [novatel.oem7.main]: Failed Conversion (tot: 9759) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053882.306196964] [novatel.oem7.main]: Failed Conversion (tot: 9859) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053883.312863399] [novatel.oem7.main]: Failed Conversion (tot: 9960) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053884.324705869] [novatel.oem7.main]: Failed Conversion (tot: 10061) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053885.325001679] [novatel.oem7.main]: Failed Conversion (tot: 10161) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053886.333825576] [novatel.oem7.main]: Failed Conversion (tot: 10262) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053887.334058510] [novatel.oem7.main]: Failed Conversion (tot: 10362) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053888.334441903] [novatel.oem7.main]: Failed Conversion (tot: 10462) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053889.345144154] [novatel.oem7.main]: Failed Conversion (tot: 10563) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053890.345281605] [novatel.oem7.main]: Failed Conversion (tot: 10663) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053891.345458079] [novatel.oem7.main]: Failed Conversion (tot: 10763) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053892.354012693] [novatel.oem7.main]: Failed Conversion (tot: 10864) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053893.354125950] [novatel.oem7.main]: Failed Conversion (tot: 10964) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053894.363927111] [novatel.oem7.main]: Failed Conversion (tot: 11065) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053895.364054107] [novatel.oem7.main]: Failed Conversion (tot: 11165) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053896.373970092] [novatel.oem7.main]: Failed Conversion (tot: 11266) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053897.384834620] [novatel.oem7.main]: Failed Conversion (tot: 11367) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053898.384842058] [novatel.oem7.main]: Failed Conversion (tot: 11467) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053899.393783619] [novatel.oem7.main]: Failed Conversion (tot: 11568) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053900.394052371] [novatel.oem7.main]: Failed Conversion (tot: 11668) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053901.404876199] [novatel.oem7.main]: Failed Conversion (tot: 11769) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053902.404905716] [novatel.oem7.main]: Failed Conversion (tot: 11869) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053903.406557426] [novatel.oem7.main]: Failed Conversion (tot: 11969) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053904.412999821] [novatel.oem7.main]: Failed Conversion (tot: 12070) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053905.413795044] [novatel.oem7.main]: Failed Conversion (tot: 12170) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053906.425280183] [novatel.oem7.main]: Failed Conversion (tot: 12271) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053907.426175925] [novatel.oem7.main]: Failed Conversion (tot: 12371) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053908.432770587] [novatel.oem7.main]: Failed Conversion (tot: 12472) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053909.444782469] [novatel.oem7.main]: Failed Conversion (tot: 12573) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053910.445118477] [novatel.oem7.main]: Failed Conversion (tot: 12673) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053911.445249015] [novatel.oem7.main]: Failed Conversion (tot: 12773) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053912.454920686] [novatel.oem7.main]: Failed Conversion (tot: 12874) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053913.466155312] [novatel.oem7.main]: Failed Conversion (tot: 12975) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053914.473825042] [novatel.oem7.main]: Failed Conversion (tot: 13076) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053915.473871292] [novatel.oem7.main]: Failed Conversion (tot: 13176) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053916.484040511] [novatel.oem7.main]: Failed Conversion (tot: 13277) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053917.484101875] [novatel.oem7.main]: Failed Conversion (tot: 13377) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053918.484236768] [novatel.oem7.main]: Failed Conversion (tot: 13477) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053919.494315931] [novatel.oem7.main]: Failed Conversion (tot: 13578) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053920.506277688] [novatel.oem7.main]: Failed Conversion (tot: 13679) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053921.506320754] [novatel.oem7.main]: Failed Conversion (tot: 13779) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053922.506467389] [novatel.oem7.main]: Failed Conversion (tot: 13879) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053923.513916116] [novatel.oem7.main]: Failed Conversion (tot: 13980) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053924.514007218] [novatel.oem7.main]: Failed Conversion (tot: 14080) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053925.514061060] [novatel.oem7.main]: Failed Conversion (tot: 14180) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053926.525048292] [novatel.oem7.main]: Failed Conversion (tot: 14281) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053927.525071545] [novatel.oem7.main]: Failed Conversion (tot: 14381) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053928.533837074] [novatel.oem7.main]: Failed Conversion (tot: 14482) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053929.534457306] [novatel.oem7.main]: Failed Conversion (tot: 14582) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053930.545870093] [novatel.oem7.main]: Failed Conversion (tot: 14683) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053931.546239227] [novatel.oem7.main]: Failed Conversion (tot: 14783) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053932.554246989] [novatel.oem7.main]: Failed Conversion (tot: 14884) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053933.564881661] [novatel.oem7.main]: Failed Conversion (tot: 14985) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053934.565112915] [novatel.oem7.main]: Failed Conversion (tot: 15085) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053935.565246786] [novatel.oem7.main]: Failed Conversion (tot: 15185) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053936.565262043] [novatel.oem7.main]: Failed Conversion (tot: 15285) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053937.573456561] [novatel.oem7.main]: Failed Conversion (tot: 15386) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053938.585518635] [novatel.oem7.main]: Failed Conversion (tot: 15487) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053939.585743896] [novatel.oem7.main]: Failed Conversion (tot: 15587) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053940.585864184] [novatel.oem7.main]: Failed Conversion (tot: 15687) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053941.593991535] [novatel.oem7.main]: Failed Conversion (tot: 15788) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053942.605176818] [novatel.oem7.main]: Failed Conversion (tot: 15889) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053943.614302675] [novatel.oem7.main]: Failed Conversion (tot: 15990) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053944.625710159] [novatel.oem7.main]: Failed Conversion (tot: 16091) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053945.634762541] [novatel.oem7.main]: Failed Conversion (tot: 16192) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053946.647383721] [novatel.oem7.main]: Failed Conversion (tot: 16293) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053947.654312685] [novatel.oem7.main]: Failed Conversion (tot: 16394) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053948.665384624] [novatel.oem7.main]: Failed Conversion (tot: 16495) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053949.665617795] [novatel.oem7.main]: Failed Conversion (tot: 16595) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053950.665793706] [novatel.oem7.main]: Failed Conversion (tot: 16695) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053951.666110416] [novatel.oem7.main]: Failed Conversion (tot: 16795) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053952.675285725] [novatel.oem7.main]: Failed Conversion (tot: 16895) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053953.685122404] [novatel.oem7.main]: Failed Conversion (tot: 16997) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053954.685200361] [novatel.oem7.main]: Failed Conversion (tot: 17097) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053955.694455064] [novatel.oem7.main]: Failed Conversion (tot: 17198) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053956.706085074] [novatel.oem7.main]: Failed Conversion (tot: 17299) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053957.713975090] [novatel.oem7.main]: Failed Conversion (tot: 17400) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053958.714026914] [novatel.oem7.main]: Failed Conversion (tot: 17500) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053959.715554503] [novatel.oem7.main]: Failed Conversion (tot: 17600) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053960.724279286] [novatel.oem7.main]: Failed Conversion (tot: 17701) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053961.733989714] [novatel.oem7.main]: Failed Conversion (tot: 17802) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053962.745533912] [novatel.oem7.main]: Failed Conversion (tot: 17903) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053963.745575878] [novatel.oem7.main]: Failed Conversion (tot: 18003) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053964.745740713] [novatel.oem7.main]: Failed Conversion (tot: 18103) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053965.754298758] [novatel.oem7.main]: Failed Conversion (tot: 18204) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053966.754373757] [novatel.oem7.main]: Failed Conversion (tot: 18304) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053967.754678131] [novatel.oem7.main]: Failed Conversion (tot: 18404) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053968.765708736] [novatel.oem7.main]: Failed Conversion (tot: 18505) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053969.772995910] [novatel.oem7.main]: Failed Conversion (tot: 18606) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053970.773074781] [novatel.oem7.main]: Failed Conversion (tot: 18706) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053971.785379812] [novatel.oem7.main]: Failed Conversion (tot: 18807) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053972.785829399] [novatel.oem7.main]: Failed Conversion (tot: 18907) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053973.785847016] [novatel.oem7.main]: Failed Conversion (tot: 19007) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053974.786134264] [novatel.oem7.main]: Failed Conversion (tot: 19107) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053975.793096134] [novatel.oem7.main]: Failed Conversion (tot: 19208) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053976.793179526] [novatel.oem7.main]: Failed Conversion (tot: 19308) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053977.793341086] [novatel.oem7.main]: Failed Conversion (tot: 19408) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053978.805136946] [novatel.oem7.main]: Failed Conversion (tot: 19509) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053979.813978069] [novatel.oem7.main]: Failed Conversion (tot: 19610) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053980.814526223] [novatel.oem7.main]: Failed Conversion (tot: 19710) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053981.825209002] [novatel.oem7.main]: Failed Conversion (tot: 19811) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053982.825898422] [novatel.oem7.main]: Failed Conversion (tot: 19911) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053983.826215755] [novatel.oem7.main]: Failed Conversion (tot: 20011) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053984.834646138] [novatel.oem7.main]: Failed Conversion (tot: 20112) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053985.844394987] [novatel.oem7.main]: Failed Conversion (tot: 20213) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053986.844636377] [novatel.oem7.main]: Failed Conversion (tot: 20313) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053987.854590655] [novatel.oem7.main]: Failed Conversion (tot: 20414) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053988.865488446] [novatel.oem7.main]: Failed Conversion (tot: 20515) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053989.874258966] [novatel.oem7.main]: Failed Conversion (tot: 20616) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053990.885098810] [novatel.oem7.main]: Failed Conversion (tot: 20717) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053991.886318694] [novatel.oem7.main]: Failed Conversion (tot: 20817) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053992.893129911] [novatel.oem7.main]: Failed Conversion (tot: 20918) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053993.893218745] [novatel.oem7.main]: Failed Conversion (tot: 21018) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053994.906267423] [novatel.oem7.main]: Failed Conversion (tot: 21119) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053995.907117456] [novatel.oem7.main]: Failed Conversion (tot: 21219) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053996.914031370] [novatel.oem7.main]: Failed Conversion (tot: 21320) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053997.925174956] [novatel.oem7.main]: Failed Conversion (tot: 21421) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053998.927255464] [novatel.oem7.main]: Failed Conversion (tot: 21521) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786053999.934547010] [novatel.oem7.main]: Failed Conversion (tot: 21622) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054000.934679172] [novatel.oem7.main]: Failed Conversion (tot: 21722) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054001.945274567] [novatel.oem7.main]: Failed Conversion (tot: 21823) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054002.954319029] [novatel.oem7.main]: Failed Conversion (tot: 21924) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054003.954522655] [novatel.oem7.main]: Failed Conversion (tot: 22024) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054004.965237070] [novatel.oem7.main]: Failed Conversion (tot: 22125) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054005.974163589] [novatel.oem7.main]: Failed Conversion (tot: 22226) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054006.974279571] [novatel.oem7.main]: Failed Conversion (tot: 22326) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054007.974297144] [novatel.oem7.main]: Failed Conversion (tot: 22426) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054008.985838778] [novatel.oem7.main]: Failed Conversion (tot: 22527) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054009.986151916] [novatel.oem7.main]: Failed Conversion (tot: 22627) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054010.993054977] [novatel.oem7.main]: Failed Conversion (tot: 22728) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054011.994241668] [novatel.oem7.main]: Failed Conversion (tot: 22828) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054012.994717985] [novatel.oem7.main]: Failed Conversion (tot: 22928) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054014.008960775] [novatel.oem7.main]: Failed Conversion (tot: 23029) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054015.010984228] [novatel.oem7.main]: Failed Conversion (tot: 23129) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054016.014383982] [novatel.oem7.main]: Failed Conversion (tot: 23230) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054017.027183730] [novatel.oem7.main]: Failed Conversion (tot: 23331) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054018.028104697] [novatel.oem7.main]: Failed Conversion (tot: 23431) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054019.033652908] [novatel.oem7.main]: Failed Conversion (tot: 23532) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054020.045447382] [novatel.oem7.main]: Failed Conversion (tot: 23633) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054021.046558516] [novatel.oem7.main]: Failed Conversion (tot: 23733) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054022.055099232] [novatel.oem7.main]: Failed Conversion (tot: 23834) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054023.065840668] [novatel.oem7.main]: Failed Conversion (tot: 23935) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054024.074223530] [novatel.oem7.main]: Failed Conversion (tot: 24036) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054025.074456928] [novatel.oem7.main]: Failed Conversion (tot: 24136) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054026.074464055] [novatel.oem7.main]: Failed Conversion (tot: 24236) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054027.085499021] [novatel.oem7.main]: Failed Conversion (tot: 24337) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054028.094207892] [novatel.oem7.main]: Failed Conversion (tot: 24438) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31
+[novatel_oem7_driver_exe-1] [WARN] [1786054029.094288817] [novatel.oem7.main]: Failed Conversion (tot: 24538) Lat: 39.6663 Lon: -75.7569; Zone: 31
+[novatel_oem7_driver_exe-1] Longitude -75.7569d more than 60d from center of UTM zone 31

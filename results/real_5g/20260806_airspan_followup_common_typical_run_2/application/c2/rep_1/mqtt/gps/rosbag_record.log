@@ -1,0 +1,15 @@
+stdin is not a terminal device. Keyboard handling disabled.[INFO] [1786048369.822735717] [rosbag2_recorder]: Press SPACE for pausing/resuming
+[INFO] [1786048369.824049503] [rosbag2_storage]: Opened database '<repo-root>/results/real_5g/20260806_airspan_followup_strong_run_1/application/c2/rep_1/mqtt/gps/rosbag/rosbag_0.db3' for READ_WRITE.
+[INFO] [1786048369.824400975] [rosbag2_recorder]: Listening for topics...
+[INFO] [1786048369.824416660] [rosbag2_recorder]: Event publisher thread: Starting
+[INFO] [1786048369.824539943] [rosbag2_recorder]: Recording...
+[INFO] [1786048369.927889472] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/bestpos'
+[INFO] [1786048369.929031118] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/bestvel'
+[INFO] [1786048369.931028878] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/fix'
+[INFO] [1786048369.932876191] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/gps'
+[INFO] [1786048369.934115641] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/inspva'
+[INFO] [1786048369.935852997] [rosbag2_recorder]: Subscribed to topic '/novatel/oem7/odom'
+[INFO] [1786048369.935911250] [rosbag2_recorder]: All requested topics are subscribed. Stopping discovery...
+[INFO] [1786048650.671309887] [rosbag2_cpp]: Writing remaining messages from cache to the bag. It may take a while
+[INFO] [1786048650.673223897] [rosbag2_recorder]: Event publisher thread: Exiting
+[INFO] [1786048650.673335721] [rosbag2_recorder]: Recording stopped

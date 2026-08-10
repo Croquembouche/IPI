@@ -1,0 +1,7 @@
+sample_id,repetition,transport,clients,attempts,accepted,failed,success_rate_pct,jain_accepted_count,client_success_rate_min_pct,client_success_rate_median_pct,client_success_rate_max_pct,client_rtt_p50_min_ms,client_rtt_p50_median_ms,client_rtt_p50_max_ms
+C4-rep1-tcp,1,tcp,100,50000,50000,0,100,1,100,100,100,239.894,245.4745,251.822
+C4-rep1-mqtt,1,mqtt,100,50000,50000,0,100,1,100,100,100,149.789,153.9185,156.881
+C4-rep1-udp,1,udp,100,50000,49386,614,98.772,0.999979826,97.8,98.8,99.6,85.636,101.843,109.601
+C4-rep2-tcp,2,tcp,100,50000,50000,0,100,1,100,100,100,249.688,255.8185,261.89
+C4-rep2-mqtt,2,mqtt,100,50000,50000,0,100,1,100,100,100,158.54,161.7955,163.749
+C4-rep2-udp,2,udp,100,50000,49281,719,98.562,0.999977544,97.4,98.6,99.8,93.731,105.821,113.698

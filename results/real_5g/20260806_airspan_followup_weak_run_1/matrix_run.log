@@ -1,0 +1,174 @@
+[2026-08-06T14:27:00-04:00] Starting matrix phase signal_class=weak location_id=weak_location_1 physical_placement=mg52_on_trunk_floor_front_face_up_toward_sky conditions=C1 C2 count=500 interval_ms=200
+[2026-08-06T14:27:00-04:00] Scheduled C1 repetition 1 tcp for 2026-08-06T14:30:00-04:00 to 2026-08-06T14:35:00-04:00
+Preflight for C1 repetition 1 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:27:01-04:00] Preflight passed for C1 repetition 1 over tcp
+[2026-08-06T14:27:01-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:27:02-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:30:15-04:00] Starting workload at 2026-08-06T14:30:15-04:00
+[2026-08-06T14:33:00-04:00] Workload finished at 2026-08-06T14:33:00-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c1-rep1-tcp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T14:33:03-04:00] C1 repetition 1 tcp complete
+[2026-08-06T14:33:05-04:00] C1 repetition 1 tcp passed immediate validation
+[2026-08-06T14:33:05-04:00] Scheduled C1 repetition 1 mqtt for 2026-08-06T14:35:00-04:00 to 2026-08-06T14:40:00-04:00
+Preflight for C1 repetition 1 over mqtt
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:33:06-04:00] Preflight passed for C1 repetition 1 over mqtt
+[2026-08-06T14:33:06-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:33:07-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:35:15-04:00] Starting workload at 2026-08-06T14:35:15-04:00
+[2026-08-06T14:37:12-04:00] Workload finished at 2026-08-06T14:37:12-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c1-rep1-mqtt_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T14:37:15-04:00] C1 repetition 1 mqtt complete
+[2026-08-06T14:37:18-04:00] C1 repetition 1 mqtt passed immediate validation
+[2026-08-06T14:37:18-04:00] Scheduled C1 repetition 1 udp for 2026-08-06T14:40:00-04:00 to 2026-08-06T14:45:00-04:00
+Preflight for C1 repetition 1 over udp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:37:19-04:00] Preflight passed for C1 repetition 1 over udp
+[2026-08-06T14:37:19-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:37:20-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:40:15-04:00] Starting workload at 2026-08-06T14:40:15-04:00
+[2026-08-06T14:42:12-04:00] Workload finished at 2026-08-06T14:42:12-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c1-rep1-udp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T14:42:15-04:00] C1 repetition 1 udp complete
+[2026-08-06T14:42:18-04:00] C1 repetition 1 udp passed immediate validation
+[2026-08-06T14:42:18-04:00] Scheduled C1 repetition 2 udp for 2026-08-06T14:45:00-04:00 to 2026-08-06T14:50:00-04:00
+Preflight for C1 repetition 2 over udp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:42:19-04:00] Preflight passed for C1 repetition 2 over udp
+[2026-08-06T14:42:19-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:42:20-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:45:15-04:00] Starting workload at 2026-08-06T14:45:15-04:00
+[2026-08-06T14:47:12-04:00] Workload finished at 2026-08-06T14:47:12-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c1-rep2-udp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T14:47:15-04:00] C1 repetition 2 udp complete
+[2026-08-06T14:47:18-04:00] C1 repetition 2 udp passed immediate validation
+[2026-08-06T14:47:18-04:00] Scheduled C1 repetition 2 mqtt for 2026-08-06T14:50:00-04:00 to 2026-08-06T14:55:00-04:00
+Preflight for C1 repetition 2 over mqtt
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:47:19-04:00] Preflight passed for C1 repetition 2 over mqtt
+[2026-08-06T14:47:19-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:47:20-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:50:15-04:00] Starting workload at 2026-08-06T14:50:15-04:00
+[2026-08-06T14:52:12-04:00] Workload finished at 2026-08-06T14:52:12-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c1-rep2-mqtt_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T14:52:15-04:00] C1 repetition 2 mqtt complete
+[2026-08-06T14:52:18-04:00] C1 repetition 2 mqtt passed immediate validation
+[2026-08-06T14:52:18-04:00] Scheduled C1 repetition 2 tcp for 2026-08-06T14:55:00-04:00 to 2026-08-06T15:00:00-04:00
+Preflight for C1 repetition 2 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:52:19-04:00] Preflight passed for C1 repetition 2 over tcp
+[2026-08-06T14:52:19-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:52:20-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:55:15-04:00] Starting workload at 2026-08-06T14:55:15-04:00
+[2026-08-06T14:57:59-04:00] Workload finished at 2026-08-06T14:57:59-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c1-rep2-tcp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T14:58:02-04:00] C1 repetition 2 tcp complete
+[2026-08-06T14:58:05-04:00] C1 repetition 2 tcp passed immediate validation
+[2026-08-06T14:58:05-04:00] Scheduled C2 repetition 1 tcp for 2026-08-06T15:00:00-04:00 to 2026-08-06T15:05:00-04:00
+Preflight for C2 repetition 1 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:58:06-04:00] Preflight passed for C2 repetition 1 over tcp
+[2026-08-06T14:58:06-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T14:58:07-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:00:15-04:00] Starting workload at 2026-08-06T15:00:15-04:00
+[2026-08-06T15:03:11-04:00] Workload finished at 2026-08-06T15:03:11-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c2-rep1-tcp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T15:03:14-04:00] C2 repetition 1 tcp complete
+[2026-08-06T15:03:17-04:00] C2 repetition 1 tcp passed immediate validation
+[2026-08-06T15:03:17-04:00] Scheduled C2 repetition 1 mqtt for 2026-08-06T15:05:00-04:00 to 2026-08-06T15:10:00-04:00
+Preflight for C2 repetition 1 over mqtt
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:03:18-04:00] Preflight passed for C2 repetition 1 over mqtt
+[2026-08-06T15:03:18-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:03:19-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:05:15-04:00] Starting workload at 2026-08-06T15:05:15-04:00
+[2026-08-06T15:08:01-04:00] Workload finished at 2026-08-06T15:08:01-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c2-rep1-mqtt_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T15:08:04-04:00] C2 repetition 1 mqtt complete
+[2026-08-06T15:08:06-04:00] C2 repetition 1 mqtt passed immediate validation
+[2026-08-06T15:08:06-04:00] Scheduled C2 repetition 1 udp for 2026-08-06T15:10:00-04:00 to 2026-08-06T15:15:00-04:00
+Preflight for C2 repetition 1 over udp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:08:08-04:00] Preflight passed for C2 repetition 1 over udp
+[2026-08-06T15:08:08-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:08:08-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:10:15-04:00] Starting workload at 2026-08-06T15:10:15-04:00
+[2026-08-06T15:13:11-04:00] Workload finished at 2026-08-06T15:13:11-04:00
+{"accepted": 497, "complete_files": 1, "expected_rows_per_file": 500, "failed": 3, "files": 1, "per_file": {"c2-rep1-udp_veh-001_sender.csv": {"accepted": 497, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T15:13:14-04:00] C2 repetition 1 udp complete
+[2026-08-06T15:13:17-04:00] C2 repetition 1 udp passed immediate validation
+[2026-08-06T15:13:17-04:00] Scheduled C2 repetition 2 udp for 2026-08-06T15:15:00-04:00 to 2026-08-06T15:20:00-04:00
+Preflight for C2 repetition 2 over udp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:13:18-04:00] Preflight passed for C2 repetition 2 over udp
+[2026-08-06T15:13:18-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:13:19-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:15:15-04:00] Starting workload at 2026-08-06T15:15:15-04:00
+[2026-08-06T15:18:12-04:00] Workload finished at 2026-08-06T15:18:12-04:00
+{"accepted": 497, "complete_files": 1, "expected_rows_per_file": 500, "failed": 3, "files": 1, "per_file": {"c2-rep2-udp_veh-001_sender.csv": {"accepted": 497, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T15:18:15-04:00] C2 repetition 2 udp complete
+[2026-08-06T15:18:18-04:00] C2 repetition 2 udp passed immediate validation
+[2026-08-06T15:18:18-04:00] Scheduled C2 repetition 2 mqtt for 2026-08-06T15:20:00-04:00 to 2026-08-06T15:25:00-04:00
+Preflight for C2 repetition 2 over mqtt
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:18:19-04:00] Preflight passed for C2 repetition 2 over mqtt
+[2026-08-06T15:18:19-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:18:20-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:20:15-04:00] Starting workload at 2026-08-06T15:20:15-04:00
+[2026-08-06T15:23:01-04:00] Workload finished at 2026-08-06T15:23:01-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c2-rep2-mqtt_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T15:23:04-04:00] C2 repetition 2 mqtt complete
+[2026-08-06T15:23:07-04:00] C2 repetition 2 mqtt passed immediate validation
+[2026-08-06T15:23:07-04:00] Scheduled C2 repetition 2 tcp for 2026-08-06T15:25:00-04:00 to 2026-08-06T15:30:00-04:00
+Preflight for C2 repetition 2 over tcp
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:23:08-04:00] Preflight passed for C2 repetition 2 over tcp
+[2026-08-06T15:23:08-04:00] Starting car and d1 host telemetry
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:23:09-04:00] Starting GNSS recorder
+Warning: Permanently added '<edge-host>' (ED25519) to the list of known hosts.
+[2026-08-06T15:25:15-04:00] Starting workload at 2026-08-06T15:25:15-04:00
+[2026-08-06T15:28:15-04:00] Workload finished at 2026-08-06T15:28:15-04:00
+{"accepted": 500, "complete_files": 1, "expected_rows_per_file": 500, "failed": 0, "files": 1, "per_file": {"c2-rep2-tcp_veh-001_sender.csv": {"accepted": 500, "complete": true, "rows": 500}}, "rows": 500}
+[2026-08-06T15:28:18-04:00] C2 repetition 2 tcp complete
+[2026-08-06T15:28:20-04:00] C2 repetition 2 tcp passed immediate validation
+[2026-08-06T15:28:20-04:00] Matrix phase complete signal_class=weak location_id=weak_location_1 physical_placement=mg52_on_trunk_floor_front_face_up_toward_sky conditions=C1 C2

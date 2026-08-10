@@ -1,0 +1,4 @@
+path,condition,repetition,transport,attempts,accepted,failed,reason,included_in_summary
+application/c3/rep_1/mqtt_attempt_1_recorder_transition,C3,1,mqtt,500,500,0,wrapper_transition_missing_load_report,False
+application/c3/rep_1/tcp_attempt_1_incomplete,C3,1,tcp,495,495,0,incomplete_timeout,False
+application/c3/rep_2/tcp_attempt_1_incomplete,C3,2,tcp,489,489,0,incomplete_timeout,False

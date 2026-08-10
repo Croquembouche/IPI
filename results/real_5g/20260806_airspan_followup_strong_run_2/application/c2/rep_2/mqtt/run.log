@@ -1,0 +1,6 @@
+[2026-08-06T18:47:25-04:00] Preflight passed for C2 repetition 2 over mqtt
+[2026-08-06T18:47:25-04:00] Starting car and d1 host telemetry
+[2026-08-06T18:47:26-04:00] Starting GNSS recorder
+[2026-08-06T18:50:15-04:00] Starting workload at 2026-08-06T18:50:15-04:00
+[2026-08-06T18:52:20-04:00] Workload finished at 2026-08-06T18:52:20-04:00
+[2026-08-06T18:52:23-04:00] C2 repetition 2 mqtt complete

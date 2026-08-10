@@ -1,0 +1,6 @@
+[2026-08-06T11:39:08-04:00] Preflight passed for C4 repetition 1 over mqtt
+[2026-08-06T11:39:08-04:00] Starting car and d1 host telemetry
+[2026-08-06T11:39:08-04:00] Starting GNSS recorder
+[2026-08-06T11:45:08-04:00] Starting workload at 2026-08-06T11:45:08-04:00
+[2026-08-06T11:48:15-04:00] Workload finished at 2026-08-06T11:48:15-04:00
+[2026-08-06T11:48:19-04:00] C4 repetition 1 mqtt complete

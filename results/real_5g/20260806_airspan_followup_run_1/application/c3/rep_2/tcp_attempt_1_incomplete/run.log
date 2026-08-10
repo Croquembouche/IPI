@@ -1,0 +1,7 @@
+[2026-08-06T11:09:54-04:00] Preflight passed for C3 repetition 2 over tcp
+[2026-08-06T11:09:54-04:00] Starting car and d1 host telemetry
+[2026-08-06T11:09:54-04:00] Starting GNSS recorder
+[2026-08-06T11:15:18-04:00] Starting workload at 2026-08-06T11:15:18-04:00
+[2026-08-06T11:19:45-04:00] Workload finished at 2026-08-06T11:19:44-04:00
+[2026-08-06T11:19:48-04:00] Load-generator artifact validation failed; artifacts were preserved
+[2026-08-06T11:19:48-04:00] One or more sender processes exited nonzero; artifacts were preserved

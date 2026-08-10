@@ -1,0 +1,80 @@
+{
+  "schema": "edge4av-airspan-r1-manifest-v1",
+  "run_id": "20260805_airspan_r1_run_1",
+  "collection_date": "2026-08-05",
+  "controller_timezone": "America/New_York",
+  "controller_clock_authoritative_for_acp_alignment": true,
+  "acp_interval_seconds": 300,
+  "purpose": "R1 idle/uplink/downlink validation pilot for ACP DU-cell counters",
+  "source_commit": "2c043b3e47484db67bd62e0bbad29f0d8a36ca0a",
+  "software": {
+    "load_generator": "scripts/edge4av_loadgen.py",
+    "load_generator_sha256": "2e71b5c1582006d065d21354392545f1b17d3da745b45da15896145357d5395f",
+    "host_telemetry_collector": "scripts/collect_host_telemetry.py",
+    "host_telemetry_collector_sha256": "0693afa4dc2d217beb814c619ef3a23fb27a0f667546563c480189502982a86d"
+  },
+  "operator_reported_configuration": {
+    "tdd_profile": "70/20/10",
+    "frame_packing": "10D4G",
+    "mg52_and_acp_configuration_verified": true,
+    "artifact_status": "pending_operator_export"
+  },
+  "measurement_policy": {
+    "phone_logger": "waived_by_operator",
+    "r1a": "waived_by_operator",
+    "clock_sync_state": "unsynced",
+    "one_way_latency_allowed": false,
+    "timing_metric_for_later_application_conditions": "rtt"
+  },
+  "windows": [
+    {
+      "id": "V1",
+      "condition": "idle",
+      "controller_start": "2026-08-05T11:15:00-04:00",
+      "controller_end": "2026-08-05T11:30:00-04:00",
+      "source": "operator_designated",
+      "host_telemetry_available": false,
+      "acp_export_status": "pending"
+    },
+    {
+      "id": "V2",
+      "condition": "controlled_uplink",
+      "direction": "car_to_edge",
+      "transport": "tcp",
+      "controller_start_marker": "2026-08-05T13:15:00.007933419-04:00",
+      "controller_end_marker": "2026-08-05T13:30:00.073820752-04:00",
+      "configured_duration_seconds": 900,
+      "offered_mbps": 25.0,
+      "achieved_application_mbps": 13.118,
+      "application_bytes_sent": 1475758800,
+      "application_bytes_received": 1475758800,
+      "client_elapsed_seconds": 900.000699,
+      "packet_bytes": 1200,
+      "status": "host_side_pass_offered_target_not_achieved"
+    },
+    {
+      "id": "V3",
+      "condition": "controlled_downlink",
+      "direction": "edge_to_car",
+      "transport": "tcp",
+      "controller_start_marker": "2026-08-05T13:35:00.008831503-04:00",
+      "controller_end_observation": "2026-08-05T13:50:00.367624425-04:00",
+      "configured_duration_seconds": 900,
+      "offered_mbps": 25.0,
+      "achieved_application_mbps": 25.0,
+      "application_bytes_sent": 2812500000,
+      "application_bytes_received": 2812500000,
+      "client_elapsed_seconds": 900.000213,
+      "packet_bytes": 1200,
+      "status": "host_side_pass"
+    }
+  ],
+  "artifacts": {
+    "load": "load/",
+    "host_telemetry": "host_telemetry/",
+    "timing": "timing/",
+    "validation": "validation/",
+    "airspan_export": "pending",
+    "mg52_export": "pending"
+  }
+}

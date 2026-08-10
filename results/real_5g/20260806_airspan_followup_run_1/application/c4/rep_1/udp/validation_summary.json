@@ -1,0 +1,510 @@
+{
+  "accepted": 49386,
+  "complete_files": 100,
+  "expected_rows_per_file": 500,
+  "failed": 614,
+  "files": 100,
+  "per_file": {
+    "c4-rep1-udp_veh-001_sender.csv": {
+      "accepted": 490,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-002_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-003_sender.csv": {
+      "accepted": 492,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-004_sender.csv": {
+      "accepted": 497,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-005_sender.csv": {
+      "accepted": 490,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-006_sender.csv": {
+      "accepted": 491,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-007_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-008_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-009_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-010_sender.csv": {
+      "accepted": 493,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-011_sender.csv": {
+      "accepted": 493,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-012_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-013_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-014_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-015_sender.csv": {
+      "accepted": 497,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-016_sender.csv": {
+      "accepted": 493,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-017_sender.csv": {
+      "accepted": 489,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-018_sender.csv": {
+      "accepted": 493,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-019_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-020_sender.csv": {
+      "accepted": 493,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-021_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-022_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-023_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-024_sender.csv": {
+      "accepted": 492,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-025_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-026_sender.csv": {
+      "accepted": 491,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-027_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-028_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-029_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-030_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-031_sender.csv": {
+      "accepted": 490,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-032_sender.csv": {
+      "accepted": 493,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-033_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-034_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-035_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-036_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-037_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-038_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-039_sender.csv": {
+      "accepted": 493,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-040_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-041_sender.csv": {
+      "accepted": 490,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-042_sender.csv": {
+      "accepted": 493,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-043_sender.csv": {
+      "accepted": 497,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-044_sender.csv": {
+      "accepted": 498,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-045_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-046_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-047_sender.csv": {
+      "accepted": 491,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-048_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-049_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-050_sender.csv": {
+      "accepted": 489,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-051_sender.csv": {
+      "accepted": 498,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-052_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-053_sender.csv": {
+      "accepted": 497,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-054_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-055_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-056_sender.csv": {
+      "accepted": 492,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-057_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-058_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-059_sender.csv": {
+      "accepted": 497,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-060_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-061_sender.csv": {
+      "accepted": 497,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-062_sender.csv": {
+      "accepted": 490,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-063_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-064_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-065_sender.csv": {
+      "accepted": 491,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-066_sender.csv": {
+      "accepted": 490,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-067_sender.csv": {
+      "accepted": 489,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-068_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-069_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-070_sender.csv": {
+      "accepted": 498,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-071_sender.csv": {
+      "accepted": 491,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-072_sender.csv": {
+      "accepted": 491,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-073_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-074_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-075_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-076_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-077_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-078_sender.csv": {
+      "accepted": 493,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-079_sender.csv": {
+      "accepted": 490,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-080_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-081_sender.csv": {
+      "accepted": 491,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-082_sender.csv": {
+      "accepted": 493,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-083_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-084_sender.csv": {
+      "accepted": 493,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-085_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-086_sender.csv": {
+      "accepted": 493,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-087_sender.csv": {
+      "accepted": 492,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-088_sender.csv": {
+      "accepted": 490,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-089_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-090_sender.csv": {
+      "accepted": 492,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-091_sender.csv": {
+      "accepted": 496,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-092_sender.csv": {
+      "accepted": 497,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-093_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-094_sender.csv": {
+      "accepted": 492,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-095_sender.csv": {
+      "accepted": 493,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-096_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-097_sender.csv": {
+      "accepted": 492,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-098_sender.csv": {
+      "accepted": 495,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-099_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    },
+    "c4-rep1-udp_veh-100_sender.csv": {
+      "accepted": 494,
+      "complete": true,
+      "rows": 500
+    }
+  },
+  "rows": 50000
+}

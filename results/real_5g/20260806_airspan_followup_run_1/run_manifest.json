@@ -1,0 +1,55 @@
+{
+  "acp_mg52_state": "operator_verified_export_pending",
+  "application_accepted": 307662,
+  "application_attempts": 309000,
+  "application_failed": 1338,
+  "application_samples": 24,
+  "application_success_rate_pct": 99.56699029126213,
+  "clock_sync_state": "unsynced",
+  "collection_finished_at": "2026-08-06T12:14:03-04:00",
+  "collection_started_at": "2026-08-06T09:05:00-04:00",
+  "conditions": [
+    "C1",
+    "C2",
+    "C3",
+    "C4"
+  ],
+  "corrected_signal_class": "medium_typical_deployment",
+  "git_commit": "2c043b3e47484db67bd62e0bbad29f0d8a36ca0a",
+  "gnss_coordinates_repository_precision_deg": 0.001,
+  "one_way_metrics_valid": false,
+  "operator_reported_location": {
+    "applies_to_conditions": [
+      "C1",
+      "C2",
+      "C3",
+      "C4"
+    ],
+    "automatic_gnss_status": "connection_timed_out_initially_then_recovered_at_2026-08-06T10:39:02-04:00",
+    "coordinate_privacy": "rounded_for_repository_copy; exact operator and ROS coordinates retained only in the excluded raw backup",
+    "latitude_deg": 39.664,
+    "location_id": "medium_typical_location_1",
+    "longitude_deg": -75.757,
+    "physical_placement": "mg52_on_trunk_floor_front_face_up_toward_sky",
+    "provenance": "operator_reported",
+    "qualification": "Applies to the current fixed medium-signal C1-C4 phase unless the operator later reports a location change.",
+    "receiver_derived": false,
+    "repository_coordinate_precision_deg": 0.001,
+    "signal_class": "medium_typical_deployment"
+  },
+  "paper_facing_state": "blocked_pending_acp_mg52_alignment",
+  "physical_placement": "mg52_on_trunk_floor_front_face_up_toward_sky",
+  "preserved_invalid_attempts": 3,
+  "repetitions": [
+    1,
+    2
+  ],
+  "run_name": "20260806_airspan_followup_run_1",
+  "schema": "edge4av-airspan-followup-run-v1",
+  "timing_metric": "request_response_rtt",
+  "transports": [
+    "tcp",
+    "mqtt",
+    "udp"
+  ]
+}

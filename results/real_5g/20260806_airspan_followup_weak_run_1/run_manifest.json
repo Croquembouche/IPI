@@ -1,0 +1,52 @@
+{
+  "acp_mg52_state": "operator_verified_export_pending",
+  "application_accepted": 5994,
+  "application_attempts": 6000,
+  "application_failed": 6,
+  "application_samples": 12,
+  "application_success_rate_pct": 99.9,
+  "clock_sync_state": "unsynced",
+  "collection_finished_at": "2026-08-06T15:28:15-04:00",
+  "collection_started_at": "2026-08-06T14:30:00-04:00",
+  "conditions": [
+    "C1",
+    "C2"
+  ],
+  "corrected_signal_class": "weak",
+  "git_commit": "2c043b3e47484db67bd62e0bbad29f0d8a36ca0a",
+  "gnss_coordinates_repository_precision_deg": 0.001,
+  "one_way_metrics_valid": false,
+  "operator_reported_location": {
+    "applies_to_conditions": [
+      "C1",
+      "C2"
+    ],
+    "automatic_gnss_status": "preflight_fix_obtained",
+    "coordinate_privacy": "rounded_for_repository_copy; exact preflight and per-sample ROS coordinates retained only in the excluded raw backup",
+    "latitude_deg": 39.663,
+    "location_id": "weak_location_1",
+    "longitude_deg": -75.756,
+    "physical_placement": "mg52_on_trunk_floor_front_face_up_toward_sky",
+    "provenance": "ros_preflight_fix_and_operator_signal_classification",
+    "qualification": "The vehicle was reported stationary at the weak location. The signal label is not paper-facing until supported by the matching MG52 radio export.",
+    "receiver_derived": true,
+    "repository_coordinate_precision_deg": 0.001,
+    "signal_class": "weak",
+    "signal_class_validation_state": "operator_reported_pending_mg52_radio_export"
+  },
+  "paper_facing_state": "blocked_pending_acp_mg52_alignment",
+  "physical_placement": "mg52_on_trunk_floor_front_face_up_toward_sky",
+  "preserved_invalid_attempts": 0,
+  "repetitions": [
+    1,
+    2
+  ],
+  "run_name": "20260806_airspan_followup_weak_run_1",
+  "schema": "edge4av-airspan-followup-run-v1",
+  "timing_metric": "request_response_rtt",
+  "transports": [
+    "tcp",
+    "mqtt",
+    "udp"
+  ]
+}

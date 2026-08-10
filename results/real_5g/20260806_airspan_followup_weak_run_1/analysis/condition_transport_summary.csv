@@ -1,0 +1,7 @@
+condition,transport,corrected_signal_class,attempts,accepted,failed,success_rate_pct,rtt_count,rtt_p50_ms,rtt_p95_ms,rtt_p99_ms,rtt_max_ms,deadline_hits_100ms,deadline_hit_rate_100ms_pct,deadline_hits_120ms,deadline_hit_rate_120ms_pct,deadline_hits_400ms,deadline_hit_rate_400ms_pct,deadline_hits_500ms,deadline_hit_rate_500ms_pct,deadline_hits_1000ms,deadline_hit_rate_1000ms_pct,deadline_hits_5000ms,deadline_hit_rate_5000ms_pct
+C1,tcp,weak,1000,1000,0,100,1000,126.758,150.429,230.408,401.748,5,0.5,282,28.2,999,99.9,1000,100,1000,100,1000,100
+C1,mqtt,weak,1000,1000,0,100,1000,32.471,46.106,83.856,171.77,991,99.1,995,99.5,1000,100,1000,100,1000,100,1000,100
+C1,udp,weak,1000,1000,0,100,1000,31.715,43.859,61.847,161.744,995,99.5,995,99.5,1000,100,1000,100,1000,100,1000,100
+C2,tcp,weak,1000,1000,0,100,1000,152.528,188.673,235.952,702.358,0,0,21,2.1,996,99.6,997,99.7,1000,100,1000,100
+C2,mqtt,weak,1000,1000,0,100,1000,125.968,162.864,242.489,643.926,44,4.4,344,34.4,995,99.5,997,99.7,1000,100,1000,100
+C2,udp,weak,1000,994,6,99.4,994,120.623,148.558,160.248,180.546,50,5,423,42.3,994,99.4,994,99.4,994,99.4,994,99.4

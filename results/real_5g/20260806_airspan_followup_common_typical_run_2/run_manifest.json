@@ -1,0 +1,52 @@
+{
+  "acp_mg52_state": "operator_verified_export_pending",
+  "application_accepted": 5999,
+  "application_attempts": 6000,
+  "application_failed": 1,
+  "application_samples": 12,
+  "application_success_rate_pct": 99.98333333333333,
+  "clock_sync_state": "unsynced",
+  "collection_finished_at": "2026-08-06T16:57:42-04:00",
+  "collection_started_at": "2026-08-06T16:00:00-04:00",
+  "conditions": [
+    "C1",
+    "C2"
+  ],
+  "corrected_signal_class": "medium_typical_deployment",
+  "git_commit": "2c043b3e47484db67bd62e0bbad29f0d8a36ca0a",
+  "gnss_coordinates_repository_precision_deg": 0.001,
+  "one_way_metrics_valid": false,
+  "operator_reported_location": {
+    "applies_to_conditions": [
+      "C1",
+      "C2"
+    ],
+    "automatic_gnss_status": "preflight_fix_obtained_stationary",
+    "coordinate_privacy": "rounded_for_repository_copy; exact preflight and per-sample ROS coordinates retained only in the excluded raw backup",
+    "latitude_deg": 39.666,
+    "location_id": "common_typical_location_2",
+    "longitude_deg": -75.757,
+    "physical_placement": "mg52_on_trunk_floor_front_face_up_toward_sky",
+    "provenance": "ros_preflight_fix_and_operator_signal_classification",
+    "qualification": "The vehicle was stationary, but the operator subsequently found that this block and the original common/typical block had the same reported RSRP range. This block is therefore a second common/typical observation, not a strong-signal observation. The matching MG52 export still must be stored before paper-facing use.",
+    "receiver_derived": true,
+    "repository_coordinate_precision_deg": 0.001,
+    "signal_class": "medium_typical_deployment",
+    "signal_class_validation_state": "operator_corrected_from_rsrp_comparison_artifact_pending"
+  },
+  "paper_facing_state": "blocked_pending_acp_mg52_alignment",
+  "physical_placement": "mg52_on_trunk_floor_front_face_up_toward_sky",
+  "preserved_invalid_attempts": 0,
+  "repetitions": [
+    1,
+    2
+  ],
+  "run_name": "20260806_airspan_followup_common_typical_run_2",
+  "schema": "edge4av-airspan-followup-run-v1",
+  "timing_metric": "request_response_rtt",
+  "transports": [
+    "tcp",
+    "mqtt",
+    "udp"
+  ]
+}

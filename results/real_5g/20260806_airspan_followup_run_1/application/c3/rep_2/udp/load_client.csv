@@ -1,0 +1,2 @@
+emit_time_ns,role,protocol,host,port,duration_s,target_mbps,bytes,packets,elapsed_s,throughput_mbps,detail
+1786028387121226317,client,tcp,<edge-host>,39000,270.0,25.0,271269600,226058,270.000826,8.038,tcp client complete

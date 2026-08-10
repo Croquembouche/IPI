@@ -1,0 +1,6 @@
+[2026-08-06T09:33:05-04:00] Preflight passed for C2 repetition 1 over tcp
+[2026-08-06T09:33:05-04:00] Starting car and d1 host telemetry
+[2026-08-06T09:33:06-04:00] Starting GNSS recorder
+[2026-08-06T09:35:15-04:00] Starting workload at 2026-08-06T09:35:15-04:00
+[2026-08-06T09:37:36-04:00] Workload finished at 2026-08-06T09:37:36-04:00
+[2026-08-06T09:37:39-04:00] C2 repetition 1 tcp complete

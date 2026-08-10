@@ -1,0 +1,27 @@
+{
+  "accepted": 5999,
+  "acp_mg52_artifacts_present": false,
+  "application_matrix_passed": true,
+  "attempts": 6000,
+  "expected_application_samples": 12,
+  "failed": 1,
+  "gnss_coordinates_repository_precision_deg": 0.001,
+  "gnss_initial_outage_recorded": false,
+  "gnss_recovered_at": null,
+  "gnss_samples_with_in_window_positions": 12,
+  "gnss_samples_without_in_window_positions": 0,
+  "known_anomalies": [],
+  "metadata_correction_applied": true,
+  "missing_samples": [],
+  "one_way_metrics_excluded": true,
+  "paper_facing_blockers": [
+    "ACP Cell 2 and MG52 radio exports have not yet been aligned to the declared bins.",
+    "The operator corrected this block from strong to medium/typical after inspecting matching RSRP values, but the supporting MG52 artifact has not yet been imported."
+  ],
+  "paper_facing_passed": false,
+  "preserved_invalid_attempts": 0,
+  "schema": "edge4av-airspan-followup-validation-v1",
+  "success_rate_pct": 99.98333333333333,
+  "valid_application_samples": 12,
+  "validation_errors": []
+}

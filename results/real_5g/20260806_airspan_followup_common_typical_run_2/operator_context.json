@@ -1,0 +1,54 @@
+{
+  "schema": "edge4av-operator-context-v1",
+  "run_name": "20260806_airspan_followup_common_typical_run_2",
+  "original_acquisition_run_name": "20260806_airspan_followup_strong_run_1",
+  "reported_at": "2026-08-06T15:55:10-04:00",
+  "classification_corrected_at": "2026-08-06T17:14:34-04:00",
+  "location": {
+    "location_id": "common_typical_location_2",
+    "latitude_deg": 39.666,
+    "longitude_deg": -75.757,
+    "provenance": "ros_preflight_fix_and_operator_signal_classification",
+    "receiver_derived": true,
+    "repository_coordinate_precision_deg": 0.001,
+    "coordinate_privacy": "rounded_for_repository_copy; exact preflight and per-sample ROS coordinates retained only in the excluded raw backup",
+    "automatic_gnss_status": "preflight_fix_obtained_stationary",
+    "applies_to_conditions": [
+      "C1",
+      "C2"
+    ],
+    "physical_placement": "mg52_on_trunk_floor_front_face_up_toward_sky",
+    "signal_class": "medium_typical_deployment",
+    "signal_class_validation_state": "operator_corrected_from_rsrp_comparison_artifact_pending",
+    "qualification": "The vehicle was stationary, but the operator subsequently found that this block and the original common/typical block had the same reported RSRP range. This block is therefore a second common/typical observation, not a strong-signal observation. The matching MG52 export still must be stored before paper-facing use."
+  },
+  "classification_correction": {
+    "previous_signal_class": "strong",
+    "corrected_signal_class": "medium_typical_deployment",
+    "reported_metric": "RSRP",
+    "reported_range_text": "109-110 for both this block and the original common/typical block",
+    "comparison_run": "20260806_airspan_followup_run_1",
+    "evidence_state": "operator_inspected_mg52_values_artifact_not_yet_imported",
+    "reason": "The operator inspected RSRP for this block and the original common/typical block and reported the same 109-110 range for both, so the attempted strong location did not create a distinct strong-signal condition."
+  },
+  "collection_plan": {
+    "conditions": [
+      "C1",
+      "C2"
+    ],
+    "repetitions": 2,
+    "transports": [
+      "tcp",
+      "mqtt",
+      "udp"
+    ],
+    "count_per_client": 500,
+    "interval_ms": 200,
+    "acp_interval_seconds": 300,
+    "timing_metric": "request_response_rtt",
+    "clock_sync_state": "unsynced",
+    "tdd_profile": "70/20/10",
+    "frame_packing": "10D4G",
+    "airspan_cell": 2
+  }
+}
