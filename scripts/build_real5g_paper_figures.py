@@ -311,6 +311,7 @@ def build_clean_run_scaling():
     fig.subplots_adjust(left=0.08, right=0.985, top=0.88, bottom=0.14)
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     fig.savefig(FIG_DIR / "fig-clean-run-scaling.png", dpi=300)
+    fig.savefig(FIG_DIR / "fig-clean-run-scaling.pdf")
     plt.close(fig)
 
 
@@ -327,6 +328,7 @@ def main():
     )
     build_clean_run_scaling()
     print(FIG_DIR / "fig-clean-run-scaling.png")
+    print(FIG_DIR / "fig-clean-run-scaling.pdf")
 
 
 if __name__ == "__main__":

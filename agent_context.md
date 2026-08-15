@@ -121,10 +121,23 @@ For paper or experiment-claim changes, validate against current artifacts in
   and mobility caveats preserved.
 - The V2X claim is a joint signal-strength and packet-size limit. The moving
   runs provide normalized signal strength; the separate stationary sweeps show
-  that larger packets fail first as signal weakens and that even 1 KiB delivery
-  requires strong signal. Point 1 is building-obstructed NLOS. These results
-  lead to Insight 1: current V2X technologies cannot support complex CAV
-  applications.
+  that larger packets fail first as signal weakens. Point 1 is building-
+  obstructed NLOS. These results lead to Insight 1: current direct V2X supports
+  compact J2735 messages only within a limited payload and coverage envelope.
+- The private-5G detector replay supports a conservative application-content
+  ceiling of approximately 20 KiB for a 500-ms p95 deadline on the evaluated
+  TCP/MQTT path. Keep this value in the Results evidence and experiment summary,
+  not in the top-level Insight 2 sentence. The boundary was measured with one
+  UE, a dedicated 40-MHz n48 channel, and no ambient contention.
+- Compare the historical 40/40/20 and follow-up 70/20/10 application outcomes
+  across collection times because they use the same sole CAV UE and dedicated
+  network. Pair each profile with its favorable, common/typical, weak, or strong
+  signal/placement context. The result is a joint TDD, signal, payload, and
+  transport comparison rather than a TDD-only effect.
+- Preserve exactly three top-level insights: 1) the direct-V2X payload-and-
+  coverage envelope; 2) the severe CAV packet-size limit for deadline-compliant
+  5G uplink exchange; and 3) the need for improved vehicular uplink performance
+  and concurrent-demand isolation in 5G/6G systems.
 
 ## Agent Operating Boundaries
 

@@ -65,6 +65,14 @@ struct ExperimentLogRecord {
     std::optional<double> serverMs{};
     std::optional<double> downlinkMs{};
     std::string detail{};
+    std::string rttClock{};
+    std::string correlationStatus{};
+    std::string responseId{};
+    std::string correlationId{};
+    bool expired{false};
+    bool late{false};
+    std::optional<std::uint32_t> envelopeBytes{};
+    std::optional<std::uint32_t> applicationPacketBytes{};
 };
 
 inline bool parse_experiment_bool(std::string_view value) {
@@ -111,12 +119,17 @@ inline std::string format_optional_double(const std::optional<double>& value) {
     return oss.str();
 }
 
+inline std::string format_optional_uint32(const std::optional<std::uint32_t>& value) {
+    return value ? std::to_string(*value) : std::string{};
+}
+
 inline std::string experiment_log_csv_header() {
     return "emitter_role,emit_time_ns,run_id,condition_id,condition_label,service_type,transport,av_id,obu_id,rsu_id,"
            "request_id,session_id,intersection_id,source_id,sequence,network_load_level,qos_profile,mobility_state,"
            "clock_sync_state,accepted,service_success,vehicle_outcome_name,vehicle_outcome_value,vehicle_outcome_unit,"
            "frame_type,payload_bytes,client_send_ns,server_receive_ns,server_send_ns,client_receive_ns,rtt_ms,"
-           "uplink_ms,server_ms,downlink_ms,detail";
+           "uplink_ms,server_ms,downlink_ms,detail,rtt_clock,correlation_status,response_id,correlation_id,expired,late,"
+           "envelope_bytes,application_packet_bytes";
 }
 
 inline std::string experiment_log_to_csv(const ExperimentLogRecord& record) {
@@ -155,7 +168,15 @@ inline std::string experiment_log_to_csv(const ExperimentLogRecord& record) {
         << format_optional_double(record.uplinkMs) << ','
         << format_optional_double(record.serverMs) << ','
         << format_optional_double(record.downlinkMs) << ','
-        << csv_escape(record.detail);
+        << csv_escape(record.detail) << ','
+        << csv_escape(record.rttClock) << ','
+        << csv_escape(record.correlationStatus) << ','
+        << csv_escape(record.responseId) << ','
+        << csv_escape(record.correlationId) << ','
+        << bool_text(record.expired) << ','
+        << bool_text(record.late) << ','
+        << format_optional_uint32(record.envelopeBytes) << ','
+        << format_optional_uint32(record.applicationPacketBytes);
     return oss.str();
 }
 
@@ -203,6 +224,12 @@ inline std::string experiment_log_to_text(const ExperimentLogRecord& record) {
     }
     if (record.roundTripMs) {
         oss << " rtt_ms=" << format_optional_double(record.roundTripMs);
+    }
+    if (!record.rttClock.empty()) {
+        oss << " rtt_clock=" << record.rttClock;
+    }
+    if (!record.correlationStatus.empty()) {
+        oss << " correlation=" << record.correlationStatus;
     }
     if (record.uplinkMs) {
         oss << " uplink_ms=" << format_optional_double(record.uplinkMs);

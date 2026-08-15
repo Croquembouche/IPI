@@ -27,6 +27,10 @@ std::uint16_t read_uint16(const std::vector<std::uint8_t>& buffer, std::size_t& 
 namespace ipi {
 
 void IpiServiceRequest::validate() const {
+    if (static_cast<std::uint8_t>(serviceType) >
+        static_cast<std::uint8_t>(ServiceType::HdMapUpdate)) {
+        throw std::invalid_argument("unknown IPI service type");
+    }
     if (additionalData.size() > kMaxAdditionalData) {
         throw std::invalid_argument("additionalData exceeds 65535 bytes");
     }
@@ -68,10 +72,17 @@ IpiServiceRequest IpiServiceRequest::from_canonical_encoding(const std::vector<s
     std::size_t offset = 0;
     IpiServiceRequest request;
 
-    request.serviceType = static_cast<ServiceType>(buffer[offset++]);
+    const auto serviceType = buffer[offset++];
+    if (serviceType > static_cast<std::uint8_t>(ServiceType::HdMapUpdate)) {
+        throw std::runtime_error("Unknown service type in IpiServiceRequest");
+    }
+    request.serviceType = static_cast<ServiceType>(serviceType);
     request.requestId = read_uint16(buffer, offset);
 
     std::uint8_t flags = buffer[offset++];
+    if ((flags & 0xFEU) != 0U) {
+        throw std::runtime_error("Unknown flags in IpiServiceRequest");
+    }
 
     if (flags & 0x01) {
         request.desiredHorizonMs = read_uint16(buffer, offset);
@@ -84,6 +95,10 @@ IpiServiceRequest IpiServiceRequest::from_canonical_encoding(const std::vector<s
 
     request.additionalData.assign(buffer.begin() + static_cast<std::ptrdiff_t>(offset),
                                    buffer.begin() + static_cast<std::ptrdiff_t>(offset + dataLen));
+    offset += dataLen;
+    if (offset != buffer.size()) {
+        throw std::runtime_error("Unexpected trailing bytes in IpiServiceRequest");
+    }
 
     request.validate();
     return request;

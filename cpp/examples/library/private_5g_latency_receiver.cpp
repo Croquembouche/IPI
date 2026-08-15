@@ -167,23 +167,32 @@ int create_server_socket(std::uint16_t port) {
 
 ipi::api::Private5gProbeAck handle_request(const ipi::api::Private5gProbeRequest& request,
                                            ipi::v2x::UperCodec& codec) {
-    ipi::api::Private5gProbeAck ack;
-    ack.sequence = request.sequence;
-    ack.clientSendTimeNs = request.clientSendTimeNs;
-    ack.serverReceiveTimeNs = ipi::api::current_unix_time_ns();
-    ack.frameType = request.frame.type;
-    ack.payloadSize = static_cast<std::uint32_t>(request.frame.payload.size());
+    const auto steadyStart = std::chrono::steady_clock::now();
+    const auto serverReceiveTimeNs = ipi::api::current_unix_time_ns();
+    bool accepted = true;
+    std::string detail;
 
     try {
-        ack.detail = ipi::api::inspect_private_5g_probe_frame(request.frame, codec);
-        ack.accepted = true;
+        if (request.messageId.empty() || request.requestId.empty()) {
+            throw std::runtime_error("probe request is missing message or request identity");
+        }
+        if (request.expiresAtUnixNs != 0 &&
+            serverReceiveTimeNs >= request.expiresAtUnixNs) {
+            throw std::runtime_error("probe request is expired");
+        }
+        detail = ipi::api::inspect_private_5g_probe_frame(request.frame, codec);
     } catch (const std::exception& ex) {
-        ack.detail = ex.what();
-        ack.accepted = false;
+        detail = ex.what();
+        accepted = false;
     }
 
-    ack.serverSendTimeNs = ipi::api::current_unix_time_ns();
-    return ack;
+    const auto serverSendTimeNs = ipi::api::current_unix_time_ns();
+    const auto processingNs = std::chrono::duration_cast<std::chrono::nanoseconds>(
+        std::chrono::steady_clock::now() - steadyStart).count();
+    return ipi::api::make_private_5g_probe_ack(
+        request, serverReceiveTimeNs, serverSendTimeNs,
+        static_cast<std::uint64_t>(processingNs), accepted, std::move(detail),
+        "probe-response-" + request.requestId + "-" + std::to_string(request.sequence));
 }
 
 void print_csv_header() {
@@ -223,6 +232,10 @@ void log_ack(const Args& args,
     record.vehicleOutcomeValue = args.context.vehicleOutcomeValue;
     record.vehicleOutcomeUnit = args.context.vehicleOutcomeUnit;
     record.frameType = ipi::to_string(ack.frameType);
+    record.rttClock = "sender-steady";
+    record.correlationStatus = "echoed";
+    record.responseId = ack.responseId;
+    record.correlationId = ack.correlationId;
     record.payloadBytes = ack.payloadSize;
     record.clientSendTimeNs = request.clientSendTimeNs;
     record.serverReceiveTimeNs = ack.serverReceiveTimeNs;

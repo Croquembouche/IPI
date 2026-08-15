@@ -4,6 +4,7 @@
 
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <poll.h>
 #include <signal.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -17,6 +18,7 @@
 #include <functional>
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #include <optional>
 #include <sstream>
 #include <stdexcept>
@@ -148,7 +150,7 @@ Args parse_args(int argc, char** argv) {
                 << "  --port <port>                Receiver port or MQTT broker port (default 36666)\n"
                 << "  --count <n>                  Number of probes to send (default 10)\n"
                 << "  --interval-ms <ms>           Delay between probes (default 1000)\n"
-                << "  --timeout-ms <ms>            Ack wait timeout for MQTT mode (default 5000)\n"
+                << "  --timeout-ms <ms>            Per-request TCP/MQTT deadline (default 5000)\n"
                 << "  --message <service|spat|psm> Payload kind (default service)\n"
                 << "  --intersection-id <id>       Logical intersection id string\n"
                 << "  --session-id <id>            Session id text for service probes\n"
@@ -252,6 +254,13 @@ int connect_socket(const Args& args) {
         ::close(socketFd);
         throw std::runtime_error("connect() failed");
     }
+    timeval timeout{};
+    timeout.tv_sec = static_cast<time_t>(args.timeoutMs / 1000U);
+    timeout.tv_usec = static_cast<suseconds_t>((args.timeoutMs % 1000U) * 1000U);
+    if (::setsockopt(socketFd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout)) != 0) {
+        ::close(socketFd);
+        throw std::runtime_error("setsockopt(SO_RCVTIMEO) failed");
+    }
     return socketFd;
 }
 
@@ -331,10 +340,13 @@ ipi::api::Private5gProbeRequest build_request(const Args& args,
     ipi::api::Private5gProbeRequest request;
     request.sequence = sequence;
     request.clientSendTimeNs = ipi::api::current_unix_time_ns();
+    request.expiresAtUnixNs = request.clientSendTimeNs +
+                              static_cast<std::uint64_t>(args.timeoutMs) * 1000000ULL;
     request.runId = args.context.runId;
     request.conditionId = args.context.conditionId;
     request.conditionLabel = args.context.conditionLabel;
     request.requestId = make_request_id(args, sequence);
+    request.messageId = "probe-message-" + request.requestId;
     request.serviceType = std::string(service_type_name(args.messageKind));
     request.intersectionId = args.intersectionId;
     request.sourceId = args.sourceId;
@@ -392,6 +404,11 @@ ipi::api::ExperimentLogRecord make_base_record(const Args& args,
     record.clientSendTimeNs = request.clientSendTimeNs;
     record.frameType = ipi::to_string(request.frame.type);
     record.payloadBytes = static_cast<std::uint32_t>(request.frame.payload.size());
+    const auto encodedBytes = ipi::api::encode_private_5g_probe_request(request).size();
+    if (encodedBytes <= std::numeric_limits<std::uint32_t>::max()) {
+        record.envelopeBytes = static_cast<std::uint32_t>(encodedBytes);
+        record.applicationPacketBytes = static_cast<std::uint32_t>(encodedBytes);
+    }
     return record;
 }
 
@@ -407,6 +424,7 @@ void record_probe_result(const Args& args,
                          const ipi::api::Private5gProbeRequest& request,
                          const ipi::api::Private5gProbeAck& ack,
                          std::uint64_t clientReceiveTimeNs,
+                         std::int64_t localRoundTripNs,
                          ProbeStats& stats) {
     ++stats.attempted;
     if (ack.accepted) {
@@ -415,7 +433,11 @@ void record_probe_result(const Args& args,
         ++stats.rejected;
     }
 
-    const auto metrics = ipi::api::compute_private_5g_latency_metrics(ack, clientReceiveTimeNs);
+    const bool synchronized = request.clockSyncState == "ptp-synced" ||
+                              request.clockSyncState == "ntp-synced" ||
+                              request.clockSyncState == "synchronized";
+    const auto metrics = ipi::api::compute_private_5g_latency_metrics(
+        ack, localRoundTripNs, synchronized, clientReceiveTimeNs);
     auto record = make_base_record(args, request, clientReceiveTimeNs);
     record.accepted = ack.accepted;
     record.serviceSuccess = ack.accepted && args.context.serviceSuccess;
@@ -430,9 +452,13 @@ void record_probe_result(const Args& args,
     }
     record.serverMs = ns_to_ms(metrics.serverProcessingNs);
     if (metrics.downlinkNs) {
-        record.downlinkMs = ns_to_ms(*metrics.downlinkNs);
+    record.downlinkMs = ns_to_ms(*metrics.downlinkNs);
     }
     record.detail = ack.detail;
+    record.rttClock = "steady";
+    record.correlationStatus = "matched";
+    record.responseId = ack.responseId;
+    record.correlationId = ack.correlationId;
     emit_record(args, record);
 
     if (ack.accepted) {
@@ -459,6 +485,8 @@ void record_probe_failure(const Args& args,
     record.serviceSuccess = false;
     record.clientReceiveTimeNs = emitTimeNs;
     record.detail = std::move(detail);
+    record.rttClock = "steady";
+    record.correlationStatus = "failed";
     emit_record(args, record);
 }
 
@@ -513,6 +541,7 @@ ProbeStats run_tcp_sender(const Args& args) {
 
     int socketFd = -1;
     ipi::v2x::UperCodec codec;
+    ipi::api::Private5gProbeResponseTracker responseTracker;
 
     for (std::size_t i = 0; i < args.count; ++i) {
         const auto request = build_request(args, i + 1U, codec);
@@ -521,12 +550,43 @@ ProbeStats run_tcp_sender(const Args& args) {
                 socketFd = connect_socket(args);
             }
             const auto encodedRequest = ipi::api::encode_private_5g_probe_request(request);
+            const auto steadyStart = std::chrono::steady_clock::now();
             ipi::api::send_private_5g_probe_packet(socketFd, encodedRequest);
+            const auto deadline = steadyStart + std::chrono::milliseconds(args.timeoutMs);
+            bool matched = false;
+            while (std::chrono::steady_clock::now() < deadline) {
+                const auto remaining = std::chrono::duration_cast<std::chrono::milliseconds>(
+                    deadline - std::chrono::steady_clock::now());
+                pollfd descriptor{};
+                descriptor.fd = socketFd;
+                descriptor.events = POLLIN;
+                const auto ready = ::poll(&descriptor, 1,
+                    static_cast<int>(std::max<std::int64_t>(1, remaining.count())));
+                if (ready == 0) break;
+                if (ready < 0) throw std::runtime_error("poll() failed while waiting for TCP ack");
 
-            const auto encodedAck = ipi::api::recv_private_5g_probe_packet(socketFd);
-            const auto clientReceiveTimeNs = ipi::api::current_unix_time_ns();
-            const auto ack = ipi::api::decode_private_5g_probe_ack(encodedAck);
-            record_probe_result(args, request, ack, clientReceiveTimeNs, stats);
+                const auto encodedAck = ipi::api::recv_private_5g_probe_packet(socketFd);
+                const auto steadyEnd = std::chrono::steady_clock::now();
+                const auto clientReceiveTimeNs = ipi::api::current_unix_time_ns();
+                const auto ack = ipi::api::decode_private_5g_probe_ack(encodedAck);
+                const auto validation = responseTracker.validate(
+                    request, ack, steadyEnd > deadline, clientReceiveTimeNs);
+                if (!validation.matched()) {
+                    std::cerr << "discarded TCP ack: "
+                              << ipi::api::to_string(validation.disposition)
+                              << " (" << validation.detail << ")\n";
+                    continue;
+                }
+                const auto roundTripNs = std::chrono::duration_cast<std::chrono::nanoseconds>(
+                    steadyEnd - steadyStart).count();
+                record_probe_result(args, request, ack, clientReceiveTimeNs,
+                                    roundTripNs, stats);
+                matched = true;
+                break;
+            }
+            if (!matched) {
+                throw std::runtime_error("TCP acknowledgement timeout or no matching response");
+            }
         } catch (const std::exception& ex) {
             record_probe_failure(args, request, ex.what(), ipi::api::current_unix_time_ns(), stats);
             if (socketFd >= 0) {
@@ -555,6 +615,7 @@ ProbeStats run_mqtt_sender(const Args& args) {
 
     ipi::v2x::UperCodec codec;
     ipi::api::MinimalMqttClient client(make_mqtt_client_id(args));
+    ipi::api::Private5gProbeResponseTracker responseTracker;
     bool connected = false;
 
     for (std::size_t i = 0; i < args.count; ++i) {
@@ -565,14 +626,37 @@ ProbeStats run_mqtt_sender(const Args& args) {
                 client.subscribe(make_ack_topic(args));
                 connected = true;
             }
+            const auto steadyStart = std::chrono::steady_clock::now();
+            const auto deadline = steadyStart + std::chrono::milliseconds(args.timeoutMs);
             client.publish(make_request_topic(args), ipi::api::encode_private_5g_probe_request(request));
-            const auto message = client.receive(std::chrono::milliseconds(args.timeoutMs));
-            if (!message) {
-                record_probe_failure(args, request, "mqtt ack timeout", ipi::api::current_unix_time_ns(), stats);
-            } else {
+            bool matched = false;
+            while (std::chrono::steady_clock::now() < deadline) {
+                const auto remaining = std::chrono::duration_cast<std::chrono::milliseconds>(
+                    deadline - std::chrono::steady_clock::now());
+                const auto message = client.receive(remaining);
+                if (!message) break;
+                if (message->topic != make_ack_topic(args)) continue;
+                const auto steadyEnd = std::chrono::steady_clock::now();
                 const auto clientReceiveTimeNs = ipi::api::current_unix_time_ns();
                 const auto ack = ipi::api::decode_private_5g_probe_ack(message->payload);
-                record_probe_result(args, request, ack, clientReceiveTimeNs, stats);
+                const auto validation = responseTracker.validate(
+                    request, ack, steadyEnd > deadline, clientReceiveTimeNs);
+                if (!validation.matched()) {
+                    std::cerr << "discarded MQTT ack: "
+                              << ipi::api::to_string(validation.disposition)
+                              << " (" << validation.detail << ")\n";
+                    continue;
+                }
+                const auto roundTripNs = std::chrono::duration_cast<std::chrono::nanoseconds>(
+                    steadyEnd - steadyStart).count();
+                record_probe_result(args, request, ack, clientReceiveTimeNs,
+                                    roundTripNs, stats);
+                matched = true;
+                break;
+            }
+            if (!matched) {
+                record_probe_failure(args, request, "mqtt ack timeout or no matching response",
+                                     ipi::api::current_unix_time_ns(), stats);
             }
         } catch (const std::exception& ex) {
             record_probe_failure(args, request, ex.what(), ipi::api::current_unix_time_ns(), stats);

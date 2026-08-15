@@ -83,19 +83,18 @@ int main() {
                 }
 
                 const auto encodedRequest = ipi::api::recv_private_5g_probe_packet(clientFd);
+                const auto processingStart = std::chrono::steady_clock::now();
                 const auto serverReceiveTimeNs = ipi::api::current_unix_time_ns();
                 const auto request = ipi::api::decode_private_5g_probe_request(encodedRequest);
                 const auto detail = ipi::api::inspect_private_5g_probe_frame(request.frame, codec);
 
-                ipi::api::Private5gProbeAck ack;
-                ack.sequence = request.sequence;
-                ack.clientSendTimeNs = request.clientSendTimeNs;
-                ack.serverReceiveTimeNs = serverReceiveTimeNs;
-                ack.serverSendTimeNs = ipi::api::current_unix_time_ns();
-                ack.frameType = request.frame.type;
-                ack.payloadSize = static_cast<std::uint32_t>(request.frame.payload.size());
-                ack.accepted = true;
-                ack.detail = detail;
+                const auto serverSendTimeNs = ipi::api::current_unix_time_ns();
+                const auto processingNs = std::chrono::duration_cast<std::chrono::nanoseconds>(
+                    std::chrono::steady_clock::now() - processingStart).count();
+                const auto ack = ipi::api::make_private_5g_probe_ack(
+                    request, serverReceiveTimeNs, serverSendTimeNs,
+                    static_cast<std::uint64_t>(processingNs), true, detail,
+                    "loopback-response-1");
 
                 ipi::api::send_private_5g_probe_packet(clientFd, ipi::api::encode_private_5g_probe_ack(ack));
                 ::close(clientFd);
@@ -115,15 +114,25 @@ int main() {
         ipi::api::Private5gProbeRequest request;
         request.sequence = 1;
         request.clientSendTimeNs = ipi::api::current_unix_time_ns();
+        request.expiresAtUnixNs = request.clientSendTimeNs + 2000000000ULL;
+        request.messageId = "loopback-message-1";
+        request.requestId = "loopback-request-1";
         request.intersectionId = "int-1";
         request.sourceId = "veh-1";
         request.frame = ipi::api::make_private_5g_probe_frame(spat, codec);
 
+        const auto steadyStart = std::chrono::steady_clock::now();
         ipi::api::send_private_5g_probe_packet(clientFd, ipi::api::encode_private_5g_probe_request(request));
         const auto encodedAck = ipi::api::recv_private_5g_probe_packet(clientFd);
         const auto clientReceiveTimeNs = ipi::api::current_unix_time_ns();
+        const auto steadyEnd = std::chrono::steady_clock::now();
         const auto ack = ipi::api::decode_private_5g_probe_ack(encodedAck);
-        const auto metrics = ipi::api::compute_private_5g_latency_metrics(ack, clientReceiveTimeNs);
+        const auto validation = ipi::api::validate_private_5g_probe_ack(
+            request, ack, {}, false, clientReceiveTimeNs);
+        const auto metrics = ipi::api::compute_private_5g_latency_metrics(
+            ack, std::chrono::duration_cast<std::chrono::nanoseconds>(
+                     steadyEnd - steadyStart).count(),
+            false, clientReceiveTimeNs);
 
         ::close(clientFd);
         server.join();
@@ -135,10 +144,13 @@ int main() {
 
         ipi::tests::expect(ack.accepted, "loopback ack should be accepted");
         ipi::tests::expect(ack.sequence == request.sequence, "loopback ack should preserve sequence");
+        ipi::tests::expect(validation.matched(), "loopback ack should match request identity");
         ipi::tests::expect(ack.frameType == ipi::MessageType::SPAT, "loopback ack should preserve frame type");
         ipi::tests::expect(metrics.roundTripNs >= 0, "loopback RTT should be non-negative");
         ipi::tests::expect(metrics.serverProcessingNs >= 0, "server processing time should be non-negative");
-        ipi::tests::expect(metrics.uplinkNs.has_value(), "loopback should provide uplink timing");
-        ipi::tests::expect(metrics.downlinkNs.has_value(), "loopback should provide downlink timing");
+        ipi::tests::expect(!metrics.uplinkNs.has_value(),
+                           "unsynchronized loopback should not claim uplink timing");
+        ipi::tests::expect(!metrics.downlinkNs.has_value(),
+                           "unsynchronized loopback should not claim downlink timing");
     });
 }

@@ -44,6 +44,12 @@ Required for MQTT deployment:
 
 - an MQTT 3.1.1-compatible broker reachable by both 5G endpoints
 
+Required for the proposal-facing ROS 2 reference runtime:
+
+- ROS 2 Humble with `ament_cmake`, `rclcpp`, `sensor_msgs`, and
+  `launch_testing_ament_cmake`
+- the system ROS Python (`/usr/bin/python3` on the validated Humble host)
+
 Recommended for meaningful latency measurements:
 
 - synchronized clocks across endpoints
@@ -71,6 +77,27 @@ Important outputs:
 - `cpp/build/example_private_5g_latency_receiver`
 - `cpp/build/example_edge4av_dual_plane`
 
+### 3.1 Install the CMake package
+
+The library exports `IPI::ipi` for downstream packages:
+
+```bash
+cmake -S cpp -B cpp/build \
+  -DIPI_ENABLE_TESTS=ON \
+  -DCMAKE_INSTALL_PREFIX="$PWD/cpp/install"
+cmake --build cpp/build --parallel
+cmake --install cpp/build
+```
+
+Downstream CMake projects can use:
+
+```cmake
+find_package(IPI CONFIG REQUIRED)
+target_link_libraries(my_target PRIVATE IPI::ipi)
+```
+
+Add `cpp/install` to `CMAKE_PREFIX_PATH` if it is not already searchable.
+
 ## 4. Build the Mocar bridge used in the radio path
 
 From the repository root:
@@ -96,6 +123,61 @@ Also keep these runtime libraries available on the Mocar target:
 
 - `third_party/mocar/J2735-2020/lib/libmocarcv2x.so`
 - `third_party/mocar/J2735-2020/lib/libzlog.so`
+
+### 4.1 Build and run the IPI PC5 exchange
+
+The strict `IP5X` sample is separate from the existing SPaT and custom-RTT
+samples. Its application payload is a complete UPER J2735 `MessageFrame` using
+reserved `TestMessage00` (`DSRCmsgID` 240), local `RegionId` 200, and the typed
+IPI regional value from `cpp/asn1/IPI.asn`:
+
+```bash
+make -C third_party/mocar/J2735-2020/samples/ipi_pc5_exchange clean
+make -C third_party/mocar/J2735-2020/samples/ipi_pc5_exchange
+```
+
+Copy the resulting `ipi_pc5_exchange` binary and vendor shared libraries to
+both radios. Start the responder before the initiator:
+
+```bash
+./ipi_pc5_exchange --role responder --node-id node-b --peer-id node-a
+./ipi_pc5_exchange --role initiator --node-id node-a --peer-id node-b \
+  --count 100 --body-bytes 128 --timeout-ms 1000
+```
+
+`--body-bytes` is the number of bytes in the IPI offload-content field, not the
+final radio application-packet size. The default 2048-byte cap applies to the
+complete `IP5X` packet, including metadata, the J2735 frame, length fields, and
+CRC. An input that cannot fit is rejected before transmission.
+`--max-packet-bytes` can be raised only up to the observed 4080-byte SDK
+application ceiling. That larger value is deployment-specific and must be
+validated again on the actual device pair.
+
+### 4.2 Verify or prepare the J2735 regional schema
+
+The deterministic vector verifier requires `asn1tools` 0.167.0, `pycrate`
+0.7.11, and an installed USDOT J2735 pycrate package. It compiles `IPI.asn` with
+both independent ASN.1 implementations, compares every regional UPER value,
+then verifies the outer `MessageFrame` with the unmodified J2735 package:
+
+```bash
+python3 scripts/verify_j2735_ipi_vectors.py
+```
+
+The repository includes the SAE standard PDF but not the separately licensed
+`J2735ASN_202309` module bundle. After obtaining that bundle, prepare a combined
+schema in a new directory:
+
+```bash
+python3 scripts/prepare_j2735_ipi_schema.py \
+  --base-dir /path/to/J2735ASN_202309 \
+  --output-dir /tmp/j2735asn-202309-ipi
+```
+
+The preparation step verifies the `TestMessage00` identifier, adds the typed
+IPI entry to `Reg-TestMessage00`, and records input and output hashes. Compile
+the resulting directory with the licensed production ASN.1/UPER compiler; do
+not edit or redistribute the source SAE modules.
 
 ## 5. Suggested runtime layout
 
@@ -282,7 +364,77 @@ Current code boundary:
 
 If you need broker-authenticated TLS for deployment, add that as the next step.
 
-## 11. Sanity checks after deployment
+### 10.1 Broker-backed IPI sessions
+
+The session transport is distinct from the latency-probe MQTT topics. A
+deployment instantiates:
+
+- `make_mqtt_session_message_broker` in each process that connects to the
+  broker;
+- `make_broker_session_endpoint` in the infrastructure process; and
+- `make_broker_private_session_transport` in each vehicle-side client process.
+
+Both ends exchange strict `IPIS` records for registration, heartbeat, patch,
+termination, service requests and updates, events, telemetry, and PCV
+responses. The shared lifecycle enforces active state, monotonic leases,
+ownership, service grants, sequence/freshness, outstanding requests, and
+terminal outcomes.
+
+`MqttSessionBrokerConfig` accepts host, port, client ID, username, password,
+keepalive, clean-session, allowed topic prefix, and reconnect backoff. The
+configuration also bounds connect and socket I/O waits so an unavailable broker
+cannot block shutdown indefinitely. The current implementation reconnects and
+resubscribes after detected connection loss. It is a reference MQTT 3.1.1
+client using QoS 0 and plain TCP. Do not use it as production evidence until
+TLS, deployment access policy, required QoS, and real broker disconnect/restart
+tests have passed.
+
+## 11. Build and test the ROS 2 proposal runtime
+
+The `ipi_msgs` package defines the activation, service-intent/link,
+policy-decision, offload-request, and offload-decision contracts. `ipi_runtime`
+provides the activation manager, tiered service manager, offload decision node,
+and a parameterized reference-zone publisher.
+
+After installing the C++ library as shown in Section 3.1:
+
+```bash
+source /opt/ros/humble/setup.bash
+PATH=/opt/ros/humble/bin:/usr/bin:/bin \
+colcon --log-base ros2_ws/log build \
+  --base-paths ros2_ws/src/ipi_msgs ros2_ws/src/ipi_runtime \
+  --build-base ros2_ws/build \
+  --install-base ros2_ws/install \
+  --cmake-args \
+    -DCMAKE_PREFIX_PATH="$PWD/cpp/install" \
+    -DPython3_EXECUTABLE=/usr/bin/python3
+```
+
+Run the launch contract test:
+
+```bash
+source ros2_ws/install/setup.bash
+colcon --log-base ros2_ws/log test \
+  --build-base ros2_ws/build \
+  --install-base ros2_ws/install \
+  --packages-select ipi_runtime \
+  --event-handlers console_direct+
+colcon test-result --test-result-base ros2_ws/build --verbose
+```
+
+Run the reference intersection:
+
+```bash
+source ros2_ws/install/setup.bash
+ros2 launch ipi_runtime reference_intersection.launch.py
+```
+
+The launch path publishes decisions only. It does not directly call Autoware
+operation-mode services or send motion/control commands. A future approved
+vehicle adapter must retain local safety authority and reject stale or unsafe
+requests.
+
+## 12. Sanity checks after deployment
 
 Use these quick checks.
 
@@ -312,7 +464,7 @@ For MQTT, verify:
 - all nodes in the same condition use the same `--run-id` and `--condition-id`
 - the receiver or bridge side sets the intended `--rsu-id`
 
-## 12. Current deployment limits
+## 13. Current deployment limits
 
 Be explicit about these when you deploy:
 
@@ -322,10 +474,31 @@ Be explicit about these when you deploy:
 - The repo ships `ipi_custom_rtt` for Mocar radio RTT. SPaT receive-side
   one-way logging still depends on the Mocar callback/logger used in the lab.
 - Private 5G latency tooling supports both TCP and MQTT.
+- Private-5G RTT uses a local steady clock. Wall-clock timestamps are retained
+  for log correlation, and one-way latency is emitted only when clock
+  synchronization is explicitly declared.
+- The correlated private-5G executable and native detector schema have local
+  tests, but historical result files were not relabeled; new monotonic or
+  native-detector claims require recollection.
+- The broker session reference path has an in-memory broker integration test;
+  it has not yet passed a deployed-broker restart or TLS test.
+- The `IP5X` PC5 adapter and Mocar sample compile for AArch64, but a two-radio
+  field run remains required.
+- The ROS 2 reference runtime has a synthetic launch test. It publishes
+  activation/policy/offload decisions and intentionally does not command
+  Autoware motion.
 - The current tools standardize experiment logs, but AV-facing outcome metrics
   still need to be supplied by the operator or higher-level AV stack.
 - MQTT support is minimal MQTT 3.1.1 over plain TCP.
 - The repo provides a measurement harness, not a full production backend.
 - One-way latency is only meaningful if your clocks are synchronized.
+- The typed IPI regional schema, complete `TestMessage00` codec, dual-compiler
+  payload vectors, and USDOT 202409 outer-frame check are implemented. Exact
+  compilation and interoperability against the separately licensed SAE
+  `J2735ASN_202309` modules remain pending because those files are not in this
+  repository. `IP5X` itself is project framing over the vendor custom channel,
+  not a standardized J2735 bearer.
+- The repository does not yet carry an approved project license for external
+  release; ROS package license identifiers remain a release gate.
 - The optional CMake Mocar example path under `cpp/examples/device` targets a
   different SDK layout and is not the deployment path documented here.

@@ -121,12 +121,12 @@ int main() {
     accepted.serviceClass = ipi::ServiceClass::GuidedPerception;
     accepted.guidanceStatus = ipi::GuidanceStatus::Update;
     accepted.offloadTaskId = task.taskId;
-    offloader.handle_cooperative_message(accepted);
+    (void)offloader.handle_cooperative_message(accepted);
 
     ipi::CooperativeServiceMessage completed = accepted;
     completed.guidanceStatus = ipi::GuidanceStatus::Complete;
     completed.offloadPayload = std::vector<std::uint8_t>{0x01, 0x02};
-    offloader.handle_cooperative_message(completed);
+    (void)offloader.handle_cooperative_message(completed);
 
     return 0;
 }

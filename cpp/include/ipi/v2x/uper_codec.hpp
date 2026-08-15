@@ -8,10 +8,12 @@
 namespace ipi::v2x {
 
 /**
- * Encoder/decoder for the simplified J2735 message helpers using ASN.1 UPER
- * bit packing. The implementation focuses on the fields surfaced in the helper
- * structs; additional fields can be added incrementally while preserving
- * backward compatibility.
+ * Encoder/decoder facade used by the J2735 message helpers.
+ *
+ * IPI cooperative-service values use the formal TestMessage00 regional profile
+ * in cpp/asn1/IPI.asn. The legacy BSM/PSM/MAP/SPAT/SRM/SSM helper overloads are
+ * project field profiles and must not be presented as complete generated SAE
+ * J2735 codecs.
  */
 class UperCodec {
 public:

@@ -158,7 +158,15 @@ private:
 
 std::shared_ptr<SenderApi> make_in_memory_sender_api()
 {
-    return std::make_shared<InMemorySenderApi>(detail::obtain_shared_state());
+    return std::make_shared<InMemorySenderApi>(std::make_shared<detail::SharedState>());
 }
+
+namespace detail {
+
+std::shared_ptr<SenderApi> make_sender_for_state(std::shared_ptr<SharedState> state) {
+    return std::make_shared<InMemorySenderApi>(std::move(state));
+}
+
+} // namespace detail
 
 } // namespace ipi::api

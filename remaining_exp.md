@@ -1,6 +1,6 @@
 # Remaining Experiment Plan
 
-Last updated: 2026-08-06
+Last updated: 2026-08-12
 
 ## Purpose
 
@@ -9,6 +9,20 @@ before the Edge4AV paper can answer the current coauthor comments. It is a
 runbook and decision record. Use it to prepare each collection, name and
 preserve the artifacts, determine whether a run is valid, and prevent
 unnecessary repetition of experiments that are already complete.
+
+## 2026-08-12 Phone And Cell-Lock Decision
+
+R1A is not required for the current paper or the completed Airspan follow-up.
+Do not schedule the Pixel/Android qualification unless a future experiment
+explicitly requires a new time-aligned phone log. The existing 16-point RSRP,
+RSRQ, and SNR survey was collected with an iPhone. It provides spatial radio
+context from a separate UE; it is not MG52 telemetry and is not a per-request
+channel trace.
+
+The user verified that the MG52 was locked to Airspan Cell 2 during the
+follow-up. Treat the serving-cell lock as operator-verified. Matching Airspan
+exports are still needed only for claims about cell counters, load, or the
+effect of the TDD configuration; they are not needed to repeat R1A.
 
 ## 2026-08-06 Application Blocks And Multi-Location Override
 
@@ -19,9 +33,11 @@ repetitions of TCP, MQTT, and UDP in separate five-minute ACP bins: 24/24 valid
 samples, 309,000 attempts, 307,662 accepted requests, 1,338 failures, and
 99.566990% overall success. The collection spans the 09:05 EDT bin through a
 12:14:03 EDT final workload finish. Three non-primary attempts remain preserved
-and excluded. ACP Cell 2 and MG52 exports are still pending, so the medium label
-is operator-reported rather than radio-validated and the run is not yet paper-
-facing.
+and excluded. The application measurements are complete and may be analyzed at
+the application layer. The medium/typical label records the collection location;
+the retained iPhone survey provides separate-UE spatial radio context rather
+than MG52 telemetry. Matching Airspan counters are needed only for cell-level
+load or TDD interpretation.
 
 The location-based weak C1/C2 application block is now complete. The MG52
 placement/orientation remained the trunk-floor, front-face-up configuration.
@@ -32,8 +48,10 @@ repetition, with all six failed rows reporting UDP acknowledgment timeouts. All
 12 samples include in-window GNSS positions. Exact coordinates, rosbags,
 endpoints, and host details remain in the excluded raw backup; the repository-
 facing result is sanitized and uses 0.001-degree GNSS precision.
-ACP Cell 2 and MG52 radio exports remain pending, so `weak` is still an operator-
-reported location class rather than a radio-validated signal claim.
+The `weak` label records the collection location and is supported only by the
+separate iPhone spatial survey, not by an MG52 measurement. The application
+measurements remain valid without an MG52 radio export. Matching Airspan
+counters are needed only for cell-level load or TDD interpretation.
 
 The block collected at the intended strong location is complete with the same
 1,024 B and 23,968 B idle, one-client workloads, two repetitions, and all three
@@ -43,27 +61,29 @@ for 99.983333% overall success. C1 and C2 TCP/MQTT were lossless; C2/UDP
 accepted 999/1,000 attempts. All 12 samples include in-window GNSS positions.
 The excluded raw backup is checksum-verified, while the repository-facing result
 is sanitized, uses 0.001-degree GNSS precision, and omits serialized rosbags.
-After collection, the user inspected MG52 RSRP for this block and the original
-common/typical block and reported the same 109-110 range for both. The attempted
+After collection, the user compared RSRP for this block and the original
+common/typical block and reported the same 109-110 range for both. On
+2026-08-12, the user clarified that these signal readings were collected with
+an iPhone, not the MG52. The attempted
 strong location therefore did not produce a distinct strong-signal condition.
 The result is corrected to a second `medium_typical_deployment` observation
 under `results/real_5g/20260806_airspan_followup_common_typical_run_2/`.
 Original `strong` acquisition fields remain preserved and are superseded by
-the run-level correction metadata. Import the supporting MG52 artifact before
-paper-facing use.
+the run-level correction metadata. Treat the iPhone readings as separate-UE
+spatial context rather than gateway telemetry.
 
 The actual strong-location C1/C2 application block is now complete under
 `results/real_5g/20260806_airspan_followup_strong_run_2/`. Before collection,
 a fresh GNSS preflight confirmed that the vehicle was stationary, and the
-operator reported a current MG52 RSRP reading of 101, distinct from the
+operator reported a current iPhone RSRP reading of 101, distinct from the
 common/typical 109-110 range. All 12 five-minute samples passed: 6,000/6,000
 attempts were accepted across both workloads, both repetitions, and all three
 transports. Every sample contains in-window GNSS positions. The exact-data
 backup is checksum-verified; the repository copy is sanitized, uses 0.001-
-degree GNSS precision, and omits serialized rosbags. The `strong` label remains
-operator-reported, and the dashboard sign convention, RSRP observation, Cell 2
-lock, `70/20/10`, and `10D4G` controls still require validation from the
-matching MG52 and ACP exports before paper-facing use.
+degree GNSS precision, and omits serialized rosbags. The iPhone reading is
+separate-UE context rather than an MG52 measurement. The Cell 2 lock is
+operator-verified; matching ACP evidence is still required for cell-load or TDD
+interpretation.
 
 Automatic GNSS for the medium block recovered at 10:39:02 EDT. Ten of 24 valid
 samples contain in-window ROS positions; earlier samples use the operator-
@@ -79,22 +99,22 @@ following bounded exception to the general protocol below:
 - Use application RTT as the timing metric. Cross-host clock synchronization
   is not required; record `clock_sync_state=unsynced` and do not report one-way
   latency.
-- Skip R1A and do not use the Android phone logger. This collection therefore
-  provides no phone-derived, co-located radio context, and no later analysis
-  may imply that it does.
-- The user reports that the ACP configuration and MG52 configuration have
-  already been verified. Preserve their exported evidence with the collection;
-  the report alone does not substitute for the artifacts.
+- Skip R1A and do not use the Android phone logger. The retained iPhone survey
+  may provide separate-UE spatial context, but it is not a time-aligned trace of
+  the completed follow-up.
+- The user verified the ACP configuration and the MG52 Cell 2 lock. Preserve
+  exported evidence when available; use Airspan exports for cell-level
+  counter, load, or TDD claims.
 - R1 host-side traffic and telemetry were collected before the then-planned
   C1-C5 block on 2026-08-05.
   The operator designated V1 as 11:15-11:30 EDT; V2 used a 25 Mbps-offered
   uplink from 13:15-13:30; and V3 used a 25 Mbps downlink from 13:35-13:50.
-  The user will export the matching ACP DU-cell and MG52/configuration evidence.
-  Do not mark R1 complete or perform final paper-facing analysis until those
-  artifacts are inspected.
-- Use MG52 management-plane radio measurements or other stored gateway-side
-  evidence to validate medium/weak/strong signal labels because phone
-  measurements are intentionally omitted.
+  The user may export matching ACP DU-cell/configuration evidence. Do not mark
+  the Airspan-counter portion of R1 complete or make cell-load or TDD-effect
+  claims until those artifacts are inspected. The application-layer results do
+  not depend on this export.
+- Use the retained iPhone signal survey only as separate-UE spatial context. Do
+  not relabel it as MG52 management-plane telemetry.
 
 This section overrides only the R1A/phone, clock-synchronization, and R1-upload
 ordering requirements for this collection. All condition definitions,
@@ -142,7 +162,8 @@ in analysis.
 ## Vehicle Collection Start Order
 
 Use this section at the vehicle. The detailed controls, artifacts, and pass
-conditions remain in R1A through R9 below.
+conditions remain in R1 through R9 below. R1A is retained only as a contingency
+protocol for future work that explicitly requires a new Android log.
 
 ### 1. Pull And Validate The Experiment Host
 
@@ -160,8 +181,7 @@ command -v sshpass rsync timeout
 Confirm that the vehicle computer can reach the existing MX250-connected edge
 host. Set `EDGE_HOST`, `EDGE_USER`, `EDGE_REPO`, and `SSHPASS` only in the local
 shell environment. Do not write a password into a script, run manifest, or Git
-file. Record the vehicle-host, edge-host, phone, and ACP times before collecting
-data.
+file. Record the vehicle-host, edge-host, and ACP times before collecting data.
 
 Historical scripts under `results/real_5g/` are implementation references.
 Do not run them in their original directories: several scripts hardcode their
@@ -172,14 +192,13 @@ Every new collection must use a new directory named
 directory, condition labels, payload list, transport list, ports, and edge-host
 settings.
 
-### 2. Qualify The Phone Before Application Runs
+### 2. Do Not Run R1A
 
-Run R1A first. Collect the five-minute stationary phone log and verify that the
-phone is attached to the Airspan private-5G NR cell and exports timestamps,
-serving-cell identity, RSRP, and RSRQ. Stop if R1A fails. Do not substitute
-screenshots or displayed signal bars for the timestamped export.
+No new Android-phone qualification or logger run is required. Use the retained
+iPhone survey for spatial RSRP/RSRQ/SNR context and keep it separate from MG52
+and Airspan measurements.
 
-### 3. Validate ACP And Logger Alignment
+### 3. Validate ACP Alignment
 
 Run R1 across three consecutive 15-minute ACP bins:
 
@@ -187,9 +206,9 @@ Run R1 across three consecutive 15-minute ACP bins:
 2. one controlled 25 Mbps vehicle-to-edge uplink stream; and
 3. one controlled 25 Mbps edge-to-vehicle downlink stream.
 
-Export ACP and the phone log immediately afterward. Stop before R2-R4 if the
+Export ACP immediately afterward. Stop before R2-R4 if the
 traffic cannot be assigned to the MG52-locked Airspan cell and the expected
-bins, the phone log has gaps, or achieved traffic differs materially from the
+bins or achieved traffic differs materially from the
 intended direction or rate. Use Cell 2 for direct comparison with the original
 campaigns. Export both cells so that the absence of experiment traffic on the
 nonselected cell can be verified rather than assumed.
@@ -197,20 +216,20 @@ nonselected cell can be verified rather than assumed.
 ### 4. Run The Required Follow-Up Matrix
 
 For the active five-minute override, the medium/typical C1-C4, second
-common/typical C1/C2, weak-location C1/C2, and radio-distinct candidate strong-
-location C1/C2 application blocks are collected. The earlier attempted strong
+common/typical C1/C2, weak-location C1/C2, and candidate strong-location C1/C2
+application blocks are collected. The earlier attempted strong
 block was reclassified as common/typical after its RSRP matched the original
-common run; the later block used the operator-reported distinct RSRP reading of
-101. Do not rerun the completed blocks solely to change their collection order.
+common run; the later block used the distinct iPhone RSRP reading of 101. Do
+not rerun the completed blocks solely to change their collection order.
 The older generic C1-C6 table below remains useful for workload mapping, but
 its planned stronger/outside and weaker/inside intervention is superseded for
 this run by the explicit multi-location directive above.
 
-The selected serving cell will use `70/20/10`: 70 downlink, 20 uplink, and 10
-dynamic frames. Lock the MG52 to Airspan Cell 2 before collection so that no
-cell handoff occurs and the serving cell matches the cell observed during the
-original campaigns. Record the lock state, selected cell, both cells'
-configurations, and phone-observed serving cell in every new run manifest.
+The selected serving cell uses `70/20/10`: 70 downlink, 20 uplink, and 10
+dynamic frames. The user verified that the MG52 was locked to Airspan Cell 2
+during collection, preventing cell handoff and matching the cell observed
+during the original campaigns. Record the lock state, selected cell, and both
+cells' configurations in every new run manifest.
 Airspan Cell 2 is the radio cell; it is unrelated to experiment condition C2.
 The R1 idle/uplink/downlink bins and the first valid C1 and C2 TCP runs can
 supply the `70/20/10` measurements used by R9; do not repeat those probes solely
@@ -238,8 +257,9 @@ The goal is not to repeat the full private-5G campaign. The existing results
 already cover payload size, TCP/MQTT/UDP, background load, detector-output
 replay, application deadlines, multiclient scaling, weak signal, and
 failure/restart behavior. The remaining measurement work is a targeted
-follow-up that collects application results, Airspan cell statistics, and
-Android radio measurements over the same time windows. Several comments do not
+follow-up that collects application results and Airspan cell statistics over
+the same time windows. The retained iPhone survey supplies separate spatial
+radio context. Several comments do not
 require a new experiment. They instead require verified deployment facts,
 architecture clarification, IPI implementation evidence, careful claim scope,
 and relevant citations. Those actions are included here so that completing the
@@ -258,9 +278,9 @@ experiment matrix alone is not mistaken for completing the paper.
    per-request measurements and currently contain no UE identifier, RSRP,
    RSRQ, SINR, CQI, MCS, BLER, HARQ/RLC retransmission, PRB utilization,
    scheduler state, queue state, QFI/5QI, or packet latency.
-5. Android radio measurements from a phone beside the gateway are a co-located
-   proxy. They are not measurements from the vehicle gateway/CPE, gNodeB, UPF,
-   or the application packets.
+5. The retained iPhone radio survey is a separate-UE spatial measurement. It is
+   not a measurement from the vehicle gateway/CPE, gNodeB, UPF, or application
+   packets.
 6. Continue reporting private-5G request/response timing as RTT. Do not report
    one-way latency unless the relevant clocks are verified as synchronized.
 7. Label signal conditions using measured signal strength. Outside/inside
@@ -270,29 +290,23 @@ experiment matrix alone is not mistaken for completing the paper.
    without written UD/Cisco/Airspan approval.
 9. Do not enable Dynamic QoS experimentally. The supplied document states that
    activation cannot be disabled and a saved rule cannot be removed.
-10. Do not use a phone for paper-facing measurements until its hardware,
-    private-5G connection, app fields, sampling behavior, and raw export have
-    passed R1A. A screen display or screenshot is not a time-aligned dataset.
-11. Phone samples cannot be described as per-request radio telemetry when the
-    phone samples more slowly than the application sender. Report them as
-    time-aligned, co-located radio context at the measured sampling interval.
-12. Do not run phone-based ping, upload, or download tests during the
-    application measurements. Those tests create an additional workload and
-    would confound the intended idle, load, and multiclient conditions.
-13. Use one qualified phone and fixed orientation for all paired comparisons.
-    Without calibration, do not equate its absolute RSRP/RSRQ with the
-    gateway/CPE receiver's values or treat the coauthor's approximate 8 dB
-    vehicle loss as a measured result.
+10. R1A is outside the current plan. If future work adds a new phone logger,
+    qualify that device and application before treating its data as a
+    time-aligned dataset.
+11. Do not describe the retained iPhone samples as per-request radio telemetry
+    or equate their absolute values with the gateway/CPE receiver's values.
+12. Do not run phone-based traffic during application measurements because it
+    adds another UE workload.
 
 ## Data Location And Git Handling
 
-- Keep confidential and unredacted Cisco/Airspan/G-NetTrack material under
+- Keep confidential and unredacted Cisco/Airspan/phone-radio material under
   `CISCO_AIRSPAN_STATS/`.
 - `CISCO_AIRSPAN_STATS/` is locally excluded through `.git/info/exclude`.
 - Do not force-add that directory or upload its raw contents to GitHub.
 - Raw exports may contain node names, internal addresses, device identifiers,
   subscriber identifiers, phone numbers, and local IP addresses.
-- In G-NetTrack-style logs, treat `IMEI`, `IMSI`, `MSISDN`, `IP`, raw
+- In Network Survey or G-NetTrack logs, treat `IMEI`, `IMSI`, `MSISDN`, `IP`, raw
   cell/network identifiers, and exact GNSS coordinates as sensitive.
 - Store only redacted, experiment-aligned derived files under
   `results/real_5g/`.
@@ -304,16 +318,16 @@ experiment matrix alone is not mistaken for completing the paper.
 | ID | Experiment or action | Priority | Current status | Required for |
 |---|---|---:|---|---|
 | R0 | Resolve Airspan counter and configuration questions | Required | Partially complete; active configuration and SAS provider retained | Correct interpretation of every new Airspan export |
-| R1A | Qualify the Android phone and installed radio app | Required before R1 | Not run | Establish whether the phone can observe and export the private-5G NR fields |
-| R1 | ACP and Android radio-logger validation pilot | Required | Host V1-V3 collected; ACP/MG52 export pending; Android logger waived for this run | Validate cell mapping, timing, and traffic attribution |
-| R2 | Multi-location payload follow-up | Required | Original and repeated common/typical, weak, and new candidate strong C1/C2 application blocks complete; ACP/MG52 alignment and radio-class validation pending | Relate signal location and payload size to application and cell-level behavior |
-| R3 | Background-load follow-up | Required | Medium C3 application block complete; ACP/MG52 alignment pending | Relate application tail growth to contemporaneous cell traffic |
-| R4 | 100-client follow-up | Required | Medium C4 application block complete; ACP/MG52 alignment pending | Add cell context to the representative scalability endpoint |
+| R1A | Qualify the Android phone and installed radio app | Not required | Closed by user decision; do not run unless future work explicitly adds Android logging | Contingency only |
+| R1 | ACP validation pilot | Required | Host V1-V3 collected; Cell 2 lock operator-verified; ACP counter export pending | Validate timing and traffic attribution |
+| R2 | Multi-location payload follow-up | Required | Original and repeated common/typical, weak, and candidate strong C1/C2 application blocks complete; iPhone survey retained as separate-UE spatial context; Cell 2 lock operator-verified | Relate collection location and payload size to application behavior; add cell-level interpretation only if matched Airspan counters are available |
+| R3 | Background-load follow-up | Required | Medium C3 application block complete; Airspan counters pending only for a contemporaneous cell-load claim | Relate application tail growth to offered host load; add cell context only with matched Airspan counters |
+| R4 | 100-client follow-up | Required | Medium C4 application block complete; Airspan counters pending only for a contemporaneous cell-load claim | Characterize the representative logical-client endpoint; add cell context only with matched Airspan counters |
 | R5 | Verified default-versus-new QoS comparison | Required only if Cisco enables it | Blocked on Cisco configuration | Determine whether network-enforced QoS changes results |
 | R6 | Path-segment measurements | Optional | Excluded from the current paper scope | Future delay decomposition; the current paper reports complete-path application RTT |
 | R7 | Additional ACP/per-UE counter export | Recommended | Availability unknown | Improve radio/RAN interpretation beyond DU Cell aggregates |
 | R8 | Validate payload direction and measure selected downlink responses | Required for bidirectional payload claims | Not run | Distinguish large vehicle-to-edge requests from large edge-to-vehicle responses |
-| R9 | Compare the historical `40/40/20` results with the locked-cell `70/20/10` follow-up | Exploratory sensitivity study | `70/20/10` host/application follow-up collected; ACP/MG52 verification and controlled comparison remain | Quantify whether and by how much the changed downlink/uplink allocation is associated with application outcomes, then derive implications for future vehicular-radio and 6G design |
+| R9 | Compare the historical `40/40/20` results with the locked-cell `70/20/10` follow-up | Exploratory sensitivity study | `70/20/10` host/application follow-up collected and Cell 2 lock operator-verified; matched Airspan TDD evidence and a controlled same-cell reference remain | Quantify whether and by how much the changed downlink/uplink allocation is associated with application outcomes, then derive implications for future vehicular-radio and 6G design |
 | P1 | Complete deployment and path documentation | Required | Not complete | Vendor attribution, reproducibility, equipment scope, and V2X/5G separation |
 | P2 | Validate and document the IPI contribution | Required | Partly implemented; final validation not recorded | Answer the request to strengthen IPI without changing the paper's central logic |
 | P3 | Close manuscript claims, citations, and submission checks | Required | Not complete | Qualified conclusions, related work, anonymity, format, and evidence traceability |
@@ -328,12 +342,12 @@ No new V2X experiment is required solely for these private-5G follow-ups.
 | Cisco supplied the edge/core equipment and Airspan supplied the radio | Verify exact models and use supplier names only in the first deployment description; use `private 5G` or `5G network` afterward | R0, P1 |
 | State the band, CBSD category, spectrum authorization, and radio configuration | Obtain written configuration values and a redacted configuration record | R0, P1 |
 | Identify the CPE, antenna placement, and receiver sensitivity | The CPE is an internal-antenna `MG52-HW`; all original runs used the trunk-floor, front-face-up placement, and modem-level n48 sensitivity is documented. Record both controlled positions for R2 | R0, R2, P1 |
-| Clarify whether the data represent a commercial cell edge | Report measured RSRP/RSRQ and avoid `cell edge` unless a deployment-specific threshold is supplied | R1A, R1-R4, P3 |
+| Clarify whether the data represent a commercial cell edge | Report the iPhone RSRP/RSRQ/SNR survey as separate-UE spatial context and avoid `cell edge` unless a deployment-specific threshold is supplied | R1-R4, P3 |
 | Clarify whether V2X is implemented using 5G | State that the measured LTE C-V2X PC5 OBU-RSU path and private-5G NR Uu vehicle-edge path are independent; NR-V2X sidelink was not measured | P1 |
 | Strengthen IPI | Tie the API, state transitions, required/optional fields, request/response example, failure semantics, and enabled analysis to the current implementation and tests | P2 |
 | Qualify conclusions to the equipment and explain what failed | Separate observed endpoint behavior from unverified radio causes; scope conclusions to the measured deployment and identify improvements as requirements unless a follow-up validates a mechanism | R1-R5, R7, P3 |
 | Consider the BREAKING-LOW/DRIVE-SAFE work | Read and cite relevant technical publications; use the project page only as motivation, not as experimental evidence | P3 |
-| Use G-NetTrack Pro for continuous logging and exports | First qualify the installed Lite build and phone. Use Pro if Lite cannot export a usable raw, timestamped log | R1A, R1 |
+| Use G-NetTrack Pro for continuous logging and exports | No new Android logging is required. The retained signal survey was collected with an iPhone and is reported only as separate-UE spatial context | Closed |
 | Change signal strength by reducing gNodeB power | Do not perform this intervention because UD prohibits power adjustment; use the user-directed multi-location field comparison with unchanged MG52 placement | R2 |
 | Compare gateway/antenna placement inside and outside the vehicle | Not performed in the active run: the MG52 remains on the trunk floor, front face up. Do not claim an inside/outside comparison from the location repeats | R2, P3 |
 | Use other campus vehicles | Not required for the current paper. Add only if the research question changes to vehicle-body generalization | No current experiment |
@@ -548,31 +562,55 @@ captures under `CISCO_AIRSPAN_STATS/`. Do not upload raw dashboard exports or
 screenshots containing serial numbers, MAC/IP addresses, subscriber data, or
 exact site information to GitHub.
 
-## R1A. Android Phone And App Qualification
+## R1A. Android Phone And App Qualification (Not Required)
 
-Complete this qualification before scheduling R1. An old Android phone is
+Status: closed by the 2026-08-12 user decision. Do not execute this protocol
+for the current paper. Retain it only as a contingency if future work explicitly
+adds a new Android-based, time-aligned radio survey.
+
+If reactivated, an old Android phone is
 usable only if its modem supports the deployed private-5G network and the
 installed app exports the required fields. The phone's age or the presence of a
 5G icon is not sufficient evidence.
 
-The current official G-NetTrack Lite listing identifies package
-`com.gyokovsolutions.gnettracklite`. It states that 5G reporting can include
-RSRP, RSRQ, and PCI, while SNR, CQI, and timing advance are listed only for 4G.
-The same listing describes text/KML recording and active ping/upload/download
-tests as Pro features, while also mentioning a Lite log mode. Because this
-description is not sufficient to establish the installed build's export
-behavior, inspect an actual export. If the installed app has a different package
-name, record its exact name and do not assume it has G-NetTrack capabilities.
+The selected free logger is Network Survey 1.57, package
+`com.craxiom.networksurvey`, installed from its official GitHub release on a
+Google Pixel 10 running Android 16. Its source defines separate LTE and NR CSV
+schemas. The NR schema includes timestamps, GNSS fields, serving-cell identity,
+NR-ARFCN, PCI, SS-RSRP, SS-RSRQ, SS-SINR, CSI measurements, timing advance,
+connection status, and cell bandwidth. A schema field may remain empty when the
+phone modem or Android API does not expose it, so the schema does not replace
+the private-5G qualification capture.
 
 Official references:
 
-- `https://play.google.com/store/apps/details?id=com.gyokovsolutions.gnettracklite`
-- `https://www.gyokovsolutions.com/manuals/G-NetTrack_Pro-manual.pdf`
+- `https://github.com/christianrowlands/android-network-survey`
+- `https://github.com/christianrowlands/android-network-survey/releases/tag/v1.57`
+- `https://github.com/christianrowlands/android-network-survey/blob/master/networksurvey/src/main/java/com/craxiom/networksurvey/logging/NrCsvLogger.java`
+- `https://networksurvey.app/`
 
 The attached `G-NetTrack_Pro_Logs 1.21.zip` contains historical 2018 AT&T LTE
 examples. It is useful for understanding the tab-delimited schema, file marks,
 neighbor-cell fields, and sensitive identifiers, but it does not validate 5G
 NR reporting on the user's current phone.
+
+### Completed Logger Precheck
+
+On 2026-08-10, a cellular-only Network Survey capture was run while the Pixel
+10 was attached to a public LTE network. The app produced 29 usable records
+over 28.205 seconds. The median timestamp interval was 1.008 seconds, with a
+0.890-second minimum and a 1.133-second maximum. Every record populated GNSS,
+serving-cell identity, channel, RSRP, RSRQ, SNR, timing advance, bandwidth, and
+connection-status fields. This verifies the configured one-second periodic CSV
+logger on LTE; it does not verify NR fields or the Airspan attachment. No NR CSV
+was produced because the phone was not attached to NR during the precheck.
+
+The final logger configuration uses cellular and automatically associated phone
+state logging only. CDR, Wi-Fi, Bluetooth, MQTT, and community-upload logging
+remain disabled. SMS, call-log, and phone-number runtime permissions are denied,
+and the app is exempt from battery optimization. Raw precheck files remain
+outside the repository because they contain exact GNSS, serving-cell, and device
+values.
 
 ### Phone And Network Eligibility
 
@@ -681,14 +719,15 @@ it.
   must be recorded as a new condition.
 - Remote execution on the car requires an authenticated SSH or reverse-SSH
   connection to the car's experiment computer, not merely a tunnel to `d1`.
-- The qualified Android phone is a separate UE and radio proxy. It must not
+- Any optional phone logger is a separate UE and radio proxy. It must not
   replace the car experiment computer as the application sender.
 
 ### Time Alignment
 
 1. Confirm the ACP timezone before the first run.
-2. Record the displayed time on the application host, Android phone, and ACP at
-   the beginning and end of the collection.
+2. Record the displayed time on the application host and ACP at the beginning
+   and end of the collection. Record phone time only if an optional future phone
+   logger is used.
 3. Record clock offsets rather than assuming synchronization.
 4. Align each condition to one ACP 15-minute bin.
 5. For a bin from `HH:00` to `HH:15`, begin the workload near `HH:01` and finish
@@ -702,10 +741,9 @@ it.
 1. Keep other test UEs disconnected where possible.
 2. Record every UE that remains connected.
 3. Verify before each measurement bin that the MG52 cell lock is active and
-   selects Airspan Cell 2. Record the MG52 serving-cell evidence separately
-   from the phone's serving cell. A phone record cannot validate the MG52 lock.
-4. Keep the gateway, antenna, phone, vehicle, and edge host unchanged within a
-   paired comparison except for the intended intervention.
+   selects Airspan Cell 2. A phone record cannot validate the MG52 lock.
+4. Keep the gateway, antenna, vehicle, and edge host unchanged within a paired
+   comparison except for the intended intervention.
 5. Keep the vehicle location and orientation fixed for the stronger/weaker
    signal comparison.
 6. Keep the phone at a marked position beside the gateway/CPE antenna and
@@ -767,13 +805,11 @@ be mistaken for a radio or core effect.
 For each non-multiclient condition:
 
 1. Start the receiver and verify readiness before the ACP bin begins.
-2. Start the R1A-qualified Android radio logger and mark the condition.
-3. Start any required background load.
-4. Run TCP, MQTT, and UDP sequentially within the same ACP bin when they fit.
-5. Keep separate sender and receiver files for every transport.
-6. Stop background load after the final application transport.
-7. Record any timeout, restart, manual correction, or unexpected traffic.
-8. Keep the Android radio logger running through the end of the bin.
+2. Start any required background load.
+3. Run TCP, MQTT, and UDP sequentially within the same ACP bin when they fit.
+4. Keep separate sender and receiver files for every transport.
+5. Stop background load after the final application transport.
+6. Record any timeout, restart, manual correction, or unexpected traffic.
 
 If all three transports cannot finish in one bin, assign a separate bin to each
 transport. Do not allow a transport to cross an ACP boundary without recording
@@ -796,16 +832,11 @@ For every condition and repetition, preserve:
   MG52 serving cell for every measurement block.
 - Live Airspan configuration evidence showing the selected cell's TDD profile
   before each R9 block.
-- Raw timestamped Android radio-log export for the same window and KML when
-  supported.
 - A redacted Airspan derivative with node/internal identifiers removed.
-- A redacted Android radio-log derivative with device, subscriber,
-  phone-number, local-IP, and precise-location fields removed or anonymized.
 - Condition metadata: location identifier, vehicle orientation, gateway and
   antenna placement, measured signal statistics, protocol order, payload,
   client count, offered load, selected Airspan cell, MG52 cell-lock state, TDD
-  profile, DNN, 5QI/QFI when applicable, phone/app versions, configured and
-  achieved phone sampling interval, and operator notes.
+  profile, DNN, 5QI/QFI when applicable, and operator notes.
 
 Recommended result layout:
 
@@ -816,21 +847,19 @@ results/real_5g/YYYYMMDD_airspan_followup_run_N/
   load/
   host_telemetry/
   airspan_redacted.csv
-  gnet_redacted.tsv
   validation_summary.json
   notes.txt
 ```
 
 Keep unredacted originals in `CISCO_AIRSPAN_STATS/`, not in this result folder.
 
-## R1. ACP And Android Radio-Logger Validation Pilot
+## R1. ACP Validation Pilot
 
 ### Purpose
 
 Validate the measurement path before collecting paper-facing follow-up data.
 This pilot determines whether known traffic appears in the correct Airspan cell
-and time bin and whether the R1A-qualified phone provides usable, time-aligned
-private-5G NR context throughout the workload. Lock the MG52 to Airspan Cell 2,
+and time bin. The user verified that the MG52 was locked to Airspan Cell 2,
 which is the cell observed during the original campaigns. Export both cells and
 verify that Cell 1 does not carry the experiment traffic. A serving-cell change
 invalidates the affected bin.
@@ -864,18 +893,14 @@ The pilot passes only if all of the following are true:
    duration after accounting for protocol overhead.
 7. Cell 2 carries the experiment traffic, Cell 1 carries no experiment traffic,
    and the MG52 remains locked without a serving-cell change.
-8. The phone export contains the private-5G serving-cell identity, RSRP, RSRQ,
-   usable timestamps, and records throughout all three bins.
-9. The phone's configured and achieved sampling intervals, missing-value
-   behavior, and stale-value behavior are documented.
-10. The zero active-UE counter and cell-unavailability units are either
+8. The zero active-UE counter and cell-unavailability units are either
     explained or explicitly excluded.
-11. Phone-generated ping/upload/download traffic is absent from all three bins.
-12. The phone is reported as co-located run-level radio context rather than
-    gateway or per-request telemetry.
+9. No undeclared application or load-generator traffic is present in the three
+   bins.
 
-Do not proceed to paper-facing R2-R5 interpretation if traffic cannot be mapped
-to the correct ACP bin and cell.
+Do not make a cell-counter, cell-load, or TDD-effect interpretation if traffic
+cannot be mapped to the correct ACP bin and cell. This restriction does not
+invalidate the separately collected application-layer measurements.
 
 ## R2-R4. Targeted Follow-Up Matrix
 
@@ -887,13 +912,15 @@ to the correct ACP bin and cell.
 | C2 | Explicit per-run location class | Idle | 23968 B | 1 | TCP, MQTT, UDP |
 | C3 | Medium/typical for the completed block | 25 Mbps offered uplink | 1024 B | 1 | TCP, MQTT, UDP |
 | C4 | Medium/typical for the completed block | Existing test background only | 1024 B | 100 | TCP, MQTT, UDP |
-| C5 | Weaker measured signal; analytical equivalent of weak-location C1 | Idle | 1024 B | 1 | TCP, MQTT, UDP |
-| C6 | Weaker measured signal; analytical equivalent of weak-location C2 | Idle | 23968 B | 1 | TCP, MQTT, UDP |
+| C5 | Weak-location equivalent of C1 | Idle | 1024 B | 1 | TCP, MQTT, UDP |
+| C6 | Weak-location equivalent of C2 | Idle | 23968 B | 1 | TCP, MQTT, UDP |
 
 For the active multi-location override, preserve C1/C2 as the raw workload IDs
-at medium, weak, and strong locations. Map weak-location C1/C2 to the C5/C6
-analytical conditions only after the radio export validates that the location
-is weaker. Never infer signal class from the condition number alone.
+at common/typical, weak, and candidate strong locations. Map weak-location
+C1/C2 to the C5/C6 analytical conditions by workload and location. The retained
+iPhone survey provides separate-UE spatial context; do not treat its absolute
+RSRP, RSRQ, or SNR as an MG52 measurement or infer signal class from the
+condition number alone.
 
 ### Repetitions
 
@@ -920,19 +947,18 @@ same vehicle and leave the MG52 flat on the trunk floor with its front face
 upward. Keep its cables, power, experiment computer, software, Cell 2 lock,
 TDD/frame configuration, and application settings unchanged. At every stop,
 record a non-sensitive location ID, exact GNSS only in the excluded raw backup,
-vehicle orientation if available, stationary start/end times, and the matching
-MG52 radio export.
+vehicle orientation if available, and stationary start/end times. If a future
+study requires causal radio attribution, collect matched CPE or RAN telemetry;
+it is not required for the completed application-layer comparison.
 
 The user-directed order began medium/typical, weak, then an intended strong
 location. Because the first intended strong location matched the common RSRP
 range, it is retained as a second common/typical observation. The later
 candidate strong location was collected after the operator reported a distinct
-RSRP reading of 101.
-Collect a short idle radio baseline after each move and before application
-traffic. The comparison is valid as a field comparison only if MG52 radio
-measurements show separated medium/weak/strong distributions. If they overlap,
-retain the location labels and report the overlap instead of assigning signal-
-strength classes.
+iPhone RSRP reading of 101. These readings distinguish spatial observations for
+the iPhone; they do not measure the MG52 application path. Retain the location
+labels in application comparisons and identify the iPhone survey as separate-UE
+radio context.
 
 Changing location also changes propagation geometry and possibly interference,
 not only received signal strength. Treat this as a representative multi-
@@ -967,8 +993,9 @@ For every transport and repetition, compute:
 - For 100 clients: per-client success, p50/p95/p99, aggregate success, and
   fairness.
 - MG52 management-plane radio statistics and serving-cell identity over each
-  application interval. The Android logger is waived for this collection, so
-  do not imply phone-derived or per-request radio context.
+  application interval when available. The user verified the Cell 2 lock. No
+  Android logger was used; the retained iPhone survey is separate spatial
+  context rather than per-request telemetry.
 - Airspan uplink/downlink DRB volume, active time, derived throughput, RACH
   counters, and availability for both cells. Use the MG52-locked Cell 2 for the
   application comparison after confirming the MG52 lock and serving-cell
@@ -986,8 +1013,9 @@ level sample.
 3. Every bin maps to the MG52-locked Airspan Cell 2; a serving-cell change or
    experiment traffic on Cell 1 invalidates the affected comparison.
 4. TCP, MQTT, and UDP retain separate application results.
-5. The medium/weak/strong labels are supported by measured MG52 radio values;
-   otherwise retain only location IDs and operator descriptions.
+5. The common/typical, weak, and candidate strong labels remain location labels.
+   The iPhone survey is reported as separate-UE spatial context and is not
+   attributed to the MG52.
 6. The load condition reaches and records its intended offered rate.
 7. The 100-client condition starts the declared number of clients and reports
    every failed or missing client.
@@ -1198,7 +1226,7 @@ Extend the existing probe without changing its correlation and timing model:
 ### Targeted Conditions
 
 Use the stronger measured signal condition, an otherwise idle cell, the same
-car sender and edge endpoint, and the R1A/R1/O1 collection protocol.
+car sender and edge endpoint, and the R1/O1 collection protocol.
 
 | Direction condition | Request payload | Response payload | Purpose |
 |---|---:|---:|---|
@@ -1293,11 +1321,10 @@ For each newly collected `40/40/20` reference and `70/20/10` follow-up block:
 
 Keep the vehicle location and orientation, gateway and antenna placement,
 channel bandwidth, application host, traffic endpoints, request interval,
-timeout, DNN, and 5QI unchanged. Capture application logs, host telemetry,
-Android radio measurements, and Airspan DU Cell statistics for both cells
-covering the complete comparison. Record the MG52 lock and serving-cell status
-for each interval. Record the phone's serving cell separately as co-located
-radio context. A loss of the MG52 lock, a serving-cell change, or experiment
+timeout, DNN, and 5QI unchanged. Capture application logs, host telemetry, and
+Airspan DU Cell statistics for both cells covering the complete comparison.
+Record the MG52 lock and serving-cell status for each interval. A loss of the
+MG52 lock, a serving-cell change, or experiment
 traffic on the nonselected cell invalidates the affected comparison.
 
 One pair is a diagnostic result only. Collect at least two valid matched pairs,
@@ -1660,14 +1687,11 @@ requirements.
 Complete this checklist before leaving the test site:
 
 - [ ] Stop every sender, receiver, load generator, and packet capture.
-- [ ] Record the final application-host, phone, and ACP times.
+- [ ] Record the final application-host and ACP times.
 - [ ] Export Airspan data covering one bin before through one bin after the
       day's experiments.
 - [ ] Preserve the MG52 cell-lock/serving-cell evidence and the live Airspan
       TDD profile associated with every R9 block.
-- [ ] Export the Android logger's raw timestamped data and KML when supported.
-- [ ] Verify the phone log contains the expected serving cell, RSRP, RSRQ, and
-      records across every experiment interval.
 - [ ] Verify that every expected sender and receiver CSV is nonempty.
 - [ ] Verify expected attempt counts and client counts.
 - [ ] Verify no condition crossed an undeclared ACP boundary.
@@ -1683,12 +1707,14 @@ The remaining experiment and paper-evidence work is complete when:
 
 1. R0 questions required for interpretation are answered or explicitly marked
    unavailable.
-2. R1A and R1 pass.
+2. R1 passes; R1A remains closed as not required.
 3. R2-R4 contain at least two valid, synchronized bins per required condition,
    with three preferred.
-4. Every condition has matching application, Airspan, Android radio-log, and
-   metadata artifacts.
-5. Stronger/weaker signal labels are measurement-backed.
+4. Every application-layer condition has matching application and metadata
+   artifacts. Any cell-level load or TDD claim also has a matched Airspan
+   artifact.
+5. Location labels and the separate iPhone spatial-radio context are identified
+   explicitly; iPhone measurements are not attributed to the MG52.
 6. The new representative application behavior is compared against the existing
    result family.
 7. R5 is either completed with verified network treatment or retained as a
@@ -1714,36 +1740,37 @@ The remaining experiment and paper-evidence work is complete when:
 ## Current Checklist
 
 - [ ] R0 Airspan counter/configuration questions answered.
-- [ ] R1A phone/app/private-5G qualification completed.
+- [x] R1A closed as not required; no new Android logger collection is planned.
 - [ ] R1 validation pilot completed; host workload/telemetry collected, ACP and
-      MG52/configuration checks pending, Android logger waived for this run.
+      configuration counters pending; MG52 Cell 2 lock operator-verified.
 - [x] Medium/typical C1, idle, 1024 B application block completed (2 reps, all
-      transports; ACP/MG52 alignment pending).
+      transports; Airspan counters needed only for cell-level interpretation).
 - [x] Medium/typical C2, idle, 23968 B application block completed (2 reps, all
-      transports; ACP/MG52 alignment pending).
+      transports; Airspan counters needed only for cell-level interpretation).
 - [x] Medium/typical C3, offered uplink load, 1024 B application block completed
-      (2 reps, all transports; ACP/MG52 alignment pending).
+      (2 reps, all transports; Airspan counters needed only for cell-level
+      interpretation).
 - [x] Medium/typical C4, 100 clients, 1024 B application block completed (2
-      reps, all transports; ACP/MG52 alignment pending).
+      reps, all transports; Airspan counters needed only for cell-level
+      interpretation).
 - [x] Weak-location C1/C2 application workloads completed (2 reps, all
       transports; these supply the C5/C6 payload equivalents).
-- [ ] Weak-location radio classification and Cell 2 controls validated from the
-      matching ACP/MG52 exports.
+- [x] Weak-location label retained, iPhone survey identified as separate-UE
+      spatial context, and MG52 Cell 2 lock operator-verified.
 - [x] Second common/typical-location C1/C2 application workloads completed (2
       reps, all transports; originally collected with a `strong` planning label).
-- [ ] Supporting MG52 export for the second common/typical block imported and
-      its reported RSRP match plus Cell 2 controls validated.
-- [x] New strong-location C1/C2 application workloads completed at a radio-
-      distinct candidate location (2 reps, all transports; 6,000/6,000
-      accepted).
-- [ ] New strong-location radio classification and Cell 2 controls validated
-      from the matching ACP/MG52 exports.
+- [x] Reported RSRP match attributed to the iPhone survey rather than the MG52;
+      MG52 Cell 2 lock operator-verified.
+- [x] New candidate strong-location C1/C2 application workloads completed (2
+      reps, all transports; 6,000/6,000 accepted).
+- [x] Candidate strong-location iPhone reading identified as separate-UE spatial
+      context; MG52 Cell 2 lock operator-verified.
 - [ ] R5 Cisco-approved QoS comparison completed or formally blocked.
 - [x] R6 excluded; the paper reports complete-path application RTT.
 - [ ] R7 additional Airspan export obtained or documented unavailable.
 - [ ] R8 directional payload experiment completed or manuscript scope narrowed.
-- [ ] R9 Cell 2 lock and both TDD profiles verified; repeated `40/40/20` versus
-      `70/20/10` comparison completed.
+- [ ] R9 Cell 2 lock operator-verified; both TDD profiles and the repeated
+      `40/40/20` versus `70/20/10` comparison remain to be validated.
 - [ ] P1 deployment inventory and V2X/5G path description completed.
 - [ ] P2 IPI implementation mapping and test validation completed.
 - [ ] P3 claim/citation/submission review completed.

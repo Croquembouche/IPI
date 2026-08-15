@@ -1,0 +1,136 @@
+{
+  "encoding": "UPER",
+  "message": "TestMessage00",
+  "message_id": 240,
+  "profile_version": 1,
+  "region_id": 200,
+  "schema": "cpp/asn1/IPI.asn",
+  "schema_sha256": "8bfaa9087800a46a91147b5a7e3c3ea8416a01ac918ed80ba31d3747e298a8fd",
+  "reference_encoders": [
+    {
+      "name": "asn1tools",
+      "version": "0.167.0",
+      "scope": "IPI regional value"
+    },
+    {
+      "name": "pycrate",
+      "version": "0.7.11",
+      "scope": "IPI regional value"
+    },
+    {
+      "name": "USDOT FHWA STOL j2735_202409 pycrate package",
+      "version": "0.1.0",
+      "scope": "MessageFrame and TestMessage00 outer structure"
+    }
+  ],
+  "vectors": [
+    {
+      "name": "perception",
+      "value": {
+        "profileVersion": 1,
+        "sessionIdHex": "42000000000000000000000000000000",
+        "vehicleIdHex": "6361762d31",
+        "serviceClass": "guidedPerception",
+        "guidanceStatus": "update",
+        "confidence": 96,
+        "servicePayload": {
+          "choice": "perception",
+          "detectedObjects": [
+            {
+              "objectIdHex": "10203040",
+              "classification": "pedestrian",
+              "position": {
+                "latitude": 423314271,
+                "longitude": -830457538
+              },
+              "velocity": 142,
+              "covarianceHex": ""
+            }
+          ]
+        }
+      },
+      "regional_uper_hex": "2800840000000000000000000000000000008c6c2ec5a62b81031020304053b80b17ce7282cfa0238000",
+      "message_frame_uper_hex": "00f02d3905450010800000000000000000000000000000118d85d8b4c57020620406080a770162f9ce5059f404700000"
+    },
+    {
+      "name": "planning_all_optional",
+      "value": {
+        "profileVersion": 1,
+        "sessionIdHex": "00112233445566778899aabbccddeeff",
+        "vehicleIdHex": "7665682d706c616e",
+        "serviceClass": "guidedPlanning",
+        "guidanceStatus": "request",
+        "requestedHorizon": 5000,
+        "confidence": 88,
+        "expirationTime": 305419896,
+        "servicePayload": {
+          "choice": "planning",
+          "fallbackRoute": true,
+          "waypoints": [
+            {
+              "position": {
+                "latitude": 423000000,
+                "longitude": -830000000,
+                "elevation": 1824
+              },
+              "targetSpeed": 1234,
+              "dwellTime": 1000
+            },
+            {
+              "position": {
+                "latitude": 423000100,
+                "longitude": -830000100
+              }
+            }
+          ]
+        },
+        "offloadPayloadHex": "deadbeef00",
+        "offloadTaskIdHex": "7461736b2d3137"
+      },
+      "regional_uper_hex": "7e000022446688aaccef1133557799bbddfeeeccad05ae0d8c2dc027116048d159e083e76db0601ce8834005390026907d0276db0921ce8830e002ef56df7780033a30b9b596989b80",
+      "message_frame_uper_hex": "00f04c39092fc00004488cd115599de2266aaef3377bbfddd995a0b5c1b185b804e22c091a2b3c107cedb60c039d106800a72004d20fa04edb612439d1061c005deadbeef00067461736b2d3137000"
+    },
+    {
+      "name": "control",
+      "value": {
+        "profileVersion": 1,
+        "sessionIdHex": "ffffffffffffffffffffffffffffffff",
+        "vehicleIdHex": "6374726c",
+        "serviceClass": "guidedControl",
+        "guidanceStatus": "complete",
+        "confidence": 100,
+        "servicePayload": {
+          "choice": "control",
+          "commands": [
+            {
+              "axis": "steering",
+              "value": -1000
+            },
+            {
+              "axis": "throttle",
+              "value": 500
+            },
+            {
+              "axis": "brake",
+              "value": 0
+            }
+          ]
+        }
+      },
+      "regional_uper_hex": "2801fffffffffffffffffffffffffffffffe6c6e8e4d9592200037727d00",
+      "message_frame_uper_hex": "00f0213903c5003fffffffffffffffffffffffffffffffcd8dd1c9b2b2440006ee4fa000"
+    },
+    {
+      "name": "minimal_request",
+      "value": {
+        "profileVersion": 1,
+        "sessionIdHex": "00000000000000000000000000000000",
+        "vehicleIdHex": "78",
+        "serviceClass": "guidedPlanning",
+        "guidanceStatus": "request"
+      },
+      "regional_uper_hex": "0000000000000000000000000000000000000f00",
+      "message_frame_uper_hex": "00f017390280000000000000000000000000000000000001e000"
+    }
+  ]
+}

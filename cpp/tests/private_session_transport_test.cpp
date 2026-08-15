@@ -2,6 +2,8 @@
 
 #include "ipi/api/private_session_transport.hpp"
 
+#include <algorithm>
+
 int main() {
     return ipi::tests::run_test("private_session_transport_topics", [] {
         using ipi::api::Envelope;
@@ -40,6 +42,7 @@ int main() {
         registration.metadata.transport = TransportType::CELLULAR_5G;
         registration.vehicleProfile.vehicleId = "veh-9";
         registration.vehicleProfile.role = VehicleRole::PCAV;
+        registration.requestedServices = {"planningAid"};
         auto session = transport->register_session(registration);
 
         HeartbeatUpdate heartbeat;
@@ -65,10 +68,31 @@ int main() {
 
         const auto publications = transport->list_publications(
             SessionPublicationQuery{std::string{"int-2"}, session.sessionId, std::nullopt, 10});
-        ipi::tests::expect(publications.size() == 3,
-                           "heartbeat, service request, and telemetry should be queryable by session");
+        ipi::tests::expect(publications.size() == 5,
+                           "heartbeat, service request, updates, and telemetry should be queryable by session");
+        ipi::tests::expect(
+            std::count_if(publications.begin(), publications.end(),
+                          [](const ipi::api::SessionPublication& publication) {
+                              return publication.topic.kind == SessionTopicKind::ServiceUpdate;
+                          }) == 2,
+            "service request should record progress and terminal updates");
 
         const auto sessionResponses = transport->list_session_responses(SessionResponseQuery{session.sessionId});
-        ipi::tests::expect(sessionResponses.size() == 1, "service invocation should produce a session response");
+        ipi::tests::expect(sessionResponses.size() == 2,
+                           "service invocation should produce progress and terminal responses");
+        ipi::tests::expect(sessionResponses.back().data.status ==
+                               ipi::api::VehicleServiceStatus::COMPLETED,
+                           "final service response should be completed");
+
+        SessionTopic invalidTopic = requestTopic;
+        invalidTopic.sessionId = "bad/+";
+        bool rejectedWildcard = false;
+        try {
+            (void)invalidTopic.to_string();
+        } catch (const std::invalid_argument&) {
+            rejectedWildcard = true;
+        }
+        ipi::tests::expect(rejectedWildcard,
+                           "topic segments containing broker wildcards must be rejected");
     });
 }

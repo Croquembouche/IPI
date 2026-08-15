@@ -1,0 +1,12 @@
+ipi_activation_zone_publisher:
+  ros__parameters:
+    zone_id: reference-intersection
+    revision: 1
+    latitudes: [42.300000]
+    longitudes: [-83.700000]
+    radius_m: 80.0
+    enter_hysteresis_m: 5.0
+    exit_hysteresis_m: 5.0
+    minimum_dwell_ms: 250
+    validity_seconds: 86400
+    actions: [0, 1, 2]

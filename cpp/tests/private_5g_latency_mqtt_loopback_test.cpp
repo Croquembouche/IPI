@@ -188,6 +188,29 @@ int main() {
         const std::string requestTopic = "ipi/int-1/latency/veh-1/request";
         const std::string ackTopic = "ipi/int-1/latency/veh-1/ack";
 
+        bool rejectedInvalidTimeout = false;
+        try {
+            ipi::api::MinimalMqttClient invalid("invalid-timeout");
+            ipi::api::MqttConnectOptions options;
+            options.ioTimeout = std::chrono::milliseconds::zero();
+            invalid.connect("127.0.0.1", 1, options);
+        } catch (const std::invalid_argument&) {
+            rejectedInvalidTimeout = true;
+        }
+        ipi::tests::expect(rejectedInvalidTimeout,
+                           "MQTT connect must reject a non-positive I/O timeout");
+        bool rejectedPasswordWithoutUsername = false;
+        try {
+            ipi::api::MinimalMqttClient invalid("invalid-credentials");
+            ipi::api::MqttConnectOptions options;
+            options.password = "secret";
+            invalid.connect("127.0.0.1", 1, options);
+        } catch (const std::invalid_argument&) {
+            rejectedPasswordWithoutUsername = true;
+        }
+        ipi::tests::expect(rejectedPasswordWithoutUsername,
+                           "MQTT connect must reject a password without a username");
+
         std::uint16_t port = 0;
         const int serverFd = create_server_socket(port);
 
@@ -248,15 +271,17 @@ int main() {
                 ipi::v2x::UperCodec codec;
                 const auto request = ipi::api::decode_private_5g_probe_request(message->payload);
 
-                ipi::api::Private5gProbeAck ack;
-                ack.sequence = request.sequence;
-                ack.clientSendTimeNs = request.clientSendTimeNs;
-                ack.serverReceiveTimeNs = ipi::api::current_unix_time_ns();
-                ack.serverSendTimeNs = ipi::api::current_unix_time_ns();
-                ack.frameType = request.frame.type;
-                ack.payloadSize = static_cast<std::uint32_t>(request.frame.payload.size());
-                ack.accepted = true;
-                ack.detail = ipi::api::inspect_private_5g_probe_frame(request.frame, codec);
+                const auto processingStart = std::chrono::steady_clock::now();
+                const auto serverReceiveTimeNs = ipi::api::current_unix_time_ns();
+                const auto detail = ipi::api::inspect_private_5g_probe_frame(request.frame, codec);
+                const auto serverSendTimeNs = ipi::api::current_unix_time_ns();
+                const auto processingElapsedNs =
+                    std::chrono::duration_cast<std::chrono::nanoseconds>(
+                        std::chrono::steady_clock::now() - processingStart).count();
+                const auto ack = ipi::api::make_private_5g_probe_ack(
+                    request, serverReceiveTimeNs, serverSendTimeNs,
+                    static_cast<std::uint64_t>(processingElapsedNs), true,
+                    detail, "mqtt-response-1");
 
                 client.publish(ackTopic, ipi::api::encode_private_5g_probe_ack(ack));
                 client.disconnect();
@@ -280,18 +305,29 @@ int main() {
         ipi::api::Private5gProbeRequest request;
         request.sequence = 1;
         request.clientSendTimeNs = ipi::api::current_unix_time_ns();
+        request.expiresAtUnixNs = request.clientSendTimeNs + 2000000000ULL;
+        request.messageId = "mqtt-message-1";
+        request.requestId = "mqtt-request-1";
         request.intersectionId = "int-1";
         request.sourceId = "veh-1";
         request.frame = ipi::api::make_private_5g_probe_frame(spat, codec);
 
+        const auto steadyStart = std::chrono::steady_clock::now();
         sender.publish(requestTopic, ipi::api::encode_private_5g_probe_request(request));
         const auto message = sender.receive(std::chrono::seconds(2));
+        const auto steadyEnd = std::chrono::steady_clock::now();
         ipi::tests::expect(message.has_value(), "sender should get published ack");
         ipi::tests::expect(message->topic == ackTopic, "sender topic should match ack topic");
 
         const auto clientReceiveTimeNs = ipi::api::current_unix_time_ns();
         const auto ack = ipi::api::decode_private_5g_probe_ack(message->payload);
-        const auto metrics = ipi::api::compute_private_5g_latency_metrics(ack, clientReceiveTimeNs);
+        ipi::api::Private5gProbeResponseTracker responseTracker;
+        const auto validation = responseTracker.validate(
+            request, ack, false, clientReceiveTimeNs);
+        const auto metrics = ipi::api::compute_private_5g_latency_metrics(
+            ack, std::chrono::duration_cast<std::chrono::nanoseconds>(
+                     steadyEnd - steadyStart).count(),
+            false, clientReceiveTimeNs);
 
         sender.disconnect();
         receiver.join();
@@ -306,7 +342,11 @@ int main() {
         }
 
         ipi::tests::expect(ack.accepted, "mqtt loopback ack should be accepted");
+        ipi::tests::expect(validation.matched(),
+                           "mqtt loopback ack should match the complete request identity");
         ipi::tests::expect(ack.frameType == ipi::MessageType::SPAT, "mqtt loopback should preserve frame type");
         ipi::tests::expect(metrics.roundTripNs >= 0, "mqtt loopback RTT should be non-negative");
+        ipi::tests::expect(!metrics.uplinkNs && !metrics.downlinkNs,
+                           "unsynchronized MQTT loopback must not claim one-way latency");
     });
 }

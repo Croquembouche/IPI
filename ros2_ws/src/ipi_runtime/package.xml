@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>ipi_runtime</name>
+  <version>0.2.0</version>
+  <description>ROS 2 nodes for IPI activation zones, tiered service policy, and offload decisions.</description>
+  <maintainer email="williamhecoin@yahoo.com">IPI maintainers</maintainer>
+  <license>LicenseRef-IPI-Research-Only</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>ipi_msgs</depend>
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <test_depend>launch_testing_ament_cmake</test_depend>
+  <test_depend>rclpy</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

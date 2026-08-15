@@ -1,11 +1,16 @@
 #include "ipi/api/minimal_mqtt_client.hpp"
 
 #include <arpa/inet.h>
+#include <fcntl.h>
 #include <poll.h>
 #include <sys/socket.h>
+#include <sys/time.h>
 #include <unistd.h>
 
+#include <algorithm>
+#include <cerrno>
 #include <chrono>
+#include <limits>
 #include <stdexcept>
 #include <string_view>
 #include <utility>
@@ -80,7 +85,8 @@ std::size_t read_remaining_length(int socketFd) {
 void send_all(int socketFd, const std::vector<std::uint8_t>& packet) {
     std::size_t offset = 0;
     while (offset < packet.size()) {
-        const auto sent = ::send(socketFd, packet.data() + offset, packet.size() - offset, 0);
+        const auto sent = ::send(
+            socketFd, packet.data() + offset, packet.size() - offset, MSG_NOSIGNAL);
         if (sent <= 0) {
             throw std::runtime_error("mqtt send() failed");
         }
@@ -113,13 +119,32 @@ std::vector<std::uint8_t> make_packet(std::uint8_t header, const std::vector<std
     return packet;
 }
 
-std::vector<std::uint8_t> make_connect_packet(const std::string& clientId, std::uint16_t keepAliveSeconds) {
+std::vector<std::uint8_t> make_connect_packet(const std::string& clientId,
+                                              const MqttConnectOptions& options) {
+    if (options.password && !options.username) {
+        throw std::invalid_argument("mqtt password requires a username");
+    }
+
     std::vector<std::uint8_t> payload;
     append_string(payload, "MQTT");
     payload.push_back(0x04U);
-    payload.push_back(0x02U);
-    append_uint16(payload, keepAliveSeconds);
+
+    std::uint8_t connectFlags = options.cleanSession ? 0x02U : 0x00U;
+    if (options.username) {
+        connectFlags |= 0x80U;
+    }
+    if (options.password) {
+        connectFlags |= 0x40U;
+    }
+    payload.push_back(connectFlags);
+    append_uint16(payload, options.keepAliveSeconds);
     append_string(payload, clientId);
+    if (options.username) {
+        append_string(payload, *options.username);
+    }
+    if (options.password) {
+        append_string(payload, *options.password);
+    }
     return make_packet(0x10U, payload);
 }
 
@@ -146,7 +171,30 @@ std::uint8_t packet_type(std::uint8_t header) {
     return static_cast<std::uint8_t>((header >> 4) & 0x0FU);
 }
 
-int connect_socket(const std::string& host, std::uint16_t port) {
+int poll_timeout(std::chrono::milliseconds timeout) {
+    const auto maximum = static_cast<long long>(std::numeric_limits<int>::max());
+    return static_cast<int>(std::min<long long>(timeout.count(), maximum));
+}
+
+void set_socket_timeouts(int socketFd, std::chrono::milliseconds timeout) {
+    const auto seconds = std::chrono::duration_cast<std::chrono::seconds>(timeout);
+    const auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(
+        timeout - seconds);
+    timeval value{};
+    value.tv_sec = static_cast<decltype(value.tv_sec)>(seconds.count());
+    value.tv_usec = static_cast<decltype(value.tv_usec)>(microseconds.count());
+    if (::setsockopt(socketFd, SOL_SOCKET, SO_RCVTIMEO, &value, sizeof(value)) != 0 ||
+        ::setsockopt(socketFd, SOL_SOCKET, SO_SNDTIMEO, &value, sizeof(value)) != 0) {
+        throw std::runtime_error("mqtt setsockopt() timeout configuration failed");
+    }
+}
+
+int connect_socket(const std::string& host,
+                   std::uint16_t port,
+                   std::chrono::milliseconds timeout) {
+    if (timeout <= std::chrono::milliseconds::zero()) {
+        throw std::invalid_argument("mqtt I/O timeout must be positive");
+    }
     const int socketFd = ::socket(AF_INET, SOCK_STREAM, 0);
     if (socketFd < 0) {
         throw std::runtime_error("mqtt socket() failed");
@@ -160,9 +208,43 @@ int connect_socket(const std::string& host, std::uint16_t port) {
         throw std::runtime_error("mqtt inet_pton() failed");
     }
 
-    if (::connect(socketFd, reinterpret_cast<sockaddr*>(&address), sizeof(address)) != 0) {
+    const auto originalFlags = ::fcntl(socketFd, F_GETFL, 0);
+    if (originalFlags < 0 || ::fcntl(socketFd, F_SETFL, originalFlags | O_NONBLOCK) != 0) {
+        ::close(socketFd);
+        throw std::runtime_error("mqtt fcntl() failed");
+    }
+
+    const auto connected = ::connect(
+        socketFd, reinterpret_cast<sockaddr*>(&address), sizeof(address));
+    if (connected != 0 && errno != EINPROGRESS) {
         ::close(socketFd);
         throw std::runtime_error("mqtt connect() failed");
+    }
+    if (connected != 0) {
+        pollfd descriptor{socketFd, POLLOUT, 0};
+        const auto ready = ::poll(&descriptor, 1, poll_timeout(timeout));
+        if (ready <= 0) {
+            ::close(socketFd);
+            throw std::runtime_error(ready == 0 ? "mqtt connect() timed out"
+                                                : "mqtt connect poll() failed");
+        }
+        int socketError = 0;
+        socklen_t errorLength = sizeof(socketError);
+        if (::getsockopt(socketFd, SOL_SOCKET, SO_ERROR,
+                         &socketError, &errorLength) != 0 || socketError != 0) {
+            ::close(socketFd);
+            throw std::runtime_error("mqtt connect() failed after poll");
+        }
+    }
+    if (::fcntl(socketFd, F_SETFL, originalFlags) != 0) {
+        ::close(socketFd);
+        throw std::runtime_error("mqtt fcntl() could not restore blocking mode");
+    }
+    try {
+        set_socket_timeouts(socketFd, timeout);
+    } catch (...) {
+        ::close(socketFd);
+        throw;
     }
     return socketFd;
 }
@@ -217,18 +299,29 @@ MinimalMqttClient& MinimalMqttClient::operator=(MinimalMqttClient&& other) noexc
 void MinimalMqttClient::connect(const std::string& host,
                                 std::uint16_t port,
                                 std::uint16_t keepAliveSeconds) {
-    disconnect();
-    socketFd_ = connect_socket(host, port);
-    send_all(socketFd_, make_connect_packet(clientId_, keepAliveSeconds));
+    MqttConnectOptions options;
+    options.keepAliveSeconds = keepAliveSeconds;
+    connect(host, port, options);
+}
 
-    const auto [header, packet] = recv_packet(socketFd_);
-    if (packet_type(header) != 2U || packet.size() != 2U) {
+void MinimalMqttClient::connect(const std::string& host,
+                                std::uint16_t port,
+                                const MqttConnectOptions& options) {
+    const auto connectPacket = make_connect_packet(clientId_, options);
+    disconnect();
+    socketFd_ = connect_socket(host, port, options.ioTimeout);
+    try {
+        send_all(socketFd_, connectPacket);
+        const auto [header, packet] = recv_packet(socketFd_);
+        if (packet_type(header) != 2U || packet.size() != 2U) {
+            throw std::runtime_error("mqtt expected CONNACK");
+        }
+        if (packet[1] != 0U) {
+            throw std::runtime_error("mqtt broker rejected connection");
+        }
+    } catch (...) {
         disconnect();
-        throw std::runtime_error("mqtt expected CONNACK");
-    }
-    if (packet[1] != 0U) {
-        disconnect();
-        throw std::runtime_error("mqtt broker rejected connection");
+        throw;
     }
 }
 
@@ -257,6 +350,11 @@ void MinimalMqttClient::publish(const std::string& topic, const std::vector<std:
     send_all(socketFd_, make_publish_packet(topic, payload));
 }
 
+void MinimalMqttClient::ping() {
+    ensure_connected();
+    send_all(socketFd_, {0xC0U, 0x00U});
+}
+
 std::optional<MqttMessage> MinimalMqttClient::receive(std::chrono::milliseconds timeout) {
     ensure_connected();
 
@@ -271,7 +369,7 @@ std::optional<MqttMessage> MinimalMqttClient::receive(std::chrono::milliseconds 
         pollfd descriptor{};
         descriptor.fd = socketFd_;
         descriptor.events = POLLIN;
-        const int ready = ::poll(&descriptor, 1, static_cast<int>(remaining.count()));
+        const int ready = ::poll(&descriptor, 1, poll_timeout(remaining));
         if (ready == 0) {
             return std::nullopt;
         }
@@ -309,6 +407,10 @@ void MinimalMqttClient::disconnect() {
 
 const std::string& MinimalMqttClient::client_id() const noexcept {
     return clientId_;
+}
+
+bool MinimalMqttClient::connected() const noexcept {
+    return socketFd_ >= 0;
 }
 
 void MinimalMqttClient::ensure_connected() const {

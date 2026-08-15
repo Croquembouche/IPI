@@ -30,8 +30,8 @@ struct ServiceRequestContext {
  */
 class Edge4AvInterface {
 public:
-    explicit Edge4AvInterface(std::shared_ptr<ReceiverApi> receiver = make_in_memory_receiver_api(),
-                              std::shared_ptr<SenderApi> sender = make_in_memory_sender_api(),
+    explicit Edge4AvInterface(std::shared_ptr<ReceiverApi> receiver = {},
+                              std::shared_ptr<SenderApi> sender = {},
                               std::shared_ptr<PrivateSessionTransport> privateSessionTransport = {},
                               v2x::UperCodec codec = {});
 
@@ -101,6 +101,11 @@ public:
     Ack heartbeat(const std::string& sessionId,
                   std::optional<VehicleTelemetryFrame> telemetry = {}) const;
 
+    Ack patch_session(SessionPatch patch) const;
+    Ack terminate_session(SessionTermination termination) const;
+    [[nodiscard]] std::optional<SessionDescriptor> get_session(
+        const std::string& sessionId) const;
+
     Ack submit_service_request(EnvelopeMetadata metadata,
                                const VehicleProfile& vehicleProfile,
                                const ipi::IpiServiceRequest& request,
@@ -109,6 +114,10 @@ public:
     Ack submit_telemetry(TelemetrySubmission submission) const;
     Ack submit_telemetry(const std::string& sessionId,
                          std::vector<VehicleTelemetryFrame> frames) const;
+
+    Ack deliver_service_update(
+        const std::string& sessionId,
+        Envelope<VehicleServiceResponse> response) const;
 
     std::vector<Envelope<VehicleServiceResponse>> list_vehicle_responses(
         const std::string& vehicleId,

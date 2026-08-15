@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
-project(ipi_cpp LANGUAGES C CXX)
+project(ipi_cpp VERSION 0.2.0 LANGUAGES C CXX)
+
+include(CMakePackageConfigHelpers)
+include(GNUInstallDirs)
 
 option(IPI_BUILD_EXAMPLES "Build example executables" ON)
 option(IPI_ENABLE_TESTS "Enable building unit tests" OFF)
@@ -28,6 +31,7 @@ set(IPI_CORE_SOURCES
 )
 
 set(IPI_V2X_SOURCES
+    src/v2x/j2735_ipi_regional_codec.cpp
     src/v2x/j2735_messages.cpp
     src/v2x/uper_codec.cpp
 )
@@ -37,20 +41,33 @@ set(IPI_MESH_SOURCES
     src/mesh/task_offloader.cpp
 )
 
+set(IPI_PROPOSAL_SOURCES
+    src/activation/activation.cpp
+    src/policy/service_policy.cpp
+    src/offload/offload_decision.cpp
+)
+
 set(IPI_API_SOURCES
+    src/api/detector_result.cpp
     src/api/edge4av_interface.cpp
     src/api/minimal_mqtt_client.cpp
+    src/api/mqtt_session_transport.cpp
+    src/api/pc5_ipi_adapter.cpp
     src/api/private_5g_latency_probe.cpp
     src/api/private_session_transport.cpp
     src/api/receiver.cpp
+    src/api/session_lifecycle.cpp
+    src/api/session_wire_codec.cpp
     src/api/sender.cpp
     src/api/shared_state.cpp
+    src/api/types.cpp
 )
 
 add_library(ipi STATIC
     ${IPI_CORE_SOURCES}
     ${IPI_V2X_SOURCES}
     ${IPI_MESH_SOURCES}
+    ${IPI_PROPOSAL_SOURCES}
     ${IPI_API_SOURCES}
 )
 
@@ -61,6 +78,7 @@ target_include_directories(ipi
 )
 
 target_compile_features(ipi PUBLIC cxx_std_17)
+target_link_libraries(ipi PUBLIC Threads::Threads)
 
 if(MSVC)
     target_compile_options(ipi PRIVATE /W4 /permissive-)
@@ -145,6 +163,7 @@ endif()
 if(IPI_ENABLE_TESTS)
     enable_testing()
     find_package(Threads REQUIRED)
+    find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
     add_executable(test_edge4av_interface tests/edge4av_interface_test.cpp)
     target_link_libraries(test_edge4av_interface PRIVATE ipi)
@@ -162,6 +181,17 @@ if(IPI_ENABLE_TESTS)
     target_link_libraries(test_j2735_message_flow PRIVATE ipi)
     add_test(NAME j2735_message_flow COMMAND test_j2735_message_flow)
 
+    add_executable(test_j2735_ipi_regional_codec tests/j2735_ipi_regional_codec_test.cpp)
+    target_link_libraries(test_j2735_ipi_regional_codec PRIVATE ipi)
+    add_test(NAME j2735_ipi_regional_codec COMMAND test_j2735_ipi_regional_codec)
+
+    add_test(
+        NAME j2735_schema_prepare
+        COMMAND ${Python3_EXECUTABLE}
+            ${CMAKE_CURRENT_SOURCE_DIR}/tests/j2735_schema_prepare_test.py
+            --script ${CMAKE_CURRENT_SOURCE_DIR}/../scripts/prepare_j2735_ipi_schema.py
+            --schema ${CMAKE_CURRENT_SOURCE_DIR}/asn1/IPI.asn)
+
     add_executable(test_experiment_logging tests/experiment_logging_test.cpp)
     target_link_libraries(test_experiment_logging PRIVATE ipi)
     add_test(NAME experiment_logging COMMAND test_experiment_logging)
@@ -173,8 +203,65 @@ if(IPI_ENABLE_TESTS)
     add_executable(test_private_5g_latency_mqtt_loopback tests/private_5g_latency_mqtt_loopback_test.cpp)
     target_link_libraries(test_private_5g_latency_mqtt_loopback PRIVATE ipi Threads::Threads)
     add_test(NAME private_5g_latency_mqtt_loopback COMMAND test_private_5g_latency_mqtt_loopback)
+
+    add_executable(test_session_lifecycle tests/session_lifecycle_test.cpp)
+    target_link_libraries(test_session_lifecycle PRIVATE ipi)
+    add_test(NAME session_lifecycle COMMAND test_session_lifecycle)
+
+    add_executable(test_session_wire_codec tests/session_wire_codec_test.cpp)
+    target_link_libraries(test_session_wire_codec PRIVATE ipi)
+    add_test(NAME session_wire_codec COMMAND test_session_wire_codec)
+
+    add_executable(test_broker_session_transport tests/broker_session_transport_test.cpp)
+    target_link_libraries(test_broker_session_transport PRIVATE ipi Threads::Threads)
+    add_test(NAME broker_session_transport COMMAND test_broker_session_transport)
+
+    add_executable(test_pc5_ipi_adapter tests/pc5_ipi_adapter_test.cpp)
+    target_link_libraries(test_pc5_ipi_adapter PRIVATE ipi)
+    add_test(NAME pc5_ipi_adapter COMMAND test_pc5_ipi_adapter)
+
+    add_executable(test_detector_result tests/detector_result_test.cpp)
+    target_link_libraries(test_detector_result PRIVATE ipi)
+    add_test(NAME detector_result COMMAND test_detector_result)
+
+    add_executable(test_activation_zone tests/activation_zone_test.cpp)
+    target_link_libraries(test_activation_zone PRIVATE ipi)
+    add_test(NAME activation_zone COMMAND test_activation_zone)
+
+    add_executable(test_service_policy tests/service_policy_test.cpp)
+    target_link_libraries(test_service_policy PRIVATE ipi)
+    add_test(NAME service_policy COMMAND test_service_policy)
+
+    add_executable(test_offload_decision tests/offload_decision_test.cpp)
+    target_link_libraries(test_offload_decision PRIVATE ipi)
+    add_test(NAME offload_decision COMMAND test_offload_decision)
+
+    add_executable(test_task_offloader tests/task_offloader_test.cpp)
+    target_link_libraries(test_task_offloader PRIVATE ipi)
+    add_test(NAME task_offloader COMMAND test_task_offloader)
 endif()
 
-install(TARGETS ipi EXPORT IpiTargets ARCHIVE DESTINATION lib LIBRARY DESTINATION lib RUNTIME DESTINATION bin)
-install(DIRECTORY include/ DESTINATION include)
-install(EXPORT IpiTargets FILE IpiTargets.cmake NAMESPACE IPI:: DESTINATION lib/cmake/ipi)
+configure_package_config_file(
+    cmake/IpiConfig.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/IPIConfig.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ipi)
+
+write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/IPIConfigVersion.cmake
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion)
+
+install(TARGETS ipi EXPORT IpiTargets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(FILES asn1/IPI.asn DESTINATION ${CMAKE_INSTALL_DATADIR}/ipi/asn1)
+install(EXPORT IpiTargets
+    FILE IpiTargets.cmake
+    NAMESPACE IPI::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ipi)
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/IPIConfig.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/IPIConfigVersion.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ipi)

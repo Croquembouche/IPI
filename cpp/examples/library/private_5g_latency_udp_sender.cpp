@@ -371,10 +371,13 @@ ipi::api::Private5gProbeRequest build_request(const Args& args,
     ipi::api::Private5gProbeRequest request;
     request.sequence = sequence;
     request.clientSendTimeNs = ipi::api::current_unix_time_ns();
+    request.expiresAtUnixNs = request.clientSendTimeNs +
+                              static_cast<std::uint64_t>(args.timeoutMs) * 1000000ULL;
     request.runId = args.context.runId;
     request.conditionId = args.context.conditionId;
     request.conditionLabel = args.context.conditionLabel;
     request.requestId = make_request_id(args, sequence);
+    request.messageId = "udp-probe-message-" + request.requestId;
     request.serviceType = std::string(service_type_name(args.messageKind));
     request.intersectionId = args.intersectionId;
     request.sourceId = args.sourceId;
@@ -428,6 +431,11 @@ ipi::api::ExperimentLogRecord make_base_record(const Args& args,
     record.clientSendTimeNs = request.clientSendTimeNs;
     record.frameType = ipi::to_string(request.frame.type);
     record.payloadBytes = static_cast<std::uint32_t>(request.frame.payload.size());
+    const auto encodedBytes = ipi::api::encode_private_5g_probe_request(request).size();
+    if (encodedBytes <= std::numeric_limits<std::uint32_t>::max()) {
+        record.envelopeBytes = static_cast<std::uint32_t>(encodedBytes);
+        record.applicationPacketBytes = static_cast<std::uint32_t>(encodedBytes);
+    }
     return record;
 }
 
@@ -443,6 +451,7 @@ void record_result(const Args& args,
                    const ipi::api::Private5gProbeRequest& request,
                    const ipi::api::Private5gProbeAck& ack,
                    std::uint64_t clientReceiveTimeNs,
+                   std::int64_t localRoundTripNs,
                    ProbeStats& stats) {
     ++stats.attempted;
     if (ack.accepted) {
@@ -450,7 +459,11 @@ void record_result(const Args& args,
     } else {
         ++stats.rejected;
     }
-    const auto metrics = ipi::api::compute_private_5g_latency_metrics(ack, clientReceiveTimeNs);
+    const bool synchronized = request.clockSyncState == "ptp-synced" ||
+                              request.clockSyncState == "ntp-synced" ||
+                              request.clockSyncState == "synchronized";
+    const auto metrics = ipi::api::compute_private_5g_latency_metrics(
+        ack, localRoundTripNs, synchronized, clientReceiveTimeNs);
     auto record = make_base_record(args, request, clientReceiveTimeNs);
     record.accepted = ack.accepted;
     record.serviceSuccess = ack.accepted && args.context.serviceSuccess;
@@ -468,6 +481,10 @@ void record_result(const Args& args,
         record.downlinkMs = ns_to_ms(*metrics.downlinkNs);
     }
     record.detail = ack.detail;
+    record.rttClock = "steady";
+    record.correlationStatus = "matched";
+    record.responseId = ack.responseId;
+    record.correlationId = ack.correlationId;
     emit_record(args, record);
     if (ack.accepted) {
         stats.rtts.push_back(metrics.roundTripNs);
@@ -486,6 +503,8 @@ void record_failure(const Args& args,
     record.serviceSuccess = false;
     record.clientReceiveTimeNs = emitTimeNs;
     record.detail = std::move(detail);
+    record.rttClock = "steady";
+    record.correlationStatus = "failed";
     emit_record(args, record);
 }
 
@@ -551,21 +570,38 @@ int main(int argc, char** argv) {
         stats.rtts.reserve(args.count);
         const int socketFd = connect_socket(args);
         ipi::v2x::UperCodec codec;
+        ipi::api::Private5gProbeResponseTracker responseTracker;
         std::vector<std::uint8_t> buffer(kMaxUdpPayload);
 
         for (std::size_t i = 0; i < args.count; ++i) {
             const auto request = build_request(args, i + 1U, codec);
             try {
                 const auto encodedRequest = ipi::api::encode_private_5g_probe_request(request);
+                const auto steadyStart = std::chrono::steady_clock::now();
                 send_encoded_request(socketFd, args, request, encodedRequest);
                 const ssize_t received = ::recv(socketFd, buffer.data(), buffer.size(), 0);
                 if (received < 0) {
                     record_failure(args, request, "udp ack timeout", ipi::api::current_unix_time_ns(), stats);
                 } else {
+                    const auto steadyEnd = std::chrono::steady_clock::now();
                     const auto clientReceiveTimeNs = ipi::api::current_unix_time_ns();
                     const std::vector<std::uint8_t> encodedAck(buffer.begin(), buffer.begin() + received);
                     const auto ack = ipi::api::decode_private_5g_probe_ack(encodedAck);
-                    record_result(args, request, ack, clientReceiveTimeNs, stats);
+                    const auto validation = responseTracker.validate(
+                        request, ack,
+                        steadyEnd - steadyStart > std::chrono::milliseconds(args.timeoutMs),
+                        clientReceiveTimeNs);
+                    if (!validation.matched()) {
+                        record_failure(args, request,
+                            ipi::api::to_string(validation.disposition) + ": " + validation.detail,
+                            clientReceiveTimeNs, stats);
+                    } else {
+                        const auto roundTripNs =
+                            std::chrono::duration_cast<std::chrono::nanoseconds>(
+                                steadyEnd - steadyStart).count();
+                        record_result(args, request, ack, clientReceiveTimeNs,
+                                      roundTripNs, stats);
+                    }
                 }
             } catch (const std::exception& ex) {
                 record_failure(args, request, ex.what(), ipi::api::current_unix_time_ns(), stats);

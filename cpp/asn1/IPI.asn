@@ -1,0 +1,125 @@
+IPI DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS
+    RegionId
+FROM DSRC;
+
+-- Local, uncoordinated deployment value from the J2735 RegionId range 128..255.
+-- Deployments sharing a radio domain must coordinate this value themselves.
+ipiRegionId RegionId ::= 200
+
+IpiProfileVersion ::= INTEGER (1..255)
+IpiSessionId ::= OCTET STRING (SIZE(16))
+IpiVehicleId ::= OCTET STRING (SIZE(1..16))
+
+IpiServiceClass ::= ENUMERATED {
+    guidedPlanning(0),
+    guidedPerception(1),
+    guidedControl(2)
+}
+
+IpiGuidanceStatus ::= ENUMERATED {
+    request(0),
+    update(1),
+    complete(2),
+    reject(3)
+}
+
+IpiLatitude ::= INTEGER (-900000000..900000000)
+IpiLongitude ::= INTEGER (-1800000000..1800000000)
+IpiElevation ::= INTEGER (-40960..614390)
+IpiSpeed ::= INTEGER (0..65535)
+IpiVelocity ::= INTEGER (-32768..32767)
+IpiHorizon ::= INTEGER (0..60000)
+IpiDwellTime ::= INTEGER (0..10000)
+IpiConfidence ::= INTEGER (0..100)
+IpiExpirationTime ::= INTEGER (0..4294967295)
+
+IpiPosition3D ::= SEQUENCE {
+    latitude IpiLatitude,
+    longitude IpiLongitude,
+    elevation IpiElevation OPTIONAL
+}
+
+IpiWaypoint ::= SEQUENCE {
+    position IpiPosition3D,
+    targetSpeed IpiSpeed OPTIONAL,
+    dwellTime IpiDwellTime OPTIONAL
+}
+
+IpiWaypointList ::= SEQUENCE (SIZE(1..50)) OF IpiWaypoint
+
+IpiGuidedPlanning ::= SEQUENCE {
+    fallbackRoute BOOLEAN,
+    waypoints IpiWaypointList
+}
+
+IpiObjectId ::= OCTET STRING (SIZE(4))
+
+IpiObjectClass ::= ENUMERATED {
+    vehicle(0),
+    pedestrian(1),
+    cyclist(2),
+    obstacle(3)
+}
+
+IpiCovariance ::= OCTET STRING (SIZE(0..255))
+
+IpiDetectedObject ::= SEQUENCE {
+    objectId IpiObjectId,
+    classification IpiObjectClass,
+    position IpiPosition3D,
+    velocity IpiVelocity OPTIONAL,
+    covariance IpiCovariance
+}
+
+IpiDetectedObjectList ::= SEQUENCE (SIZE(0..64)) OF IpiDetectedObject
+
+IpiGuidedPerception ::= SEQUENCE {
+    detectedObjects IpiDetectedObjectList
+}
+
+IpiControlAxis ::= ENUMERATED {
+    steering(0),
+    throttle(1),
+    brake(2)
+}
+
+IpiControlValue ::= INTEGER (-1000..1000)
+
+IpiControlCommand ::= SEQUENCE {
+    axis IpiControlAxis,
+    value IpiControlValue
+}
+
+IpiControlCommandList ::= SEQUENCE (SIZE(1..10)) OF IpiControlCommand
+
+IpiGuidedControl ::= SEQUENCE {
+    commands IpiControlCommandList
+}
+
+IpiServicePayload ::= CHOICE {
+    planning IpiGuidedPlanning,
+    perception IpiGuidedPerception,
+    control IpiGuidedControl
+}
+
+IpiOffloadPayload ::= OCTET STRING (SIZE(0..2048))
+IpiOffloadTaskId ::= OCTET STRING (SIZE(1..255))
+
+IpiCooperativeService ::= SEQUENCE {
+    profileVersion IpiProfileVersion,
+    sessionId IpiSessionId,
+    vehicleId IpiVehicleId,
+    serviceClass IpiServiceClass,
+    guidanceStatus IpiGuidanceStatus,
+    requestedHorizon IpiHorizon OPTIONAL,
+    confidence IpiConfidence OPTIONAL,
+    expirationTime IpiExpirationTime OPTIONAL,
+    servicePayload IpiServicePayload OPTIONAL,
+    offloadPayload IpiOffloadPayload OPTIONAL,
+    offloadTaskId IpiOffloadTaskId OPTIONAL,
+    ...
+}
+
+END

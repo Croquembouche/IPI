@@ -90,6 +90,7 @@ struct CooperativeServiceMessage {
     std::optional<std::uint32_t> expirationTimeDs{}; ///< Tenths of a second since epoch (J2735 DTime).
 
     void validate() const;
+    void validate_freshness(std::uint32_t currentTimeDs) const;
 
     /**
      * Serialises the cooperative message to a canonical byte encoding.

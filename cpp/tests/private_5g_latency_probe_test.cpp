@@ -26,6 +26,8 @@ int main() {
         Private5gProbeRequest request;
         request.sequence = 7;
         request.clientSendTimeNs = 1000;
+        request.expiresAtUnixNs = 5000;
+        request.messageId = "message-7";
         request.runId = "run-42";
         request.conditionId = "cond-baseline";
         request.conditionLabel = "private-5g-baseline";
@@ -63,15 +65,8 @@ int main() {
         ipi::tests::expect(decodedRequest.frame.payload == request.frame.payload,
                            "frame payload should round-trip");
 
-        Private5gProbeAck ack;
-        ack.sequence = request.sequence;
-        ack.clientSendTimeNs = request.clientSendTimeNs;
-        ack.serverReceiveTimeNs = 1200;
-        ack.serverSendTimeNs = 1300;
-        ack.frameType = request.frame.type;
-        ack.payloadSize = static_cast<std::uint32_t>(request.frame.payload.size());
-        ack.accepted = true;
-        ack.detail = "accepted";
+        auto ack = ipi::api::make_private_5g_probe_ack(
+            request, 1200, 1300, 100, true, "accepted", "response-7");
 
         const auto encodedAck = ipi::api::encode_private_5g_probe_ack(ack);
         const auto decodedAck = ipi::api::decode_private_5g_probe_ack(encodedAck);
@@ -79,12 +74,71 @@ int main() {
         ipi::tests::expect(decodedAck.accepted == ack.accepted, "ack accepted should round-trip");
         ipi::tests::expect(decodedAck.payloadSize == ack.payloadSize, "ack payload size should round-trip");
         ipi::tests::expect(decodedAck.detail == ack.detail, "ack detail should round-trip");
+        ipi::tests::expect(decodedAck.requestMessageId == request.messageId,
+                           "ack request message id should round-trip");
+        ipi::tests::expect(decodedAck.requestId == request.requestId,
+                           "ack request id should round-trip");
+        ipi::tests::expect(decodedAck.sessionId == request.sessionId,
+                           "ack session id should round-trip");
+        ipi::tests::expect(decodedAck.serverProcessingElapsedNs == 100,
+                           "server steady duration should round-trip");
 
-        const auto metrics = ipi::api::compute_private_5g_latency_metrics(decodedAck, 1500);
+        const auto validation = ipi::api::validate_private_5g_probe_ack(
+            request, decodedAck, {}, false, 1500);
+        ipi::tests::expect(validation.matched(), "matching ack should validate");
+
+        const auto metrics = ipi::api::compute_private_5g_latency_metrics(
+            decodedAck, 500, true, 1500);
         ipi::tests::expect(metrics.roundTripNs == 500, "round-trip latency should be computed");
         ipi::tests::expect(metrics.serverProcessingNs == 100, "server processing latency should be computed");
         ipi::tests::expect(metrics.uplinkNs && *metrics.uplinkNs == 200, "uplink latency should be computed");
         ipi::tests::expect(metrics.downlinkNs && *metrics.downlinkNs == 200,
                            "downlink latency should be computed");
+
+        const auto unsynchronized = ipi::api::compute_private_5g_latency_metrics(
+            decodedAck, 500, false, 1500);
+        ipi::tests::expect(!unsynchronized.uplinkNs && !unsynchronized.downlinkNs,
+                           "unsynchronized clocks must not produce one-way latency");
+        const auto wallRollback = ipi::api::compute_private_5g_latency_metrics(
+            decodedAck, 500, true, 1100);
+        ipi::tests::expect(!wallRollback.downlinkNs,
+                           "wall-clock rollback must not underflow downlink latency");
+
+        ipi::api::Private5gProbeResponseTracker tracker;
+        ipi::tests::expect(tracker.validate(request, decodedAck, false, 1500).matched(),
+                           "tracker should accept first matching response");
+        ipi::tests::expect(
+            tracker.validate(request, decodedAck, false, 1500).disposition ==
+                ipi::api::Private5gProbeAckDisposition::DUPLICATE,
+            "tracker should reject duplicate response id");
+
+        auto wrongSession = decodedAck;
+        wrongSession.responseId = "response-8";
+        wrongSession.sessionId = "other-session";
+        ipi::tests::expect(
+            ipi::api::validate_private_5g_probe_ack(
+                request, wrongSession, {}, false, 1500).disposition ==
+                ipi::api::Private5gProbeAckDisposition::MISMATCHED_SESSION,
+            "session mismatch should be classified");
+        ipi::tests::expect(
+            ipi::api::validate_private_5g_probe_ack(
+                request, decodedAck, {}, false, 5000).disposition ==
+                ipi::api::Private5gProbeAckDisposition::STALE,
+            "wall expiration should be classified stale");
+        ipi::tests::expect(
+            ipi::api::validate_private_5g_probe_ack(
+                request, decodedAck, {}, true, 1500).disposition ==
+                ipi::api::Private5gProbeAckDisposition::LATE,
+            "local monotonic deadline should be classified late");
+
+        auto trailing = encodedAck;
+        trailing.push_back(0);
+        bool rejectedTrailing = false;
+        try {
+            (void)ipi::api::decode_private_5g_probe_ack(trailing);
+        } catch (const std::exception&) {
+            rejectedTrailing = true;
+        }
+        ipi::tests::expect(rejectedTrailing, "probe decoder must reject trailing bytes");
     });
 }

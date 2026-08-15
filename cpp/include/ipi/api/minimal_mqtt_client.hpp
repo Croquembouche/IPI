@@ -13,6 +13,14 @@ struct MqttMessage {
     std::vector<std::uint8_t> payload{};
 };
 
+struct MqttConnectOptions {
+    std::uint16_t keepAliveSeconds{30};
+    bool cleanSession{true};
+    std::optional<std::string> username{};
+    std::optional<std::string> password{};
+    std::chrono::milliseconds ioTimeout{std::chrono::seconds(5)};
+};
+
 class MinimalMqttClient {
 public:
     explicit MinimalMqttClient(std::string clientId = {});
@@ -28,14 +36,20 @@ public:
                  std::uint16_t port,
                  std::uint16_t keepAliveSeconds = 30);
 
+    void connect(const std::string& host,
+                 std::uint16_t port,
+                 const MqttConnectOptions& options);
+
     void subscribe(const std::string& topicFilter);
     void publish(const std::string& topic, const std::vector<std::uint8_t>& payload);
+    void ping();
 
     [[nodiscard]] std::optional<MqttMessage> receive(std::chrono::milliseconds timeout);
 
     void disconnect();
 
     [[nodiscard]] const std::string& client_id() const noexcept;
+    [[nodiscard]] bool connected() const noexcept;
 
 private:
     int socketFd_{-1};

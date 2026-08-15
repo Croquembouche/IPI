@@ -8,7 +8,14 @@
 #include <unordered_map>
 #include <vector>
 
+namespace ipi::api {
+class ReceiverApi;
+class SenderApi;
+} // namespace ipi::api
+
 namespace ipi::api::detail {
+
+class SharedState;
 
 struct SharedState {
     std::mutex mutex;
@@ -43,6 +50,7 @@ struct SharedState {
     std::uint64_t messageCounter{0};
 };
 
-std::shared_ptr<SharedState> obtain_shared_state();
+std::shared_ptr<ReceiverApi> make_receiver_for_state(std::shared_ptr<SharedState> state);
+std::shared_ptr<SenderApi> make_sender_for_state(std::shared_ptr<SharedState> state);
 
 } // namespace ipi::api::detail

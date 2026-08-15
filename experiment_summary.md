@@ -1,6 +1,6 @@
 # Experiment Summary
 
-Last updated: 2026-08-10.
+Last updated: 2026-08-14.
 
 This file summarizes the experiments currently present under `results/`. It is
 based on the current result artifacts, not on prior generated paper prose.
@@ -99,6 +99,11 @@ Primary artifacts:
 
 Purpose: map private-5G signal context and relate run locations to RSRP, RSRQ,
 and SNR survey points.
+
+The user confirmed on 2026-08-12 that this 16-point survey was collected with
+an iPhone. These values characterize the survey handset as a separate UE. They
+provide spatial radio context but are not MG52 measurements, Airspan counters,
+or per-request channel telemetry for the vehicle application path.
 
 Measured signal summary:
 
@@ -318,8 +323,9 @@ Primary folders:
 - `results/real_5g/20260806_airspan_followup_strong_run_2/`
 
 Purpose: collect host-side direction controls and repeated C1/C2 application
-workloads at multiple stationary vehicle locations under the operator-reported
-Cell 2 lock, `70/20/10` TDD profile, and unchanged `10D4G` frame packing. The
+workloads at multiple stationary vehicle locations under the operator-verified
+Cell 2 lock, operator-reported `70/20/10` TDD profile, and unchanged `10D4G`
+frame packing. The
 MG52 remained on the trunk floor with its front face upward. Every application
 transport occupied a separate five-minute ACP interval, used 500 sequential
 RTT probes per repetition, and retained `clock_sync_state=unsynced`; one-way
@@ -330,10 +336,10 @@ car-to-edge TCP stream from 13:15-13:30 EDT and transferred 1,475,758,800 bytes
 at 13.118 Mbps. TCP backpressure prevented it from reaching the configured
 25 Mbps target. V3 was an edge-to-car TCP stream from 13:35-13:50 EDT and
 transferred 2,812,500,000 bytes at the configured 25 Mbps. V1 is the operator-
-designated 11:15-11:30 EDT idle window and has no host telemetry. R1 remains
-pending until the matching ACP and MG52 artifacts validate the idle state,
-directional cell counters, Cell 2 attribution, cell lock, and live radio
-configuration.
+designated 11:15-11:30 EDT idle window and has no host telemetry. The user has
+verified the MG52 Cell 2 lock. R1 remains pending only for claims requiring the
+matching ACP artifacts to validate the idle state, directional cell counters,
+Cell 2 traffic attribution, and live radio configuration.
 
 Application-block validation:
 
@@ -351,8 +357,10 @@ six failures and the common repeat's one failure are all C2 UDP acknowledgment
 timeouts. All failed rows remain in the result artifacts rather than being
 replaced by retries.
 
-The operator reported an MG52 RSRP display value of 109-110 for the original
-and repeated common/typical blocks and 101 for the strong candidate. Using the
+The operator reported RSRP values of 109-110 for the original and repeated
+common/typical blocks and 101 for the strong candidate. On 2026-08-12, the user
+clarified that these readings came from an iPhone, not from the MG52. They are
+therefore separate-UE spatial context. Using the
 two common C1/C2 blocks as one descriptive reference distribution, the strong
 candidate had lower matched RTT percentiles in every condition/transport
 aggregate:
@@ -366,12 +374,32 @@ aggregate:
 | C2 | MQTT | 59.790 | 49.753 | -16.79% | 75.752 | 59.721 | -21.16% |
 | C2 | UDP | 56.623 | 47.947 | -15.32% | 70.541 | 56.947 | -19.27% |
 
+The application-layer comparison with the historical `40/40/20` campaign must
+also include signal and placement. The same sole CAV UE, dedicated radio and
+channel, Cell 2 path, and `10D4G` packing were retained across collection
+times, while the TDD allocation and vehicle location changed. Each cell below
+reports p95 RTT followed by the percentage of all issued requests answered by
+100 ms. The common/typical row pools both retained common blocks.
+
+| TDD profile and signal/placement context | 1 KiB MQTT | 1 KiB TCP | 23,968 B MQTT | 23,968 B TCP |
+|---|---:|---:|---:|---:|
+| `40/40/20`, favorable | 44.487 ms / 100.0% | 140.249 ms / 4.0% | 183.705 ms / 30.8% | 169.540 ms / 18.4% |
+| `70/20/10`, common/typical | 41.632 ms / 99.8% | 149.913 ms / 1.0% | 75.752 ms / 99.4% | 106.971 ms / 86.3% |
+| `70/20/10`, weak | 46.106 ms / 99.1% | 150.429 ms / 0.5% | 162.864 ms / 4.4% | 188.673 ms / 0.0% |
+| `70/20/10`, strong | 39.955 ms / 100.0% | 137.309 ms / 4.6% | 59.721 ms / 99.7% | 93.605 ms / 97.8% |
+
+The 1-KiB rows are comparatively stable within each transport. The 23,968-B
+rows vary sharply with signal/placement under the same `70/20/10` profile.
+Therefore, the historical-to-follow-up result is a joint TDD, signal, payload,
+and transport comparison rather than a TDD-only effect.
+
 This supports an application-layer association between the strong-candidate
 location and lower RTT, especially for C2. It does not yet establish that RSRP
 alone caused the change: the field blocks were sequential, contain two
-repetitions per transport, and still require aligned MG52 and ACP exports to
-validate radio-class separation, serving-cell lock, and contemporaneous cell
-load. Repository-facing GNSS coordinates are rounded to 0.001 degree and
+repetitions per transport, and use iPhone rather than MG52 radio observations.
+The Cell 2 lock is operator-verified, while aligned ACP exports remain necessary
+for contemporaneous cell-load or TDD claims. Repository-facing GNSS coordinates
+are rounded to 0.001 degree and
 serialized rosbags are omitted; the exact-data backups remain excluded from
 version control.
 
@@ -632,6 +660,36 @@ The final detector run covers the full 922-sample staged validation split in
 the current local dataset. Its per-sample CSV records a median of about 202
 predicted boxes and 8 ground-truth boxes per successful sample.
 
+## Derived Successful-Attempt RTT Variance
+
+Primary artifacts:
+
+- `paper/analysis/limiting_factors/successful_attempt_variance.csv`
+- `paper/analysis/limiting_factors/successful_attempt_variance_summary.json`
+- `paper/analysis/limiting_factors/successful_attempt_variance.md`
+- `scripts/analyze_successful_ipi_variance.py`
+
+Purpose: quantify sender-side RTT variability conditional on an accepted IPI
+response. This is a derived analysis of the retained experiments, not a new
+network experiment. It includes conditions with at least 20 finite successful
+RTTs and gives each experimental condition equal weight.
+
+The analysis retains 1,688,330 finite successful RTT records from 355
+conditions. Because RTT spans multiple orders of magnitude, the primary
+variance decomposition uses `log10(RTT)`. Differences between condition means
+explain 89.1% of successful-attempt variance, while attempt-to-attempt variation
+within a fixed condition explains 10.9%. Thus, when IPI succeeds, the operating
+condition determines the latency regime more strongly than ordinary jitter
+within one condition.
+
+Across the 355 conditions, the median coefficient of variation is 0.282 and
+the median p95/p50 ratio is 1.427. The 95th-percentile condition has a p95/p50
+ratio of 6.223, and the maximum is 12.029. The median p95/p50 ratio is 1.456
+for the 330 private-5G conditions and 1.089 for the 25 direct-PC5 conditions.
+The direct-PC5 value is conditional on receiving at least 20 replies: complete
+and near-complete outages remain in the delivery analysis and are not evidence
+of low variance.
+
 ## Cross-Experiment Takeaways For Future Paper Drafting
 
 These are evidence summaries, not final paper claims:
@@ -642,6 +700,13 @@ These are evidence summaries, not final paper claims:
 - Private-5G payload size matters strongly. 128-512 KiB payloads become
   conditional for 500-1000 ms deadlines, and MiB-scale payloads are seconds-
   scale bulk or prefetch traffic in the measured request/response path.
+- Across the favorable and weak detector replays, approximately 20 KiB of
+  application content is the conservative measured ceiling for a 500-ms p95
+  guarantee on TCP/MQTT. This boundary occurred with one UE, a dedicated
+  40-MHz n48 channel, and no ambient contention.
+- The `40/40/20` and `70/20/10` application outcomes vary jointly with the
+  signal/placement context, payload, and transport. A TDD profile must be
+  evaluated with the vehicular field condition and workload mix.
 - Application-level `5qi-mapped` labels were collected, but current packet
   capture does not verify network-enforced QoS or 5QI behavior.
 - Mocar V2X compact payload RTT can be stable near 100 ms for successful

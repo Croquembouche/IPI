@@ -1,0 +1,15 @@
+builtin_interfaces/Time stamp
+string request_id
+int64 deadline_ms
+int64 local_queue_ms
+int64 local_compute_ms
+uint64 upload_bytes
+uint64 download_bytes
+int64 edge_queue_ms
+int64 edge_compute_ms
+int64 uncertainty_margin_ms
+int64 minimum_edge_benefit_ms
+float64 minimum_result_confidence
+float64 expected_result_confidence
+bool edge_service_available
+bool local_fallback_available

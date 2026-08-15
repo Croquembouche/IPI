@@ -1,18 +1,29 @@
 # IPI C++ Reference Library
 
-This directory contains a C++17 reference implementation of the core data
-structures described in the Intersection Programming Interface (IPI) message
-fabric. The goal is to provide a lightweight starting point for integrating the
-IPI-specific regional extensions into production J2735 pipelines.
+This directory contains a C++17 reference implementation of the Intersection
+Programming Interface (IPI) message fabric. It provides strict project codecs,
+an enforced session lifecycle, private-5G and PC5 integration helpers, and the
+transport-neutral activation, policy, and offload foundation used by the Year 2
+ROS 2 reference path.
 
 ```
 cpp/
   include/
     ipi/
       core/   # IPI service request/response models
-      v2x/    # J2735 helpers, UPER codec, optional ROS2 bridge adapters
+      api/    # session, broker, measurement, detector, and PC5 contracts
+      activation/ # infrastructure activation state machine
+      policy/ # tiered service decisions
+      offload/ # local/edge/fallback prediction
+      mesh/   # mesh manager and task lifecycle
+      v2x/    # formal IPI regional UPER, J2735 helpers, ROS2 bridge adapters
   src/
+    activation/
+    api/
     core/
+    mesh/
+    offload/
+    policy/
     v2x/
   examples/
     library/  # host-side sanity tools
@@ -25,16 +36,31 @@ cpp/
   payloads.
 - Basic J2735 V2X message helpers for BSM, MAP, SPaT, SRM, and SSM frames with
   canonical byte encoders.
-- `ipi::v2x::UperCodec` façade implementing ASN.1 UPER packing for the helper
-  structs, ready to be swapped with a production encoder when available.
+- `ipi::v2x::J2735IpiRegionalCodec` for the typed `IPI.asn` regional extension
+  carried by `TestMessage00` (`DSRCmsgID` 240, local `RegionId` 200), including
+  complete UPER `MessageFrame` encoding and strict decoding.
+- `ipi::v2x::UperCodec` delegates IPI cooperative-service values to the formal
+  regional codec. Its other lightweight J2735 helper overloads remain project
+  field profiles pending a generated production ASN.1 toolchain.
 - Optional ROS 2 bridge helpers (`IPI_ENABLE_ROS2_BRIDGE=ON`) that translate
   between the lightweight models and the `v2x_msg` ROS message types used on the
   MQTT/ROS buses.
-- `ipi::api::ReceiverApi` / `ipi::api::SenderApi` interfaces that implement the
-  HTTP/MQTT semantics described in `api/README.md`, with in-memory reference
-  implementations for rapid prototyping.
-- Canonical byte-level encoders/decoders (non-ASN.1) suitable for early
-  integration testing.
+- A clock-injected, transport-neutral session lifecycle that retains the full
+  registration, enforces active state and monotonic leases, and validates
+  request/result identity, freshness, duplicates, and terminal outcomes.
+- In-memory and broker-backed private-session transports sharing the same
+  lifecycle rules. The broker client and endpoint exchange strict, versioned,
+  per-topic `IPIS` records.
+- Machine-readable failure, termination, fallback, and service-outcome states.
+- Correlated private-5G probes with local monotonic RTT, strict response
+  validation, and a native detector-result schema.
+- A CRC-protected, size-bounded `IP5X` PC5 request/response adapter plus a Mocar
+  device sample that carries and validates the formal IPI `MessageFrame`.
+- Activation-zone, tiered service-policy, and offload-decision modules used by
+  the proposal-facing ROS 2 runtime.
+- Strict project codecs for session and integration records. Those formats are
+  separate from the formal IPI ASN.1 regional value and do not establish
+  conformance for the legacy BSM/PSM/MAP/SPaT/SRM/SSM helper encodings.
 - Edge-to-device bridge plan: a minimal TCP link between the edge unit and the
   on-device process over Ethernet. The on-device process listens on a TCP port,
   receives Base64-encoded UPER `MessageFrame` payloads, and forwards them to
@@ -173,14 +199,35 @@ or `ipi::api::ReceiverApi` pathways to route the requests; the only difference
 is the `serviceType` advertised and the richer cooperative payload that flows
 back when another node accepts the task.
 
+## Implemented lifecycle and safety boundary
+
+`ipi::api::SessionLifecycle` owns session state independently of the chosen
+transport. Registration begins in `REGISTERED`, the first valid heartbeat moves
+the session to `ACTIVE`, and a clock-injected steady deadline determines lease
+expiry. Patch, termination, service, telemetry, outstanding-request, duplicate,
+correlation, and terminal-result checks are applied before transport-specific
+delivery.
+
+The activation and policy modules publish machine-readable decisions. They do
+not directly change Autoware operation mode or vehicle motion. In particular, a
+safety-critical service is never deliberately paused: loss of a usable edge
+path selects an available local fallback or produces an explicit rejection.
+
+The offload engine predicts completion at local and edge execution sites using
+queue, transfer, RTT, compute, uncertainty, deadline, confidence, and service
+availability inputs. `TaskOffloader` remains the task execution/lifecycle
+helper and now rejects identity mismatches, stale transitions, duplicates, and
+late updates.
+
 ## Building
 
 ```bash
-cmake -S cpp -B cpp/build
-cmake --build cpp/build
+cmake -S cpp -B cpp/build -DIPI_ENABLE_TESTS=ON
+cmake --build cpp/build --parallel
+ctest --test-dir cpp/build --output-on-failure
 ```
 
-The build creates `libipi.a` plus the core sample executables
+The build creates `libipi.a`, the contract tests, and the core sample executables
 `cpp/build/example_build_service_request` and
 `cpp/build/example_v2x_roundtrip`. Optional demos are enabled through the
 configuration flags described below.
@@ -226,9 +273,18 @@ hardware using the UPER codec and bridge helpers.
 
 ## Next Steps
 
-- Replace the canonical encoders with bindings to the project’s chosen J2735
-  ASN.1 toolchain (e.g., asn1c) while retaining the validation logic.
-- Add unit tests (e.g., using GoogleTest or Catch2) to exercise error paths and
-  boundary conditions.
-- Extend the library with transport adapters that embed the encoded payloads in
-  RSU, MQTT, or HTTP flows as outlined in the message architecture.
+- Supply the separately licensed `J2735ASN_202309` modules, run
+  `prepare_j2735_ipi_schema.py`, compile the combined module set with the chosen
+  production compiler, and confirm the checked-in vectors with an independent
+  SEP2023 implementation. The typed extension, local C++ codec, dual-compiler
+  payload vectors, and USDOT 202409 outer-frame check are already implemented.
+- Run the broker transport against a deployed, authenticated broker through
+  disconnect/restart scenarios; add TLS, production access policy, and the QoS
+  required by the deployment.
+- Run the new PC5 exchange on both Mocar devices at compact and near-limit
+  conditions before using it for cross-path experimental claims.
+- Recollect representative private-5G workloads with the correlated probe and
+  native detector schema, with matched radio counters where causal radio claims
+  are intended.
+- Add the approved vehicle-side Autoware adapter while retaining local safety
+  authority and explicit stale/unsafe-request rejection.

@@ -5,6 +5,8 @@
 #include <chrono>
 #include <random>
 #include <sstream>
+#include <stdexcept>
+#include <utility>
 
 namespace ipi::api {
 
@@ -28,8 +30,21 @@ Envelope<VehicleServiceResponse> make_response(const Envelope<VehicleServiceRequ
     response.data.serviceType = request.data.serviceType;
     response.data.vehicleId = request.data.vehicleId;
     response.data.status = status;
+    response.data.expiresAt = request.metadata.expiresAt;
     response.data.guidance = request.data.context;
+    response.data.resultId = make_identifier(state);
+    response.data.failureCode = FailureCode::NONE;
+    validate_vehicle_service_response(response.data);
     return response;
+}
+
+Ack reject(FailureCode code, std::string detail)
+{
+    Ack acknowledgement;
+    acknowledgement.accepted = false;
+    acknowledgement.code = code;
+    acknowledgement.detail = std::move(detail);
+    return acknowledgement;
 }
 
 class InMemoryReceiverApi final : public ReceiverApi {
@@ -88,17 +103,31 @@ public:
 
     SessionDescriptor registerSession(const SessionRegistration& registration) override
     {
+        std::lock_guard lock(state_->mutex);
         SessionDescriptor descriptor;
         descriptor.sessionId = registration.metadata.sessionId.value_or(make_identifier(*state_));
+        if (descriptor.sessionId.empty() || registration.vehicleProfile.vehicleId.empty() ||
+            registration.metadata.intersectionId.empty()) {
+            throw std::invalid_argument(
+                "session registration requires session, vehicle, and intersection identifiers");
+        }
+        if (state_->sessionDirectory.find(descriptor.sessionId) != state_->sessionDirectory.end()) {
+            throw std::invalid_argument("duplicate session id: " + descriptor.sessionId);
+        }
         descriptor.vehicleProfile = registration.vehicleProfile;
         descriptor.transport = registration.metadata.transport;
-        descriptor.state = SessionState::ACTIVE;
+        descriptor.state = SessionState::REGISTERED;
         descriptor.leaseSeconds = 30;
         descriptor.heartbeatIntervalSeconds = 5;
         descriptor.preferredChannels = registration.requestedServices;
         descriptor.grantedServices = registration.requestedServices;
+        descriptor.registeredAt = std::chrono::system_clock::now();
+        descriptor.lastHeartbeatAt = descriptor.registeredAt;
+        descriptor.expiresAt = descriptor.registeredAt + std::chrono::seconds(descriptor.leaseSeconds);
+        descriptor.rsuFallback = registration.rsuFallback;
+        descriptor.minSidelinkRssi = registration.minSidelinkRssi;
+        descriptor.inlineSubscription = registration.inlineSubscription;
 
-        std::lock_guard lock(state_->mutex);
         state_->sessionDirectory[descriptor.sessionId] = descriptor;
         return descriptor;
     }
@@ -107,13 +136,22 @@ public:
     {
         std::lock_guard lock(state_->mutex);
         if (auto it = state_->sessionDirectory.find(heartbeat.sessionId); it != state_->sessionDirectory.end()) {
+            if (it->second.state == SessionState::TERMINATED) {
+                return reject(FailureCode::SESSION_TERMINATED, "session is terminated");
+            }
+            if (it->second.state == SessionState::EXPIRED) {
+                return reject(FailureCode::SESSION_EXPIRED, "session is expired");
+            }
             it->second.state = SessionState::ACTIVE;
+            it->second.lastHeartbeatAt = std::chrono::system_clock::now();
+            it->second.expiresAt = it->second.lastHeartbeatAt +
+                                   std::chrono::seconds(it->second.leaseSeconds);
             if (heartbeat.telemetry) {
                 state_->telemetryBySession[heartbeat.sessionId].push_back(*heartbeat.telemetry);
             }
             return Ack{};
         }
-        return Ack{false, {"unknown-session"}};
+        return reject(FailureCode::UNKNOWN_SESSION, "unknown session");
     }
 
     Ack patchSession(const SessionPatch& patch) override
@@ -121,9 +159,20 @@ public:
         std::lock_guard lock(state_->mutex);
         auto it = state_->sessionDirectory.find(patch.sessionId);
         if (it == state_->sessionDirectory.end()) {
-            return Ack{false, {"unknown-session"}};
+            return reject(FailureCode::UNKNOWN_SESSION, "unknown session");
+        }
+        if (it->second.state == SessionState::TERMINATED ||
+            it->second.state == SessionState::EXPIRED) {
+            return reject(it->second.state == SessionState::TERMINATED
+                              ? FailureCode::SESSION_TERMINATED
+                              : FailureCode::SESSION_EXPIRED,
+                          "session is terminal");
         }
         if (patch.profile) {
+            if (patch.profile->vehicleId != it->second.vehicleProfile.vehicleId) {
+                return reject(FailureCode::ACCESS_DENIED,
+                              "session patch cannot change vehicle ownership");
+            }
             it->second.vehicleProfile = *patch.profile;
         }
         if (patch.preferredChannels) {
@@ -137,23 +186,59 @@ public:
         std::lock_guard lock(state_->mutex);
         auto it = state_->sessionDirectory.find(termination.sessionId);
         if (it == state_->sessionDirectory.end()) {
-            return Ack{false, {"unknown-session"}};
+            return reject(FailureCode::UNKNOWN_SESSION, "unknown session");
+        }
+        if (it->second.state == SessionState::EXPIRED) {
+            return reject(FailureCode::SESSION_EXPIRED, "session is expired");
         }
         it->second.state = SessionState::TERMINATED;
-        return Ack{};
+        return Ack{true, termination.sessionId};
     }
 
     Ack invokeService(const ServiceInvocation& invocation) override
     {
         std::lock_guard lock(state_->mutex);
-        state_->responsesBySession[invocation.sessionId].push_back(
-            make_response(invocation.request, VehicleServiceStatus::IN_PROGRESS, *state_));
+        auto session = state_->sessionDirectory.find(invocation.sessionId);
+        if (session == state_->sessionDirectory.end()) {
+            return reject(FailureCode::UNKNOWN_SESSION, "unknown session");
+        }
+        if (session->second.state != SessionState::ACTIVE) {
+            const auto code = session->second.state == SessionState::TERMINATED
+                                  ? FailureCode::SESSION_TERMINATED
+                              : session->second.state == SessionState::EXPIRED
+                                  ? FailureCode::SESSION_EXPIRED
+                                  : FailureCode::SESSION_INACTIVE;
+            return reject(code, "session is not active");
+        }
+        if (!invocation.request.metadata.sessionId ||
+            *invocation.request.metadata.sessionId != invocation.sessionId ||
+            invocation.request.data.vehicleId != session->second.vehicleProfile.vehicleId) {
+            return reject(FailureCode::CORRELATION_MISMATCH,
+                          "service request identity does not match session");
+        }
+        auto progress = make_response(
+            invocation.request, VehicleServiceStatus::IN_PROGRESS, *state_);
+        auto completed = make_response(
+            invocation.request, VehicleServiceStatus::COMPLETED, *state_);
+        auto& vehicleResponses =
+            state_->responsesByVehicle[invocation.request.data.vehicleId];
+        vehicleResponses.push_back(progress);
+        vehicleResponses.push_back(completed);
+        state_->responsesBySession[invocation.sessionId].push_back(std::move(progress));
+        state_->responsesBySession[invocation.sessionId].push_back(std::move(completed));
         return Ack{};
     }
 
     Ack submitTelemetry(const TelemetrySubmission& submission) override
     {
         std::lock_guard lock(state_->mutex);
+        const auto session = state_->sessionDirectory.find(submission.sessionId);
+        if (session == state_->sessionDirectory.end()) {
+            return reject(FailureCode::UNKNOWN_SESSION, "unknown session");
+        }
+        if (session->second.state != SessionState::ACTIVE) {
+            return reject(FailureCode::SESSION_INACTIVE, "session is not active");
+        }
         auto& frames = state_->telemetryBySession[submission.sessionId];
         frames.insert(frames.end(), submission.frames.begin(), submission.frames.end());
         return Ack{};
@@ -181,7 +266,15 @@ private:
 
 std::shared_ptr<ReceiverApi> make_in_memory_receiver_api()
 {
-    return std::make_shared<InMemoryReceiverApi>(detail::obtain_shared_state());
+    return std::make_shared<InMemoryReceiverApi>(std::make_shared<detail::SharedState>());
 }
+
+namespace detail {
+
+std::shared_ptr<ReceiverApi> make_receiver_for_state(std::shared_ptr<SharedState> state) {
+    return std::make_shared<InMemoryReceiverApi>(std::move(state));
+}
+
+} // namespace detail
 
 } // namespace ipi::api

@@ -696,7 +696,7 @@ def render_run_markers(elements, run_locations, geometry):
         sx, sy = geometry.screen_from_latlon(run["latitude"], run["longitude"])
         color = colors[idx % len(colors)]
         label = re.sub(r"[^0-9]", "", run["label"]) or str(idx + 1)
-        elements.append(f'<circle cx="{sx:.2f}" cy="{sy:.2f}" r="30.0" fill="{color}" stroke="#ffffff" stroke-width="6.0"/>')
+        elements.append(f'<circle cx="{sx:.2f}" cy="{sy:.2f}" r="24.0" fill="{color}" stroke="#ffffff" stroke-width="5.0"/>')
         elements.append(svg_text(sx, sy + 10.5, label, 30, "700", anchor="middle", extra='style="fill:#ffffff"'))
         dx, dy = offsets[idx % len(offsets)]
         text_x = sx + dx
@@ -775,7 +775,6 @@ def render_osm_panel(metric, records, cells, to_latlon, geometry, cache_dir, run
     render_osm_points(elements, records, geometry)
     if run_locations:
         render_run_markers(elements, run_locations, geometry)
-        render_run_legend(elements, run_locations, geometry, excluded_locations)
     render_osm_scale_bar(elements, geometry, records)
     render_colorbar(elements, geometry, metric["domain"], metric["unit"], scale=OSM_LABEL_SCALE)
     elements.append(svg_text(geometry.left + 16, geometry.top + 36, "Triangulated linear interpolation", 26, "700"))

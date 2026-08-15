@@ -1,6 +1,7 @@
 #include "ipi/v2x/uper_codec.hpp"
 
 #include "ipi/common/debug.hpp"
+#include "ipi/v2x/j2735_ipi_regional_codec.hpp"
 
 #include <cmath>
 #include <stdexcept>
@@ -555,10 +556,11 @@ j2735::SignalStatusMessage UperCodec::decode_ssm(const std::vector<std::uint8_t>
 }
 
 std::vector<std::uint8_t> UperCodec::encode(const CooperativeServiceMessage& msg) const {
-    msg.validate();
-    auto out = msg.to_canonical_encoding();
+    const J2735IpiRegionalCodec codec;
+    auto out = codec.encode_message_frame(msg);
     if (ipi::debug::enabled()) {
-        ipi::debug::log("[UPER][IPI-CooperativeService] encode ", msg.to_string(),
+        ipi::debug::log("[J2735-UPER][TestMessage00][IPI-CooperativeService] encode ",
+                        msg.to_string(),
                         " bytes=", out.size(), " hex=", ipi::debug::hex(out));
     }
     return out;
@@ -567,12 +569,12 @@ std::vector<std::uint8_t> UperCodec::encode(const CooperativeServiceMessage& msg
 CooperativeServiceMessage UperCodec::decode_ipi_cooperative_service(
     const std::vector<std::uint8_t>& buffer) const {
     if (ipi::debug::enabled()) {
-        ipi::debug::log("[UPER][IPI-CooperativeService] decode bytes=", buffer.size(),
+        ipi::debug::log("[J2735-UPER][TestMessage00][IPI-CooperativeService] decode bytes=",
+                        buffer.size(),
                         " hex=", ipi::debug::hex(buffer));
     }
-    auto msg = CooperativeServiceMessage::from_canonical_encoding(buffer);
-    msg.validate();
-    return msg;
+    const J2735IpiRegionalCodec codec;
+    return codec.decode_message_frame(buffer);
 }
 
 } // namespace ipi::v2x

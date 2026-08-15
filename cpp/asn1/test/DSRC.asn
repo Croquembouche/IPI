@@ -1,0 +1,7 @@
+DSRC DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- Test-only dependency stub. Production schema builds must use the licensed
+-- DSRC module shipped with the selected SAE J2735 ASN distribution.
+RegionId ::= INTEGER (0..255)
+
+END

@@ -1,5 +1,7 @@
 #include "ipi/api/edge4av_interface.hpp"
 
+#include "ipi/api/in_memory_api.hpp"
+
 #include <chrono>
 #include <sstream>
 #include <stdexcept>
@@ -29,6 +31,14 @@ SourceType source_type_for_role(VehicleRole role) {
 
 bool uses_pcav_contract(VehicleRole role) {
     return role == VehicleRole::PCAV;
+}
+
+Ack invalid_request(std::string detail) {
+    Ack acknowledgement;
+    acknowledgement.accepted = false;
+    acknowledgement.code = FailureCode::INVALID_REQUEST;
+    acknowledgement.detail = std::move(detail);
+    return acknowledgement;
 }
 
 std::variant<PCVServiceType, PCAVServiceType> translate_service_type(
@@ -85,11 +95,13 @@ Edge4AvInterface::Edge4AvInterface(std::shared_ptr<ReceiverApi> receiver,
       sender_(std::move(sender)),
       privateSessionTransport_(std::move(privateSessionTransport)),
       codec_(std::move(codec)) {
-    if (!receiver_) {
-        throw std::invalid_argument("Edge4AvInterface requires a ReceiverApi");
-    }
-    if (!sender_) {
-        throw std::invalid_argument("Edge4AvInterface requires a SenderApi");
+    if (!receiver_ && !sender_) {
+        auto pair = make_in_memory_api_pair();
+        receiver_ = std::move(pair.receiver);
+        sender_ = std::move(pair.sender);
+    } else if (!receiver_ || !sender_) {
+        throw std::invalid_argument(
+            "Edge4AvInterface requires both ReceiverApi and SenderApi, or neither");
     }
     if (!privateSessionTransport_) {
         privateSessionTransport_ = make_in_memory_private_session_transport(receiver_, sender_);
@@ -101,7 +113,7 @@ Ack Edge4AvInterface::ingest_v2x_payload(EnvelopeMetadata metadata,
                                         std::optional<int> rssi,
                                         std::optional<int> channel) const {
     if (payload.payload.empty()) {
-        return Ack{false, std::string{"J2735 payload must not be empty"}};
+        return invalid_request("J2735 payload must not be empty");
     }
     Envelope<J2735Payload> envelope;
     envelope.metadata = normalize_metadata(std::move(metadata));
@@ -113,7 +125,7 @@ Ack Edge4AvInterface::request_broadcast_payload(EnvelopeMetadata metadata,
                                                 BroadcastTarget target,
                                                 J2735Payload payload) const {
     if (payload.payload.empty()) {
-        return Ack{false, std::string{"J2735 payload must not be empty"}};
+        return invalid_request("J2735 payload must not be empty");
     }
     BroadcastRequest request;
     request.metadata = normalize_metadata(std::move(metadata));
@@ -175,6 +187,19 @@ Ack Edge4AvInterface::heartbeat(const std::string& sessionId,
     return heartbeat(std::move(heartbeatUpdate));
 }
 
+Ack Edge4AvInterface::patch_session(SessionPatch patch) const {
+    return privateSessionTransport_->patch_session(patch);
+}
+
+Ack Edge4AvInterface::terminate_session(SessionTermination termination) const {
+    return privateSessionTransport_->terminate_session(termination);
+}
+
+std::optional<SessionDescriptor> Edge4AvInterface::get_session(
+    const std::string& sessionId) const {
+    return privateSessionTransport_->get_session(sessionId);
+}
+
 Ack Edge4AvInterface::submit_service_request(EnvelopeMetadata metadata,
                                              const VehicleProfile& vehicleProfile,
                                              const ipi::IpiServiceRequest& request,
@@ -190,7 +215,7 @@ Ack Edge4AvInterface::submit_service_request(EnvelopeMetadata metadata,
             context.vehicleId = vehicleProfile.vehicleId;
         }
         if (context.vehicleId.empty()) {
-            return Ack{false, std::string{"vehicleId is required for service submission"}};
+            return invalid_request("vehicleId is required for service submission");
         }
 
         if (envelope.metadata.source.id.empty()) {
@@ -219,7 +244,7 @@ Ack Edge4AvInterface::submit_service_request(EnvelopeMetadata metadata,
         }
         return receiver_->submitPCAVRequest(envelope);
     } catch (const std::exception& ex) {
-        return Ack{false, std::string{ex.what()}};
+        return invalid_request(ex.what());
     }
 }
 
@@ -233,6 +258,14 @@ Ack Edge4AvInterface::submit_telemetry(const std::string& sessionId,
     submission.sessionId = sessionId;
     submission.frames = std::move(frames);
     return submit_telemetry(std::move(submission));
+}
+
+Ack Edge4AvInterface::deliver_service_update(
+    const std::string& sessionId,
+    Envelope<VehicleServiceResponse> response) const {
+    response.metadata.sessionId = sessionId;
+    response.metadata = normalize_metadata(std::move(response.metadata));
+    return privateSessionTransport_->deliver_service_update(sessionId, response);
 }
 
 std::vector<Envelope<VehicleServiceResponse>> Edge4AvInterface::list_vehicle_responses(

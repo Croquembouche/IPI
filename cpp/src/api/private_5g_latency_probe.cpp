@@ -8,6 +8,7 @@
 #include <array>
 #include <chrono>
 #include <cstring>
+#include <limits>
 #include <stdexcept>
 #include <utility>
 
@@ -16,7 +17,8 @@ namespace ipi::api {
 namespace {
 
 constexpr std::array<std::uint8_t, 4> kMagic{{'I', '5', 'G', 'P'}};
-constexpr std::uint8_t kVersion = 1;
+constexpr std::uint8_t kVersion1 = 1;
+constexpr std::uint8_t kVersion2 = 2;
 constexpr std::uint8_t kRequestRecord = 1;
 constexpr std::uint8_t kAckRecord = 2;
 
@@ -131,7 +133,11 @@ void append_frame(std::vector<std::uint8_t>& buffer, const MessageFrame& frame) 
 
 MessageFrame read_frame(const std::vector<std::uint8_t>& buffer, std::size_t& offset) {
     MessageFrame frame;
-    frame.type = static_cast<MessageType>(read_byte(buffer, offset));
+    const auto type = read_byte(buffer, offset);
+    if (type > static_cast<std::uint8_t>(MessageType::PSM)) {
+        throw std::runtime_error("unknown probe frame type");
+    }
+    frame.type = static_cast<MessageType>(type);
     const auto payloadSize = read_uint32(buffer, offset);
     if (offset + payloadSize > buffer.size()) {
         throw std::runtime_error("frame payload exceeds buffer");
@@ -142,19 +148,21 @@ MessageFrame read_frame(const std::vector<std::uint8_t>& buffer, std::size_t& of
     return frame;
 }
 
-void validate_prefix(const std::vector<std::uint8_t>& buffer, std::uint8_t expectedRecordKind) {
+std::uint8_t validate_prefix(const std::vector<std::uint8_t>& buffer,
+                             std::uint8_t expectedRecordKind) {
     if (buffer.size() < 6) {
         throw std::runtime_error("probe packet too small");
     }
     if (!std::equal(kMagic.begin(), kMagic.end(), buffer.begin())) {
         throw std::runtime_error("invalid probe packet magic");
     }
-    if (buffer[4] != kVersion) {
+    if (buffer[4] != kVersion1 && buffer[4] != kVersion2) {
         throw std::runtime_error("unsupported probe packet version");
     }
     if (buffer[5] != expectedRecordKind) {
         throw std::runtime_error("unexpected probe packet kind");
     }
+    return buffer[4];
 }
 
 MessageFrame make_frame(MessageType type, std::vector<std::uint8_t> payload) {
@@ -183,7 +191,7 @@ void send_exact(int socketFd, const void* source, std::size_t size) {
     const auto* data = static_cast<const std::uint8_t*>(source);
     std::size_t offset = 0;
     while (offset < size) {
-        const auto sent = ::send(socketFd, data + offset, size - offset, 0);
+        const auto sent = ::send(socketFd, data + offset, size - offset, MSG_NOSIGNAL);
         if (sent <= 0) {
             throw std::runtime_error("send() failed");
         }
@@ -256,10 +264,12 @@ std::vector<std::uint8_t> encode_private_5g_probe_request(const Private5gProbeRe
     std::vector<std::uint8_t> buffer;
     buffer.reserve(64 + request.frame.payload.size());
     buffer.insert(buffer.end(), kMagic.begin(), kMagic.end());
-    buffer.push_back(kVersion);
+    buffer.push_back(kVersion2);
     buffer.push_back(kRequestRecord);
     append_uint64(buffer, request.sequence);
     append_uint64(buffer, request.clientSendTimeNs);
+    append_uint64(buffer, request.expiresAtUnixNs);
+    append_string(buffer, request.messageId);
     append_string(buffer, request.runId);
     append_string(buffer, request.conditionId);
     append_string(buffer, request.conditionLabel);
@@ -277,12 +287,16 @@ std::vector<std::uint8_t> encode_private_5g_probe_request(const Private5gProbeRe
 }
 
 Private5gProbeRequest decode_private_5g_probe_request(const std::vector<std::uint8_t>& buffer) {
-    validate_prefix(buffer, kRequestRecord);
+    const auto version = validate_prefix(buffer, kRequestRecord);
     std::size_t offset = 6;
 
     Private5gProbeRequest request;
     request.sequence = read_uint64(buffer, offset);
     request.clientSendTimeNs = read_uint64(buffer, offset);
+    if (version >= kVersion2) {
+        request.expiresAtUnixNs = read_uint64(buffer, offset);
+        request.messageId = read_string(buffer, offset);
+    }
     request.runId = read_string(buffer, offset);
     request.conditionId = read_string(buffer, offset);
     request.conditionLabel = read_string(buffer, offset);
@@ -307,12 +321,18 @@ std::vector<std::uint8_t> encode_private_5g_probe_ack(const Private5gProbeAck& a
     std::vector<std::uint8_t> buffer;
     buffer.reserve(64 + ack.detail.size());
     buffer.insert(buffer.end(), kMagic.begin(), kMagic.end());
-    buffer.push_back(kVersion);
+    buffer.push_back(kVersion2);
     buffer.push_back(kAckRecord);
     append_uint64(buffer, ack.sequence);
     append_uint64(buffer, ack.clientSendTimeNs);
     append_uint64(buffer, ack.serverReceiveTimeNs);
     append_uint64(buffer, ack.serverSendTimeNs);
+    append_uint64(buffer, ack.serverProcessingElapsedNs);
+    append_string(buffer, ack.responseId);
+    append_string(buffer, ack.correlationId);
+    append_string(buffer, ack.requestMessageId);
+    append_string(buffer, ack.requestId);
+    append_optional_string(buffer, ack.sessionId);
     buffer.push_back(static_cast<std::uint8_t>(ack.frameType));
     append_uint32(buffer, ack.payloadSize);
     buffer.push_back(ack.accepted ? 1U : 0U);
@@ -321,7 +341,7 @@ std::vector<std::uint8_t> encode_private_5g_probe_ack(const Private5gProbeAck& a
 }
 
 Private5gProbeAck decode_private_5g_probe_ack(const std::vector<std::uint8_t>& buffer) {
-    validate_prefix(buffer, kAckRecord);
+    const auto version = validate_prefix(buffer, kAckRecord);
     std::size_t offset = 6;
 
     Private5gProbeAck ack;
@@ -329,9 +349,27 @@ Private5gProbeAck decode_private_5g_probe_ack(const std::vector<std::uint8_t>& b
     ack.clientSendTimeNs = read_uint64(buffer, offset);
     ack.serverReceiveTimeNs = read_uint64(buffer, offset);
     ack.serverSendTimeNs = read_uint64(buffer, offset);
-    ack.frameType = static_cast<MessageType>(read_byte(buffer, offset));
+    if (version >= kVersion2) {
+        ack.serverProcessingElapsedNs = read_uint64(buffer, offset);
+        ack.responseId = read_string(buffer, offset);
+        ack.correlationId = read_string(buffer, offset);
+        ack.requestMessageId = read_string(buffer, offset);
+        ack.requestId = read_string(buffer, offset);
+        ack.sessionId = read_optional_string(buffer, offset);
+    } else if (ack.serverSendTimeNs >= ack.serverReceiveTimeNs) {
+        ack.serverProcessingElapsedNs = ack.serverSendTimeNs - ack.serverReceiveTimeNs;
+    }
+    const auto frameType = read_byte(buffer, offset);
+    if (frameType > static_cast<std::uint8_t>(MessageType::PSM)) {
+        throw std::runtime_error("unknown probe acknowledgement frame type");
+    }
+    ack.frameType = static_cast<MessageType>(frameType);
     ack.payloadSize = read_uint32(buffer, offset);
-    ack.accepted = read_byte(buffer, offset) != 0;
+    const auto accepted = read_byte(buffer, offset);
+    if (accepted > 1U) {
+        throw std::runtime_error("invalid probe acknowledgement accepted flag");
+    }
+    ack.accepted = accepted != 0;
     ack.detail = read_string(buffer, offset);
 
     if (offset != buffer.size()) {
@@ -368,19 +406,145 @@ std::uint64_t current_unix_time_ns() {
     return static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::nanoseconds>(now).count());
 }
 
-Private5gLatencyMetrics compute_private_5g_latency_metrics(const Private5gProbeAck& ack,
-                                                           std::uint64_t clientReceiveTimeNs) {
-    Private5gLatencyMetrics metrics;
-    metrics.roundTripNs = static_cast<std::int64_t>(clientReceiveTimeNs - ack.clientSendTimeNs);
-    metrics.serverProcessingNs = static_cast<std::int64_t>(ack.serverSendTimeNs - ack.serverReceiveTimeNs);
+Private5gProbeAck make_private_5g_probe_ack(
+    const Private5gProbeRequest& request,
+    std::uint64_t serverReceiveTimeNs,
+    std::uint64_t serverSendTimeNs,
+    std::uint64_t serverProcessingElapsedNs,
+    bool accepted,
+    std::string detail,
+    std::string responseId) {
+    Private5gProbeAck acknowledgement;
+    acknowledgement.sequence = request.sequence;
+    acknowledgement.clientSendTimeNs = request.clientSendTimeNs;
+    acknowledgement.serverReceiveTimeNs = serverReceiveTimeNs;
+    acknowledgement.serverSendTimeNs = serverSendTimeNs;
+    acknowledgement.serverProcessingElapsedNs = serverProcessingElapsedNs;
+    acknowledgement.responseId = std::move(responseId);
+    acknowledgement.correlationId = request.requestId;
+    acknowledgement.requestMessageId = request.messageId;
+    acknowledgement.requestId = request.requestId;
+    acknowledgement.sessionId = request.sessionId;
+    acknowledgement.frameType = request.frame.type;
+    acknowledgement.payloadSize = static_cast<std::uint32_t>(request.frame.payload.size());
+    acknowledgement.accepted = accepted;
+    acknowledgement.detail = std::move(detail);
+    return acknowledgement;
+}
 
-    const auto uplink = static_cast<std::int64_t>(ack.serverReceiveTimeNs - ack.clientSendTimeNs);
-    const auto downlink = static_cast<std::int64_t>(clientReceiveTimeNs - ack.serverSendTimeNs);
-    if (uplink >= 0) {
-        metrics.uplinkNs = uplink;
+Private5gProbeAckValidation validate_private_5g_probe_ack(
+    const Private5gProbeRequest& request,
+    const Private5gProbeAck& acknowledgement,
+    const std::unordered_set<std::string>& completedResponseIds,
+    bool arrivedAfterDeadline,
+    std::uint64_t currentUnixTimeNs) {
+    auto result = [](Private5gProbeAckDisposition disposition, std::string detail) {
+        return Private5gProbeAckValidation{disposition, std::move(detail)};
+    };
+    if (request.messageId.empty() || acknowledgement.requestMessageId != request.messageId) {
+        return result(Private5gProbeAckDisposition::MISMATCHED_MESSAGE,
+                      "acknowledgement request message identity mismatch");
     }
-    if (downlink >= 0) {
-        metrics.downlinkNs = downlink;
+    if (request.requestId.empty() || acknowledgement.requestId != request.requestId ||
+        acknowledgement.correlationId != request.requestId) {
+        return result(Private5gProbeAckDisposition::MISMATCHED_REQUEST,
+                      "acknowledgement request/correlation identity mismatch");
+    }
+    if (acknowledgement.sessionId != request.sessionId) {
+        return result(Private5gProbeAckDisposition::MISMATCHED_SESSION,
+                      "acknowledgement session identity mismatch");
+    }
+    if (acknowledgement.sequence != request.sequence ||
+        acknowledgement.clientSendTimeNs != request.clientSendTimeNs) {
+        return result(Private5gProbeAckDisposition::MISMATCHED_SEQUENCE,
+                      "acknowledgement sequence or echoed send time mismatch");
+    }
+    if (acknowledgement.frameType != request.frame.type) {
+        return result(Private5gProbeAckDisposition::MISMATCHED_RESULT,
+                      "acknowledgement result/frame type mismatch");
+    }
+    if (acknowledgement.payloadSize != request.frame.payload.size()) {
+        return result(Private5gProbeAckDisposition::MISMATCHED_PAYLOAD,
+                      "acknowledgement payload size mismatch");
+    }
+    if (acknowledgement.responseId.empty() ||
+        completedResponseIds.find(acknowledgement.responseId) != completedResponseIds.end()) {
+        return result(Private5gProbeAckDisposition::DUPLICATE,
+                      "missing or duplicate response identity");
+    }
+    if (currentUnixTimeNs == 0) currentUnixTimeNs = current_unix_time_ns();
+    if (request.expiresAtUnixNs != 0 && currentUnixTimeNs >= request.expiresAtUnixNs) {
+        return result(Private5gProbeAckDisposition::STALE,
+                      "acknowledgement arrived after request expiration");
+    }
+    if (arrivedAfterDeadline) {
+        return result(Private5gProbeAckDisposition::LATE,
+                      "acknowledgement arrived after the local monotonic deadline");
+    }
+    return result(Private5gProbeAckDisposition::MATCHED, "matched");
+}
+
+Private5gProbeAckValidation Private5gProbeResponseTracker::validate(
+    const Private5gProbeRequest& request,
+    const Private5gProbeAck& acknowledgement,
+    bool arrivedAfterDeadline,
+    std::uint64_t currentUnixTimeNs) {
+    auto validation = validate_private_5g_probe_ack(
+        request, acknowledgement, completedResponseIds_, arrivedAfterDeadline,
+        currentUnixTimeNs);
+    if (validation.matched()) completedResponseIds_.insert(acknowledgement.responseId);
+    return validation;
+}
+
+void Private5gProbeResponseTracker::reset() {
+    completedResponseIds_.clear();
+}
+
+std::string to_string(Private5gProbeAckDisposition disposition) {
+    switch (disposition) {
+        case Private5gProbeAckDisposition::MATCHED: return "matched";
+        case Private5gProbeAckDisposition::MISMATCHED_MESSAGE: return "mismatched-message";
+        case Private5gProbeAckDisposition::MISMATCHED_REQUEST: return "mismatched-request";
+        case Private5gProbeAckDisposition::MISMATCHED_SESSION: return "mismatched-session";
+        case Private5gProbeAckDisposition::MISMATCHED_SEQUENCE: return "mismatched-sequence";
+        case Private5gProbeAckDisposition::MISMATCHED_RESULT: return "mismatched-result";
+        case Private5gProbeAckDisposition::MISMATCHED_PAYLOAD: return "mismatched-payload";
+        case Private5gProbeAckDisposition::DUPLICATE: return "duplicate";
+        case Private5gProbeAckDisposition::STALE: return "stale";
+        case Private5gProbeAckDisposition::LATE: return "late";
+        default: return "unknown";
+    }
+}
+
+Private5gLatencyMetrics compute_private_5g_latency_metrics(
+    const Private5gProbeAck& ack,
+    std::int64_t localRoundTripNs,
+    bool oneWayClockSynchronized,
+    std::optional<std::uint64_t> clientReceiveWallTimeNs) {
+    if (localRoundTripNs < 0) {
+        throw std::invalid_argument("local monotonic round-trip duration must be non-negative");
+    }
+    if (ack.serverProcessingElapsedNs >
+        static_cast<std::uint64_t>(std::numeric_limits<std::int64_t>::max())) {
+        throw std::invalid_argument("server processing duration exceeds int64");
+    }
+    Private5gLatencyMetrics metrics;
+    metrics.roundTripNs = localRoundTripNs;
+    metrics.serverProcessingNs = static_cast<std::int64_t>(ack.serverProcessingElapsedNs);
+
+    if (oneWayClockSynchronized && clientReceiveWallTimeNs) {
+        if (ack.serverReceiveTimeNs >= ack.clientSendTimeNs &&
+            ack.serverReceiveTimeNs - ack.clientSendTimeNs <=
+                static_cast<std::uint64_t>(std::numeric_limits<std::int64_t>::max())) {
+            metrics.uplinkNs = static_cast<std::int64_t>(
+                ack.serverReceiveTimeNs - ack.clientSendTimeNs);
+        }
+        if (*clientReceiveWallTimeNs >= ack.serverSendTimeNs &&
+            *clientReceiveWallTimeNs - ack.serverSendTimeNs <=
+                static_cast<std::uint64_t>(std::numeric_limits<std::int64_t>::max())) {
+            metrics.downlinkNs = static_cast<std::int64_t>(
+                *clientReceiveWallTimeNs - ack.serverSendTimeNs);
+        }
     }
     return metrics;
 }

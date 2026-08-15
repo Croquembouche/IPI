@@ -2,6 +2,8 @@
 
 #include "ipi/api/edge4av_interface.hpp"
 
+#include <algorithm>
+
 int main() {
     return ipi::tests::run_test("edge4av_interface_dual_plane", [] {
         using ipi::IpiServiceRequest;
@@ -76,10 +78,51 @@ int main() {
                            "session telemetry should succeed");
 
         const auto sessionResponses = edge4av.list_session_responses(session.sessionId);
-        ipi::tests::expect(sessionResponses.size() == 1, "session invocation should produce one session response");
+        ipi::tests::expect(sessionResponses.size() == 2,
+                           "session invocation should produce progress and terminal responses");
+        ipi::tests::expect(
+            sessionResponses.front().data.status == ipi::api::VehicleServiceStatus::IN_PROGRESS,
+            "first session response should report progress");
+        ipi::tests::expect(
+            sessionResponses.back().data.status == ipi::api::VehicleServiceStatus::COMPLETED,
+            "last session response should be terminal");
+        const auto vehicleResponses = edge4av.list_vehicle_responses(profile.vehicleId);
+        ipi::tests::expect(vehicleResponses.size() == 2,
+                           "vehicle response lookup should retain progress and terminal results");
+
+        ipi::api::SessionPatch patch;
+        patch.sessionId = session.sessionId;
+        auto patchedProfile = profile;
+        patchedProfile.softwareVersion = "year2-demo";
+        patch.profile = patchedProfile;
+        ipi::tests::expect(edge4av.patch_session(patch).accepted,
+                           "session profile patch should succeed");
+        ipi::tests::expect(
+            edge4av.get_session(session.sessionId)->vehicleProfile.softwareVersion ==
+                patchedProfile.softwareVersion,
+            "session patch should be visible through the facade");
+
+        ipi::api::SessionTermination termination;
+        termination.sessionId = session.sessionId;
+        termination.reasonCode = ipi::api::TerminationReasonCode::CLIENT_REQUEST;
+        termination.reason = "test complete";
+        ipi::tests::expect(edge4av.terminate_session(termination).accepted,
+                           "session termination should succeed");
+        const auto rejectedTelemetry = edge4av.submit_telemetry(
+            session.sessionId, {VehicleTelemetryFrame{}});
+        ipi::tests::expect(
+            !rejectedTelemetry.accepted &&
+                rejectedTelemetry.code == ipi::api::FailureCode::SESSION_TERMINATED,
+            "terminated session must reject later telemetry");
 
         const auto publications = edge4av.private_session_transport()->list_publications({});
-        ipi::tests::expect(publications.size() >= 4,
-                           "register, heartbeat, service request, and telemetry publications should be recorded");
+        ipi::tests::expect(publications.size() >= 9,
+                           "session operations and service updates should retain wire publications");
+        ipi::tests::expect(
+            std::all_of(publications.begin(), publications.end(),
+                        [](const ipi::api::SessionPublication& publication) {
+                            return !publication.encodedPayload.empty();
+                        }),
+            "every session publication should retain encoded wire bytes");
     });
 }

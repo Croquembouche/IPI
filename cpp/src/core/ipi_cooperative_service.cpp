@@ -67,6 +67,14 @@ double read_double(const std::vector<std::uint8_t>& buffer, std::size_t& offset)
 namespace ipi {
 
 void CooperativeServiceMessage::validate() const {
+    if (static_cast<std::uint8_t>(serviceClass) >
+        static_cast<std::uint8_t>(ServiceClass::GuidedControl)) {
+        throw std::invalid_argument("unknown cooperative service class");
+    }
+    if (static_cast<std::uint8_t>(guidanceStatus) >
+        static_cast<std::uint8_t>(GuidanceStatus::Reject)) {
+        throw std::invalid_argument("unknown cooperative guidance status");
+    }
     if (vehicleId.empty() || vehicleId.size() > 16) {
         throw std::invalid_argument("vehicleId must be between 1 and 16 bytes");
     }
@@ -81,6 +89,15 @@ void CooperativeServiceMessage::validate() const {
     }
     if (offloadPayload && offloadPayload->size() > 65535) {
         throw std::invalid_argument("offloadPayload exceeds 65535 bytes");
+    }
+
+    if ((serviceClass != ServiceClass::GuidedPlanning && planning) ||
+        (serviceClass != ServiceClass::GuidedPerception && perception) ||
+        (serviceClass != ServiceClass::GuidedControl && control)) {
+        throw std::invalid_argument("cooperative payload does not match serviceClass");
+    }
+    if (guidanceStatus == GuidanceStatus::Reject && (planning || perception || control)) {
+        throw std::invalid_argument("rejected cooperative response cannot carry guidance payload");
     }
 
     if (planning) {
@@ -118,6 +135,13 @@ void CooperativeServiceMessage::validate() const {
                 throw std::invalid_argument("control command value must be within [-1000, 1000]");
             }
         }
+    }
+}
+
+void CooperativeServiceMessage::validate_freshness(std::uint32_t currentTimeDs) const {
+    validate();
+    if (expirationTimeDs && *expirationTimeDs <= currentTimeDs) {
+        throw std::invalid_argument("cooperative service message has expired");
     }
 }
 
@@ -263,8 +287,14 @@ CooperativeServiceMessage CooperativeServiceMessage::from_canonical_encoding(con
     if (offset + 2 > buffer.size()) {
         throw std::runtime_error("Buffer underrun reading serviceClass/status");
     }
-    msg.serviceClass = static_cast<ServiceClass>(buffer[offset++]);
-    msg.guidanceStatus = static_cast<GuidanceStatus>(buffer[offset++]);
+    const auto serviceClass = buffer[offset++];
+    const auto guidanceStatus = buffer[offset++];
+    if (serviceClass > static_cast<std::uint8_t>(ServiceClass::GuidedControl) ||
+        guidanceStatus > static_cast<std::uint8_t>(GuidanceStatus::Reject)) {
+        throw std::runtime_error("Unknown cooperative service class or guidance status");
+    }
+    msg.serviceClass = static_cast<ServiceClass>(serviceClass);
+    msg.guidanceStatus = static_cast<GuidanceStatus>(guidanceStatus);
 
     if (offset >= buffer.size()) {
         throw std::runtime_error("Buffer underrun reading flags");
@@ -305,26 +335,40 @@ CooperativeServiceMessage CooperativeServiceMessage::from_canonical_encoding(con
         if (section.size() < 3) {
             throw std::runtime_error("Planning section too small");
         }
+        if (section[sOff] > 1U) throw std::runtime_error("Invalid planning fallback flag");
         payload.fallbackRoute = section[sOff++] != 0;
         auto count = read_uint16(section, sOff);
+        if (count > 50) throw std::runtime_error("Planning waypoint count exceeds limit");
         payload.waypoints.reserve(count);
         for (std::uint16_t i = 0; i < count; ++i) {
             Waypoint wp;
             wp.position.latitude = read_double(section, sOff);
             wp.position.longitude = read_double(section, sOff);
+            if (sOff >= section.size() || section[sOff] > 1U) {
+                throw std::runtime_error("Invalid or missing waypoint elevation flag");
+            }
             bool hasElevation = section[sOff++] != 0;
             if (hasElevation) {
                 wp.position.elevation = read_double(section, sOff);
             }
+            if (sOff >= section.size() || section[sOff] > 1U) {
+                throw std::runtime_error("Invalid or missing waypoint speed flag");
+            }
             bool hasTargetSpeed = section[sOff++] != 0;
             if (hasTargetSpeed) {
                 wp.targetSpeedMps = read_double(section, sOff);
+            }
+            if (sOff >= section.size() || section[sOff] > 1U) {
+                throw std::runtime_error("Invalid or missing waypoint dwell flag");
             }
             bool hasDwell = section[sOff++] != 0;
             if (hasDwell) {
                 wp.dwellTimeMs = read_uint16(section, sOff);
             }
             payload.waypoints.push_back(std::move(wp));
+        }
+        if (sOff != section.size()) {
+            throw std::runtime_error("Unexpected trailing bytes in planning section");
         }
         msg.planning = std::move(payload);
     }
@@ -335,6 +379,7 @@ CooperativeServiceMessage CooperativeServiceMessage::from_canonical_encoding(con
         GuidedPerceptionPayload payload;
         std::size_t sOff = 0;
         auto count = read_uint16(section, sOff);
+        if (count > 64) throw std::runtime_error("Perception object count exceeds limit");
         payload.detectedObjects.reserve(count);
         for (std::uint16_t i = 0; i < count; ++i) {
             DetectedObject obj;
@@ -343,12 +388,22 @@ CooperativeServiceMessage CooperativeServiceMessage::from_canonical_encoding(con
             }
             std::copy_n(section.begin() + static_cast<std::ptrdiff_t>(sOff), obj.objectId.size(), obj.objectId.begin());
             sOff += obj.objectId.size();
+            if (sOff >= section.size() ||
+                section[sOff] > static_cast<std::uint8_t>(DetectedObject::Classification::Obstacle)) {
+                throw std::runtime_error("Unknown or missing detected-object classification");
+            }
             obj.classification = static_cast<DetectedObject::Classification>(section[sOff++]);
             obj.position.latitude = read_double(section, sOff);
             obj.position.longitude = read_double(section, sOff);
+            if (sOff >= section.size() || section[sOff] > 1U) {
+                throw std::runtime_error("Invalid or missing object elevation flag");
+            }
             bool hasElevation = section[sOff++] != 0;
             if (hasElevation) {
                 obj.position.elevation = read_double(section, sOff);
+            }
+            if (sOff >= section.size() || section[sOff] > 1U) {
+                throw std::runtime_error("Invalid or missing object velocity flag");
             }
             bool hasVelocity = section[sOff++] != 0;
             if (hasVelocity) {
@@ -366,6 +421,9 @@ CooperativeServiceMessage CooperativeServiceMessage::from_canonical_encoding(con
             sOff += covLen;
             payload.detectedObjects.push_back(std::move(obj));
         }
+        if (sOff != section.size()) {
+            throw std::runtime_error("Unexpected trailing bytes in perception section");
+        }
         msg.perception = std::move(payload);
     }
 
@@ -375,16 +433,23 @@ CooperativeServiceMessage CooperativeServiceMessage::from_canonical_encoding(con
         GuidedControlPayload payload;
         std::size_t sOff = 0;
         auto count = read_uint16(section, sOff);
+        if (count > 10) throw std::runtime_error("Control command count exceeds limit");
         payload.commands.reserve(count);
         for (std::uint16_t i = 0; i < count; ++i) {
             ControlCommand cmd;
             if (sOff >= section.size()) {
                 throw std::runtime_error("Control section truncated (axis)");
             }
+            if (section[sOff] > static_cast<std::uint8_t>(ControlCommand::Axis::Brake)) {
+                throw std::runtime_error("Unknown control-command axis");
+            }
             cmd.axis = static_cast<ControlCommand::Axis>(section[sOff++]);
             auto rawValue = read_uint16(section, sOff);
             cmd.valuePermille = static_cast<std::int16_t>(static_cast<std::int32_t>(rawValue) - 32768);
             payload.commands.push_back(std::move(cmd));
+        }
+        if (sOff != section.size()) {
+            throw std::runtime_error("Unexpected trailing bytes in control section");
         }
         msg.control = std::move(payload);
     }
@@ -399,6 +464,10 @@ CooperativeServiceMessage CooperativeServiceMessage::from_canonical_encoding(con
         std::vector<std::uint8_t> section;
         read_section(section);
         msg.offloadTaskId = std::string(section.begin(), section.end());
+    }
+
+    if (offset != buffer.size()) {
+        throw std::runtime_error("Unexpected trailing bytes in CooperativeServiceMessage");
     }
 
     msg.validate();
