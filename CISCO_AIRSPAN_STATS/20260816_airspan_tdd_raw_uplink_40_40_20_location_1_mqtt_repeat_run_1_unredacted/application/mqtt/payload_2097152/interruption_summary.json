@@ -1,0 +1,18 @@
+{
+  "accepted": 133,
+  "application_payload_bytes": 2097152,
+  "attempts_completed": 133,
+  "attempts_planned": 1000,
+  "errors": [],
+  "excluded_from_aggregate": true,
+  "interruption_reason": "user-requested stop; 2 MiB removed from future payload matrices",
+  "receiver_rows": 133,
+  "rtt_count": 133,
+  "rtt_max_ms": 12013.4499,
+  "rtt_p50_ms": 9276.284713,
+  "rtt_p95_ms": 10963.315607,
+  "rtt_p99_ms": 11751.944151,
+  "sender_receiver_prefix_match": true,
+  "status": "interrupted-by-user",
+  "transport": "mqtt"
+}

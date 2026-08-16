@@ -1,0 +1,5 @@
+transport,payload_label,application_payload_bytes,attempts,accepted,failed,receiver_rows,rtt_p50_ms,rtt_p95_ms,rtt_p99_ms,rtt_max_ms,deadline_misses_100ms,deadline_misses_500ms,deadline_misses_1000ms,wire_request_bytes,status
+mqtt,1 KiB,1024,1000,1000,0,1000,39.434809,51.015590,279.632336,299.648861,18,0,0,1125,complete
+mqtt,10 KiB,10240,1000,1000,0,1000,63.682347,169.246667,263.223489,539.404311,98,2,0,10341,complete
+mqtt,100 KiB,102400,1000,1000,0,1000,439.005556,746.946578,927.222399,34967.950930,1000,334,5,102502,complete
+mqtt,"1,024 KiB",1048576,1000,1000,0,1000,4549.326402,5608.034358,6193.953585,6700.886107,1000,1000,1000,1048678,complete

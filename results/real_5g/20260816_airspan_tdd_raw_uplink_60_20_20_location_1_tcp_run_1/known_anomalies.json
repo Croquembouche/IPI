@@ -1,0 +1,16 @@
+{
+  "schema": "edge4av-airspan-raw-uplink-known-anomalies-v1",
+  "anomalies": [
+    {
+      "type": "operator-requested-condition-stop",
+      "condition": "tcp-payload-1048576",
+      "requested_attempts": 1000,
+      "retained_attempts": 500,
+      "accepted": 500,
+      "failed": 0,
+      "sender_exit_status": 143,
+      "treatment": "preserved as an intentionally stopped 500-sample condition; excluded from the three-condition complete matrix",
+      "validation": "sender and receiver sequences 1..500 match exactly in sequence, application-payload length, CRC32, client send wall timestamp, and server-processing value"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "edge4av-airspan-serving-cell-selection-correction-v1",
+  "correction_date": "2026-08-16",
+  "run_name": "20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_2",
+  "applies_to_all_conditions": true,
+  "source": "user post-acquisition clarification on 2026-08-16",
+  "terminology": "MG52 locked onto identifies UE cell selection; it is distinct from an Airspan administrative lock, which means that a cell is not broadcasting.",
+  "previous_record": {
+    "serving_cell": 2,
+    "serving_cell_state": "carried-forward-from-prior-same-day-cell-2-no-handoff-context"
+  },
+  "corrected_serving_context": {
+    "serving_cell": 1,
+    "serving_cell_selection": "mg52-locked-onto-cell-1",
+    "handoff_state": "no-reported-handoff",
+    "state": "user-post-acquisition-correction"
+  },
+  "cell_administrative_states_unchanged": {
+    "cell_1": {
+      "state": "unlocked",
+      "broadcasting": true
+    },
+    "cell_2": {
+      "state": "unlocked",
+      "broadcasting": true
+    }
+  },
+  "comparison_scope": {
+    "other_tcp_runs_serving_cell": 2,
+    "other_tcp_runs": [
+      "20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2",
+      "20260815_airspan_tdd_raw_uplink_40_40_20_location_1_run_3",
+      "20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_1"
+    ]
+  },
+  "timestamp_aligned_mg52_export_present": false,
+  "supersedes": "The acquisition-time airspan_cell/serving_cell value and any derived statement that carried Cell 2 forward into this run. The application measurements are unchanged."
+}

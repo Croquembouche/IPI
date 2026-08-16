@@ -1,0 +1,18 @@
+{
+  "schema": "edge4av-airspan-raw-uplink-measurement-correction-v1",
+  "applies_to": "all three quick-follow-up TCP sender conditions in this run",
+  "declared_timing_boundary": "immediately before the framed TCP request is sent through receipt and structural parsing of the complete correlated application acknowledgment",
+  "implemented_timing_start": "time.monotonic_ns immediately before the framed TCP length prefix and application object are passed to sendall",
+  "implemented_timing_end": "time.monotonic_ns immediately after the complete application acknowledgment has been received and parsed for exact frame length, magic, and protocol version",
+  "outside_timed_interval": [
+    "acknowledgment sequence comparison",
+    "acknowledgment accepted-state comparison",
+    "acknowledgment application-payload-length comparison",
+    "acknowledgment payload-CRC32 comparison"
+  ],
+  "accepted_row_rule": "A sender row is accepted only after every outside-timed comparison passes; the edge already validated the complete request payload length and CRC32 before emitting the acknowledgment.",
+  "result_interpretation": "Use rtt_ms as monotonic complete-application-acknowledgment receipt-and-parse RTT. Do not interpret it as a TCP ACK RTT or one-way delay.",
+  "tcp_ack_only": false,
+  "network_bytes_excluded_at_end": false,
+  "one_way_latency_valid": false
+}

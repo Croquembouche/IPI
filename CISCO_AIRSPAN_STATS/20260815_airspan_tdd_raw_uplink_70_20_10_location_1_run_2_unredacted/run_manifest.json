@@ -1,0 +1,816 @@
+{
+  "analyzed_at_utc": "2026-08-15T19:10:26.083867+00:00",
+  "application_direction": "uplink-oriented",
+  "application_matrix_passed": true,
+  "application_payload_bytes": [
+    1024,
+    10240,
+    102400,
+    1048576,
+    2097152
+  ],
+  "attempts_per_condition": 1000,
+  "edge_artifact_verification": {
+    "all_remote_files_match_local_copies": true,
+    "comparisons": [
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1024/edge/host_telemetry/d1.jsonl",
+        "local_sha256": "cfee4c78c39bebb9c42610b871ea7eef1470935ca3e390fa2f0367fc3151cb82",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1024/host_telemetry/d1.jsonl",
+        "remote_sha256": "cfee4c78c39bebb9c42610b871ea7eef1470935ca3e390fa2f0367fc3151cb82"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1024/edge/logs/broker.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1024/logs/broker.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1024/edge/logs/broker.out",
+        "local_sha256": "5b85db2fc6a09426f0cb1d181927d814eae143b45bd521a96e4872f8e3330995",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1024/logs/broker.out",
+        "remote_sha256": "5b85db2fc6a09426f0cb1d181927d814eae143b45bd521a96e4872f8e3330995"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1024/edge/logs/receiver.csv",
+        "local_sha256": "515f81195d1b1ea1f92ef6ee0650aaf278f53a2c330c5d8f48e9767ba58498ba",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1024/logs/receiver.csv",
+        "remote_sha256": "515f81195d1b1ea1f92ef6ee0650aaf278f53a2c330c5d8f48e9767ba58498ba"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1024/edge/logs/receiver.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1024/logs/receiver.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1024/edge/logs/telemetry.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1024/logs/telemetry.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1024/edge/logs/telemetry.out",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1024/logs/telemetry.out",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1024/edge/pids/broker.pid",
+        "local_sha256": "51c81407d0cd03ce53bb7b3d9b0992ffc22f36ff8aa3f3d788b4b17007cddcd2",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1024/pids/broker.pid",
+        "remote_sha256": "51c81407d0cd03ce53bb7b3d9b0992ffc22f36ff8aa3f3d788b4b17007cddcd2"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1024/edge/pids/receiver.pid",
+        "local_sha256": "04b3ca9fab094f531caa5b0d63b22db9a99ffc56defe01e6b2cd881a534dc874",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1024/pids/receiver.pid",
+        "remote_sha256": "04b3ca9fab094f531caa5b0d63b22db9a99ffc56defe01e6b2cd881a534dc874"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1024/edge/pids/telemetry.pid",
+        "local_sha256": "59e35b9ac120eba0e3eeb4fb180f4acf4ca36772483eeb6a570cffddaf815b0d",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1024/pids/telemetry.pid",
+        "remote_sha256": "59e35b9ac120eba0e3eeb4fb180f4acf4ca36772483eeb6a570cffddaf815b0d"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_10240/edge/host_telemetry/d1.jsonl",
+        "local_sha256": "9f6617d212bdf949cf10d2b1a322167ea8cd37d8477ce918b1044fe003c40687",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_10240/host_telemetry/d1.jsonl",
+        "remote_sha256": "9f6617d212bdf949cf10d2b1a322167ea8cd37d8477ce918b1044fe003c40687"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_10240/edge/logs/broker.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_10240/logs/broker.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_10240/edge/logs/broker.out",
+        "local_sha256": "38400319ce1fae0dfede7a3c52b3230e963af0668759c75d9e87ba92ef61aab9",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_10240/logs/broker.out",
+        "remote_sha256": "38400319ce1fae0dfede7a3c52b3230e963af0668759c75d9e87ba92ef61aab9"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_10240/edge/logs/receiver.csv",
+        "local_sha256": "9f29056adcc5b948af361ad0b90cd8f245883327f0fb1ca1ea58b26e07503a17",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_10240/logs/receiver.csv",
+        "remote_sha256": "9f29056adcc5b948af361ad0b90cd8f245883327f0fb1ca1ea58b26e07503a17"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_10240/edge/logs/receiver.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_10240/logs/receiver.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_10240/edge/logs/telemetry.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_10240/logs/telemetry.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_10240/edge/logs/telemetry.out",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_10240/logs/telemetry.out",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_10240/edge/pids/broker.pid",
+        "local_sha256": "5a642ef85950b1e58791691b25729ae9ed0d9ef005e68bc3f2f93fb2d74bbe33",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_10240/pids/broker.pid",
+        "remote_sha256": "5a642ef85950b1e58791691b25729ae9ed0d9ef005e68bc3f2f93fb2d74bbe33"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_10240/edge/pids/receiver.pid",
+        "local_sha256": "253736645d1e67f1165d394f867dc9589dc65b68978a8a4c2c866b76476bb364",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_10240/pids/receiver.pid",
+        "remote_sha256": "253736645d1e67f1165d394f867dc9589dc65b68978a8a4c2c866b76476bb364"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_10240/edge/pids/telemetry.pid",
+        "local_sha256": "8625ec7c26a38b05e5babb54600aba435c17da4015e59c83e43c83b3743727c0",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_10240/pids/telemetry.pid",
+        "remote_sha256": "8625ec7c26a38b05e5babb54600aba435c17da4015e59c83e43c83b3743727c0"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_102400/edge/host_telemetry/d1.jsonl",
+        "local_sha256": "8ef22a57f1f0ecafac2bef1823ba354f513cf6d423ff4f21dbab31f4aa2cb47b",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_102400/host_telemetry/d1.jsonl",
+        "remote_sha256": "8ef22a57f1f0ecafac2bef1823ba354f513cf6d423ff4f21dbab31f4aa2cb47b"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_102400/edge/logs/broker.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_102400/logs/broker.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_102400/edge/logs/broker.out",
+        "local_sha256": "9b0b11d4e7ed85fa34c26f0ee7d387c9b6a5536a4aa1fa4c327115978a7f5dc9",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_102400/logs/broker.out",
+        "remote_sha256": "9b0b11d4e7ed85fa34c26f0ee7d387c9b6a5536a4aa1fa4c327115978a7f5dc9"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_102400/edge/logs/receiver.csv",
+        "local_sha256": "674a291e4d42f16f2989b7f1d5cb27b62adcfa9b42bbae10902c2f6dc0fb0561",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_102400/logs/receiver.csv",
+        "remote_sha256": "674a291e4d42f16f2989b7f1d5cb27b62adcfa9b42bbae10902c2f6dc0fb0561"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_102400/edge/logs/receiver.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_102400/logs/receiver.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_102400/edge/logs/telemetry.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_102400/logs/telemetry.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_102400/edge/logs/telemetry.out",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_102400/logs/telemetry.out",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_102400/edge/pids/broker.pid",
+        "local_sha256": "1fb769a6fe1702063859c4f5aa0181485a1c9ffb8361b1c9bd3f65ce14c7b4b8",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_102400/pids/broker.pid",
+        "remote_sha256": "1fb769a6fe1702063859c4f5aa0181485a1c9ffb8361b1c9bd3f65ce14c7b4b8"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_102400/edge/pids/receiver.pid",
+        "local_sha256": "af98368f7964c967bec0f3e78ae44de869bbee4b6f3dcd051631988d17bca56b",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_102400/pids/receiver.pid",
+        "remote_sha256": "af98368f7964c967bec0f3e78ae44de869bbee4b6f3dcd051631988d17bca56b"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_102400/edge/pids/telemetry.pid",
+        "local_sha256": "81a03bcc93a48b9abad262bcfa941c2a156a32fead96463435be08a0d8efa3cd",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_102400/pids/telemetry.pid",
+        "remote_sha256": "81a03bcc93a48b9abad262bcfa941c2a156a32fead96463435be08a0d8efa3cd"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1048576/edge/host_telemetry/d1.jsonl",
+        "local_sha256": "f569d865937390a0bcd9719d05053232a580bc3de872a742b351b8a49d6b0066",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1048576/host_telemetry/d1.jsonl",
+        "remote_sha256": "f569d865937390a0bcd9719d05053232a580bc3de872a742b351b8a49d6b0066"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1048576/edge/logs/broker.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1048576/logs/broker.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1048576/edge/logs/broker.out",
+        "local_sha256": "b6f4279db1eba0c47c912b1d071f9428b7ffe8a82ced0d60490af733f13e45af",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1048576/logs/broker.out",
+        "remote_sha256": "b6f4279db1eba0c47c912b1d071f9428b7ffe8a82ced0d60490af733f13e45af"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1048576/edge/logs/receiver.csv",
+        "local_sha256": "35aa802cd3209d1be01d5d464d9d2f74d7c2201eba4f1f12fd9202070537b8cd",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1048576/logs/receiver.csv",
+        "remote_sha256": "35aa802cd3209d1be01d5d464d9d2f74d7c2201eba4f1f12fd9202070537b8cd"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1048576/edge/logs/receiver.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1048576/logs/receiver.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1048576/edge/logs/telemetry.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1048576/logs/telemetry.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1048576/edge/logs/telemetry.out",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1048576/logs/telemetry.out",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1048576/edge/pids/broker.pid",
+        "local_sha256": "2c0843a5d5b7460303c6c448b196c4a0a68969eea7ad2e36db8803745c8fd4c2",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1048576/pids/broker.pid",
+        "remote_sha256": "2c0843a5d5b7460303c6c448b196c4a0a68969eea7ad2e36db8803745c8fd4c2"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1048576/edge/pids/receiver.pid",
+        "local_sha256": "f0aaf60d3ea7cec59fb0b7f3cb8c27bd87e80c28a378e71d96e2b41550c2eab5",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1048576/pids/receiver.pid",
+        "remote_sha256": "f0aaf60d3ea7cec59fb0b7f3cb8c27bd87e80c28a378e71d96e2b41550c2eab5"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_1048576/edge/pids/telemetry.pid",
+        "local_sha256": "a8026793613b6c163567530e759004a214fb9a70eaf8cb42bbc1597d6c482010",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_1048576/pids/telemetry.pid",
+        "remote_sha256": "a8026793613b6c163567530e759004a214fb9a70eaf8cb42bbc1597d6c482010"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_2097152/edge/host_telemetry/d1.jsonl",
+        "local_sha256": "7742fc212d6ddbadef4b4984bab0173625fe889230a2e5ba43580b9b24a5169a",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_2097152/host_telemetry/d1.jsonl",
+        "remote_sha256": "7742fc212d6ddbadef4b4984bab0173625fe889230a2e5ba43580b9b24a5169a"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_2097152/edge/logs/broker.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_2097152/logs/broker.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_2097152/edge/logs/broker.out",
+        "local_sha256": "66d029677c578e083b4c94954b6ba6313ab23b28c587ed91e9f14ac27100dddd",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_2097152/logs/broker.out",
+        "remote_sha256": "66d029677c578e083b4c94954b6ba6313ab23b28c587ed91e9f14ac27100dddd"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_2097152/edge/logs/receiver.csv",
+        "local_sha256": "8136b3662389f521a6fa4e8c8a8abfac388debe760efc4de7d9f6e1b082c116b",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_2097152/logs/receiver.csv",
+        "remote_sha256": "8136b3662389f521a6fa4e8c8a8abfac388debe760efc4de7d9f6e1b082c116b"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_2097152/edge/logs/receiver.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_2097152/logs/receiver.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_2097152/edge/logs/telemetry.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_2097152/logs/telemetry.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_2097152/edge/logs/telemetry.out",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_2097152/logs/telemetry.out",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_2097152/edge/pids/broker.pid",
+        "local_sha256": "25555124dfa0558344eb7ce8bc46ce8a12b2d034c28d983612fc8fde1770be8e",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_2097152/pids/broker.pid",
+        "remote_sha256": "25555124dfa0558344eb7ce8bc46ce8a12b2d034c28d983612fc8fde1770be8e"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_2097152/edge/pids/receiver.pid",
+        "local_sha256": "fa469e8f873be276994c8a8e1b5d669f8afbef6e0bfad43961e1104d2bb056ed",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_2097152/pids/receiver.pid",
+        "remote_sha256": "fa469e8f873be276994c8a8e1b5d669f8afbef6e0bfad43961e1104d2bb056ed"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/mqtt/payload_2097152/edge/pids/telemetry.pid",
+        "local_sha256": "3e3fd7b979b3c4b6b7317db0aa0b78ed4ac27fd9f53b7c9ef34a7d712353d0a0",
+        "match": true,
+        "remote_relative_path": "application/mqtt/payload_2097152/pids/telemetry.pid",
+        "remote_sha256": "3e3fd7b979b3c4b6b7317db0aa0b78ed4ac27fd9f53b7c9ef34a7d712353d0a0"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1024/edge/host_telemetry/d1.jsonl",
+        "local_sha256": "09647531f1eaca0986e152a8d23e3e0aeeda9067af326576aff07d9566131cf5",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1024/host_telemetry/d1.jsonl",
+        "remote_sha256": "09647531f1eaca0986e152a8d23e3e0aeeda9067af326576aff07d9566131cf5"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1024/edge/logs/receiver.csv",
+        "local_sha256": "4acb1df66464e4c21b54c9bba3a64c619b459e96cefad270b4f2cba713c4273c",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1024/logs/receiver.csv",
+        "remote_sha256": "4acb1df66464e4c21b54c9bba3a64c619b459e96cefad270b4f2cba713c4273c"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1024/edge/logs/receiver.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1024/logs/receiver.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1024/edge/logs/telemetry.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1024/logs/telemetry.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1024/edge/logs/telemetry.out",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1024/logs/telemetry.out",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1024/edge/pids/receiver.pid",
+        "local_sha256": "e10211579ecd050b72677a287f8c035ee5d49184372f1b18272c7882ed2a6059",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1024/pids/receiver.pid",
+        "remote_sha256": "e10211579ecd050b72677a287f8c035ee5d49184372f1b18272c7882ed2a6059"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1024/edge/pids/telemetry.pid",
+        "local_sha256": "25c4b046af6e5c71c4f6f7d1c6893eb3cf6ffda1ddb0aadc04eb2ee0257cd95f",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1024/pids/telemetry.pid",
+        "remote_sha256": "25c4b046af6e5c71c4f6f7d1c6893eb3cf6ffda1ddb0aadc04eb2ee0257cd95f"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_10240/edge/host_telemetry/d1.jsonl",
+        "local_sha256": "8c5ff287990873014a73b0f17efa3ff0f40dcdf8d35b103ba79b7aed2b0f2b4c",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_10240/host_telemetry/d1.jsonl",
+        "remote_sha256": "8c5ff287990873014a73b0f17efa3ff0f40dcdf8d35b103ba79b7aed2b0f2b4c"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_10240/edge/logs/receiver.csv",
+        "local_sha256": "7e98fb616d47e6e7d41a455d01efb356d48c7ba267ca01448419077b6ca83156",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_10240/logs/receiver.csv",
+        "remote_sha256": "7e98fb616d47e6e7d41a455d01efb356d48c7ba267ca01448419077b6ca83156"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_10240/edge/logs/receiver.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_10240/logs/receiver.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_10240/edge/logs/telemetry.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_10240/logs/telemetry.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_10240/edge/logs/telemetry.out",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_10240/logs/telemetry.out",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_10240/edge/pids/receiver.pid",
+        "local_sha256": "83662f698febf2ea774ae1d3ffc6ccf56327d8de351a9f22289df1759d9633c4",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_10240/pids/receiver.pid",
+        "remote_sha256": "83662f698febf2ea774ae1d3ffc6ccf56327d8de351a9f22289df1759d9633c4"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_10240/edge/pids/telemetry.pid",
+        "local_sha256": "a14c5ba8c18930b005e669603db65d6e0313b899054ef9c8c7d2000c8c6f2fb3",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_10240/pids/telemetry.pid",
+        "remote_sha256": "a14c5ba8c18930b005e669603db65d6e0313b899054ef9c8c7d2000c8c6f2fb3"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_102400/edge/host_telemetry/d1.jsonl",
+        "local_sha256": "a665ad8b64669968995f65f4465262293bcf723c6220346526ff992feaa13d39",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_102400/host_telemetry/d1.jsonl",
+        "remote_sha256": "a665ad8b64669968995f65f4465262293bcf723c6220346526ff992feaa13d39"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_102400/edge/logs/receiver.csv",
+        "local_sha256": "93a524ec0b87ec60e9e0fd0f7b37e84c88a5464e468404e2ec564a84f0f79d86",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_102400/logs/receiver.csv",
+        "remote_sha256": "93a524ec0b87ec60e9e0fd0f7b37e84c88a5464e468404e2ec564a84f0f79d86"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_102400/edge/logs/receiver.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_102400/logs/receiver.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_102400/edge/logs/telemetry.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_102400/logs/telemetry.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_102400/edge/logs/telemetry.out",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_102400/logs/telemetry.out",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_102400/edge/pids/receiver.pid",
+        "local_sha256": "7d98b45676bdecad7319e98b13ca2f9df4b0b4f0f913b8c5be19b09a9f5702d5",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_102400/pids/receiver.pid",
+        "remote_sha256": "7d98b45676bdecad7319e98b13ca2f9df4b0b4f0f913b8c5be19b09a9f5702d5"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_102400/edge/pids/telemetry.pid",
+        "local_sha256": "6a1ea340a1f359dde9c8d1b6b011aabc2aac53c5f595eae1294feab0ed948f55",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_102400/pids/telemetry.pid",
+        "remote_sha256": "6a1ea340a1f359dde9c8d1b6b011aabc2aac53c5f595eae1294feab0ed948f55"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1048576/edge/host_telemetry/d1.jsonl",
+        "local_sha256": "e94c8de1617a0219bf93d3d384b2dff389fe64dabd7d06b37412cbe0109e1ff9",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1048576/host_telemetry/d1.jsonl",
+        "remote_sha256": "e94c8de1617a0219bf93d3d384b2dff389fe64dabd7d06b37412cbe0109e1ff9"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1048576/edge/logs/receiver.csv",
+        "local_sha256": "ec18035e4cf451b4a36cc382b511f1e971081bba505e9bfb2e66a16eb189ade6",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1048576/logs/receiver.csv",
+        "remote_sha256": "ec18035e4cf451b4a36cc382b511f1e971081bba505e9bfb2e66a16eb189ade6"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1048576/edge/logs/receiver.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1048576/logs/receiver.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1048576/edge/logs/telemetry.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1048576/logs/telemetry.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1048576/edge/logs/telemetry.out",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1048576/logs/telemetry.out",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1048576/edge/pids/receiver.pid",
+        "local_sha256": "229371296afe4a71293f32b0e4c2fb5005b22d9be76f3849dbe26dba55553d50",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1048576/pids/receiver.pid",
+        "remote_sha256": "229371296afe4a71293f32b0e4c2fb5005b22d9be76f3849dbe26dba55553d50"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_1048576/edge/pids/telemetry.pid",
+        "local_sha256": "42ec0a79b09923a79b8e82a631ab686979a30ae46ca910c01fe64966b1282f1e",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_1048576/pids/telemetry.pid",
+        "remote_sha256": "42ec0a79b09923a79b8e82a631ab686979a30ae46ca910c01fe64966b1282f1e"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_2097152/edge/host_telemetry/d1.jsonl",
+        "local_sha256": "b738c1c60f0138d942c245456c36c072d46698866993c4a2f09017bbf1fb1414",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_2097152/host_telemetry/d1.jsonl",
+        "remote_sha256": "b738c1c60f0138d942c245456c36c072d46698866993c4a2f09017bbf1fb1414"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_2097152/edge/logs/receiver.csv",
+        "local_sha256": "7071b462c6ac32e19993dc2fb589722d4143742c09987e138f8b9ba0bac3d69e",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_2097152/logs/receiver.csv",
+        "remote_sha256": "7071b462c6ac32e19993dc2fb589722d4143742c09987e138f8b9ba0bac3d69e"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_2097152/edge/logs/receiver.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_2097152/logs/receiver.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_2097152/edge/logs/telemetry.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_2097152/logs/telemetry.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_2097152/edge/logs/telemetry.out",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_2097152/logs/telemetry.out",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_2097152/edge/pids/receiver.pid",
+        "local_sha256": "aacd18bc868c73dd3e692721cdef748a53a9b7a5299434cfc370af65115cf0fe",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_2097152/pids/receiver.pid",
+        "remote_sha256": "aacd18bc868c73dd3e692721cdef748a53a9b7a5299434cfc370af65115cf0fe"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/application/tcp/payload_2097152/edge/pids/telemetry.pid",
+        "local_sha256": "54207424260f6c09926e2647b9feb5a5fe49753c08e43eb82e44baaca7ed20a6",
+        "match": true,
+        "remote_relative_path": "application/tcp/payload_2097152/pids/telemetry.pid",
+        "remote_sha256": "54207424260f6c09926e2647b9feb5a5fe49753c08e43eb82e44baaca7ed20a6"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/preflight_smoke/edge/mqtt/broker.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "preflight_smoke/mqtt/broker.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/preflight_smoke/edge/mqtt/broker.out",
+        "local_sha256": "71e3d3118509f595e78d26d2ca62d2dcdb2725ea09762e2c41d50449660a590c",
+        "match": true,
+        "remote_relative_path": "preflight_smoke/mqtt/broker.out",
+        "remote_sha256": "71e3d3118509f595e78d26d2ca62d2dcdb2725ea09762e2c41d50449660a590c"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/preflight_smoke/edge/mqtt/broker.pid",
+        "local_sha256": "e55d16a347db10395db72e9862b368c01967626fca1f4207e0f629bcd0e71ab2",
+        "match": true,
+        "remote_relative_path": "preflight_smoke/mqtt/broker.pid",
+        "remote_sha256": "e55d16a347db10395db72e9862b368c01967626fca1f4207e0f629bcd0e71ab2"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/preflight_smoke/edge/mqtt/receiver.csv",
+        "local_sha256": "fdfba52d1e04e3e4a00d74e0df68159f882c37ad2dcb5b341e6014e87ee85347",
+        "match": true,
+        "remote_relative_path": "preflight_smoke/mqtt/receiver.csv",
+        "remote_sha256": "fdfba52d1e04e3e4a00d74e0df68159f882c37ad2dcb5b341e6014e87ee85347"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/preflight_smoke/edge/mqtt/receiver.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "preflight_smoke/mqtt/receiver.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/preflight_smoke/edge/mqtt/receiver.pid",
+        "local_sha256": "e37161016eef8ba55488993b830e2c8601c1be31125cd23808017be8593a5933",
+        "match": true,
+        "remote_relative_path": "preflight_smoke/mqtt/receiver.pid",
+        "remote_sha256": "e37161016eef8ba55488993b830e2c8601c1be31125cd23808017be8593a5933"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/preflight_smoke/edge/tcp/receiver.csv",
+        "local_sha256": "6e70d4f36992e9254e64f9a627daeadeb95c543eadefc35824e6775caab6bfbf",
+        "match": true,
+        "remote_relative_path": "preflight_smoke/tcp/receiver.csv",
+        "remote_sha256": "6e70d4f36992e9254e64f9a627daeadeb95c543eadefc35824e6775caab6bfbf"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/preflight_smoke/edge/tcp/receiver.err",
+        "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "match": true,
+        "remote_relative_path": "preflight_smoke/tcp/receiver.err",
+        "remote_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "local_relative_path": "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted/preflight_smoke/edge/tcp/receiver.pid",
+        "local_sha256": "cb60cbe28bac343beaf1daaef8a2f7ed875bf63e129a140770a76379802689b0",
+        "match": true,
+        "remote_relative_path": "preflight_smoke/tcp/receiver.pid",
+        "remote_sha256": "cb60cbe28bac343beaf1daaef8a2f7ed875bf63e129a140770a76379802689b0"
+      },
+      {
+        "local_relative_path": "scripts/private_5g_raw_bulk_probe.py",
+        "local_sha256": "36c2cf9ed694175fa05ae7ed74eff3788ac5e8bd9fc9a6dd0a1efe862d0e84bf",
+        "match": true,
+        "remote_relative_path": "tools/private_5g_raw_bulk_probe.py",
+        "remote_sha256": "36c2cf9ed694175fa05ae7ed74eff3788ac5e8bd9fc9a6dd0a1efe862d0e84bf"
+      }
+    ],
+    "matched_files": 95,
+    "missing_or_mismatched_files": [],
+    "remote_files": 95,
+    "repository_derivative_hashes_expected_to_match": false,
+    "schema": "edge4av-airspan-edge-artifact-verification-v1",
+    "verification_scope": "Remote edge files versus their excluded unredacted local copies before repository redaction",
+    "verified_at_utc": "2026-08-15T18:49:46.240484+00:00"
+  },
+  "git_commit_at_analysis": "2b44f352bb4579599dc51c4719314b66052e4f49",
+  "known_anomalies": [
+    {
+      "affected_rows": 20,
+      "affected_sender_sequences_by_receive_time": "97 through 116",
+      "affected_window_rtt_max_ms": 2041.296,
+      "affected_window_rtt_median_ms": 1507.215,
+      "application_failures_observed": false,
+      "car_cpu_busy_peak_pct": 11.19,
+      "condition": "uplink-tcp-payload-2097152",
+      "description": "A read-only git fsck --full --no-reflogs --unreachable integrity scan ran on the car for 22.7 seconds while the application condition was active.",
+      "final_condition_maximum": "2263.904662 ms at sequence 613 and 2026-08-15T17:39:03.122809Z, outside the integrity-scan window",
+      "handling": "Retain and include every row. Do not filter, replace, or silently retry. Qualify the affected window and use the recorded host telemetry when interpreting tails; the final condition maximum occurred outside this window.",
+      "host_saturation_observed": false,
+      "id": "tcp-2mib-car-git-integrity-scan",
+      "telemetry_elevated_cpu_window_utc": "2026-08-15T17:24:21Z through 2026-08-15T17:24:55Z"
+    }
+  ],
+  "measurement_boundary_correction": {
+    "accepted_row_rule": "A sender row is accepted only after every outside-timed comparison passes; the edge already validated the complete request payload length and CRC32 before emitting the acknowledgment.",
+    "applies_to": "all preflight-smoke and full-sweep raw TCP/MQTT sender rows in this run",
+    "declared_timing_boundary": "immediately before first framed TCP or MQTT byte is sent through complete correlated application-acknowledgment validation",
+    "implemented_timing_end": "time.monotonic_ns immediately after the complete application acknowledgment has been received and parsed for exact frame length, magic, and protocol version",
+    "implemented_timing_start": "time.monotonic_ns immediately before the first framed TCP length prefix or complete MQTT PUBLISH packet is passed to sendall",
+    "network_bytes_excluded_at_end": false,
+    "one_way_latency_valid": false,
+    "outside_timed_interval": [
+      "MQTT acknowledgment-topic comparison",
+      "acknowledgment sequence comparison",
+      "acknowledgment accepted-state comparison",
+      "acknowledgment application-payload-length comparison",
+      "acknowledgment payload-CRC32 comparison"
+    ],
+    "result_interpretation": "Use rtt_ms as monotonic complete-application-acknowledgment receipt-and-parse RTT. Do not claim that the subsequent local correlation comparisons are included in rtt_ms.",
+    "schema": "edge4av-airspan-raw-uplink-measurement-correction-v1"
+  },
+  "one_way_metrics_valid": false,
+  "operator_context": {
+    "evidence_qualification": {
+      "causal_tdd_comparison": false,
+      "exact_gps_and_rosbag_retained_only_in_excluded_raw_evidence": true,
+      "one_location_one_profile_only": true,
+      "timestamp_aligned_airspan_acp_export_present": false,
+      "timestamp_aligned_mg52_export_present": false
+    },
+    "location": {
+      "exact_coordinate_repository_allowed": false,
+      "gps_bag_duration_s": 59.584771804,
+      "gps_bag_messages": 16089,
+      "gps_csv_position_rows": 13074,
+      "gps_raw_run_name": "20260815_airspan_tdd_uplink_70_20_10_location_1_run_1_unredacted",
+      "gps_requested_duration_s": 60,
+      "horizontal_speed_max_mps": 0.0074,
+      "horizontal_speed_median_mps": 0.0026,
+      "horizontal_speed_p95_mps": 0.005,
+      "latitude_span_m": 0.485,
+      "location_id": "location_1",
+      "longitude_span_m": 0.502,
+      "mobility_state": "stationary",
+      "physical_placement": "not-reconfirmed",
+      "radial_distance_max_m": 0.66,
+      "radial_distance_p95_m": 0.62,
+      "repository_coordinate_0_001deg": "39.664, -75.757",
+      "stationarity_gate": "passed"
+    },
+    "radio": {
+      "cell_administrative_lock_definition": "locked means not broadcasting",
+      "cell_administrative_states": {
+        "cell_1": {
+          "broadcasting": true,
+          "source": "user post-acquisition clarification on 2026-08-16",
+          "state": "unlocked"
+        },
+        "cell_2": {
+          "broadcasting": true,
+          "source": "user post-acquisition clarification on 2026-08-16",
+          "state": "unlocked"
+        }
+      },
+      "radio_measurement_state": "operator-reported",
+      "rsrp_correction": {
+        "corrected_dbm": -100,
+        "correction_date": "2026-08-15",
+        "originally_recorded_dbm": -97,
+        "source": "user post-acquisition correction"
+      },
+      "rsrp_dbm": -100,
+      "rsrq_db": -13,
+      "serving_cell": 2,
+      "serving_cell_state": "operator-reported-cell-2-no-handoff",
+      "tdd_profile": "70/20/10",
+      "tdd_profile_state": "operator-reported"
+    },
+    "run_id": "edge4av-real-20260815-airspan-tdd-raw-uplink-70-20-10-location-1-run-2",
+    "run_name": "20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2",
+    "schema": "edge4av-airspan-raw-uplink-operator-context-v1"
+  },
+  "overall": {
+    "accepted": 10000,
+    "accepted_application_bytes": 6518784000,
+    "aggregate_application_goodput_mbps": 7.55242840476192,
+    "attempts": 10000,
+    "complete_conditions": 10,
+    "conditions": 10,
+    "deadline_hit_rate_1000ms_pct": 79.92,
+    "deadline_hit_rate_100ms_pct": 49.79,
+    "deadline_hit_rate_500ms_pct": 60.0,
+    "deadline_hits_1000ms": 7992,
+    "deadline_hits_100ms": 4979,
+    "deadline_hits_500ms": 6000,
+    "deadline_misses_1000ms": 2008,
+    "deadline_misses_100ms": 5021,
+    "deadline_misses_500ms": 4000,
+    "failed": 0,
+    "success_rate_pct": 100.0,
+    "sum_active_application_elapsed_s": 6905.099817579001
+  },
+  "run_id": "edge4av-real-20260815-airspan-tdd-raw-uplink-70-20-10-location-1-run-2",
+  "run_name": "20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2",
+  "schema": "edge4av-airspan-raw-uplink-run-v1",
+  "status": "complete",
+  "timing_metric": "monotonic complete application-acknowledgment receipt-and-parse RTT",
+  "transports": [
+    "tcp",
+    "mqtt"
+  ]
+}

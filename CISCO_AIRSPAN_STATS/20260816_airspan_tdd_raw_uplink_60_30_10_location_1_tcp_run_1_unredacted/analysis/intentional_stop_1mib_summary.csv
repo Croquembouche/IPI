@@ -1,0 +1,2 @@
+condition,status,application_payload_bytes,tdd_profile,rsrp_dbm,rsrq_db,attempts,accepted,failed,receiver_rows,rtt_p50_ms,rtt_p95_ms,rtt_p99_ms,rtt_max_ms,deadline_misses_100ms,deadline_misses_500ms,deadline_misses_1000ms,active_application_elapsed_s,application_goodput_mbps
+tcp-payload-1048576,intentionally-stopped-at-user-request,1048576,60/20/20,-98,-13,500,500,0,500,7484.304739,10187.363713,11175.804438,13368.892552,500,500,500,3862.045980,1.086032

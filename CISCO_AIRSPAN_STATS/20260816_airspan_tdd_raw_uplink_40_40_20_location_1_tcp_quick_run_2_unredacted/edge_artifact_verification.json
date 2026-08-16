@@ -1,0 +1,14 @@
+{
+  "schema": "edge4av-edge-artifact-verification-v1",
+  "verification_date": "2026-08-16",
+  "method": "SHA-256 comparison of every file in each remote condition against its fetched local edge copy",
+  "conditions_checked": 3,
+  "remote_files": 21,
+  "local_edge_files": 21,
+  "matched_files": 21,
+  "itemized_differences": 0,
+  "all_remote_files_match_local_copies": true,
+  "verification_completed_before_temporary_access_revocation": true,
+  "temporary_access_key_fingerprint": "SHA256:DcAgriY87GFMtudQTCnYPt6XQS1GkSArYmOrjakY5tY",
+  "temporary_access_revoked": true
+}

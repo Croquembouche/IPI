@@ -1,0 +1,20 @@
+{
+  "accepted": 1000,
+  "application_payload_bytes": 102400,
+  "attempts": 1000,
+  "deadline_misses_1000ms": 33,
+  "deadline_misses_100ms": 1000,
+  "deadline_misses_500ms": 523,
+  "errors": [],
+  "failed": 0,
+  "receiver_rows": 1000,
+  "rtt_count": 1000,
+  "rtt_max_ms": 4085.307583,
+  "rtt_p50_ms": 508.809248,
+  "rtt_p95_ms": 927.334021,
+  "rtt_p99_ms": 1209.344285,
+  "status": "complete",
+  "transport": "tcp",
+  "wire_request_bytes_max": 102436,
+  "wire_request_bytes_min": 102436
+}

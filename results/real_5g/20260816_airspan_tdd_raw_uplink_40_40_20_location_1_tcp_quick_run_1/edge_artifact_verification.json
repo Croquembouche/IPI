@@ -1,0 +1,12 @@
+{
+  "schema": "edge4av-edge-artifact-verification-v1",
+  "verification_date": "2026-08-16",
+  "method": "rsync checksum dry-run with itemized changes, one remote/local condition pair at a time",
+  "conditions_checked": 3,
+  "remote_files": 21,
+  "local_edge_files": 21,
+  "matched_files": 21,
+  "itemized_differences": 0,
+  "all_remote_files_match_local_copies": true,
+  "verification_completed_before_temporary_access_revocation": true
+}

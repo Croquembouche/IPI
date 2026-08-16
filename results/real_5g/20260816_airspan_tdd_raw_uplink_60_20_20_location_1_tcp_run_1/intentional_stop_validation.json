@@ -1,0 +1,18 @@
+{
+  "schema": "edge4av-intentionally-stopped-condition-validation-v1",
+  "condition": "tcp-payload-1048576",
+  "status": "intentionally-stopped-at-user-request",
+  "planned_attempts_at_start": 1000,
+  "stop_after_completed_attempts": 500,
+  "sender_rows": 500,
+  "accepted": 500,
+  "failed": 0,
+  "receiver_rows": 500,
+  "sender_sequence": "exactly 1..500",
+  "receiver_sequence": "exactly 1..500",
+  "sender_receiver_correlation_validated": true,
+  "payload_length_and_crc32_validated": true,
+  "sender_exit_status": 143,
+  "complete_marker_present": false,
+  "included_in_complete_matrix": false
+}

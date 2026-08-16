@@ -1,0 +1,26 @@
+{
+  "schema": "edge4av-airspan-cell-administrative-state-correction-v1",
+  "correction_date": "2026-08-16",
+  "run_name": "20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_1",
+  "applies_to_all_conditions": true,
+  "source": "user post-acquisition clarification plus stated serving-cell context",
+  "locked_definition": "an administratively locked Airspan cell is not broadcasting",
+  "cell_administrative_states": {
+    "cell_1": {
+      "state": "locked",
+      "broadcasting": false,
+      "state_source": "user-reported"
+    },
+    "cell_2": {
+      "state": "unlocked",
+      "broadcasting": true,
+      "state_source": "inferred from completed traffic on reported serving Cell 2"
+    }
+  },
+  "serving_cell_context": {
+    "serving_cell": 2,
+    "handoff_state": "no-reported-handoff",
+    "qualification": "Serving-cell attachment is distinct from Airspan administrative lock state."
+  },
+  "supersedes": "Any cell_lock_state field in acquisition-time condition manifests is ambiguous and must not be interpreted as an Airspan administrative lock."
+}

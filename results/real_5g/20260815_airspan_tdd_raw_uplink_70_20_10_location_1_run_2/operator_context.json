@@ -1,0 +1,60 @@
+{
+  "schema": "edge4av-airspan-raw-uplink-operator-context-v1",
+  "run_name": "20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2",
+  "run_id": "edge4av-real-20260815-airspan-tdd-raw-uplink-70-20-10-location-1-run-2",
+  "radio": {
+    "tdd_profile": "70/20/10",
+    "tdd_profile_state": "operator-reported",
+    "serving_cell": 2,
+    "serving_cell_state": "operator-reported-cell-2-no-handoff",
+    "cell_administrative_lock_definition": "locked means not broadcasting",
+    "cell_administrative_states": {
+      "cell_1": {
+        "state": "unlocked",
+        "broadcasting": true,
+        "source": "user post-acquisition clarification on 2026-08-16"
+      },
+      "cell_2": {
+        "state": "unlocked",
+        "broadcasting": true,
+        "source": "user post-acquisition clarification on 2026-08-16"
+      }
+    },
+    "rsrp_dbm": -100,
+    "rsrq_db": -13,
+    "radio_measurement_state": "operator-reported",
+    "rsrp_correction": {
+      "corrected_dbm": -100,
+      "correction_date": "2026-08-15",
+      "originally_recorded_dbm": -97,
+      "source": "user post-acquisition correction"
+    }
+  },
+  "location": {
+    "location_id": "location_1",
+    "mobility_state": "stationary",
+    "physical_placement": "not-reconfirmed",
+    "repository_coordinate_0_001deg": "39.664, -75.757",
+    "exact_coordinate_repository_allowed": false,
+    "gps_raw_run_name": "20260815_airspan_tdd_uplink_70_20_10_location_1_run_1_unredacted",
+    "gps_requested_duration_s": 60,
+    "gps_bag_duration_s": 59.584771804,
+    "gps_bag_messages": 16089,
+    "gps_csv_position_rows": 13074,
+    "latitude_span_m": 0.485,
+    "longitude_span_m": 0.502,
+    "radial_distance_p95_m": 0.62,
+    "radial_distance_max_m": 0.66,
+    "horizontal_speed_median_mps": 0.0026,
+    "horizontal_speed_p95_mps": 0.005,
+    "horizontal_speed_max_mps": 0.0074,
+    "stationarity_gate": "passed"
+  },
+  "evidence_qualification": {
+    "one_location_one_profile_only": true,
+    "causal_tdd_comparison": false,
+    "timestamp_aligned_airspan_acp_export_present": false,
+    "timestamp_aligned_mg52_export_present": false,
+    "exact_gps_and_rosbag_retained_only_in_excluded_raw_evidence": true
+  }
+}

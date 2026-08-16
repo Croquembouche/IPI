@@ -1,0 +1,15 @@
+{
+  "schema": "edge4av-airspan-raw-uplink-known-anomalies-v1",
+  "anomalies": [
+    {
+      "type": "validated-high-rtt-sample",
+      "condition": "tcp-payload-102400",
+      "sequence": 840,
+      "rtt_ms": 4085.307583,
+      "second_highest_rtt_ms": 2425.479705,
+      "validation": "sender accepted and exact sender/receiver sequence, payload-length, and CRC32 correlation passed",
+      "treatment": "retained without filtering",
+      "cause": "not established"
+    }
+  ]
+}

@@ -670,6 +670,51 @@ The final detector run covers the full 922-sample staged validation split in
 the current local dataset. Its per-sample CSV records a median of about 202
 predicted boxes and 8 ground-truth boxes per successful sample.
 
+## 2026-08-15--16 Raw-Byte Private-5G Uplink Follow-Ups
+
+Primary folders:
+
+- `results/real_5g/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2/`
+- `results/real_5g/20260816_airspan_tdd_raw_uplink_40_40_20_location_1_mqtt_repeat_run_1/`
+- `results/real_5g/20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_1/`
+- `results/real_5g/20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_2/`
+- `results/real_5g/20260816_airspan_tdd_raw_uplink_70_20_10_location_1_tcp_quick_run_1/`
+- `results/real_5g/20260816_airspan_tdd_raw_uplink_60_20_20_location_1_tcp_run_1/`
+
+These runs use exact raw application objects sent vehicle-to-edge and compact
+correlated application acknowledgments returned edge-to-vehicle. RTT is the
+sender's monotonic interval through receipt and structural parsing of the
+complete application acknowledgment; it is not TCP-ACK RTT or one-way delay.
+The edge validates request length and CRC32 before acknowledging.
+
+The first complete `70/20/10` block collected 1,000 TCP and 1,000 MQTT
+exchanges at each of 1, 10, 100, 1,024, and 2,048 KiB. Later policy removes
+2 MiB from future sweeps and caps them at 1,024 KiB. The same-day MQTT repeat
+completed 1,000 exchanges through 1 MiB; its active 2 MiB condition was stopped
+after 133 matching exchanges. Three quick TCP blocks collected 1,000 exchanges
+at 1, 10, and 100 KiB under the recorded `40/40/20` and `70/20/10` contexts.
+
+The latest TCP run records the user's corrected TDD profile `60/20/20`.
+Acquisition-time `60/30/10` fields and identifiers remain immutable provenance
+and are superseded by `tdd_profile_correction.json`. Its results are:
+
+| Payload | Status | Accepted/attempts | p50 RTT ms | p95 RTT ms | p99 RTT ms | Max RTT ms |
+|---:|---|---:|---:|---:|---:|---:|
+| 1 KiB | Complete | 1,000/1,000 | 49.604 | 75.391 | 361.531 | 387.686 |
+| 10 KiB | Complete | 1,000/1,000 | 101.216 | 248.853 | 377.315 | 1,013.779 |
+| 100 KiB | Complete | 1,000/1,000 | 753.242 | 1,321.325 | 1,773.416 | 2,547.593 |
+| 1,024 KiB | User-stopped | 500/500 retained | 7,484.305 | 10,187.364 | 11,175.804 | 13,368.893 |
+
+All retained latest-run sender rows match edge rows in sequence, application
+payload length, and CRC32. The 1 MiB condition stopped exactly at row 500 at
+user request; it retains sender status 143 and no completion marker and is
+excluded from the complete three-condition matrix. Cell 1 was reported
+locked/not broadcasting, Cell 2 unlocked/broadcasting and selected by the
+MG52 with no handoff, while RSRP `-98 dBm` and RSRQ `-13 dB` were carried
+forward. The corrected TDD and radio context lack timestamp-aligned ACP/MG52
+verification, so cross-profile differences are observations rather than causal
+TDD estimates.
+
 ## Derived Successful-Attempt RTT Variance
 
 Primary artifacts:

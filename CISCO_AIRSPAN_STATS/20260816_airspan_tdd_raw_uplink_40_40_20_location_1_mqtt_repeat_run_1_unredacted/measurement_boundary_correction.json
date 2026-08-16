@@ -1,0 +1,10 @@
+{
+  "schema": "edge4av-raw-uplink-measurement-boundary-v1",
+  "metric": "sender monotonic complete application-acknowledgment RTT",
+  "start": "immediately before the first framed MQTT request byte is sent",
+  "end": "after the complete correlated application acknowledgment is received and structurally parsed",
+  "post_timing_validation": "topic, sequence, accepted state, payload length, and CRC32 are checked immediately after the end timestamp",
+  "qualification": "All accepted rows passed post-timing validation, but the local comparison CPU time is outside rtt_ms.",
+  "tcp_ack_only": false,
+  "one_way_latency_valid": false
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "edge4av-known-anomalies-v1",
+  "anomalies": [
+    {
+      "id": "stale-prior-mqtt-stack-before-run",
+      "scope": "preflight",
+      "effect": "The first launch refused to start because yesterday's broker, receiver, and telemetry processes still held MQTT port 1883. Their recorded PIDs and run paths were verified and stopped before today's first request. No new measurement overlapped them."
+    },
+    {
+      "id": "mqtt-100k-sequence-19-high-rtt",
+      "scope": "application/mqtt/payload_102400",
+      "effect": "Sequence 19 completed with a validated 34967.950930 ms RTT. It is retained unfiltered. The next-largest RTT was 1191.193164 ms."
+    },
+    {
+      "id": "mqtt-2m-user-stopped",
+      "scope": "application/mqtt/payload_2097152",
+      "effect": "The user stopped the condition after 133 validated sender/receiver pairs and removed 2 MiB from future payload matrices. This incomplete condition is preserved but excluded from aggregate and day-to-day comparisons."
+    }
+  ]
+}

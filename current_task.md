@@ -2,6 +2,29 @@
 
 Last updated: 2026-08-16
 
+## Private-5G Raw-Uplink Collection and TDD Correction
+
+Complete. Six repository-facing experiment trees were added for the 2026-08-15
+and 2026-08-16 raw-byte TCP/MQTT work. The latest result is
+`results/real_5g/20260816_airspan_tdd_raw_uplink_60_20_20_location_1_tcp_run_1/`.
+Its acquisition-time `60/30/10` label is preserved and explicitly superseded
+by the user's `60/20/20` correction in `tdd_profile_correction.json`.
+
+For the latest TCP run, 1 KiB, 10 KiB, and 100 KiB each completed 1,000/1,000
+validated exchanges. Their p50 RTTs are 49.604, 101.216, and 753.242 ms, and
+p95 RTTs are 75.391, 248.853, and 1,321.325 ms. At user request, 1,024 KiB
+stopped after exactly 500 accepted exchanges; all 500 match edge rows. Its p50
+is 7,484.305 ms and p95 is 10,187.364 ms. It is explicitly user-stopped and is
+not mislabeled as a complete 1,000-message condition.
+
+The context records Cell 1 locked/not broadcasting, Cell 2
+unlocked/broadcasting and selected by the MG52 with no reported handoff, and
+carried-forward RSRP `-98 dBm`/RSRQ `-13 dB`. All 28 fetched edge files matched
+before access revocation. Raw/public checksums, structured parsing,
+measurement identity, privacy validation, process cleanup, and
+`git diff --check` pass. The corrected TDD and radio context remain
+operator-reported because no timestamp-aligned ACP/MG52 exports are stored.
+
 ## Results-Presentation and Signal-Classification Annotation Revision
 
 Complete. Seven substantive highlights in `paper/manuscript/main.pdf` were

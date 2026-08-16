@@ -1,0 +1,31 @@
+{
+  "schema": "edge4av-airspan-mqtt-uplink-repeat-v1",
+  "run_id": "edge4av-real-20260816-airspan-tdd-raw-uplink-40-40-20-location-1-mqtt-repeat-run-1",
+  "run_name": "20260816_airspan_tdd_raw_uplink_40_40_20_location_1_mqtt_repeat_run_1",
+  "status": "complete-with-excluded-interrupted-condition",
+  "transport": "mqtt",
+  "application_direction": "uplink-oriented",
+  "completed_application_payload_bytes": [1024, 10240, 102400, 1048576],
+  "future_maximum_application_payload_bytes": 1048576,
+  "attempts_per_completed_condition": 1000,
+  "completed_conditions": 4,
+  "completed_attempts": 4000,
+  "completed_accepted": 4000,
+  "completed_failed": 0,
+  "completed_receiver_rows": 4000,
+  "excluded_interrupted_condition": {
+    "application_payload_bytes": 2097152,
+    "attempts_completed": 133,
+    "accepted": 133,
+    "receiver_rows": 133,
+    "reason": "user-requested stop and removal of 2 MiB from future matrices"
+  },
+  "tdd_profile": "40/40/20",
+  "tdd_state": "operator-reported",
+  "rsrp_dbm": -100,
+  "rsrq_db": -13,
+  "stationarity_gate": "passed",
+  "edge_artifact_checksum_comparison": "passed",
+  "day_to_day_reference_run": "20260815_airspan_tdd_raw_uplink_40_40_20_location_1_run_3",
+  "causal_tdd_comparison": false
+}

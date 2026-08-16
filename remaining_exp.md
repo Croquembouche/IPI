@@ -1767,6 +1767,25 @@ Complete this checklist before leaving the test site:
 - [ ] Record anomalies before memory of the run is lost.
 - [ ] Back up the raw files before the Airspan retention window expires.
 
+## 2026-08-15--16 Raw-Uplink Collection Status
+
+The repository now retains six validated/redacted result trees for the new
+raw-byte TCP/MQTT payload work. The latest is
+`results/real_5g/20260816_airspan_tdd_raw_uplink_60_20_20_location_1_tcp_run_1/`.
+The corrected profile is `60/20/20`; acquisition-time `60/30/10` labels are
+preserved and superseded by an explicit correction record.
+
+The 1, 10, and 100 KiB TCP conditions completed 1,000/1,000 exchanges. The
+user stopped 1,024 KiB at exactly 500/500 matching accepted exchanges. The
+stopped condition is retained with separate validation and is not called a
+complete 1,000-message condition. All 28 fetched edge files matched before
+access revocation, and public checksums/privacy validation pass.
+
+This remains a one-location application observation with operator-reported
+TDD and radio context. It does not close R9: the matched two-location,
+directional, repeated TDD matrix with timestamp-aligned ACP/MG52 evidence is
+still required for a causal TDD claim.
+
 ## Completion Definition
 
 The remaining experiment and paper-evidence work is complete when:

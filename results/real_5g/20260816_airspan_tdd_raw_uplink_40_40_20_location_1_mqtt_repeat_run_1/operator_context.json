@@ -1,0 +1,43 @@
+{
+  "schema": "edge4av-airspan-raw-uplink-operator-context-v1",
+  "run_name": "20260816_airspan_tdd_raw_uplink_40_40_20_location_1_mqtt_repeat_run_1",
+  "run_id": "edge4av-real-20260816-airspan-tdd-raw-uplink-40-40-20-location-1-mqtt-repeat-run-1",
+  "radio": {
+    "tdd_profile": "40/40/20",
+    "tdd_profile_state": "operator-reported",
+    "serving_cell": 2,
+    "cell_lock_state": "carried-forward-operator-reported-locked-no-handoff",
+    "rsrp_dbm": -100,
+    "rsrq_db": -13,
+    "rsrp_state": "operator-reported-on-2026-08-16",
+    "rsrq_state": "carried-forward-operator-reported"
+  },
+  "location": {
+    "location_id": "location_1",
+    "mobility_state": "stationary",
+    "physical_placement": "not-reconfirmed",
+    "repository_coordinate_0_001deg": "39.664, -75.757",
+    "exact_coordinate_repository_allowed": false,
+    "gps_raw_run_name": "20260816_airspan_tdd_raw_uplink_40_40_20_location_1_mqtt_repeat_run_1_unredacted",
+    "gps_requested_duration_s": 60,
+    "gps_bag_duration_s": 59.570111471,
+    "gps_bag_messages": 16087,
+    "gps_csv_position_rows": 13063,
+    "latitude_span_m": 0.402,
+    "longitude_span_m": 0.498,
+    "radial_distance_p95_m": 0.622,
+    "radial_distance_max_m": 0.630,
+    "horizontal_speed_median_mps": 0.0025,
+    "horizontal_speed_p95_mps": 0.0050,
+    "horizontal_speed_max_mps": 0.0087,
+    "stationarity_gate": "passed"
+  },
+  "evidence_qualification": {
+    "same_reported_profile_as_2026_08_15_reference": true,
+    "day_to_day_repeat_comparison_only": true,
+    "causal_tdd_comparison": false,
+    "timestamp_aligned_airspan_acp_export_present": false,
+    "timestamp_aligned_mg52_export_present": false,
+    "exact_gps_and_rosbag_retained_only_in_excluded_raw_evidence": true
+  }
+}

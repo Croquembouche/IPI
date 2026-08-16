@@ -1,0 +1,48 @@
+{
+  "accepted": 10000,
+  "application_matrix_passed": true,
+  "attempts": 10000,
+  "cell_administrative_state_correction_present": true,
+  "cell_administrative_state_evidence": "user post-acquisition clarification; not timestamp-aligned ACP evidence",
+  "cell_administrative_states": {
+    "cell_1": "unlocked-broadcasting",
+    "cell_2": "unlocked-broadcasting"
+  },
+  "complete_conditions": 10,
+  "expected_attempts": 10000,
+  "expected_conditions": 10,
+  "expected_receiver_rows_if_all_attempts_are_accepted": 10000,
+  "failed": 0,
+  "host_telemetry_files": 20,
+  "known_anomalies": [
+    {
+      "affected_rows": 20,
+      "affected_sender_sequences_by_receive_time": "97 through 116",
+      "affected_window_rtt_max_ms": 2041.296,
+      "affected_window_rtt_median_ms": 1507.215,
+      "application_failures_observed": false,
+      "car_cpu_busy_peak_pct": 11.19,
+      "condition": "uplink-tcp-payload-2097152",
+      "description": "A read-only git fsck --full --no-reflogs --unreachable integrity scan ran on the car for 22.7 seconds while the application condition was active.",
+      "final_condition_maximum": "2263.904662 ms at sequence 613 and 2026-08-15T17:39:03.122809Z, outside the integrity-scan window",
+      "handling": "Retain and include every row. Do not filter, replace, or silently retry. Qualify the affected window and use the recorded host telemetry when interpreting tails; the final condition maximum occurred outside this window.",
+      "host_saturation_observed": false,
+      "id": "tcp-2mib-car-git-integrity-scan",
+      "telemetry_elevated_cpu_window_utc": "2026-08-15T17:24:21Z through 2026-08-15T17:24:55Z"
+    }
+  ],
+  "measurement_boundary_correction_applied": true,
+  "one_way_metrics_excluded": true,
+  "paper_facing_blockers": [
+    "This is one location and one operator-reported TDD profile, not a matched TDD comparison.",
+    "Timestamp-aligned Airspan configuration/ACP and MG52 radio exports are not stored with this block."
+  ],
+  "paper_facing_tdd_comparison_passed": false,
+  "payload_length_and_crc32_validated": true,
+  "receiver_rows": 10000,
+  "remote_edge_artifacts_checksum_verified": true,
+  "remote_edge_files_verified": 95,
+  "schema": "edge4av-airspan-raw-uplink-validation-v1",
+  "sender_edge_sequence_correlation_validated": true,
+  "validation_errors": []
+}

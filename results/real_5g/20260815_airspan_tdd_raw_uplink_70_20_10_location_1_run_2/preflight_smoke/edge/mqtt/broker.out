@@ -1,0 +1,15 @@
+threaded mqtt broker listening on <private-ip>:1883
+1786812463.379953 accept ('<private-ip>', 34804)
+1786812463.381344 close ('<private-ip>', 34804) closed
+1786812463.989737 accept ('<private-ip>', 36586)
+1786812463.990280 subscribe ('<private-ip>', 36586) edge4av/airspan-tdd-uplink-location-1/raw-uplink/veh-001/request
+1786812465.031837 accept ('<private-ip>', 34816)
+1786812465.051757 subscribe ('<private-ip>', 34816) edge4av/airspan-tdd-uplink-location-1/raw-uplink/veh-001/ack
+1786812466.643124 publish topic=edge4av/airspan-tdd-uplink-location-1/raw-uplink/veh-001/request bytes=2097184 forwarded=1
+1786812466.666316 publish topic=edge4av/airspan-tdd-uplink-location-1/raw-uplink/veh-001/ack bytes=32 forwarded=1
+1786812468.227362 publish topic=edge4av/airspan-tdd-uplink-location-1/raw-uplink/veh-001/request bytes=2097184 forwarded=1
+1786812468.248465 publish topic=edge4av/airspan-tdd-uplink-location-1/raw-uplink/veh-001/ack bytes=32 forwarded=1
+1786812469.780794 publish topic=edge4av/airspan-tdd-uplink-location-1/raw-uplink/veh-001/request bytes=2097184 forwarded=1
+1786812469.788491 publish topic=edge4av/airspan-tdd-uplink-location-1/raw-uplink/veh-001/ack bytes=32 forwarded=1
+1786812469.810080 close ('<private-ip>', 34816) disconnect
+1786812470.363708 close ('<private-ip>', 36586) closed

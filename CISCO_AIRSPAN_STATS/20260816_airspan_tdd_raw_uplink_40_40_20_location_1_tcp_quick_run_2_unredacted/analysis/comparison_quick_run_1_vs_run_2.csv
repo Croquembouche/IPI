@@ -1,0 +1,4 @@
+application_payload_bytes,payload_label,run_1_rsrp_dbm,run_2_rsrp_dbm,run_1_cell_1_state,run_2_cell_1_state,run_1_serving_cell,run_2_serving_cell,run_1_rtt_p50_ms,run_2_rtt_p50_ms,p50_change_pct,run_1_rtt_p95_ms,run_2_rtt_p95_ms,p95_change_pct,run_1_rtt_p99_ms,run_2_rtt_p99_ms,p99_change_pct,run_1_rtt_max_ms,run_2_rtt_max_ms,max_change_pct
+1024,1 KiB,-100,-98,locked-not-broadcasting,unlocked-broadcasting,2,1,39.634225,39.676320,0.106209,51.547557,149.398746,189.827015,77.656597,363.057414,367.516512,359.631660,642.942296,78.778002
+10240,10 KiB,-100,-98,locked-not-broadcasting,unlocked-broadcasting,2,1,57.518967,65.490792,13.859472,91.420889,187.381655,104.965908,211.821552,339.493813,60.273499,465.503636,660.564423,41.903172
+102400,100 KiB,-100,-98,locked-not-broadcasting,unlocked-broadcasting,2,1,441.095507,508.809248,15.351265,789.094106,927.334021,17.518812,937.481816,1209.344285,28.999226,1120.316882,4085.307583,264.656433

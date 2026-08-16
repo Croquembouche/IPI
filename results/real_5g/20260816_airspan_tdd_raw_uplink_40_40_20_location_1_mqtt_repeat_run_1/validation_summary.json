@@ -1,0 +1,27 @@
+{
+  "schema": "edge4av-airspan-mqtt-uplink-repeat-validation-v1",
+  "status": "passed-with-declared-exclusion",
+  "completed_conditions_expected": 4,
+  "completed_conditions_valid": 4,
+  "completed_attempts": 4000,
+  "completed_accepted": 4000,
+  "completed_failed": 0,
+  "completed_receiver_rows": 4000,
+  "sender_receiver_count_and_prefix_match": true,
+  "payload_length_and_crc32_validation": true,
+  "completion_markers_present": true,
+  "sender_exit_status_zero": true,
+  "gps_stationarity_gate": "passed",
+  "edge_artifact_checksum_comparison": "passed",
+  "excluded_conditions": [
+    {
+      "transport": "mqtt",
+      "application_payload_bytes": 2097152,
+      "status": "interrupted-by-user",
+      "attempts_completed": 133,
+      "accepted": 133,
+      "receiver_rows": 133,
+      "sender_receiver_prefix_match": true
+    }
+  ]
+}

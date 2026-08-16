@@ -1,0 +1,191 @@
+{
+  "analyzed_at_utc": "2026-08-16T19:27:39.709741+00:00",
+  "application_direction": "uplink-oriented",
+  "application_matrix_passed": true,
+  "application_payload_bytes": [
+    1024,
+    10240,
+    102400
+  ],
+  "attempts_per_condition": 1000,
+  "edge_artifact_verification": {
+    "all_remote_files_match_local_copies": true,
+    "conditions_checked": 3,
+    "itemized_differences": 0,
+    "local_edge_files": 21,
+    "matched_files": 21,
+    "method": "SHA-256 comparison of every file in each remote condition against its fetched local edge copy",
+    "remote_files": 21,
+    "schema": "edge4av-edge-artifact-verification-v1",
+    "temporary_access_key_fingerprint": "SHA256:DcAgriY87GFMtudQTCnYPt6XQS1GkSArYmOrjakY5tY",
+    "temporary_access_revoked": true,
+    "verification_completed_before_temporary_access_revocation": true,
+    "verification_date": "2026-08-16"
+  },
+  "git_commit_at_analysis": "2b44f352bb4579599dc51c4719314b66052e4f49",
+  "known_anomalies": [
+    {
+      "cause": "not established",
+      "condition": "tcp-payload-102400",
+      "rtt_ms": 4085.307583,
+      "second_highest_rtt_ms": 2425.479705,
+      "sequence": 840,
+      "treatment": "retained without filtering",
+      "type": "validated-high-rtt-sample",
+      "validation": "sender accepted and exact sender/receiver sequence, payload-length, and CRC32 correlation passed"
+    }
+  ],
+  "measurement_boundary_correction": {
+    "accepted_row_rule": "A sender row is accepted only after every outside-timed comparison passes; the edge already validated the complete request payload length and CRC32 before emitting the acknowledgment.",
+    "applies_to": "all three run-2 quick-follow-up TCP sender conditions",
+    "declared_timing_boundary": "immediately before the framed TCP request is sent through receipt and structural parsing of the complete correlated application acknowledgment",
+    "implemented_timing_end": "time.monotonic_ns immediately after the complete application acknowledgment has been received and parsed for exact frame length, magic, and protocol version",
+    "implemented_timing_start": "time.monotonic_ns immediately before the framed TCP length prefix and application object are passed to sendall",
+    "network_bytes_excluded_at_end": false,
+    "one_way_latency_valid": false,
+    "outside_timed_interval": [
+      "acknowledgment sequence comparison",
+      "acknowledgment accepted-state comparison",
+      "acknowledgment application-payload-length comparison",
+      "acknowledgment payload-CRC32 comparison"
+    ],
+    "result_interpretation": "Use rtt_ms as monotonic complete-application-acknowledgment receipt-and-parse RTT. Do not interpret it as a TCP ACK RTT or one-way delay.",
+    "schema": "edge4av-airspan-raw-uplink-measurement-correction-v1",
+    "tcp_ack_only": false
+  },
+  "one_way_metrics_valid": false,
+  "operator_context": {
+    "evidence_qualification": {
+      "causal_tdd_comparison": false,
+      "cell_administrative_states_user_reported": true,
+      "exact_gps_and_rosbag_retained_only_in_excluded_raw_evidence": true,
+      "location_continuity_not_independently_reverified": true,
+      "one_location_one_profile_block": true,
+      "quick_latency_followup": true,
+      "rsrp_freshly_reported": true,
+      "rsrq_freshly_reported": false,
+      "same_day_gps_capture_reused": true,
+      "serving_cell_context_freshly_verified": false,
+      "serving_cell_context_user_corrected": true,
+      "timestamp_aligned_airspan_acp_export_present": false,
+      "timestamp_aligned_mg52_export_present": false
+    },
+    "location": {
+      "exact_coordinate_repository_allowed": false,
+      "fresh_gps_capture_for_this_run": false,
+      "gps_bag_duration_s": 59.570111471,
+      "gps_bag_messages": 16087,
+      "gps_capture_relationship": "same-day validated stationary capture reused; no fresh capture was requested for this quick TCP follow-up",
+      "gps_csv_position_rows": 13063,
+      "gps_raw_run_name": "20260816_airspan_tdd_raw_uplink_40_40_20_location_1_mqtt_repeat_run_1_unredacted",
+      "gps_requested_duration_s": 60,
+      "horizontal_speed_max_mps": 0.0087,
+      "horizontal_speed_median_mps": 0.0025,
+      "horizontal_speed_p95_mps": 0.005,
+      "latitude_span_m": 0.402,
+      "location_id": "location_1",
+      "longitude_span_m": 0.498,
+      "mobility_state": "stationary",
+      "physical_placement": "not-reconfirmed",
+      "radial_distance_max_m": 0.63,
+      "radial_distance_p95_m": 0.622,
+      "repository_coordinate_0_001deg": "39.664, -75.757",
+      "stationarity_gate": "passed-for-referenced-capture"
+    },
+    "radio": {
+      "cell_administrative_lock_definition": "locked means not broadcasting",
+      "cell_administrative_states": {
+        "cell_1": {
+          "broadcasting": true,
+          "source": "user-reported-current-on-2026-08-16",
+          "state": "unlocked"
+        },
+        "cell_2": {
+          "broadcasting": true,
+          "source": "user-reported-current-on-2026-08-16",
+          "state": "unlocked"
+        }
+      },
+      "handoff_state": "no-reported-handoff",
+      "rsrp_dbm": -98,
+      "rsrp_state": "user-reported-current-on-2026-08-16",
+      "rsrq_db": -13,
+      "rsrq_state": "carried-forward-from-latest-operator-report-not-freshly-measured",
+      "serving_cell": 1,
+      "serving_cell_selection": "mg52-locked-onto-cell-1",
+      "serving_cell_source": "user post-acquisition clarification on 2026-08-16",
+      "serving_cell_state": "user-post-acquisition-correction-mg52-locked-onto-cell-1",
+      "tdd_profile": "40/40/20",
+      "tdd_profile_state": "user-reported-current-on-2026-08-16"
+    },
+    "run_id": "edge4av-real-20260816-airspan-tdd-raw-uplink-40-40-20-location-1-tcp-quick-run-2",
+    "run_name": "20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_2",
+    "schema": "edge4av-airspan-raw-uplink-operator-context-v1"
+  },
+  "overall": {
+    "accepted": 3000,
+    "accepted_application_bytes": 113664000,
+    "aggregate_application_goodput_mbps": 0.701174401735266,
+    "attempts": 3000,
+    "complete_conditions": 3,
+    "conditions": 3,
+    "deadline_hit_rate_1000ms_pct": 98.9,
+    "deadline_hit_rate_100ms_pct": 59.833333333333336,
+    "deadline_hit_rate_500ms_pct": 82.46666666666667,
+    "deadline_hits_1000ms": 2967,
+    "deadline_hits_100ms": 1795,
+    "deadline_hits_500ms": 2474,
+    "deadline_misses_1000ms": 33,
+    "deadline_misses_100ms": 1205,
+    "deadline_misses_500ms": 526,
+    "failed": 0,
+    "success_rate_pct": 100.0,
+    "sum_active_application_elapsed_s": 1296.841410282
+  },
+  "run_id": "edge4av-real-20260816-airspan-tdd-raw-uplink-40-40-20-location-1-tcp-quick-run-2",
+  "run_name": "20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_2",
+  "schema": "edge4av-airspan-raw-uplink-run-v1",
+  "serving_cell_selection_correction": {
+    "applies_to_all_conditions": true,
+    "cell_administrative_states_unchanged": {
+      "cell_1": {
+        "broadcasting": true,
+        "state": "unlocked"
+      },
+      "cell_2": {
+        "broadcasting": true,
+        "state": "unlocked"
+      }
+    },
+    "comparison_scope": {
+      "other_tcp_runs": [
+        "20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2",
+        "20260815_airspan_tdd_raw_uplink_40_40_20_location_1_run_3",
+        "20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_1"
+      ],
+      "other_tcp_runs_serving_cell": 2
+    },
+    "corrected_serving_context": {
+      "handoff_state": "no-reported-handoff",
+      "serving_cell": 1,
+      "serving_cell_selection": "mg52-locked-onto-cell-1",
+      "state": "user-post-acquisition-correction"
+    },
+    "correction_date": "2026-08-16",
+    "previous_record": {
+      "serving_cell": 2,
+      "serving_cell_state": "carried-forward-from-prior-same-day-cell-2-no-handoff-context"
+    },
+    "run_name": "20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_2",
+    "schema": "edge4av-airspan-serving-cell-selection-correction-v1",
+    "source": "user post-acquisition clarification on 2026-08-16",
+    "supersedes": "The acquisition-time airspan_cell/serving_cell value and any derived statement that carried Cell 2 forward into this run. The application measurements are unchanged.",
+    "terminology": "MG52 locked onto identifies UE cell selection; it is distinct from an Airspan administrative lock, which means that a cell is not broadcasting.",
+    "timestamp_aligned_mg52_export_present": false
+  },
+  "status": "complete",
+  "timing_metric": "monotonic complete application-acknowledgment receipt-and-parse RTT",
+  "transports": [
+    "tcp"
+  ]
+}

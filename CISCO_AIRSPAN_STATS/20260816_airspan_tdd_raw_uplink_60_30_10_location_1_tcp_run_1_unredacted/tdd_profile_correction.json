@@ -1,0 +1,14 @@
+{
+  "schema": "edge4av-airspan-tdd-profile-correction-v1",
+  "run_name": "20260816_airspan_tdd_raw_uplink_60_30_10_location_1_tcp_run_1",
+  "correction_date": "2026-08-16",
+  "source": "user post-acquisition correction on 2026-08-16",
+  "applies_to_all_conditions": true,
+  "previous_record": {"tdd_profile": "60/30/10"},
+  "corrected_tdd_context": {
+    "tdd_profile": "60/20/20",
+    "state": "user-post-acquisition-correction"
+  },
+  "supersedes": "The acquisition-time tdd_profile value in condition manifests, run identifiers, and directory names. Application and telemetry measurements are unchanged.",
+  "timestamp_aligned_airspan_acp_export_present": false
+}

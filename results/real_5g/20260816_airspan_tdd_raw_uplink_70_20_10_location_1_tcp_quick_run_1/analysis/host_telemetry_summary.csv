@@ -1,0 +1,7 @@
+condition,transport,application_payload_bytes,host_role,telemetry_rows,telemetry_elapsed_s,cpu_busy_pct,memory_used_pct_median,memory_used_pct_max,interface,network_tx_bytes_delta,network_rx_bytes_delta,network_tx_mbps,network_rx_mbps,network_tx_errors_delta,network_rx_errors_delta,network_tx_drops_delta,network_rx_drops_delta
+tcp-payload-1024,tcp,1024,car,236,235.000288,9.261415,3.988773,4.026175,eno2,8857284,2978625,0.301524,0.1014,0,0,0,0
+tcp-payload-1024,tcp,1024,edge,236,235.000086,9.697339,15.474395,16.166477,enp0s31f6,590232,1628231,0.020093,0.055429,0,0,0,0
+tcp-payload-10240,tcp,10240,car,242,241.000297,9.161665,3.99274,4.025873,eno2,15886997,3623617,0.527369,0.120286,0,0,0,0
+tcp-payload-10240,tcp,10240,edge,242,241.00027,9.306877,15.302103,15.485848,enp0s31f6,732265,11309832,0.024308,0.37543,0,0,0,0
+tcp-payload-102400,tcp,102400,car,304,303.000062,8.823032,3.971016,4.01098,eno2,113394954,4703880,2.993926,0.124195,0,0,0,0
+tcp-payload-102400,tcp,102400,edge,305,304.000073,9.644657,15.304513,16.076847,enp0s31f6,1542712,108119032,0.040598,2.845237,0,0,0,0

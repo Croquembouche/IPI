@@ -1,0 +1,29 @@
+{
+  "schema": "edge4av-airspan-raw-uplink-repository-redaction-v1",
+  "sanitization_tools": {
+    "jq_sha256": "858a84f22b39317f13a57b4b91e535925c1b4f819d9bb2864361df4ad6acb00f",
+    "sed_sha256": "42e2ce00721556ff9d371778fc36adcbb7c1697f65c3f996c6c9b28206dba565"
+  },
+  "host_telemetry": {
+    "files": 8,
+    "rows": 10883,
+    "hostname_policy": "Repository-facing hostnames use the logical roles car and d1.",
+    "process_policy": "Host and process resource counters are retained; process command lines are omitted.",
+    "removed_process_cmdline_fields": 27178
+  },
+  "text_artifacts": {
+    "sanitized_files": 4,
+    "policy": "Deployment-specific endpoint addresses, hostnames, absolute paths, private IP addresses, and MAC addresses are replaced with logical placeholders."
+  },
+  "edge_verification": {
+    "policy": "The remote-to-unredacted-local checksum comparison completed before redaction. Sanitized text files are not expected to retain their raw hashes."
+  },
+  "location": {
+    "repository_coordinate_precision_deg": 0.001,
+    "fresh_gps_capture_for_this_run": false,
+    "exact_coordinates_present": false,
+    "serialized_rosbag_present": false,
+    "policy": "Only provenance for the same-day validated stationary capture, its non-sensitive stationarity summary, and the approved 0.001-degree derivative are repository-facing."
+  },
+  "raw_recovery": "The original current-run files remain recoverable from the locally excluded, checksum-manifested unredacted run tree. Referenced exact GPS evidence remains in its separately excluded raw tree."
+}

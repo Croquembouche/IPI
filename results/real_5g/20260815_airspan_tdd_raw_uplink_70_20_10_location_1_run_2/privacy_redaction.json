@@ -1,0 +1,25 @@
+{
+  "schema": "edge4av-airspan-raw-uplink-repository-redaction-v1",
+  "sanitizer_sha256": "b798c5a911cfcfc073cd30c4d9234994f00743a68949a61e5c6c4bdfe4e4f2a9",
+  "host_telemetry": {
+    "files": 20,
+    "rows": 13910,
+    "hostname_policy": "Repository-facing hostnames use the logical roles car and d1.",
+    "process_policy": "Host and process resource counters are retained; process command lines are omitted.",
+    "removed_process_cmdline_fields": 38136
+  },
+  "text_artifacts": {
+    "sanitized_files": 16,
+    "policy": "Deployment-specific endpoint addresses, hostnames, absolute paths, private IP addresses, and MAC addresses are replaced with logical placeholders."
+  },
+  "edge_verification": {
+    "policy": "edge_artifact_verification.json records the successful remote-to-unredacted-local comparison performed before redaction. Hashes for text files that were sanitized are not expected to equal the repository derivative."
+  },
+  "location": {
+    "repository_coordinate_precision_deg": 0.001,
+    "exact_coordinates_present": false,
+    "serialized_rosbag_present": false,
+    "policy": "Only the approved 0.001-degree coordinate derivative and non-sensitive stationarity summary are repository-facing."
+  },
+  "raw_recovery": "The original files and one-minute GPS evidence remain recoverable from the locally excluded, checksum-verified unredacted run trees."
+}

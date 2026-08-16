@@ -1,0 +1,4 @@
+emitter_role,emit_time_ns,run_id,condition_id,transport,source_id,sequence,application_payload_bytes,wire_request_bytes,accepted,client_send_wall_ns,client_receive_wall_ns,rtt_ms,server_processing_ms,payload_crc32,detail
+raw-uplink-sender,1786812638638187993,raw-path-smoke,mqtt-2m-smoke,mqtt,veh-001,1,2097152,2097255,true,1786812637024755661,1786812638638187993,1604.068701,6.160030,2240685312,validated compact application acknowledgment
+raw-uplink-sender,1786812640218716962,raw-path-smoke,mqtt-2m-smoke,mqtt,veh-001,2,2097152,2097255,true,1786812638648442874,1786812640218716962,1558.732729,6.510738,2240685312,validated compact application acknowledgment
+raw-uplink-sender,1786812641760824409,raw-path-smoke,mqtt-2m-smoke,mqtt,veh-001,3,2097152,2097255,true,1786812640228948914,1786812641760824409,1523.712938,2.314109,2240685312,validated compact application acknowledgment

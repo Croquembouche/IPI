@@ -1,0 +1,26 @@
+{
+  "schema": "edge4av-airspan-mqtt-uplink-repeat-analysis-v1",
+  "completed_conditions": 4,
+  "attempts": 4000,
+  "accepted": 4000,
+  "failed": 0,
+  "receiver_rows": 4000,
+  "reference_date": "2026-08-15",
+  "repeat_date": "2026-08-16",
+  "reference_tdd_profile": "40/40/20",
+  "repeat_tdd_profile": "40/40/20",
+  "p50_relative_difference_percent": {
+    "1024": 2.356373,
+    "10240": 10.041621,
+    "102400": 102.714999,
+    "1048576": 256.862410
+  },
+  "p95_relative_difference_percent": {
+    "1024": 9.221304,
+    "10240": 60.520331,
+    "102400": 111.266747,
+    "1048576": 163.856856
+  },
+  "excluded_2m_condition": "stopped by user after 133 validated exchanges",
+  "causal_interpretation_allowed": false
+}

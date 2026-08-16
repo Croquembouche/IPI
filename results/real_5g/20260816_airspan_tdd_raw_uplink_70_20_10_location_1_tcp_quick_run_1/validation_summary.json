@@ -1,0 +1,52 @@
+{
+  "accepted": 3000,
+  "application_matrix_passed": true,
+  "attempts": 3000,
+  "cell_administrative_context": {
+    "cell_1": {
+      "broadcasting": false,
+      "source": "user-reported-current-on-2026-08-16",
+      "state": "locked"
+    },
+    "cell_2": {
+      "broadcasting": true,
+      "source": "user-reported-current-on-2026-08-16",
+      "state": "unlocked"
+    }
+  },
+  "complete_conditions": 3,
+  "expected_attempts": 3000,
+  "expected_conditions": 3,
+  "expected_receiver_rows_if_all_attempts_are_accepted": 3000,
+  "failed": 0,
+  "host_telemetry_files": 6,
+  "known_anomalies": [],
+  "measurement_boundary_correction_applied": true,
+  "one_way_metrics_excluded": true,
+  "paper_facing_blockers": [
+    "This is one location and one operator-reported TDD profile, not a matched TDD comparison.",
+    "Timestamp-aligned Airspan configuration/ACP and MG52 radio exports are not stored with this block."
+  ],
+  "paper_facing_tdd_comparison_passed": false,
+  "payload_length_and_crc32_validated": true,
+  "per_condition_cell_context_validated": true,
+  "per_condition_radio_context_validated": true,
+  "radio_context": {
+    "rsrp_dbm": -98,
+    "rsrq_db": -13,
+    "state": "operator-reported",
+    "tdd_profile": "70/20/10"
+  },
+  "receiver_rows": 3000,
+  "remote_edge_artifacts_checksum_verified": true,
+  "remote_edge_files_verified": 21,
+  "schema": "edge4av-airspan-raw-uplink-validation-v1",
+  "sender_edge_sequence_correlation_validated": true,
+  "serving_cell_context": {
+    "handoff_state": "no-reported-handoff",
+    "serving_cell": 2,
+    "serving_cell_state": "user-reported-current-cell-2-no-handoff"
+  },
+  "serving_cell_selection_correction_applied": false,
+  "validation_errors": []
+}

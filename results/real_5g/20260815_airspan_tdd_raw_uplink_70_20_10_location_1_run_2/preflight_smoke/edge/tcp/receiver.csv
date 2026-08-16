@@ -1,0 +1,4 @@
+emitter_role,emit_time_ns,run_id,condition_id,transport,source_id,sequence,application_payload_bytes,wire_request_bytes,accepted,client_send_wall_ns,client_receive_wall_ns,rtt_ms,server_processing_ms,payload_crc32,detail
+raw-uplink-receiver,1786812458826788551,raw-path-smoke,tcp-2m-smoke,tcp,veh-001,1,2097152,2097184,true,1786812629209513481,,,2.968194,2240685312,validated raw payload length and CRC32
+raw-uplink-receiver,1786812460394053637,raw-path-smoke,tcp-2m-smoke,tcp,veh-001,2,2097152,2097184,true,1786812630809263683,,,5.718607,2240685312,validated raw payload length and CRC32
+raw-uplink-receiver,1786812461874828645,raw-path-smoke,tcp-2m-smoke,tcp,veh-001,3,2097152,2097184,true,1786812632377078348,,,6.517205,2240685312,validated raw payload length and CRC32
