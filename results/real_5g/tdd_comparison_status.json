@@ -1,0 +1,67 @@
+{
+  "schema": "edge4av-tdd-comparison-status-v1",
+  "last_updated": "2026-08-15",
+  "status": "inconclusive",
+  "scope": "all retained evidence that could be interpreted as a comparison of 40/40/20 and 70/20/10 TDD allocations",
+  "reason": "The TDD allocation and vehicle placement/signal context changed together. No newly collected same-placement 40/40/20 control exists for the 70/20/10 follow-up.",
+  "valid_uses": [
+    "report RTT, response availability, and deadline availability for each recorded operating condition",
+    "report the 70/20/10 vehicle-to-edge and edge-to-vehicle direction controls as single-profile measurements",
+    "use the retained values as provenance and as inputs to the design of the new matched comparison"
+  ],
+  "prohibited_inferences": [
+    "rank 40/40/20 against 70/20/10",
+    "attribute an observed latency, availability, or throughput difference to TDD allocation",
+    "estimate a causal TDD effect",
+    "describe the retained data as evidence of TDD sensitivity",
+    "generalize the 70/20/10 directional throughput result to another TDD profile"
+  ],
+  "evidence_families": [
+    {
+      "name": "cross-profile compact application observations",
+      "status": "inconclusive_for_tdd",
+      "logical_payload_bytes": 1024,
+      "historical_40_40_20_artifacts": [
+        "results/real_5g/20260513_sunny_fintechparking_run_1/p5g-mqtt-service-payload-1024_sender.csv",
+        "results/real_5g/20260513_sunny_fintechparking_run_1/p5g-tcp-service-payload-1024_sender.csv"
+      ],
+      "followup_70_20_10_artifacts": [
+        "results/real_5g/20260806_airspan_followup_run_1/",
+        "results/real_5g/20260806_airspan_followup_common_typical_run_2/",
+        "results/real_5g/20260806_airspan_followup_weak_run_1/",
+        "results/real_5g/20260806_airspan_followup_strong_run_2/"
+      ]
+    },
+    {
+      "name": "cross-profile detector-sized application observations",
+      "status": "inconclusive_for_tdd",
+      "logical_payload_bytes": 23968,
+      "historical_40_40_20_artifacts": [
+        "results/real_5g/20260702_detector_output_to_ipi_run_1/p5g-mqtt-detector-output-payload-23968_sender.csv",
+        "results/real_5g/20260702_detector_output_to_ipi_run_1/p5g-tcp-detector-output-payload-23968_sender.csv"
+      ],
+      "followup_70_20_10_artifacts": [
+        "results/real_5g/20260806_airspan_followup_run_1/",
+        "results/real_5g/20260806_airspan_followup_common_typical_run_2/",
+        "results/real_5g/20260806_airspan_followup_weak_run_1/",
+        "results/real_5g/20260806_airspan_followup_strong_run_2/"
+      ]
+    },
+    {
+      "name": "70/20/10 host-side direction control",
+      "status": "valid_single_profile_measurement_inconclusive_for_tdd",
+      "artifacts": [
+        "results/real_5g/20260805_airspan_r1_run_1/"
+      ],
+      "missing_control": "same-placement 40/40/20 vehicle-to-edge and edge-to-vehicle direction measurements"
+    },
+    {
+      "name": "30/60/10 attempted configuration",
+      "status": "no_valid_experiment_result"
+    }
+  ],
+  "replacement_evidence": {
+    "status": "pending",
+    "requirement": "new same-placement, same-signal-context, Cell-2-locked matched blocks under 40/40/20 and 70/20/10 with all other application and network controls held constant"
+  }
+}

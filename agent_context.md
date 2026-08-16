@@ -129,11 +129,14 @@ For paper or experiment-claim changes, validate against current artifacts in
   TCP/MQTT path. Keep this value in the Results evidence and experiment summary,
   not in the top-level Insight 2 sentence. The boundary was measured with one
   UE, a dedicated 40-MHz n48 channel, and no ambient contention.
-- Compare the historical 40/40/20 and follow-up 70/20/10 application outcomes
-  across collection times because they use the same sole CAV UE and dedicated
-  network. Pair each profile with its favorable, common/typical, weak, or strong
-  signal/placement context. The result is a joint TDD, signal, payload, and
-  transport comparison rather than a TDD-only effect.
+- Classify every retained historical 40/40/20 versus follow-up 70/20/10
+  comparison as inconclusive for TDD inference. The application measurements
+  remain valid observations of their recorded operating conditions, but TDD
+  and placement/signal changed jointly. Do not rank the profiles, estimate a
+  TDD effect, or call the data a TDD sensitivity result. The 70/20/10
+  directional throughput control is also a single-profile measurement, not a
+  TDD comparison. Only a newly collected same-placement matched experiment may
+  support a within-deployment TDD conclusion.
 - Preserve exactly three top-level insights: 1) the direct-V2X payload-and-
   coverage envelope; 2) the severe CAV packet-size limit for deadline-compliant
   5G uplink exchange; and 3) the need for improved vehicular uplink performance

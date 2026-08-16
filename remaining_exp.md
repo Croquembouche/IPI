@@ -1,6 +1,6 @@
 # Remaining Experiment Plan
 
-Last updated: 2026-08-12
+Last updated: 2026-08-15
 
 ## Purpose
 
@@ -9,6 +9,65 @@ before the Edge4AV paper can answer the current coauthor comments. It is a
 runbook and decision record. Use it to prepare each collection, name and
 preserve the artifacts, determine whether a run is valid, and prevent
 unnecessary repetition of experiments that are already complete.
+
+## 2026-08-15 Matched TDD Collection And Uplink-Scope Decision
+
+Status: **inconclusive for TDD inference**. The historical `40/40/20` campaign
+and the later `70/20/10` campaign were collected under different
+placement/signal contexts. Their RTT and availability data remain valid for
+their recorded operating conditions, but they do not establish which TDD
+profile performs better and cannot support a causal or sensitivity claim about
+TDD allocation. The `70/20/10` uplink/downlink direction control has no matched
+`40/40/20` control and is likewise inconclusive about a TDD effect.
+
+The next data delivery will contain a matched comparison of `40/40/20` and
+`70/20/10`, where the values are ordered as downlink/uplink/dynamic. Hold the
+vehicle and UE, exact fixed vehicle location, MG52 placement and orientation,
+serving Cell 2 lock, 40-MHz n48 channel, gNodeB/core/MX250/d1 path, `10D4G`,
+sole-UE clean-band condition, transport and software versions, payload,
+request interval, timeout, and background condition constant. If the collection
+uses more than one signal/placement condition, collect both TDD profiles at
+every condition rather than comparing unmatched locations.
+
+The primary application matrix is:
+
+- two TDD profiles: `40/40/20` and `70/20/10`;
+- two vehicle-to-edge request payloads: 1,024 B and 23,968 B;
+- two transports: TCP and MQTT;
+- three repetitions where possible; and
+- 1,000 attempts per profile/payload/transport/repetition cell, for 24,000
+  attempts in the complete matrix.
+
+Use a balanced or interleaved profile order, such as
+`40/40/20`, `70/20/10`, `70/20/10`, `40/40/20`, `40/40/20`,
+`70/20/10`. Apply the same stabilization period after each profile change and
+exclude reconfiguration, reattachment, and warm-up traffic from the measurement
+window. Before each block, verify the live TDD profile and Cell 2 lock. Preserve
+the configuration evidence, timestamps, available signal context before and
+after the block, placement record, weather/context record, and host telemetry.
+
+For every attempt, the vehicle uploads the selected N-byte IPI application
+request to d1, and d1 returns a compact correlated application acknowledgment.
+This is not an N-byte request followed by an N-byte response, and it is not a
+small vehicle request followed by a large edge-to-vehicle object. The user has
+accepted this uplink-oriented experimental scope for the current paper. A
+reverse-direction large-payload experiment is not a prerequisite for the
+manuscript, but all paper claims must state the measured direction accurately.
+
+For every matrix cell, report issued attempts, matching responses,
+timeouts/failures, response availability, successful-response RTT p50/p95/p99,
+all-attempt deadline availability at 100, 200, 500, and 1,000 ms, server
+processing time, and encoded request size. Treat unmatched attempts as
+timeouts in the all-attempt analysis. Analyze repetition-level paired
+differences before pooling the data, and then report absolute and relative
+changes with their repetition-level variation. Only these newly collected,
+same-placement matched blocks may support a within-deployment attribution to
+the TDD allocation.
+
+An optional matched throughput control may measure sustained vehicle-to-d1
+uplink under both profiles with the same 25-Mbit/s offered rate and duration.
+The retained 13.118-Mbit/s uplink result was collected only under `70/20/10`;
+therefore, it is not a two-profile throughput comparison.
 
 ## 2026-08-12 Phone And Cell-Lock Decision
 
@@ -1196,16 +1255,15 @@ payload sweeps therefore measure a large vehicle-to-edge request followed by a
 compact edge-to-vehicle acknowledgment. The reported RTT is round trip, but
 the payload-size intervention is primarily uplink.
 
-Before final paper revision, choose and document one of these valid paths:
+Decision recorded on 2026-08-15: use the second path for the current paper.
+Narrow every payload-size claim, table, figure, caption, and workload mapping to
+vehicle-to-edge request transfer with a compact edge-to-vehicle acknowledgment.
+Do not claim that the current sweeps measured equally sized edge-to-vehicle
+responses, symmetric payload transfers, or a download-heavy exchange. The user
+accepts this uplink-oriented scope, so the reverse-direction experiment below
+is optional future work rather than a manuscript prerequisite.
 
-1. Run the targeted response-payload experiment below and report request and
-   response direction separately.
-2. If the experiment cannot be run, narrow all payload-size claims, tables, and
-   workload mappings to vehicle-to-edge request transfer with a compact
-   acknowledgment. Do not claim that the current sweeps measured equally sized
-   edge-to-vehicle responses or symmetric transfers.
-
-### Harness Requirements
+### Optional Future Reverse-Direction Harness
 
 Extend the existing probe without changing its correlation and timing model:
 
@@ -1268,11 +1326,16 @@ measured deployment and TDD configuration, not as a universal 5G property.
 
 ### Status And Interpretation
 
-The existing experiment campaigns used the `40/40/20` TDD configuration. The
-new follow-up will use `70/20/10`. The attempted `30/60/10` configuration did
-not support a usable collection and produced no valid experiment result. Do
-not include it as a measured condition. The slash-separated values are frame
-allocations ordered as downlink, uplink, and dynamic.
+The historical campaign used the `40/40/20` TDD configuration, while the later
+follow-up used `70/20/10`. Because their placement/signal contexts differ, the
+retained campaigns do not isolate a TDD effect and cannot establish that one
+profile outperforms the other. They remain a joint-condition comparison. A new
+matched collection will measure both profiles at the same placement and under
+the same application and network controls. The attempted `30/60/10`
+configuration did not support a usable collection and produced no valid
+experiment result. Do not include it as a measured condition. The
+slash-separated values are frame allocations ordered as downlink, uplink, and
+dynamic.
 
 The network administrator identifies `10D4G` as an LTE-coexistence
 frame-packing setting. Because it is fixed across both configurations, R9
@@ -1285,39 +1348,39 @@ profile therefore increases the downlink allocation and reduces the uplink
 allocation. It is a directional sensitivity condition, not an uplink-enhanced
 configuration or a proposed fix.
 
-The MG52 will be locked to one Airspan cell so that no handoff occurs. Use Cell
-2 because the original experiment traffic was observed on Cell 2. Retain the
-same Cell 2 NR-ARFCN, bandwidth, RF configuration, gateway placement, and
-vehicle orientation across the comparison. Record the MG52 cell-lock setting
-and its serving-cell identity independently of the co-located phone, which is a
-separate UE and cannot prove which cell serves the MG52.
+The MG52 must remain locked to Airspan Cell 2 so that no handoff occurs. Retain
+the same Cell 2 NR-ARFCN, bandwidth, RF configuration, gateway placement,
+vehicle orientation, and exact fixed vehicle location across the comparison.
+Record the MG52 cell-lock setting and its serving-cell identity independently
+of the co-located phone, which is a separate UE and cannot prove which cell
+serves the MG52.
 
 If the MG52 is instead locked to Cell 1, collect a new `40/40/20` reference on
 Cell 1 before collecting `70/20/10`. Do not present a comparison between the
 historical Cell 2 results and a Cell 1 follow-up as a TDD-only comparison.
 
-The strongest comparison uses newly collected `40/40/20` and `70/20/10`
-blocks on the same locked cell. Put each configuration in a separate ACP
-15-minute bin, verify the live TDD profile and cell lock before the bin, and do
-not reconfigure the cell inside a measurement bin. If only the historical
-`40/40/20` data are used, describe R9 as a historical-to-follow-up sensitivity
-comparison rather than a controlled causal estimate of the TDD change.
+The valid comparison uses newly collected `40/40/20` and `70/20/10` blocks on
+the same locked cell and at the same placement. Put each configuration in a
+separate measurement window, verify the live TDD profile and cell lock before
+the window, and do not reconfigure the cell inside a measurement window. The
+historical and follow-up data remain descriptive joint-condition evidence even
+after the matched collection is available.
 
-### Quick Diagnostic
+### Primary Matched Application Matrix
 
-Run the pilot first at one fixed stronger-signal location. Record quantitative
-RSRP, RSRQ, and NR SINR where available; a phone signal-bar display is not an
-experimental signal metric.
+At one exact fixed vehicle location, collect both profiles for the 1,024-B and
+23,968-B vehicle-to-edge IPI requests over TCP and MQTT. Use 1,000 attempts per
+matrix cell and three repetitions where possible. Every response is the same
+compact correlated acknowledgment. This produces 24,000 attempts in the full
+two-profile, two-payload, two-transport, three-repetition matrix.
 
-For each newly collected `40/40/20` reference and `70/20/10` follow-up block:
-
-1. collect a two-minute idle interval;
-2. collect 60 seconds of sustained vehicle-to-edge uplink throughput;
-3. collect 60 seconds of sustained edge-to-vehicle downlink throughput;
-4. send 1000 TCP requests with a 1 KiB request and compact acknowledgment at
-   the existing 200 ms interval; and
-5. send at least 100 TCP requests with a 23,968 B request and compact
-   acknowledgment.
+Use a balanced order such as `40/40/20`, `70/20/10`, `70/20/10`,
+`40/40/20`, `40/40/20`, `70/20/10`. Apply the same stabilization interval and
+discard the same warm-up interval after each profile change. Record available
+quantitative RSRP, RSRQ, and NR SINR before and after each block; a phone
+signal-bar display is not an experimental signal metric. If the experiment is
+repeated at another signal/placement condition, collect both TDD profiles at
+that condition.
 
 Keep the vehicle location and orientation, gateway and antenna placement,
 channel bandwidth, application host, traffic endpoints, request interval,
@@ -1328,11 +1391,11 @@ MG52 lock, a serving-cell change, or experiment
 traffic on the nonselected cell invalidates the affected comparison.
 
 One pair is a diagnostic result only. Collect at least two valid matched pairs,
-with three preferred. Alternate configuration order when operationally
-possible, and record reconfiguration and reattachment intervals outside the
-measurement bins. If stronger-signal pairs show a repeatable difference,
-repeat the pair at one quantitatively defined lower-signal condition to test
-whether the difference depends on coverage.
+with three preferred. Record reconfiguration and reattachment intervals
+outside the measurement windows. A separate matched throughput control may use
+the same 25-Mbit/s offered vehicle-to-d1 uplink rate and duration under each
+profile; do not compare the existing `70/20/10`-only 13.118-Mbit/s result as if
+it were a two-profile control.
 
 For a matched pair, TDD allocation is the only intended changed parameter.
 Report signal conditions, cell load, weather, vehicle placement, serving cell,
@@ -1342,14 +1405,17 @@ TDD-only interpretation.
 
 ### Analysis
 
-Report uplink and downlink throughput separately. For the application probes,
-report attempts, response availability, RTT p50/p95, and 100/500/1000 ms miss
-rates. For each metric, report the absolute and relative difference between
-configurations with repetition-level variation, not only whether the direction
-is better or worse. Interpret practical importance against the application
-deadlines used elsewhere in the paper. A repeated matched-cell difference may
-be attributed to the TDD allocation within this deployment. A historical-only
-comparison supports an association, not the same causal attribution.
+For the application probes, report issued attempts, matching responses,
+timeouts/failures, response availability, successful-response RTT p50/p95/p99,
+and all-attempt deadline availability at 100, 200, 500, and 1,000 ms. Treat
+unmatched attempts as timeouts. Report server processing time and encoded
+request size. Analyze repetition-level paired differences first. Then report
+the absolute and relative difference between configurations with
+repetition-level variation, not only whether the direction is better or worse.
+Interpret practical importance against the application deadlines used
+elsewhere in the paper. A repeated matched-cell, matched-placement difference
+may be attributed to the TDD allocation within this deployment. The historical
+comparison supports only a joint-condition association.
 
 Either outcome is informative. A small matched-pair effect would show that this
 allocation change is not a dominant cause of the measured application outcomes
@@ -1768,9 +1834,11 @@ The remaining experiment and paper-evidence work is complete when:
 - [ ] R5 Cisco-approved QoS comparison completed or formally blocked.
 - [x] R6 excluded; the paper reports complete-path application RTT.
 - [ ] R7 additional Airspan export obtained or documented unavailable.
-- [ ] R8 directional payload experiment completed or manuscript scope narrowed.
-- [ ] R9 Cell 2 lock operator-verified; both TDD profiles and the repeated
-      `40/40/20` versus `70/20/10` comparison remain to be validated.
+- [x] R8 manuscript scope narrowed to an N-byte vehicle-to-edge IPI request and
+      compact edge-to-vehicle acknowledgment; a reverse-payload experiment is
+      not required for the current paper.
+- [ ] R9 new same-placement, Cell-2-locked `40/40/20` versus `70/20/10`
+      matched comparison received, validated, and analyzed.
 - [ ] P1 deployment inventory and V2X/5G path description completed.
 - [ ] P2 IPI implementation mapping and test validation completed.
 - [ ] P3 claim/citation/submission review completed.

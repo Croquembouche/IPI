@@ -314,6 +314,15 @@ and tail spikes rather than median shifts.
 
 ### E08. Airspan `70/20/10` Validation And Multi-Location Follow-Up
 
+**TDD inference status: inconclusive.** The retained measurements remain valid
+for their recorded direction, workload, placement, and signal contexts. They
+must not be used to rank `40/40/20` against `70/20/10`, estimate a TDD effect,
+or claim TDD sensitivity. The profile and vehicle placement/signal context
+changed together, and the `70/20/10` direction control has no matched
+`40/40/20` control. This status is recorded in
+`results/real_5g/tdd_comparison_status.json` and remains in force until a new
+same-placement matched comparison is validated.
+
 Primary folders:
 
 - `results/real_5g/20260805_airspan_r1_run_1/`
@@ -374,12 +383,13 @@ aggregate:
 | C2 | MQTT | 59.790 | 49.753 | -16.79% | 75.752 | 59.721 | -21.16% |
 | C2 | UDP | 56.623 | 47.947 | -15.32% | 70.541 | 56.947 | -19.27% |
 
-The application-layer comparison with the historical `40/40/20` campaign must
-also include signal and placement. The same sole CAV UE, dedicated radio and
-channel, Cell 2 path, and `10D4G` packing were retained across collection
-times, while the TDD allocation and vehicle location changed. Each cell below
-reports p95 RTT followed by the percentage of all issued requests answered by
-100 ms. The common/typical row pools both retained common blocks.
+The application-layer observations from the historical `40/40/20` campaign
+and the `70/20/10` follow-up are retained below for data provenance. The same
+sole CAV UE, dedicated radio and channel, Cell 2 path, and `10D4G` packing were
+retained across collection times, while the TDD allocation and vehicle
+location changed. Consequently, the table is inconclusive for TDD inference.
+Each cell reports p95 RTT followed by the percentage of all issued requests
+answered by 100 ms. The common/typical row pools both retained common blocks.
 
 | TDD profile and signal/placement context | 1 KiB MQTT | 1 KiB TCP | 23,968 B MQTT | 23,968 B TCP |
 |---|---:|---:|---:|---:|
@@ -390,8 +400,8 @@ reports p95 RTT followed by the percentage of all issued requests answered by
 
 The 1-KiB rows are comparatively stable within each transport. The 23,968-B
 rows vary sharply with signal/placement under the same `70/20/10` profile.
-Therefore, the historical-to-follow-up result is a joint TDD, signal, payload,
-and transport comparison rather than a TDD-only effect.
+These observations do not identify the effect of TDD allocation. The retained
+cross-profile data are therefore classified as inconclusive for TDD inference.
 
 This supports an application-layer association between the strong-candidate
 location and lower RTT, especially for C2. It does not yet establish that RSRP

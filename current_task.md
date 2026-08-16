@@ -1,6 +1,479 @@
 # Current Task
 
-Last updated: 2026-08-14
+Last updated: 2026-08-16
+
+## Results-Presentation and Signal-Classification Annotation Revision
+
+Complete. Seven substantive highlights in `paper/manuscript/main.pdf` were
+treated as manuscript-wide revision instructions. The annotated input contained
+fourteen PDF annotation objects because each highlight had an associated popup.
+It is preserved at
+`tmp/pdfs/new_comments_20260816/main_annotated_before_revision.pdf` with
+SHA-256
+`b2eda34bfb14174e57335d57fe6c542072c2af0626b610f7f6a6742ea480fc1c`.
+
+The revision defines signed handset RSRP bands as strong from -94 to -80 dBm,
+common/typical from -105 to -95 dBm, and weak from -121 to -106 dBm. The
+stationary Uu workload collections are now identified as common/typical or weak;
+none is described as a strong-band workload run. Table 1, Figure 4, Figure 9,
+the setup prose, the results prose, the appendix, and the binding outline use
+the same classification. Joint TDD/location comparisons retain both the
+recorded TDD profile and RSRP rather than assigning the result to TDD alone.
+
+The IPI packaging result now reproduces Table 4 exactly. A 256-B content field
+produces a 334--337-B frame, while 1- and 4-KiB fields produce 1,102--1,105-B
+and 4,174--4,177-B frames. The resulting 78--81-B addition is reported as
+30.5--31.6%, 7.6--7.9%, and 1.9--2.0% of the respective content sizes. The
+text no longer characterizes the smallest field through the relative-overhead
+claim appropriate only to larger objects.
+
+Section 5 now progresses from simple to compound comparisons: IPI packaging,
+PC5 payload and route behavior, 5G payload and deadline behavior, transport and
+reassembly, joint signal/TDD context, directional capacity and competing
+traffic, concurrent application demand, interruption, and cross-application
+comparison. Every table and figure is cited in the body. Wide result figures
+are placed with interpreting text where the two-column layout permits it, and
+result-first captions provide the interpretation when a wide float separates
+the principal paragraph. Figure 7 uses explicit workload names, payload ranges,
+request counts, units, deadlines, and denominators; `Detector output` is defined
+as serialized object-detection result sizes replayed as IPI payloads. Figure 10
+now groups idle/load pairs under their measured signal-condition labels without
+overlapping x-axis text.
+
+The ambiguous term `response availability` was removed from the manuscript.
+The setup now defines deadline completion as
+`C(B) = requests answered within B / all issued requests`, while response
+completion denotes a response received before the harness timeout. Figures,
+captions, prose, and appendix tables distinguish these completion rates from RTT
+percentiles among completed responses. The binding outline records these
+requirements and explicitly supersedes the earlier `A(B)`, availability, and
+historical-placement drafting labels. `paper/general_academic_writing_lessons.md`
+records the errors in domain-independent form as Lessons 15 and 16.
+
+Updated files include:
+
+- `paper/manuscript/sections/01_introduction.tex`
+- `paper/manuscript/sections/02_related_work.tex`
+- `paper/manuscript/sections/03_ipi_protocol_design.tex`
+- `paper/manuscript/sections/04_system_design_setup.tex`
+- `paper/manuscript/sections/05_experiment_results.tex`
+- `paper/manuscript/sections/06_future_research_directions.tex`
+- `paper/manuscript/sections/07_conclusion.tex`
+- `paper/manuscript/sections/08_appendices.tex`
+- `paper/manuscript/scripts/build_section5_figures.py`
+- `paper/manuscript/figures/section5_*.pdf`
+- `paper/paper_outline.md`
+- `paper/general_academic_writing_lessons.md`
+- `paper/manuscript/main.pdf`
+
+Validation: the figure-generation script and forced LaTeX/BibTeX build complete
+successfully. The final LaTeX pass contains no compilation errors, undefined
+citations, undefined references, rerun requests, or overfull boxes. Every table
+and figure label has at least one body reference. The rebuilt PDF contains 19
+US-Letter pages as a build fact, zero annotations, zero links, no author or title
+metadata, and fully embedded fonts. All 19 pages were rendered and inspected;
+the revised Figures 6--12 were checked at higher resolution. No overlap,
+clipping, missing figure, or broken table remains. No page-limit optimization
+was performed, and `paper/manuscript/28p.pdf` was not changed. The revised PDF
+SHA-256 is
+`50194c7d3f012cb8a555ee82e2dda1cc1d3d91b8ea8b9e4e75377d36706bc44b`.
+`git diff --check` passes.
+
+## Parallel Application-Class Annotation Revision
+
+Complete. The new page-3 highlight in `paper/manuscript/main.pdf` was treated as
+a manuscript-wide revision instruction. The annotated input contained two PDF
+annotation objects: one substantive highlight and its popup. It is preserved at
+`tmp/pdfs/protocol_scope_comment_20260816/main_annotated_before_revision.pdf`
+with SHA-256
+`1f1010bee2078d1dcb5cdca396db2fd1d4c0a67b978609e3bdc591a9880d2102`.
+
+The highlighted protocol-gap sentence compared `J2735 messages` with `stateful
+CAV operations`, placing the two sides at different levels of abstraction. The
+revision now defines the protocol contribution through two parallel application
+classes: stateless CV/ITS applications and stateful CAV applications. The next
+sentences explain their representations separately: individual J2735 messages
+serve the stateless class, while correlated IPI operations serve the stateful
+class.
+
+This distinction was propagated through the Abstract, Introduction, contribution
+list, Related Work opening and standards synthesis, Figure 1, IPI Protocol
+Design, Figure 2, System Design and Experimental Setup, IPI packaging result,
+Conclusion, and the binding paper outline. Detailed implementation passages
+retain J2735 messages and correlated operations where those are the actual
+objects being encoded or measured. No experiment result, citation, TDD evidence
+classification, or page-limit target was changed, and no page-limit
+optimization was performed.
+
+`paper/general_academic_writing_lessons.md` now records the error in
+domain-independent form as Lesson 14, `Comparing categories at different levels
+of abstraction`. The lesson requires both sides of a comparison to remain at
+the same conceptual level--system, application class, interaction pattern,
+application object, or encoded representation--and requires mappings between
+levels to be explained in a separate sentence. The final checklist now tests
+conceptual parallelism and explicit class-to-representation mappings. The new
+lesson contains no terminology from this paper or its technical domain.
+
+Updated files:
+
+- `paper/manuscript/sections/00_abstract.tex`
+- `paper/manuscript/sections/01_introduction.tex`
+- `paper/manuscript/sections/02_related_work.tex`
+- `paper/manuscript/sections/03_ipi_protocol_design.tex`
+- `paper/manuscript/sections/04_system_design_setup.tex`
+- `paper/manuscript/sections/05_experiment_results.tex`
+- `paper/manuscript/sections/07_conclusion.tex`
+- `paper/paper_outline.md`
+- `paper/general_academic_writing_lessons.md`
+- `paper/manuscript/main.pdf`
+
+Validation: a forced LaTeX/BibTeX rebuild completed successfully. The final
+LaTeX pass contains no compilation errors, undefined citations, undefined
+references, rerun requests, or overfull boxes. The rebuilt PDF contains 18
+US-Letter pages as a build fact, zero annotations, zero links, zero embedded
+files, no author or title metadata, and fully embedded fonts. All 18 pages were
+inspected in a rendered contact sheet; pages 1--4, 8, and 14 were also inspected
+at high resolution. No overlap, clipping, missing figure, or broken table was
+found. `git diff --check` passes. The revised PDF SHA-256 is
+`0f95246151840b5b8c7886ad870e7c258a45ab1d9bacdaeae4df8926e4fe2e4a`.
+
+## Protocol-Gap Logic Annotation Revision
+
+Complete. The three substantive highlights on pages 2--3 of
+`paper/manuscript/main.pdf` were treated as manuscript-wide revision
+instructions. The annotated input contained six PDF annotation objects because
+each highlight had an associated popup. It is preserved at
+`tmp/pdfs/related_work_comments_round2_20260816/main_annotated_before_revision.pdf`
+with SHA-256
+`ad2411990cb145d430940907eb1d40bc044c6637d57300c177a17cfe988a0781`.
+
+The revision corrects three related reasoning errors. First, development
+history is no longer presented as the cause of the protocol gap. Standards,
+application systems, and field studies are described as addressing different
+parts of communication, while the gap is defined as the present absence of a
+coherent application protocol for stateless J2735-based CV/ITS messages and
+stateful CAV operations. Second, the protocol claim is no longer limited to the
+standards and platforms selected for the survey. The manuscript now states that
+no current standard or platform provides the combined protocol and presents IPI
+as the first implemented application protocol with this combination. Third,
+the standards paragraph now transitions from the capabilities of existing
+layers to the missing protocol through a genuine contrast, and the
+application-systems paragraph explicitly states that IPI fills the same gap it
+identifies.
+
+The corrected logic was propagated through the Abstract, Introduction, Related
+Work opening, Figure 1 and its caption, IPI Protocol Design, and the binding
+paper outline. The experimental evidence gap remains separate: prior field
+studies do not determine whether PC5 and Uu can each carry both workload classes
+or identify the payload sizes and network conditions at which either path
+misses application deadlines. No experiment result, citation, TDD evidence
+classification, or page-limit target was changed, and no page-limit
+optimization was performed.
+
+`paper/general_academic_writing_lessons.md` now records the mistake in
+domain-independent form. New Lesson 13 explains that historical development is
+context rather than proof of a research gap; a gap must identify a present
+missing capability, unanswered question, untested relationship, or unmet
+requirement. It also distinguishes survey-scoped absence claims from
+field-level novelty claims and requires an explicit gap-to-contribution handoff.
+The final checklist now tests both points. The lesson contains no terminology
+from this paper or its technical domain.
+
+Updated files:
+
+- `paper/manuscript/sections/00_abstract.tex`
+- `paper/manuscript/sections/01_introduction.tex`
+- `paper/manuscript/sections/02_related_work.tex`
+- `paper/manuscript/sections/03_ipi_protocol_design.tex`
+- `paper/paper_outline.md`
+- `paper/general_academic_writing_lessons.md`
+- `paper/manuscript/main.pdf`
+
+Validation: a forced LaTeX/BibTeX rebuild completed successfully. The final
+LaTeX pass contains no compilation errors, undefined citations, undefined
+references, rerun requests, or overfull boxes. The rebuilt PDF contains 18
+US-Letter pages as a build fact, zero annotations, zero links, zero embedded
+files, no author or title metadata, and fully embedded fonts. All 18 pages were
+inspected in a rendered contact sheet; pages 1--4 and 14 were also inspected at
+high resolution. No overlap, clipping, missing figure, or broken table was
+found. `git diff --check` passes. The revised PDF SHA-256 is
+`7b812e3c9d706bad67004de054080729ea831b77a6cda030c4a83a8b2065f223`.
+
+## Related Work Annotation Revision
+
+Complete. The seven substantive highlights on pages 2--3 of
+`paper/manuscript/main.pdf` were treated as revision instructions. The annotated
+input contained fourteen PDF annotations because each highlight had an
+associated popup. It is preserved at
+`tmp/pdfs/related_work_comments_20260816/main_annotated_before_revision.pdf`
+with SHA-256
+`e744247d5941640dde86ef348f30aad4537e807fd3d77e0e6a57b2bfc4e1f763`.
+
+Related Work now describes three independently developed lines of work:
+standards and application platforms, application-specific CAV systems, and
+field studies of direct and network-assisted paths. It no longer calls these
+lines `foundations`. The section identifies a protocol gap and an evidence gap.
+The protocol gap is the absence of one application protocol for stateless
+J2735-based CV/ITS messages and stateful CAV operations. The evidence gap is
+that existing studies do not determine whether PC5 and Uu can each carry both
+workload classes or identify the payload sizes and network conditions at which
+either path misses application deadlines.
+
+The standards discussion preserves the functions already provided by the 3GPP
+V2X Application Enabler and ETSI Multi-access Edge Computing specifications.
+It makes the narrower claim that J2735 standardizes individual messages, while
+the network-service standards leave stateful CAV application messages to
+individual applications. The application-system and field-study discussions
+now identify cited systems through their authors, including Wu et al. for
+Tentacles, Asabe et al. for AutowareV2X, and Demircioglu for the 40-km 5G
+Standalone corridor study. The corridor paragraph retains its relevant
+measurement scope but removes the annotated common-success-criterion detail.
+
+Figure 1 now presents existing technologies and studies, the two unresolved
+gaps, and future communication requirements. The same protocol and evidence
+logic was applied to the Abstract, Introduction, IPI Protocol Design, System
+Design and Experimental Setup, Conclusion, and the binding paper outline.
+Across these sections, IPI is described as a transport-independent application
+protocol for stateless CV/ITS applications and stateful CAV applications. No
+experiment result, citation, TDD evidence classification, or page-limit target
+was changed, and no page-limit optimization was performed.
+
+Updated files:
+
+- `paper/manuscript/sections/00_abstract.tex`
+- `paper/manuscript/sections/01_introduction.tex`
+- `paper/manuscript/sections/02_related_work.tex`
+- `paper/manuscript/sections/03_ipi_protocol_design.tex`
+- `paper/manuscript/sections/04_system_design_setup.tex`
+- `paper/manuscript/sections/07_conclusion.tex`
+- `paper/paper_outline.md`
+- `paper/manuscript/main.pdf`
+
+Validation: a forced LaTeX/BibTeX rebuild completed without compilation errors,
+undefined citations, undefined references, rerun requests, or overfull boxes.
+The rebuilt PDF contains 18 US-Letter pages as a build fact, zero annotations,
+zero links, zero embedded files, no title or author metadata, and fully embedded
+fonts. All 18 pages were inspected in a rendered contact sheet; pages 1--4 and
+14 were also inspected at high resolution. No overlap, clipping, missing
+figure, or broken table was found. The revised PDF SHA-256 is
+`0ffac807ea8590298645dabcc8a443747ff1f595150e3125c962943885da6269`.
+
+## Additional Wording Annotation Revision
+
+Complete. The three new substantive annotations on pages 1--2 of
+`paper/manuscript/main.pdf` were treated as revision instructions. The
+stateless-update definition now compares messages directly: a newer message
+supersedes the previous message without preserving an application session. The
+confusing statement that IPI `places` two workload classes at an application
+boundary was removed. The Introduction now moves from the contribution list to
+the experimental result directly by stating that the evaluation identifies the
+payload sizes and operating conditions at which each path no longer meets the
+required response latency or availability.
+
+The third insight now states that cellular networks must support CAV and ITS
+applications that advance the goal of zero road fatalities. This replaces the
+awkward claim that the networks support `CAV and ITS contributions`. The same
+wording was corrected in the Abstract, Introduction, Results discussion, and
+binding outline. Related interface wording in IPI Protocol Design and System
+Design was also simplified from an abstract `application boundary` to a common
+application interface and the application forms that it represents. No
+experiment result, TDD evidence classification, or page-limit target was
+changed.
+
+Updated files:
+
+- `paper/manuscript/sections/00_abstract.tex`
+- `paper/manuscript/sections/01_introduction.tex`
+- `paper/manuscript/sections/03_ipi_protocol_design.tex`
+- `paper/manuscript/sections/04_system_design_setup.tex`
+- `paper/manuscript/sections/05_experiment_results.tex`
+- `paper/paper_outline.md`
+- `paper/manuscript/main.pdf`
+
+Validation: the full LaTeX/BibTeX rebuild completed without compilation errors,
+undefined citations, undefined references, rerun requests, or overfull boxes.
+The rebuilt PDF contains 18 US-Letter pages as a build fact, zero annotations,
+zero links, zero embedded files, no title or author metadata, and fully embedded
+fonts. All pages were rendered for visual inspection; pages 1--4 and 14 were
+also inspected at 180 dpi. No overlap, clipping, missing figure, or broken table
+was found. The clean PDF SHA-256 is
+`132b88078a7b6130c629e901b3efa88fd2cf0be4e351c6c098d1261a2f79d08d`.
+The annotated input is preserved at
+`tmp/pdfs/additional_comments_round2/main_annotated_before_revision.pdf` with
+SHA-256
+`4ca28222f7984a171e3fdefc8a1c10abd22417b5f993e8d5bef9a136e7d1e5a4`.
+
+## Content-Flow Annotation Revision
+
+Complete. The five new substantive annotations in
+`paper/manuscript/main.pdf` were treated as revision instructions. The opening
+argument was rebuilt around one causal sequence: vehicles need information
+distributed across other vehicles and roadside infrastructure; applications
+exchange that information through stateless updates and stateful operations;
+direct PC5 and network-assisted Uu use different network resources; and the
+paper asks where each path stops meeting the application requirement. The
+annotated filler statements about connection status and generic application
+criteria were removed rather than rephrased.
+
+The Abstract now introduces stateless J2735 updates and stateful CAV exchanges
+before stating the interface and measurement gaps. The same distinction was
+carried through Related Work, IPI Protocol Design, System Design and
+Experimental Setup, Experiment Results, the Conclusion, and the appendices.
+Application state and payload size remain separate concepts: the manuscript
+uses payload sizes representative of the two workload classes instead of
+defining stateless traffic as small and stateful traffic as large. No page-limit
+optimization was performed, and no TDD evidence classification or experiment
+result was changed.
+
+Updated manuscript files:
+
+- `paper/manuscript/sections/00_abstract.tex`
+- `paper/manuscript/sections/01_introduction.tex`
+- `paper/manuscript/sections/02_related_work.tex`
+- `paper/manuscript/sections/03_ipi_protocol_design.tex`
+- `paper/manuscript/sections/04_system_design_setup.tex`
+- `paper/manuscript/sections/05_experiment_results.tex`
+- `paper/manuscript/sections/07_conclusion.tex`
+- `paper/manuscript/sections/08_appendices.tex`
+- `paper/manuscript/main.pdf`
+
+Validation: a full LaTeX/BibTeX rebuild completed without compilation errors,
+undefined citations, undefined references, rerun requests, or overfull boxes.
+The PDF contains 18 US-Letter pages as a build fact, zero annotations, zero
+links, zero embedded files, no title or author metadata, and fully embedded
+fonts. All pages were rendered for visual inspection; pages 1--2 were also
+checked at 180 dpi. No overlap, clipping, missing figure, or broken table was
+found. The rebuilt PDF SHA-256 is
+`c0745d18916b6f44906deb0def81df2932c3a7c6da187e4650bb930b466483a2`.
+The annotated input is preserved at
+`tmp/pdfs/content_flow_annotation_revision/main_annotated_before_revision.pdf`
+with SHA-256
+`78af21d741fc06c5f907c29748dc1a638d1704f2ab67310529e11b1ee8d7bc60`.
+
+## Transition-Mistake Writing Lesson
+
+Complete. `paper/general_academic_writing_lessons.md` now records the
+generalized mistake exposed by the annotated manuscript: treating a transition
+problem as a word-choice problem instead of repairing the relationship between
+the ideas. Lesson 8 now distinguishes cause, consequence, contrast,
+qualification, extension, and sequence; identifies common false uses of each;
+and requires a proposition-level test before a connector is selected. It also
+records that a repeated technical subject or a precise backward-pointing phrase
+can provide a stronger transition than a generic conjunctive adverb.
+
+The transition-audit procedure and final checklist were updated to require
+two-sided verification at sentence, paragraph, and section boundaries.
+Validation: Markdown whitespace checks and `git diff --check` pass. No
+manuscript source, experiment record, figure, or PDF was changed for this
+documentation-only update.
+
+## Transition-Logic Annotation Revision
+
+Complete. The seven substantive annotations in
+`paper/manuscript/main.pdf` were treated as revision instructions. The marked
+Introduction passages were rebuilt around their actual logical relationships:
+the opening now gives one shared information need for automated and
+human-driven vehicles; the traffic-controller and cooperative-maneuver ideas
+are separate; V2X and 5G are linked directly to the external information they
+carry; and the CV/CAV distinction uses individual J2735 messages versus
+multiple messages associated with one CAV operation. Assistant-created wording
+such as `replaceable updates` was removed.
+
+The same error pattern was audited across the Abstract, Introduction, Related
+Work, IPI design, experimental setup, Results, Future Research Directions,
+Conclusion, and appendices. Decorative uses of contrast, cause, consequence,
+and extension words were removed. Sentence and paragraph links now use repeated
+technical subjects, backward-pointing phrases, explicit evidence-to-claim
+relations, and true experimental sequence. Long compound sentences were split
+when the clauses did not express one necessary relationship. No page-limit
+optimization was performed, and the stored TDD evidence classification remains
+unchanged.
+
+Updated manuscript files:
+
+- `paper/manuscript/sections/00_abstract.tex`
+- `paper/manuscript/sections/01_introduction.tex`
+- `paper/manuscript/sections/02_related_work.tex`
+- `paper/manuscript/sections/03_ipi_protocol_design.tex`
+- `paper/manuscript/sections/04_system_design_setup.tex`
+- `paper/manuscript/sections/05_experiment_results.tex`
+- `paper/manuscript/sections/06_future_research_directions.tex`
+- `paper/manuscript/sections/07_conclusion.tex`
+- `paper/manuscript/sections/08_appendices.tex`
+- `paper/manuscript/main.pdf`
+
+Validation: a forced LaTeX/BibTeX rebuild completed without compilation errors,
+undefined citations, undefined references, rerun requests, or overfull boxes.
+All 18 pages were rendered at 150 dpi and visually inspected; no overlap,
+clipping, missing figure, or broken table was found. The rebuilt PDF contains
+zero annotations, zero links, zero embedded files, and fully embedded fonts.
+The revised PDF SHA-256 is
+`001cedebf1308d257973aa95356a6c2b70be7e9c5cf0f320a6c86d97549a7c3a`.
+The annotated input is preserved at
+`tmp/pdfs/transition_annotation_revision/main_annotated_before_revision.pdf`
+with SHA-256
+`46f3ace44cb4160ad734ca1ca50b336a28b8fe74d9834d558f34460078ccb200`.
+
+## TDD Data Classification
+
+Complete. On 2026-08-15, the user classified every retained experiment that
+could be interpreted as a `40/40/20` versus `70/20/10` comparison as
+**inconclusive for TDD inference**. The application RTT and availability
+measurements remain valid observations of their recorded operating conditions,
+but they cannot rank the two profiles, estimate a TDD effect, or support a
+causal or sensitivity claim about directional frame allocation. The
+`70/20/10` host-side direction control remains a valid single-profile
+uplink/downlink measurement, but it is also inconclusive about the effect of
+TDD because no matched `40/40/20` control was collected.
+
+The machine-readable decision record is
+`results/real_5g/tdd_comparison_status.json`. The experiment summaries,
+analysis summary, agent context, and remaining-experiment runbook carry the
+same status. This classification supersedes any earlier task entry that calls
+the retained data a TDD comparison or TDD sensitivity result. Per the user's
+instruction, no manuscript TeX, paper outline, figure, caption, generated
+figure, or PDF was changed. A new same-placement matched collection will
+replace this inconclusive evidence when it is received and validated.
+Validation: the status JSON parses successfully, `git diff --check` passes,
+and no file under `paper/manuscript/` was modified.
+
+## Pending Matched TDD Collection And Manuscript Continuation
+
+Active. On 2026-08-15, the user determined that the retained historical
+`40/40/20` and follow-up `70/20/10` application campaigns cannot isolate the
+effect of the time-division duplexing (TDD) allocation because their
+placement/signal contexts differ. The user classified their TDD inference as
+inconclusive. The measurements remain valid observations of their recorded
+operating conditions, but they must not be used to rank the two TDD profiles or
+claim that one profile caused the observed difference.
+
+The user will provide a new matched data set that compares `40/40/20` and
+`70/20/10`, ordered as downlink/uplink/dynamic, while holding the vehicle,
+MG52 placement and orientation, fixed location, Cell 2 lock, 40-MHz n48
+channel, gNodeB/core/MX250/d1 path, `10D4G` setting, sole-UE clean-band
+condition, transport, application version, workload, request interval,
+timeout, and background condition constant. If multiple signal/placement
+conditions are collected, both profiles must be measured at each condition.
+The collection should use balanced profile order, three repetitions where
+possible, and 1,000 attempts for each combination of profile, 1,024-B or
+23,968-B request payload, and TCP or MQTT transport. The primary matrix
+therefore contains 24,000 attempts. Reconfiguration, reattachment,
+stabilization, and warm-up intervals remain outside the measurement windows.
+
+Every application attempt has the existing uplink-oriented transaction:
+the vehicle sends an N-byte IPI request to d1, and d1 returns a compact
+correlated application acknowledgment. The user accepts this scope. The
+current paper does not require a download-heavy reverse-payload experiment.
+Consequently, every manuscript claim, figure, caption, and table must identify
+the measured vehicle-to-edge request and compact edge-to-vehicle acknowledgment
+instead of implying N-byte transfers in both directions.
+
+The binding collection and analysis requirements are recorded in
+`remaining_exp.md` under R8 and R9. No manuscript source was changed by this
+documentation update. The next active work is continued manuscript revision;
+the matched TDD result will be incorporated after the new artifacts arrive.
+Validation: `git diff --check` passed, and this documentation update changed
+only `current_task.md` and `remaining_exp.md` inside the repository.
 
 ## Joint TDD, Signal-Context, and Three-Insight Revision
 
