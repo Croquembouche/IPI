@@ -1,19 +1,22 @@
 # Experiment Summary
 
-Last updated: 2026-08-14.
+Last updated: 2026-08-16.
 
 This file summarizes the experiments currently present under `results/`. It is
 based on the current result artifacts, not on prior generated paper prose.
 Repository-facing CSV, JSON, log, GPS, and receiver artifacts remain under
 `results/`. Exact GNSS, endpoint, hostname, and deployment-path copies from the
-2026-08-05 and 2026-08-06 follow-up remain only in the locally excluded
-`CISCO_AIRSPAN_STATS/` backups.
+2026-08-05 and 2026-08-06 follow-up remain only in locally excluded backups.
+At the user's explicit direction, the six 2026-08-15--16 raw-uplink trees,
+including exact GPS/deployment metadata where captured, are also committed
+under `CISCO_AIRSPAN_STATS/`; their sanitized derivatives remain under
+`results/real_5g/`.
 
 ## Inventory
 
 | Result area | Scope | Current folders |
 |---|---|---:|
-| `results/real_5g/` | Private-5G TCP/MQTT/UDP latency, payload sweeps, load/QoS labels, detector-output replay, multiclient scaling, failure/fallback, deadline analysis, GPS, and signal maps | 30 dated run folders plus derived signal-map artifacts |
+| `results/real_5g/` | Private-5G TCP/MQTT/UDP latency, payload sweeps, load/QoS labels, detector-output replay, multiclient scaling, failure/fallback, deadline analysis, GPS, and signal maps | 36 dated run folders plus derived signal-map artifacts |
 | `results/mocar_v2x/` | Mocar C-V2X setup, custom RTT, stationary payload sweeps, signal probe, and radio-distance/mobility runs | 17 run folders |
 | `results/v2x_benchmarks/` | Public V2X dataset loopback, dataset/GPU processing, OpenCOOD smoke checks, and V2X-Radar detector benchmark runs | 9 result folders |
 | `results/local_loopback/` | Local loopback placeholder | present but empty |
@@ -413,6 +416,279 @@ are rounded to 0.001 degree and
 serialized rosbags are omitted; the exact-data backups remain excluded from
 version control.
 
+### E09. 2026-08-15 Raw-Byte Uplink Payload Sweep
+
+Primary folder:
+
+- `results/real_5g/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2/`
+
+Purpose: measure uplink-oriented request/application-acknowledgment RTT over
+TCP and MQTT for exact 1 KiB, 10 KiB, 100 KiB, 1,024 KiB, and 2,048 KiB raw
+application bodies. Each condition used 1,000 sequential attempts and a 200 ms
+post-completion interval. The edge validated the exact request length and CRC32
+before returning a compact correlated application acknowledgment.
+
+All 10 conditions passed: 10,000 attempts, 10,000 accepted responses, 10,000
+matching receiver rows, and zero failures. The sender used a monotonic RTT from
+immediately before framed transmission through receipt and structural parsing
+of the complete application acknowledgment. Subsequent local topic, sequence,
+accepted-state, length, and CRC32 comparisons also passed for every row but are
+outside the measured interval.
+
+| Transport | Payload | p50 RTT ms | p95 RTT ms | p99 RTT ms | Max RTT ms | Application goodput Mbps |
+|---|---:|---:|---:|---:|---:|---:|
+| TCP | 1 KiB | 31.639 | 41.721 | 47.781 | 91.669 | 0.035 |
+| TCP | 10 KiB | 39.596 | 49.082 | 53.815 | 83.748 | 0.342 |
+| TCP | 100 KiB | 101.290 | 111.503 | 119.386 | 151.802 | 2.710 |
+| TCP | 1,024 KiB | 770.485 | 818.754 | 878.972 | 1,580.884 | 8.619 |
+| TCP | 2,048 KiB | 1,500.456 | 1,584.062 | 1,628.938 | 2,263.905 | 9.847 |
+| MQTT | 1 KiB | 29.982 | 40.476 | 44.539 | 60.608 | 0.036 |
+| MQTT | 10 KiB | 39.573 | 50.225 | 55.383 | 83.142 | 0.340 |
+| MQTT | 100 KiB | 99.473 | 111.174 | 127.308 | 161.320 | 2.716 |
+| MQTT | 1,024 KiB | 767.345 | 810.505 | 868.133 | 1,328.069 | 8.639 |
+| MQTT | 2,048 KiB | 1,501.583 | 1,591.377 | 1,682.788 | 1,949.352 | 9.820 |
+
+The operator reported `70/20/10`, serving Cell 2 with no handoff, RSRP
+`-100 dBm`, and RSRQ `-13 dB`. The user later clarified that Airspan Cell 1
+and Cell 2 were both administratively unlocked and broadcasting. Administrative
+`locked` means the cell is not broadcasting and is distinct from serving-cell
+attachment. The user corrected the original `-97 dBm` RSRP
+entry after acquisition. These values remain operator-reported until
+timestamp-aligned ACP/configuration and MG52 exports are stored. The 59.585-
+second ROS 2 bag passed the stationary gate. The explicitly committed raw tree
+retains the exact coordinates and bag; the public result derivative retains
+only `39.664, -75.757` at 0.001-degree precision.
+
+Payload labels describe application objects, not individual IP packets. TCP
+segments the object as needed, and MQTT adds MQTT framing over TCP. Application
+goodput is accepted payload divided by the same-host span from first request
+transmission to final acknowledgment; interface rates include protocol and
+incidental traffic. Endpoint clocks were unsynchronized, so one-way metrics
+are excluded.
+
+A read-only Git integrity scan overlapped TCP 2 MiB sequences 97-116 for 22.7
+seconds. The affected rows remain included; host telemetry shows no saturation
+or failure, and the final condition maximum occurred at sequence 613 outside
+the overlap. All 95 copied edge files matched their remote hashes, both raw and
+public checksum manifests pass, and the public derivative passes its privacy
+scan. This one-location, one-profile block is not a causal TDD comparison and
+does not replace the planned two-location `40/40/20` versus `70/20/10`
+directional matrix.
+
+### E10. 2026-08-16 MQTT Same-Profile Uplink Repeat
+
+Primary folder:
+
+- `results/real_5g/20260816_airspan_tdd_raw_uplink_40_40_20_location_1_mqtt_repeat_run_1/`
+
+Purpose: repeat the prior day's MQTT raw-byte uplink experiment after the
+private-5G route resumed. The operator reported the same `40/40/20` profile,
+RSRP `-100 dBm`, RSRQ `-13 dB`, serving Cell 2/no handoff, and stationary
+`location_1`. Each retained condition used 1,000 sequential requests and the
+same 200 ms post-completion interval.
+
+| Payload | Attempts | Accepted | Receiver rows | p50 ms | p95 ms | p99 ms | Max ms |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 KiB | 1,000 | 1,000 | 1,000 | 39.435 | 51.016 | 279.632 | 299.649 |
+| 10 KiB | 1,000 | 1,000 | 1,000 | 63.682 | 169.247 | 263.223 | 539.404 |
+| 100 KiB | 1,000 | 1,000 | 1,000 | 439.006 | 746.947 | 927.222 | 34,967.951 |
+| 1,024 KiB | 1,000 | 1,000 | 1,000 | 4,549.326 | 5,608.034 | 6,193.954 | 6,700.886 |
+
+All four retained conditions passed exact request-length, CRC32, sequence, and
+application-acknowledgment validation with zero failures. The 100 KiB maximum
+is a retained accepted outlier at sequence 19; the next-largest RTT in that
+condition is 1,191.193 ms. The fresh 59.570-second ROS 2 bag contains 16,087
+messages and passes the stationarity gate.
+
+Relative to the valid 2026-08-15 `40/40/20` MQTT rows, p50 RTT changed by
++2.36% at 1 KiB, +10.04% at 10 KiB, +102.71% at 100 KiB, and +256.86% at
+1 MiB. The corresponding p95 changes are +9.22%, +60.52%, +111.27%, and
++163.86%. Thus this repeat directly shows materially worse large-object RTT on
+2026-08-16. It does not identify the cause: the runs are on different days and
+lack timestamp-aligned ACP, MG52, and cell-load evidence.
+
+At the user's direction, the 2 MiB condition stopped after 133/1,000 validated
+sender/receiver pairs. It is preserved in the raw and public result trees but
+excluded from totals and comparisons. Future payload sweeps stop at 1,024 KiB
+(1 MiB); 2 MiB is no longer part of the planned matrix. All 50 fetched edge
+files matched their remote copies before redaction, both checksum manifests
+pass, the repository measurement artifacts match the raw copies, and the
+public derivative contains no exact GPS bag/CSV or deployment identifiers.
+
+### E11. 2026-08-16 Quick TCP Same-Profile Uplink Follow-Up
+
+Primary folder:
+
+- `results/real_5g/20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_1/`
+
+Purpose: quickly measure TCP application-acknowledgment RTT at 1 KiB, 10 KiB,
+and 100 KiB after the MQTT repeat. The operator-reported context remained
+`40/40/20`, RSRP `-100 dBm`, RSRQ `-13 dB`, Cell 1 administratively locked
+and not broadcasting, and Cell 2 serving with no handoff. Cell 2's
+broadcasting/unlocked state is inferred from the completed serving-cell traffic
+at stationary `location_1`. Each condition used 1,000 sequential exact raw
+application objects and the established 200 ms post-completion interval. The
+validated same-day 59.570-second GPS capture was reused; no new bag was
+collected for this quick follow-up.
+
+The administrative and serving-cell parameters for the four TCP blocks in
+the side-by-side comparison are:
+
+| Date/run | TDD | Cell 1 administrative state | Cell 2 administrative state | Serving cell | RSRP | RSRQ |
+|---|---|---|---|---:|---:|---:|
+| 2026-08-15 `70/20/10` | `70/20/10` | Unlocked; broadcasting | Unlocked; broadcasting | 2; MG52-selected/no handoff | -100 dBm | -13 dB |
+| 2026-08-15 `40/40/20` | `40/40/20` | Unlocked; broadcasting | Unlocked; broadcasting | 2; MG52-selected/no handoff | -100 dBm | -13 dB |
+| 2026-08-16 run 1 | `40/40/20` | Locked; not broadcasting | Unlocked; broadcasting (inferred) | 2; MG52-selected/no handoff | -100 dBm | -13 dB |
+| 2026-08-16 run 2 | `40/40/20` | Unlocked; broadcasting | Unlocked; broadcasting | 1; MG52-selected/no handoff | -98 dBm | -13 dB; carried forward |
+
+| Payload | Attempts | Accepted | Receiver rows | p50 ms | p95 ms | p99 ms | Max ms |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 KiB | 1,000 | 1,000 | 1,000 | 39.634 | 51.548 | 77.657 | 359.632 |
+| 10 KiB | 1,000 | 1,000 | 1,000 | 57.519 | 91.421 | 211.822 | 465.504 |
+| 100 KiB | 1,000 | 1,000 | 1,000 | 441.096 | 789.094 | 937.482 | 1,120.317 |
+
+Relative to the valid 2026-08-15 same-profile TCP subset, p50/p95 changed by
++0.52%/+3.33% at 1 KiB, +11.38%/+27.97% at 10 KiB, and
++132.55%/+169.05% at 100 KiB. The new 100 KiB distribution is therefore
+materially slower, but the evidence does not identify the cause: the runs lack
+timestamp-aligned ACP, MG52, scheduler, and cell-load evidence. It also differs
+in Cell 1 administrative state: Cell 1 broadcast on 2026-08-15 but did not
+broadcast on 2026-08-16.
+
+All 3,000 requests passed exact length, CRC32, sequence, and compact
+application-acknowledgment validation with zero failures. All 21 fetched edge
+files match their remote copies, raw and public checksums pass, retained
+measurement files are identical across the raw/public boundary, and the public
+privacy scan passes. The temporary edge authorization was revoked and its
+local key files were deleted. Each condition manifest and application-summary
+row records TDD `40/40/20`, RSRP `-100 dBm`, and RSRQ `-13 dB`.
+
+### E12. 2026-08-16 Quick TCP Uplink Follow-Up — Run 2
+
+Primary folder:
+
+- `results/real_5g/20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_2/`
+
+Purpose: repeat the three-size quick TCP sweep after the user reported RSRP
+`-98 dBm` and both Airspan cells administratively unlocked and broadcasting.
+The user also reported TDD `40/40/20`. RSRQ `-13 dB` was carried forward from
+the latest operator report, not freshly measured. The user later clarified
+that the MG52 was locked onto serving Cell 1 with no reported handoff. The
+earlier carried-forward Cell 2 entry is superseded, but the corrected selection
+is not verified by a timestamp-aligned MG52 export. The other three TCP runs
+in the side-by-side comparison were locked onto Cell 2.
+
+The raw and repository-facing trees preserve this clarification in
+`serving_cell_selection_correction.json`. Acquisition-time condition manifests
+retain their original Cell 2 value as provenance; corrected operator context
+and derived analysis rows use Cell 1. No application RTT, sender/receiver row,
+payload, or telemetry sample changed.
+
+Each condition used 1,000 sequential exact raw application objects and the
+same 200 ms post-completion interval. All 3,000 requests passed application-
+acknowledgment, exact-length, CRC32, sequence, and sender/receiver correlation
+validation with zero failures:
+
+| Payload | Accepted/attempts | p50 ms | p95 ms | p99 ms | Max ms | Miss @500 ms | Miss @1,000 ms |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 1 KiB | 1,000/1,000 | 39.676 | 149.399 | 363.057 | 642.942 | 1 | 0 |
+| 10 KiB | 1,000/1,000 | 65.491 | 187.382 | 339.494 | 660.564 | 2 | 0 |
+| 100 KiB | 1,000/1,000 | 508.809 | 927.334 | 1,209.344 | 4,085.308 | 523 | 33 |
+
+Relative to the first same-day quick TCP run, the second run changed as follows:
+
+| Payload | Run 1 p50 ms | Run 2 p50 ms | p50 change | Run 1 p95 ms | Run 2 p95 ms | p95 change |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 KiB | 39.634 | 39.676 | +0.11% | 51.548 | 149.399 | +189.83% |
+| 10 KiB | 57.519 | 65.491 | +13.86% | 91.421 | 187.382 | +104.97% |
+| 100 KiB | 441.096 | 508.809 | +15.35% | 789.094 | 927.334 | +17.52% |
+
+The 100 KiB maximum occurred at sequence 840. It passed exact sender/receiver
+sequence, length, and CRC32 correlation and remains unfiltered; its cause is
+not established. Car and edge CPU stayed below 10% condition-level busy time,
+memory remained stable, and neither interface recorded an error or drop delta.
+
+The run reused the earlier same-day 59.570-second stationary GPS evidence; no
+new bag was collected, and continuity with the application run was not
+independently reverified. The two quick runs differ in reported RSRP and Cell 1
+administrative state, and they used different serving cells. Neither has
+aligned ACP/MG52 or cell-load evidence. They therefore do not isolate the
+effect of RSRP, Cell 1 broadcasting, serving-cell selection, or TDD.
+
+All 21 fetched edge files matched their remote copies before access revocation.
+The independent analyzer, raw/public checksums, JSON/CSV parsing, retained-
+measurement identity, and repository privacy scan pass. The temporary edge key
+was revoked and deleted.
+
+### E13. 2026-08-16 Quick TCP `70/20/10` Repeat
+
+Primary folder:
+
+- `results/real_5g/20260816_airspan_tdd_raw_uplink_70_20_10_location_1_tcp_quick_run_1/`
+
+Purpose: repeat the 1 KiB, 10 KiB, and 100 KiB TCP raw-object measurements
+under reported TDD `70/20/10` and compare them with the first complete
+2026-08-15 `70/20/10` TCP block. The user reported the MG52 locked onto serving
+Cell 2 with no handoff and Airspan Cell 1 administratively locked/not
+broadcasting. Cell 2 was unlocked/broadcasting. RSRP `-98 dBm` and RSRQ
+`-13 dB` were carried forward from the most recent report.
+
+| Payload | Accepted/attempts | p50 ms | p95 ms | p99 ms | Max ms |
+|---:|---:|---:|---:|---:|---:|
+| 1 KiB | 1,000/1,000 | 31.583 | 41.975 | 49.638 | 101.337 |
+| 10 KiB | 1,000/1,000 | 39.594 | 49.190 | 53.550 | 110.003 |
+| 100 KiB | 1,000/1,000 | 99.582 | 112.947 | 120.936 | 191.354 |
+
+| Payload | Aug. 15 p50 ms | Aug. 16 p50 ms | Change | Aug. 15 p95 ms | Aug. 16 p95 ms | Change |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 KiB | 31.639 | 31.583 | -0.18% | 41.721 | 41.975 | +0.61% |
+| 10 KiB | 39.596 | 39.594 | -0.01% | 49.082 | 49.190 | +0.22% |
+| 100 KiB | 101.290 | 99.582 | -1.69% | 111.503 | 112.947 | +1.29% |
+
+Both runs used reported `70/20/10`, serving Cell 2/no handoff, RSRQ `-13 dB`,
+and stationary `location_1`. They are not configuration-matched: the August 15
+run recorded RSRP `-100 dBm` with both cells broadcasting, while the new run
+used carried-forward RSRP `-98 dBm` with Cell 1 not broadcasting. The close
+p50/p95 values are repeat observations, not evidence that Cell 1 state or RSRP
+has no effect. Timestamp-aligned ACP/MG52 and cell-load evidence is absent.
+
+All 3,000 sender rows match 3,000 edge rows and pass exact length, CRC32,
+sequence, application-acknowledgment, radio/cell-context, and telemetry
+validation. All 21 copied edge files matched before key revocation. Raw/public
+checksums, structured-file parsing, retained measurement identity, and the
+privacy scan pass. The same-day validated stationary GPS capture was reused;
+no new bag was requested.
+
+### E14. 2026-08-16 TCP `60/20/20` Payload Sweep
+
+Primary folder:
+
+- `results/real_5g/20260816_airspan_tdd_raw_uplink_60_20_20_location_1_tcp_run_1/`
+
+Purpose: measure TCP raw-object application-acknowledgment RTT at 1 KiB,
+10 KiB, 100 KiB, and 1,024 KiB at the same stationary location. The corrected
+reported TDD is `60/20/20`; acquisition-time `60/30/10` fields and identifiers
+remain preserved and are superseded by `tdd_profile_correction.json`. The
+context records Cell 1 locked/not broadcasting, Cell 2 unlocked/broadcasting
+and selected by the MG52 with no reported handoff, and carried-forward RSRP
+`-98 dBm`/RSRQ `-13 dB`.
+
+| Payload | Status | Accepted/attempts | p50 ms | p95 ms | p99 ms | Max ms |
+|---:|---|---:|---:|---:|---:|---:|
+| 1 KiB | Complete | 1,000/1,000 | 49.604 | 75.391 | 361.531 | 387.686 |
+| 10 KiB | Complete | 1,000/1,000 | 101.216 | 248.853 | 377.315 | 1,013.779 |
+| 100 KiB | Complete | 1,000/1,000 | 753.242 | 1,321.325 | 1,773.416 | 2,547.593 |
+| 1,024 KiB | User-stopped | 500/500 retained | 7,484.305 | 10,187.364 | 11,175.804 | 13,368.893 |
+
+All retained rows pass exact sequence, payload-length, CRC32, and sender/edge
+correlation checks with zero application failures. The 1 MiB sender was
+terminated immediately after row 500 at user request, so it retains status 143
+and no completion marker and is excluded from the complete three-condition
+matrix. All 28 fetched edge files matched before access revocation. The same-
+day GPS evidence was reused. The TDD correction and carried-forward radio
+values lack timestamp-aligned ACP/MG52 evidence, so this block is not by itself
+a causal TDD comparison.
+
 ## Mocar V2X Experiments
 
 ### M01. Mocar Setup And Custom RX Debug
@@ -669,51 +945,6 @@ GPUs.
 The final detector run covers the full 922-sample staged validation split in
 the current local dataset. Its per-sample CSV records a median of about 202
 predicted boxes and 8 ground-truth boxes per successful sample.
-
-## 2026-08-15--16 Raw-Byte Private-5G Uplink Follow-Ups
-
-Primary folders:
-
-- `results/real_5g/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2/`
-- `results/real_5g/20260816_airspan_tdd_raw_uplink_40_40_20_location_1_mqtt_repeat_run_1/`
-- `results/real_5g/20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_1/`
-- `results/real_5g/20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_2/`
-- `results/real_5g/20260816_airspan_tdd_raw_uplink_70_20_10_location_1_tcp_quick_run_1/`
-- `results/real_5g/20260816_airspan_tdd_raw_uplink_60_20_20_location_1_tcp_run_1/`
-
-These runs use exact raw application objects sent vehicle-to-edge and compact
-correlated application acknowledgments returned edge-to-vehicle. RTT is the
-sender's monotonic interval through receipt and structural parsing of the
-complete application acknowledgment; it is not TCP-ACK RTT or one-way delay.
-The edge validates request length and CRC32 before acknowledging.
-
-The first complete `70/20/10` block collected 1,000 TCP and 1,000 MQTT
-exchanges at each of 1, 10, 100, 1,024, and 2,048 KiB. Later policy removes
-2 MiB from future sweeps and caps them at 1,024 KiB. The same-day MQTT repeat
-completed 1,000 exchanges through 1 MiB; its active 2 MiB condition was stopped
-after 133 matching exchanges. Three quick TCP blocks collected 1,000 exchanges
-at 1, 10, and 100 KiB under the recorded `40/40/20` and `70/20/10` contexts.
-
-The latest TCP run records the user's corrected TDD profile `60/20/20`.
-Acquisition-time `60/30/10` fields and identifiers remain immutable provenance
-and are superseded by `tdd_profile_correction.json`. Its results are:
-
-| Payload | Status | Accepted/attempts | p50 RTT ms | p95 RTT ms | p99 RTT ms | Max RTT ms |
-|---:|---|---:|---:|---:|---:|---:|
-| 1 KiB | Complete | 1,000/1,000 | 49.604 | 75.391 | 361.531 | 387.686 |
-| 10 KiB | Complete | 1,000/1,000 | 101.216 | 248.853 | 377.315 | 1,013.779 |
-| 100 KiB | Complete | 1,000/1,000 | 753.242 | 1,321.325 | 1,773.416 | 2,547.593 |
-| 1,024 KiB | User-stopped | 500/500 retained | 7,484.305 | 10,187.364 | 11,175.804 | 13,368.893 |
-
-All retained latest-run sender rows match edge rows in sequence, application
-payload length, and CRC32. The 1 MiB condition stopped exactly at row 500 at
-user request; it retains sender status 143 and no completion marker and is
-excluded from the complete three-condition matrix. Cell 1 was reported
-locked/not broadcasting, Cell 2 unlocked/broadcasting and selected by the
-MG52 with no handoff, while RSRP `-98 dBm` and RSRQ `-13 dB` were carried
-forward. The corrected TDD and radio context lack timestamp-aligned ACP/MG52
-verification, so cross-profile differences are observations rather than causal
-TDD estimates.
 
 ## Derived Successful-Attempt RTT Variance
 

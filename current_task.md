@@ -21,8 +21,10 @@ The context records Cell 1 locked/not broadcasting, Cell 2
 unlocked/broadcasting and selected by the MG52 with no reported handoff, and
 carried-forward RSRP `-98 dBm`/RSRQ `-13 dB`. All 28 fetched edge files matched
 before access revocation. Raw/public checksums, structured parsing,
-measurement identity, privacy validation, process cleanup, and
-`git diff --check` pass. The corrected TDD and radio context remain
+measurement identity, public-artifact privacy validation, process cleanup, and
+source/document `git diff --check` pass. At the user's explicit direction, the
+six raw 2026-08-15--16 experiment trees are committed alongside their public
+derivatives. The corrected TDD and radio context remain
 operator-reported because no timestamp-aligned ACP/MG52 exports are stored.
 
 ## Results-Presentation and Signal-Classification Annotation Revision
