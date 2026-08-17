@@ -1,6 +1,64 @@
 # Current Task
 
-Last updated: 2026-08-16
+Last updated: 2026-08-17
+
+## Repository README
+
+Complete. A new root `README.md` explains why IPI combines stateless CV/ITS
+messages with correlated stateful CAV operations. It documents the shared
+application contract, session lifecycle, cooperative planning/perception/control
+content, experimental J2735 regional profile, MQTT and PC5 bindings, current
+C++17 implementation, build and test commands, repository layout, experiment
+harness boundary, and release limitations. The root-document inventories in
+`AGENTS.md` and `agent_context.md` now include the explicitly requested README.
+
+Updated files:
+
+- `README.md`
+- `AGENTS.md`
+- `agent_context.md`
+- `cpp/examples/README.md`
+- `current_task.md`
+
+Validation: every relative README link resolves. The documented CMake
+configuration and full C++17 build complete successfully, all 18 CTest tests
+pass, and the three quick-start examples exit successfully. Markdown structure,
+root-document inventory, and whitespace checks pass.
+
+## 5G Signal-Bin Standardization
+
+Complete. The manuscript's handset-RSRP categories are
+strong at or above -95 dBm, common/typical from -105 to below -95 dBm, and weak
+below -105 dBm. The three bins aggregate the four outdoor pedestrian coverage
+levels in Australia's Telecommunications (Mobile Network Coverage Maps)
+Industry Standard 2026. Good maps to strong, Moderate maps to common/typical,
+and Basic plus No Coverage map to weak. A short setup paragraph cites that
+standard and 3GPP TS 38.215, which defines SS-RSRP but does not assign
+qualitative coverage levels. The binding outline and Figure 4 caption use the
+same inequality-based definitions. The measured values retain their existing
+categories: -101 dBm is common/typical, while -106, -109 to -110, and -120 dBm
+are weak.
+
+Updated files:
+
+- `paper/manuscript/sections/04_system_design_setup.tex`
+- `paper/manuscript/references.bib`
+- `paper/paper_outline.md`
+- `paper/manuscript/main.pdf`
+- `current_task.md`
+
+Validation: a forced LaTeX and BibTeX rebuild completed successfully. The
+final log contains no compilation errors, undefined citations or references,
+rerun requests, or overfull boxes. The PDF contains 19 US-Letter pages, zero
+annotations, zero links, zero embedded files, no author or title metadata, and
+fully embedded fonts. Manuscript pages 4--6 and reference page 16 were rendered
+and inspected; the new paragraph, Table 1, Figure 4 caption, and both new
+references are legible without overlap or clipping. No page-limit optimization
+was performed. `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+`6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
+The revised `paper/manuscript/main.pdf` has SHA-256
+`e97c2be08737f7f32c058c3c8619c25f86eaed05abf44d53fc8efa2aa3be6f56`.
+`git diff --check` passes.
 
 ## Private-5G Raw-Uplink Collection and TDD Correction
 
@@ -37,8 +95,8 @@ It is preserved at
 SHA-256
 `b2eda34bfb14174e57335d57fe6c542072c2af0626b610f7f6a6742ea480fc1c`.
 
-The revision defines signed handset RSRP bands as strong from -94 to -80 dBm,
-common/typical from -105 to -95 dBm, and weak from -121 to -106 dBm. The
+The revision defines signed handset RSRP bands as strong at or above -95 dBm,
+common/typical from -105 to below -95 dBm, and weak below -105 dBm. The
 stationary Uu workload collections are now identified as common/typical or weak;
 none is described as a strong-band workload run. Table 1, Figure 4, Figure 9,
 the setup prose, the results prose, the appendix, and the binding outline use

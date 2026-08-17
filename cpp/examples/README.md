@@ -50,8 +50,10 @@ After building, run from the repo root:
 - `example_v2x_roundtrip` generates synthetic BSM/PSM/MAP/SPaT/SRM/SSM frames,
   encodes them using the J2735 helpers and `UperCodec`, and decodes them again.
 - `example_spat_tcp_sender` connects to a remote RSU or bridge process over TCP
-  and sends SPaT frames; see the root `README.md` “Edge→Device SPaT over TCP”
-  section for full instructions and parameter examples. It now supports shared
+  and sends SPaT frames; see the
+  [root README](../../README.md#edge-to-device-spat-over-tcp) for the bridge
+  workflow and the [setup guide](../../setup.md) for deployment details. It now
+  supports shared
   experiment flags such as `--run-id`, `--condition-id`, `--condition-label`,
   `--request-id`, and `--csv`.
 - `example_private_5g_latency_receiver` listens for framed latency probes over a
@@ -81,8 +83,9 @@ The device-side examples depend on the Mocar SDK and, optionally, ROS2:
   Configure `MOCAR_SDK_ROOT` at CMake configure time if the SDK is not under
   `third_party/mocar/new_V2X_64bit`.
 - `example_spat_tcp_bridge` (also under the Mocar examples) listens on a TCP
-  port and forwards SPaT frames to the on-device J2735 encoder; see the root
-  `README.md` demo for a typical edge↔device setup.
+  port and forwards SPaT frames to the on-device J2735 encoder; see the
+  [root README](../../README.md#edge-to-device-spat-over-tcp) for a typical
+  edge-to-device setup.
 - `example_ros2_bsm_broadcaster` (requires both `IPI_ENABLE_MOCAR_EXAMPLES` and
   `IPI_ENABLE_ROS2_BRIDGE`) subscribes to a `v2x_msg::msg::BSM` topic, uses the
   bridge helpers to convert into the lightweight BSM model, and rebroadcasts

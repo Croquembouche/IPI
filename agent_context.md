@@ -9,6 +9,8 @@ staging, and collected experiment results.
 
 The repository root documentation is intentionally reduced to:
 
+- `README.md` - public overview of the IPI protocol, current implementation,
+  build path, repository structure, and release boundaries.
 - `AGENTS.md` - Codex entry point and working rules.
 - `agent_context.md` - this repository map.
 - `current_task.md` - mutable handoff for the active task.
@@ -147,9 +149,9 @@ For paper or experiment-claim changes, validate against current artifacts in
 - Use root `AGENTS.md` for repo-specific guidance. Universal Codex preferences
   belong in `~/.codex/AGENTS.md`; nested `AGENTS.md` files should be added only
   when a subdirectory needs different rules.
-- Keep the root Markdown set limited to `AGENTS.md`, `agent_context.md`,
-  `current_task.md`, `setup.md`, `experiment_summary.md`, and
-  `remaining_exp.md`.
+- Keep the root Markdown set limited to `README.md`, `AGENTS.md`,
+  `agent_context.md`, `current_task.md`, `setup.md`, `experiment_summary.md`,
+  and `remaining_exp.md`.
 - Do not copy a generic AGENTS/supporting-doc bundle into this repo. Add new
   supporting Markdown only when it is project-specific and the user asks for it
   or the task clearly needs it.

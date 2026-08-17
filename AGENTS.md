@@ -4,6 +4,7 @@ This is the Codex entry point for the IPI repository.
 
 The repository root intentionally keeps only these Markdown files:
 
+- `README.md`
 - `AGENTS.md`
 - `agent_context.md`
 - `current_task.md`
