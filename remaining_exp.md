@@ -1,6 +1,6 @@
 # Remaining Experiment Plan
 
-Last updated: 2026-08-15
+Last updated: 2026-08-17
 
 ## Purpose
 
@@ -1785,6 +1785,22 @@ This remains a one-location application observation with operator-reported
 TDD and radio context. It does not close R9: the matched two-location,
 directional, repeated TDD matrix with timestamp-aligned ACP/MG52 evidence is
 still required for a causal TDD claim.
+
+## 2026-08-17 Location-2 Raw-Uplink Collection Status
+
+Complete. The location-2 `60/20/20`, RSRP `-100 dBm` TCP/MQTT payload sweep is
+stored under
+`results/real_5g/20260817_airspan_tdd_raw_uplink_60_20_20_location_2_tcp_mqtt_run_1/`.
+TCP and MQTT completed 1,000 messages at 1, 10, and 100 KiB. TCP 1,024 KiB was
+stopped by the user at 227 validated exchanges; MQTT 1,024 KiB completed its
+revised declared count of 100. A fresh 59.599-second GNSS capture passes the
+stationarity gate.
+
+This closes the requested location-2 application collection but does not close
+R9. TDD and RSRP were user-reported during the run, while RSRQ, cell
+administrative states, serving-cell selection, and no-handoff state were
+carried forward. A causal TDD comparison still requires matched profiles at the
+same locations with timestamp-aligned configuration, ACP, and MG52 evidence.
 
 ## Completion Definition
 

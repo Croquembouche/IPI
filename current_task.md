@@ -60,6 +60,38 @@ The revised `paper/manuscript/main.pdf` has SHA-256
 `e97c2be08737f7f32c058c3c8619c25f86eaed05abf44d53fc8efa2aa3be6f56`.
 `git diff --check` passes.
 
+## 2026-08-17 Location-2 TCP/MQTT Raw-Uplink Collection
+
+Complete. At the user's new stationary location, the run collected a fresh
+59.599-second ROS 2 GNSS bag and sequential uplink-oriented application-
+acknowledgment RTTs over both TCP and MQTT at 1, 10, 100, and 1,024 KiB. The
+bag contains 16,098 messages and passes the stationary gate with 0.189 m
+maximum radial displacement. The TDD profile and
+fresh RSRP were initially pending. During the TCP 1,024-KiB condition, the user
+reported TDD `60/20/20` and RSRP `-100 dBm`; the timestamped context update is
+stored in the raw run and supersedes the provisional carried-forward values for
+analysis without rewriting acquisition manifests. Cross-location differences
+must not be interpreted as a TDD or signal-strength effect without matched
+controls.
+
+The user subsequently stopped TCP 1,024 KiB after 227/227 matching sender and
+receiver rows; it retains exit status 143 and is a user-stopped partial
+condition, not a completed declared-count condition. TCP 1, 10, and 100 KiB
+remain complete 1,000-message conditions. MQTT 1, 10, and 100 KiB remain
+1,000-message conditions, while MQTT 1,024 KiB completed its explicit 100/100
+declared count. All 6,327 retained sender rows are accepted and match 6,327
+edge rows in sequence, payload length, CRC32, client-send timestamp, and
+server-processing value.
+
+All 68 fetched edge files match their remote copies. The temporary d1
+authorization was revoked, no experiment processes or planned ports remain,
+raw/public checksums pass, structured files parse, raw/public sender and
+receiver measurements are identical, and the public privacy scan passes. Raw
+evidence is stored under
+`CISCO_AIRSPAN_STATS/20260817_airspan_tdd_raw_uplink_pending_location_2_tcp_mqtt_run_1_unredacted/`;
+the sanitized result is
+`results/real_5g/20260817_airspan_tdd_raw_uplink_60_20_20_location_2_tcp_mqtt_run_1/`.
+
 ## Private-5G Raw-Uplink Collection and TDD Correction
 
 Complete. Six repository-facing experiment trees were added for the 2026-08-15

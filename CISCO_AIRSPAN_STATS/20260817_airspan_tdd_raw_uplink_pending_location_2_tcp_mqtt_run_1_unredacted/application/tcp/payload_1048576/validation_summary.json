@@ -1,0 +1,19 @@
+{
+  "accepted": 227,
+  "application_payload_bytes": 1048576,
+  "attempts": 227,
+  "deadline_misses_1000ms": 227,
+  "deadline_misses_100ms": 227,
+  "deadline_misses_500ms": 227,
+  "failed": 0,
+  "receiver_rows": 227,
+  "rtt_count": 227,
+  "rtt_max_ms": 25263.821555,
+  "rtt_p50_ms": 17031.65574,
+  "rtt_p95_ms": 20982.53363,
+  "rtt_p99_ms": 24535.773919,
+  "status": "user-stopped",
+  "transport": "tcp",
+  "wire_request_bytes_max": 1048612,
+  "wire_request_bytes_min": 1048612
+}

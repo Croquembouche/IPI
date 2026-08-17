@@ -1,0 +1,15 @@
+{
+  "schema": "edge4av-edge-artifact-verification-v1",
+  "verification_date": "2026-08-17",
+  "method": "rsync checksum dry-run with itemized changes, one remote/local condition pair at a time",
+  "conditions_checked": 8,
+  "remote_files": 68,
+  "local_edge_files": 68,
+  "matched_files": 68,
+  "itemized_differences": 0,
+  "all_remote_files_match_local_copies": true,
+  "verification_completed_before_temporary_access_revocation": true,
+  "temporary_access_key_fingerprint": "SHA256:lYmfM3uzxByKxQ1+vriLmxMTCmY+s1M/GdxFliJKvMQ",
+  "temporary_access_revoked": true,
+  "revocation_note": "the uniquely commented authorization line was removed from d1 after verification"
+}

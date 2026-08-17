@@ -1,13 +1,14 @@
 # Experiment Summary
 
-Last updated: 2026-08-16.
+Last updated: 2026-08-17.
 
 This file summarizes the experiments currently present under `results/`. It is
 based on the current result artifacts, not on prior generated paper prose.
 Repository-facing CSV, JSON, log, GPS, and receiver artifacts remain under
 `results/`. Exact GNSS, endpoint, hostname, and deployment-path copies from the
 2026-08-05 and 2026-08-06 follow-up remain only in locally excluded backups.
-At the user's explicit direction, the six 2026-08-15--16 raw-uplink trees,
+At the user's explicit direction, the six 2026-08-15--16 raw-uplink trees and
+the 2026-08-17 location-2 raw-uplink tree,
 including exact GPS/deployment metadata where captured, are also committed
 under `CISCO_AIRSPAN_STATS/`; their sanitized derivatives remain under
 `results/real_5g/`.
@@ -16,7 +17,7 @@ under `CISCO_AIRSPAN_STATS/`; their sanitized derivatives remain under
 
 | Result area | Scope | Current folders |
 |---|---|---:|
-| `results/real_5g/` | Private-5G TCP/MQTT/UDP latency, payload sweeps, load/QoS labels, detector-output replay, multiclient scaling, failure/fallback, deadline analysis, GPS, and signal maps | 36 dated run folders plus derived signal-map artifacts |
+| `results/real_5g/` | Private-5G TCP/MQTT/UDP latency, payload sweeps, load/QoS labels, detector-output replay, multiclient scaling, failure/fallback, deadline analysis, GPS, and signal maps | 37 dated run folders plus derived signal-map artifacts |
 | `results/mocar_v2x/` | Mocar C-V2X setup, custom RTT, stationary payload sweeps, signal probe, and radio-distance/mobility runs | 17 run folders |
 | `results/v2x_benchmarks/` | Public V2X dataset loopback, dataset/GPU processing, OpenCOOD smoke checks, and V2X-Radar detector benchmark runs | 9 result folders |
 | `results/local_loopback/` | Local loopback placeholder | present but empty |
@@ -688,6 +689,47 @@ matrix. All 28 fetched edge files matched before access revocation. The same-
 day GPS evidence was reused. The TDD correction and carried-forward radio
 values lack timestamp-aligned ACP/MG52 evidence, so this block is not by itself
 a causal TDD comparison.
+
+### E15. 2026-08-17 Location-2 TCP/MQTT `60/20/20` Payload Sweep
+
+Primary folder:
+
+- `results/real_5g/20260817_airspan_tdd_raw_uplink_60_20_20_location_2_tcp_mqtt_run_1/`
+
+Purpose: repeat the exact raw-object uplink/application-acknowledgment workload
+at a new stationary vehicle location over TCP and MQTT. The user reported TDD
+`60/20/20` and RSRP `-100 dBm` during the run. RSRQ `-13 dB`, Cell 1
+locked/not broadcasting, Cell 2 unlocked/broadcasting and serving, and no
+handoff are carried-forward context rather than fresh measurements.
+
+| Transport | Payload | Status | Accepted/attempts | p50 ms | p95 ms | p99 ms | Max ms |
+|---|---:|---|---:|---:|---:|---:|---:|
+| TCP | 1 KiB | Complete | 1,000/1,000 | 47.701 | 77.824 | 377.658 | 433.860 |
+| TCP | 10 KiB | Complete | 1,000/1,000 | 169.206 | 487.783 | 733.619 | 2,113.708 |
+| TCP | 100 KiB | Complete | 1,000/1,000 | 1,460.886 | 2,321.439 | 2,981.048 | 3,773.505 |
+| TCP | 1,024 KiB | User-stopped | 227/227 retained | 17,031.656 | 20,982.534 | 24,535.774 | 25,263.822 |
+| MQTT | 1 KiB | Complete | 1,000/1,000 | 42.125 | 90.050 | 311.772 | 562.268 |
+| MQTT | 10 KiB | Complete | 1,000/1,000 | 149.582 | 461.766 | 654.742 | 1,406.279 |
+| MQTT | 100 KiB | Complete | 1,000/1,000 | 1,717.276 | 2,614.260 | 3,251.222 | 4,482.610 |
+| MQTT | 1,024 KiB | Complete declared count | 100/100 | 17,229.249 | 20,834.363 | 21,150.195 | 22,356.526 |
+
+The final requested matrix contains 6,327/6,327 accepted exchanges with zero
+application failures. The TCP 1-MiB condition retains status 143 and no
+completion marker; it is validated as a user-stopped partial condition, not a
+completed 1,000-message run. MQTT 1 MiB completed the user's revised declared
+count of 100.
+
+The fresh GNSS bag spans 59.599 seconds and 16,098 messages. Its 595 BESTPOS
+samples have 0.171 m p95 and 0.189 m maximum radial displacement, so the
+stationarity gate passes. Exact GNSS and deployment artifacts are retained in
+the committed raw tree at the user's direction; the public derivative retains
+only the 0.001-degree coordinate and stationarity summary.
+
+All 68 copied edge files match their remote copies, raw/public checksums pass,
+all structured files parse, sender/receiver measurement files remain identical
+across the raw/public boundary, and the public privacy scan passes. This is a
+one-location, one-profile observation. It does not isolate TDD, signal, serving
+cell, or location effects and lacks timestamp-aligned ACP/MG52 evidence.
 
 ## Mocar V2X Experiments
 

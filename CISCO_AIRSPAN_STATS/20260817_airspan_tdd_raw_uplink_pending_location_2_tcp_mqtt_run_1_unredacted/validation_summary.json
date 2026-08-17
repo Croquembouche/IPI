@@ -1,0 +1,76 @@
+{
+  "accepted": 6327,
+  "application_matrix_passed": true,
+  "attempts": 6327,
+  "cell_administrative_context": {
+    "cell_1": {
+      "broadcasting": false,
+      "source": "carried forward from the latest 2026-08-16 user report",
+      "state": "locked"
+    },
+    "cell_2": {
+      "broadcasting": true,
+      "source": "carried forward from the latest 2026-08-16 user report",
+      "state": "unlocked"
+    }
+  },
+  "complete_conditions": 7,
+  "expected_attempts": 6327,
+  "expected_conditions": 8,
+  "expected_receiver_rows_if_all_attempts_are_accepted": 6327,
+  "failed": 0,
+  "host_telemetry_files": 16,
+  "known_anomalies": [
+    {
+      "accepted": 227,
+      "condition": "tcp-payload-1048576",
+      "failed": 0,
+      "requested_attempts": 1000,
+      "retained_attempts": 227,
+      "sender_exit_status": 143,
+      "treatment": "preserved as a user-stopped 227-sample condition and reported separately from completed declared-count conditions",
+      "type": "operator-requested-condition-stop",
+      "validation": "sender and receiver sequences 1..227 match exactly in sequence, application-payload length, CRC32, client-send wall timestamp, and server-processing value"
+    },
+    {
+      "condition": "reported during tcp-payload-1048576",
+      "previous_provisional_rsrp_dbm": -98,
+      "previous_provisional_tdd_profile": "60/20/20",
+      "reported_rsrp_dbm": -100,
+      "reported_tdd_profile": "60/20/20",
+      "treatment": "the timestamped radio-context update supersedes provisional manifest context for run-level interpretation; acquisition manifests remain unchanged",
+      "type": "in-run-radio-context-update"
+    }
+  ],
+  "measurement_boundary_correction_applied": true,
+  "one_way_metrics_excluded": true,
+  "paper_facing_blockers": [
+    "This is one location and one operator-reported TDD profile, not a matched TDD comparison.",
+    "Timestamp-aligned Airspan configuration/ACP and MG52 radio exports are not stored with this block."
+  ],
+  "paper_facing_tdd_comparison_passed": false,
+  "payload_length_and_crc32_validated": true,
+  "per_condition_cell_context_validated": true,
+  "per_condition_radio_context_validated": true,
+  "radio_context": {
+    "rsrp_dbm": -100,
+    "rsrq_db": -13,
+    "state": "operator-reported",
+    "tdd_profile": "60/20/20"
+  },
+  "receiver_rows": 6327,
+  "remote_edge_artifacts_checksum_verified": true,
+  "remote_edge_files_verified": 68,
+  "schema": "edge4av-airspan-raw-uplink-validation-v1",
+  "sender_edge_sequence_correlation_validated": true,
+  "serving_cell_context": {
+    "handoff_state": "no-reported-handoff",
+    "serving_cell": 2,
+    "serving_cell_state": "carried-forward-cell-2-no-reported-handoff"
+  },
+  "serving_cell_selection_correction_applied": false,
+  "tdd_profile_correction_applied": false,
+  "user_stopped_conditions": 1,
+  "validated_conditions": 8,
+  "validation_errors": []
+}

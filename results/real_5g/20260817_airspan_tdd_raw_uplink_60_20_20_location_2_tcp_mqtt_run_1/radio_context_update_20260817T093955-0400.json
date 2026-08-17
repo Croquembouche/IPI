@@ -1,0 +1,14 @@
+{
+  "schema": "edge4av-airspan-raw-uplink-radio-context-update-v1",
+  "run_name": "20260817_airspan_tdd_raw_uplink_pending_location_2_tcp_mqtt_run_1",
+  "reported_at": "2026-08-17T09:39:55-04:00",
+  "reported_during_condition": "uplink-tcp-payload-1048576",
+  "condition_progress_at_report": 26,
+  "source": "user in-run report",
+  "reported_context": {
+    "tdd_profile": "60/20/20",
+    "rsrp_dbm": -100
+  },
+  "scope": "operator context for this stationary location-2 run",
+  "provenance_note": "Condition manifests retain provisional carried-forward acquisition entries. This update supersedes the provisional TDD and RSRP values for analysis without rewriting those manifests."
+}

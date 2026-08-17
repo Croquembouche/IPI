@@ -1,0 +1,173 @@
+{
+  "analyzed_at_utc": "2026-08-17T20:56:55.668346+00:00",
+  "application_direction": "uplink-oriented",
+  "application_matrix_passed": true,
+  "application_payload_bytes": [
+    1024,
+    10240,
+    102400,
+    1048576
+  ],
+  "attempts_per_condition": {
+    "mqtt-payload-1024": 1000,
+    "mqtt-payload-10240": 1000,
+    "mqtt-payload-102400": 1000,
+    "mqtt-payload-1048576": 100,
+    "tcp-payload-1024": 1000,
+    "tcp-payload-10240": 1000,
+    "tcp-payload-102400": 1000,
+    "tcp-payload-1048576": 227
+  },
+  "edge_artifact_verification": {
+    "all_remote_files_match_local_copies": true,
+    "conditions_checked": 8,
+    "itemized_differences": 0,
+    "local_edge_files": 68,
+    "matched_files": 68,
+    "method": "rsync checksum dry-run with itemized changes, one remote/local condition pair at a time",
+    "remote_files": 68,
+    "revocation_note": "the uniquely commented authorization line was removed from d1 after verification",
+    "schema": "edge4av-edge-artifact-verification-v1",
+    "temporary_access_key_fingerprint": "SHA256:lYmfM3uzxByKxQ1+vriLmxMTCmY+s1M/GdxFliJKvMQ",
+    "temporary_access_revoked": true,
+    "verification_completed_before_temporary_access_revocation": true,
+    "verification_date": "2026-08-17"
+  },
+  "git_commit_at_analysis": "3a392a47eb5870171b6954cc438095496d4fb6d5",
+  "known_anomalies": [
+    {
+      "accepted": 227,
+      "condition": "tcp-payload-1048576",
+      "failed": 0,
+      "requested_attempts": 1000,
+      "retained_attempts": 227,
+      "sender_exit_status": 143,
+      "treatment": "preserved as a user-stopped 227-sample condition and reported separately from completed declared-count conditions",
+      "type": "operator-requested-condition-stop",
+      "validation": "sender and receiver sequences 1..227 match exactly in sequence, application-payload length, CRC32, client-send wall timestamp, and server-processing value"
+    },
+    {
+      "condition": "reported during tcp-payload-1048576",
+      "previous_provisional_rsrp_dbm": -98,
+      "previous_provisional_tdd_profile": "60/20/20",
+      "reported_rsrp_dbm": -100,
+      "reported_tdd_profile": "60/20/20",
+      "treatment": "the timestamped radio-context update supersedes provisional manifest context for run-level interpretation; acquisition manifests remain unchanged",
+      "type": "in-run-radio-context-update"
+    }
+  ],
+  "measurement_boundary_correction": {
+    "accepted_row_rule": "A sender row is accepted only after every outside-timed comparison passes; the edge validates the complete request length and CRC32 before acknowledging.",
+    "applies_to": "all TCP and MQTT sender conditions in this run",
+    "declared_timing_boundary": "immediately before the framed request is sent through receipt and structural parsing of the complete correlated application acknowledgment",
+    "implemented_timing_end": "time.monotonic_ns immediately after the complete application acknowledgment has been received and parsed for exact frame length, magic, and protocol version",
+    "implemented_timing_start": "time.monotonic_ns immediately before the framed TCP request or MQTT publish is transmitted",
+    "one_way_latency_valid": false,
+    "outside_timed_interval": [
+      "acknowledgment sequence comparison",
+      "acknowledgment accepted-state comparison",
+      "acknowledgment application-payload-length comparison",
+      "acknowledgment payload-CRC32 comparison"
+    ],
+    "result_interpretation": "Use rtt_ms as monotonic complete-application-acknowledgment receipt-and-parse RTT, not TCP ACK RTT or one-way delay.",
+    "schema": "edge4av-airspan-raw-uplink-measurement-correction-v1",
+    "tcp_ack_only": false
+  },
+  "one_way_metrics_valid": false,
+  "operator_context": {
+    "evidence_qualification": {
+      "causal_tdd_comparison": false,
+      "cell_administrative_states_freshly_reported": false,
+      "exact_gps_committed_at_user_direction": true,
+      "fresh_same_day_gps_capture": true,
+      "one_location_one_profile_block": true,
+      "rsrp_freshly_reported_during_run": true,
+      "rsrq_freshly_reported": false,
+      "serving_cell_context_freshly_reported": false,
+      "tdd_profile_user_reported_during_run": true,
+      "timestamp_aligned_airspan_acp_export_present": false,
+      "timestamp_aligned_mg52_export_present": false
+    },
+    "location": {
+      "exact_coordinate_repository_allowed": true,
+      "fresh_gps_capture_for_this_run": true,
+      "gps_bag_duration_s": 59.599010966,
+      "gps_bag_messages": 16098,
+      "gps_capture_relationship": "fresh pre-application stationary capture at location_2",
+      "gps_csv_position_rows": 595,
+      "gps_raw_run_name": "20260817_airspan_tdd_raw_uplink_pending_location_2_tcp_mqtt_run_1_unredacted",
+      "gps_requested_duration_s": 60,
+      "horizontal_speed_max_mps": 0.0057,
+      "horizontal_speed_median_mps": 0.0021,
+      "horizontal_speed_p95_mps": 0.0038,
+      "latitude_span_m": 0.232,
+      "location_id": "location_2",
+      "longitude_span_m": 0.281,
+      "mobility_state": "stationary",
+      "physical_placement": "new vehicle location; antenna placement not reconfirmed",
+      "radial_distance_max_m": 0.189,
+      "radial_distance_p95_m": 0.171,
+      "repository_coordinate_0_001deg": "39.666, -75.757",
+      "stationarity_gate": "passed"
+    },
+    "radio": {
+      "cell_administrative_lock_definition": "locked means not broadcasting",
+      "cell_administrative_states": {
+        "cell_1": {
+          "broadcasting": false,
+          "source": "carried forward from the latest 2026-08-16 user report",
+          "state": "locked"
+        },
+        "cell_2": {
+          "broadcasting": true,
+          "source": "carried forward from the latest 2026-08-16 user report",
+          "state": "unlocked"
+        }
+      },
+      "handoff_state": "no-reported-handoff",
+      "rsrp_dbm": -100,
+      "rsrp_state": "user-reported-during-run-on-2026-08-17",
+      "rsrq_db": -13,
+      "rsrq_state": "carried-forward-from-most-recent-user-report-on-2026-08-16",
+      "serving_cell": 2,
+      "serving_cell_selection": "carried-forward-mg52-locked-onto-cell-2",
+      "serving_cell_state": "carried-forward-cell-2-no-reported-handoff",
+      "tdd_profile": "60/20/20",
+      "tdd_profile_state": "user-reported-during-run-on-2026-08-17"
+    },
+    "run_id": "edge4av-real-20260817-airspan-tdd-raw-uplink-pending-location-2-tcp-mqtt-run-1",
+    "run_name": "20260817_airspan_tdd_raw_uplink_pending_location_2_tcp_mqtt_run_1",
+    "schema": "edge4av-airspan-raw-uplink-operator-context-v1"
+  },
+  "overall": {
+    "accepted": 6327,
+    "accepted_application_bytes": 570212352,
+    "aggregate_application_goodput_mbps": 0.42694434618291577,
+    "attempts": 6327,
+    "complete_conditions": 7,
+    "conditions": 8,
+    "deadline_hit_rate_1000ms_pct": 66.9511616880038,
+    "deadline_hit_rate_100ms_pct": 34.59775565038723,
+    "deadline_hit_rate_500ms_pct": 62.05152520941995,
+    "deadline_hits_1000ms": 4236,
+    "deadline_hits_100ms": 2189,
+    "deadline_hits_500ms": 3926,
+    "deadline_misses_1000ms": 2091,
+    "deadline_misses_100ms": 4138,
+    "deadline_misses_500ms": 2401,
+    "failed": 0,
+    "success_rate_pct": 100.0,
+    "sum_active_application_elapsed_s": 10684.527987743,
+    "user_stopped_conditions": 1,
+    "validated_conditions": 8
+  },
+  "run_id": "edge4av-real-20260817-airspan-tdd-raw-uplink-pending-location-2-tcp-mqtt-run-1",
+  "run_name": "20260817_airspan_tdd_raw_uplink_pending_location_2_tcp_mqtt_run_1",
+  "schema": "edge4av-airspan-raw-uplink-run-v1",
+  "status": "complete-with-user-stopped-condition",
+  "timing_metric": "monotonic complete application-acknowledgment receipt-and-parse RTT",
+  "transports": [
+    "tcp",
+    "mqtt"
+  ]
+}

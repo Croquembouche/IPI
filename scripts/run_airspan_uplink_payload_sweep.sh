@@ -19,10 +19,14 @@ Optional environment:
   REMOTE_RUN_ROOT           Default: /home/d1/edge4av_followup/runs
   RUN_NAME                  Default: 20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2
   GPS_EVIDENCE_ROOT         Default: the validated run-1 raw result root
+  LOCATION_ID               Default: location_1
   TDD_PROFILE               40/40/20, 60/20/20, or 70/20/10; default: 70/20/10
+  TDD_STATE                 Default: operator-reported
   RSRP_DBM                  Default: -100
   RSRQ_DB                   Default: -13
+  RADIO_STATE               Default: operator-reported
   COUNT                     Default: 1000
+  PAYLOAD_1048576_COUNT     Default: COUNT; permits a shorter 1,024-KiB condition
   INTERVAL_MS               Default: 200
   MQTT_TIMEOUT_MS           Default: 60000
   MAX_CONDITION_SECONDS     Default: 14400
@@ -53,6 +57,7 @@ RUN_NAME="${RUN_NAME:-20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2}
 RUN_ID="${RUN_ID:-edge4av-real-${RUN_NAME//_/-}}"
 RAW_RUN_DIR="${RAW_RUN_DIR:-$REPO_ROOT/CISCO_AIRSPAN_STATS/${RUN_NAME}_unredacted}"
 GPS_EVIDENCE_ROOT="${GPS_EVIDENCE_ROOT:-$REPO_ROOT/CISCO_AIRSPAN_STATS/20260815_airspan_tdd_uplink_70_20_10_location_1_run_1_unredacted}"
+LOCATION_ID="${LOCATION_ID:-location_1}"
 EDGE_USER="${EDGE_USER:-d1}"
 EDGE_DEPLOY_ROOT="${EDGE_DEPLOY_ROOT:-/home/d1/edge4av_followup/ipi_2c043b3}"
 REMOTE_RUN_ROOT="${REMOTE_RUN_ROOT:-/home/d1/edge4av_followup/runs}"
@@ -60,6 +65,7 @@ REMOTE_RUN_DIR="$REMOTE_RUN_ROOT/$RUN_NAME"
 LOCAL_PROBE="$REPO_ROOT/scripts/private_5g_raw_bulk_probe.py"
 REMOTE_PROBE="$REMOTE_RUN_DIR/tools/private_5g_raw_bulk_probe.py"
 COUNT="${COUNT:-1000}"
+PAYLOAD_1048576_COUNT="${PAYLOAD_1048576_COUNT:-$COUNT}"
 INTERVAL_MS="${INTERVAL_MS:-200}"
 TCP_PORT="${TCP_PORT:-36666}"
 MQTT_PORT="${MQTT_PORT:-1883}"
@@ -69,8 +75,10 @@ TRANSPORT_TEXT="${TRANSPORTS:-tcp mqtt}"
 PAYLOAD_TEXT="${PAYLOADS:-1024 10240 102400 1048576}"
 PREFLIGHT_ONLY="${PREFLIGHT_ONLY:-0}"
 TDD_PROFILE="${TDD_PROFILE:-70/20/10}"
+TDD_STATE="${TDD_STATE:-operator-reported}"
 RSRP_DBM="${RSRP_DBM:--100}"
 RSRQ_DB="${RSRQ_DB:--13}"
+RADIO_STATE="${RADIO_STATE:-operator-reported}"
 
 : "${EDGE_HOST:?Set EDGE_HOST to the reachable d1 edge address}"
 : "${SSH_KEY:?Set SSH_KEY to the authorized per-run private key}"
@@ -82,14 +90,14 @@ RSRQ_DB="${RSRQ_DB:--13}"
 read -r -a TRANSPORT_LIST <<< "$TRANSPORT_TEXT"
 read -r -a PAYLOAD_LIST <<< "$PAYLOAD_TEXT"
 
-for name in RUN_NAME RUN_ID; do
+for name in RUN_NAME RUN_ID LOCATION_ID; do
   value="${!name}"
   if [[ ! "$value" =~ ^[A-Za-z0-9_.-]+$ ]]; then
     echo "$name contains unsupported characters" >&2
     exit 2
   fi
 done
-for name in COUNT INTERVAL_MS TCP_PORT MQTT_PORT MQTT_TIMEOUT_MS MAX_CONDITION_SECONDS; do
+for name in COUNT PAYLOAD_1048576_COUNT INTERVAL_MS TCP_PORT MQTT_PORT MQTT_TIMEOUT_MS MAX_CONDITION_SECONDS; do
   value="${!name}"
   if [[ ! "$value" =~ ^[1-9][0-9]*$ ]]; then
     echo "$name must be a positive integer" >&2
@@ -113,6 +121,10 @@ case "${PAYLOAD_LIST[*]}" in
 esac
 if [[ "$COUNT" != "1000" || "$INTERVAL_MS" != "200" ]]; then
   echo 'COUNT and INTERVAL_MS must remain 1000 and 200 for this acquisition' >&2
+  exit 2
+fi
+if (( PAYLOAD_1048576_COUNT > COUNT )); then
+  echo 'PAYLOAD_1048576_COUNT cannot exceed COUNT' >&2
   exit 2
 fi
 if [[ "$TDD_PROFILE" != "40/40/20" && "$TDD_PROFILE" != "60/20/20" && "$TDD_PROFILE" != "70/20/10" ]]; then
@@ -245,6 +257,7 @@ write_manifest() {
   local transport="$1"
   local payload="$2"
   local condition_id="$3"
+  local condition_count="$4"
   python3 -c '
 import json, pathlib, sys
 path = pathlib.Path(sys.argv[1])
@@ -262,7 +275,7 @@ data = {
     "mqtt_timeout_ms": int(sys.argv[9]),
     "outer_timeout_s": int(sys.argv[10]),
     "tdd_profile": sys.argv[11],
-    "tdd_state": "operator-reported",
+    "tdd_state": sys.argv[18],
     "airspan_cell": int(sys.argv[14]),
     "serving_cell": int(sys.argv[14]),
     "handoff_state": sys.argv[15],
@@ -273,8 +286,8 @@ data = {
     "cell_2_broadcasting": sys.argv[17] == "unlocked",
     "rsrp_dbm": int(sys.argv[12]),
     "rsrq_db": int(sys.argv[13]),
-    "radio_state": "operator-reported",
-    "location_id": "location_1",
+    "radio_state": sys.argv[19],
+    "location_id": sys.argv[20],
     "mobility_state": "stationary",
     "physical_placement": "not-reconfirmed",
     "dnn": "cisco5g",
@@ -289,9 +302,10 @@ data = {
 }
 path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 ' "$CURRENT_LOCAL_DIR/run_manifest.json" "$RUN_ID" "$RUN_NAME" "$condition_id" \
-    "$transport" "$payload" "$COUNT" "$INTERVAL_MS" "$MQTT_TIMEOUT_MS" \
+    "$transport" "$payload" "$condition_count" "$INTERVAL_MS" "$MQTT_TIMEOUT_MS" \
     "$MAX_CONDITION_SECONDS" "$TDD_PROFILE" "$RSRP_DBM" "$RSRQ_DB" \
-    "$SERVING_CELL" "$HANDOFF_STATE" "$CELL_1_ADMIN_STATE" "$CELL_2_ADMIN_STATE"
+    "$SERVING_CELL" "$HANDOFF_STATE" "$CELL_1_ADMIN_STATE" "$CELL_2_ADMIN_STATE" \
+    "$TDD_STATE" "$RADIO_STATE" "$LOCATION_ID"
 }
 
 record_timing() {
@@ -311,7 +325,8 @@ validate_condition() {
   local transport="$1"
   local payload="$2"
   local condition_id="$3"
-  python3 - "$CURRENT_LOCAL_DIR" "$transport" "$payload" "$condition_id" "$COUNT" <<'PY'
+  local condition_count="$4"
+  python3 - "$CURRENT_LOCAL_DIR" "$transport" "$payload" "$condition_id" "$condition_count" <<'PY'
 import csv
 import json
 import math
@@ -460,7 +475,7 @@ start_stack() {
   local transport="$1"
   local payload="$2"
   local condition_id="$3"
-  local common="--role receiver --run-id '$RUN_ID' --condition-id '$condition_id' --source-id veh-001 --intersection-id airspan-tdd-uplink-location-1 --max-payload-bytes 134217728"
+  local common="--role receiver --run-id '$RUN_ID' --condition-id '$condition_id' --source-id veh-001 --intersection-id airspan-tdd-uplink-$LOCATION_ID --max-payload-bytes 134217728"
   if [[ "$transport" == "tcp" ]]; then
     start_remote_process receiver receiver.csv \
       "python3 -u '$REMOTE_PROBE' --transport tcp --port '$TCP_PORT' $common"
@@ -480,6 +495,10 @@ run_condition() {
   local transport="$1"
   local payload="$2"
   local condition_id="uplink-${transport}-payload-${payload}"
+  local condition_count="$COUNT"
+  if [[ "$payload" == "1048576" ]]; then
+    condition_count="$PAYLOAD_1048576_COUNT"
+  fi
   local local_dir="$RAW_RUN_DIR/application/$transport/payload_${payload}"
   if [[ -f "$local_dir/complete.marker" ]]; then
     log "Skipping completed $transport payload $payload"
@@ -493,8 +512,8 @@ run_condition() {
   ssh_edge_bash "if ss -ltnp 2>/dev/null | grep -Eq ':$port( |$)'; then echo 'planned edge port occupied' >&2; exit 1; fi"
 
   reserve_condition "$transport" "$payload"
-  write_manifest "$transport" "$payload" "$condition_id"
-  printf '%s\n' "private_5g_raw_bulk_probe.py --role sender --transport $transport --host <edge-host> --port $port --count $COUNT --interval-ms $INTERVAL_MS --payload-bytes $payload" > "$CURRENT_LOCAL_DIR/commands.txt"
+  write_manifest "$transport" "$payload" "$condition_id" "$condition_count"
+  printf '%s\n' "private_5g_raw_bulk_probe.py --role sender --transport $transport --host <edge-host> --port $port --count $condition_count --interval-ms $INTERVAL_MS --payload-bytes $payload" > "$CURRENT_LOCAL_DIR/commands.txt"
   start_telemetry
   start_stack "$transport" "$payload" "$condition_id"
 
@@ -503,10 +522,10 @@ run_condition() {
     --transport "$transport"
     --host "$EDGE_HOST"
     --port "$port"
-    --count "$COUNT"
+    --count "$condition_count"
     --interval-ms "$INTERVAL_MS"
     --payload-bytes "$payload"
-    --intersection-id airspan-tdd-uplink-location-1
+    --intersection-id "airspan-tdd-uplink-$LOCATION_ID"
     --source-id veh-001
     --run-id "$RUN_ID"
     --condition-id "$condition_id"
@@ -536,7 +555,7 @@ run_condition() {
     echo "$transport payload $payload sender exited with status $sender_status" >&2
     return 1
   fi
-  validate_condition "$transport" "$payload" "$condition_id"
+  validate_condition "$transport" "$payload" "$condition_id" "$condition_count"
   log "Completed $transport payload $payload at $finished"
   CURRENT_LOCAL_DIR=""
   CURRENT_REMOTE_DIR=""

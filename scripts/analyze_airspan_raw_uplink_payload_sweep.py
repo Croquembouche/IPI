@@ -22,7 +22,8 @@ from typing import Any
 
 
 TRANSPORTS = ("tcp", "mqtt")
-PAYLOADS = (1024, 10240, 102400, 1048576, 2097152)
+SUPPORTED_PAYLOADS = (1024, 10240, 102400, 1048576, 2097152)
+DEFAULT_PAYLOADS = (1024, 10240, 102400, 1048576)
 DEADLINES_MS = (100, 500, 1000)
 EXPECTED_COUNT = 1000
 EXPECTED_SENDER_DETAIL = "validated compact application acknowledgment"
@@ -183,18 +184,20 @@ def analyze_condition(
     operator_context: dict[str, Any],
     serving_cell_correction: dict[str, Any] | None,
     tdd_profile_correction: dict[str, Any] | None,
+    stopped_condition: dict[str, Any] | None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]], list[str]]:
     condition_dir = run_root / "application" / transport / f"payload_{payload}"
     condition_name = f"{transport}-payload-{payload}"
     errors: list[str] = []
     required = {
-        "complete marker": condition_dir / "complete.marker",
         "sender CSV": condition_dir / "sender.csv",
         "receiver CSV": condition_dir / "edge" / "logs" / "receiver.csv",
         "manifest": condition_dir / "run_manifest.json",
         "condition validation": condition_dir / "validation_summary.json",
         "sender status": condition_dir / "sender.exit_status",
     }
+    if stopped_condition is None:
+        required["complete marker"] = condition_dir / "complete.marker"
     for label, path in required.items():
         if not path.is_file():
             errors.append(f"{condition_name}: missing {label}: {path}")
@@ -213,20 +216,28 @@ def analyze_condition(
     failed_rows = [row for row in sender if row.get("accepted", "").lower() == "false"]
     expected_condition_id = f"uplink-{transport}-payload-{payload}"
     expected_crc = deterministic_crc32(payload)
+    declared_count = int(manifest.get("count", 0))
+    target_count = (
+        int(stopped_condition["retained_attempts"])
+        if stopped_condition is not None
+        else declared_count
+    )
+    condition_status = "user-stopped" if stopped_condition is not None else "complete"
 
     radio_context = operator_context["radio"]
     manifest_expected = {
-        "status": "complete",
+        "status": "running" if stopped_condition is not None else "complete",
         "transport": transport,
         "condition_id": expected_condition_id,
         "application_payload_bytes": payload,
-        "count": EXPECTED_COUNT,
+        "count": declared_count,
         "interval_ms": 200,
         "timing_metric": "monotonic_complete_application_ack_rtt",
         "payload_protocol": "exact raw application body with length and CRC32 validation",
-        "rsrp_dbm": operator_context["radio"]["rsrp_dbm"],
         "rsrq_db": operator_context["radio"]["rsrq_db"],
     }
+    if not str(manifest.get("radio_state", "")).startswith("provisional-"):
+        manifest_expected["rsrp_dbm"] = operator_context["radio"]["rsrp_dbm"]
     if tdd_profile_correction is None:
         manifest_expected["tdd_profile"] = operator_context["radio"]["tdd_profile"]
     else:
@@ -276,27 +287,30 @@ def analyze_condition(
             errors.append(
                 f"{condition_name}: manifest {key}={manifest.get(key)!r}, expected {expected!r}"
             )
-    if required["sender status"].read_text(encoding="utf-8").strip() != "0":
-        errors.append(f"{condition_name}: sender exit status is not zero")
-
-    if len(sender) != EXPECTED_COUNT:
-        errors.append(f"{condition_name}: sender rows {len(sender)} != {EXPECTED_COUNT}")
-    if len(receiver) < len(accepted_rows) or len(receiver) > EXPECTED_COUNT:
+    expected_sender_status = "143" if stopped_condition is not None else "0"
+    if required["sender status"].read_text(encoding="utf-8").strip() != expected_sender_status:
         errors.append(
-            f"{condition_name}: receiver rows {len(receiver)} outside accepted..attempt range "
-            f"{len(accepted_rows)}..{EXPECTED_COUNT}"
+            f"{condition_name}: sender exit status is not {expected_sender_status}"
         )
 
-    expected_sequences = list(range(1, EXPECTED_COUNT + 1))
+    if len(sender) != target_count:
+        errors.append(f"{condition_name}: sender rows {len(sender)} != {target_count}")
+    if len(receiver) < len(accepted_rows) or len(receiver) > target_count:
+        errors.append(
+            f"{condition_name}: receiver rows {len(receiver)} outside accepted..attempt range "
+            f"{len(accepted_rows)}..{target_count}"
+        )
+
+    expected_sequences = list(range(1, target_count + 1))
     try:
         sender_sequences = [int(row["sequence"]) for row in sender]
         receiver_sequences = [int(row["sequence"]) for row in receiver]
         if sender_sequences != expected_sequences:
-            errors.append(f"{condition_name}: sender sequence is not exactly 1..1000")
+            errors.append(f"{condition_name}: sender sequence is not exactly 1..{target_count}")
         if len(set(receiver_sequences)) != len(receiver_sequences):
             errors.append(f"{condition_name}: receiver sequence contains duplicates")
         if any(sequence not in expected_sequences for sequence in receiver_sequences):
-            errors.append(f"{condition_name}: receiver sequence is outside 1..1000")
+            errors.append(f"{condition_name}: receiver sequence is outside 1..{target_count}")
 
         sender_checks = (
             ("accepted state", lambda row: row["accepted"].lower() in ("true", "false")),
@@ -374,9 +388,9 @@ def analyze_condition(
         }[payload],
         "application_payload_bytes": payload,
         "tdd_profile": radio_context.get("tdd_profile"),
-        "rsrp_dbm": manifest.get("rsrp_dbm"),
-        "rsrq_db": manifest.get("rsrq_db"),
-        "radio_state": manifest.get("radio_state"),
+        "rsrp_dbm": radio_context.get("rsrp_dbm"),
+        "rsrq_db": radio_context.get("rsrq_db"),
+        "radio_state": radio_context.get("rsrp_state"),
         "serving_cell": radio_context.get("serving_cell"),
         "serving_cell_state": radio_context.get("serving_cell_state"),
         "cell_1_administrative_state": (
@@ -393,6 +407,9 @@ def analyze_condition(
         ),
         "expected_payload_crc32": expected_crc,
         "attempts": len(sender),
+        "declared_attempts": declared_count,
+        "target_attempts": target_count,
+        "condition_status": condition_status,
         "accepted": len(accepted_rows),
         "failed": len(sender) - len(accepted_rows),
         "receiver_rows": len(receiver),
@@ -427,7 +444,7 @@ def analyze_condition(
         )
 
     stored_expected = {
-        "status": "complete",
+        "status": condition_status,
         "transport": transport,
         "application_payload_bytes": payload,
         "attempts": summary["attempts"],
@@ -512,16 +529,15 @@ def main() -> int:
         "--payloads",
         nargs="+",
         type=int,
-        choices=PAYLOADS,
-        default=list(PAYLOADS),
-        help="Payload-byte subset to analyze (default: the full payload matrix)",
+        choices=SUPPORTED_PAYLOADS,
+        default=list(DEFAULT_PAYLOADS),
+        help="Payload-byte subset to analyze (default: current matrix through 1 MiB; historical 2 MiB remains selectable)",
     )
     args = parser.parse_args()
 
     selected_transports = tuple(dict.fromkeys(args.transports))
     selected_payloads = tuple(dict.fromkeys(args.payloads))
     expected_conditions = len(selected_transports) * len(selected_payloads)
-    expected_attempts = expected_conditions * EXPECTED_COUNT
 
     run_root = args.run_root.resolve()
     if not run_root.is_dir() or run_root == Path("/"):
@@ -589,6 +605,11 @@ def main() -> int:
     if not anomalies_path.is_file():
         raise SystemExit(f"missing known anomalies record: {anomalies_path}")
     known_anomalies = load_json(anomalies_path).get("anomalies", [])
+    stopped_conditions = {
+        item["condition"]: item
+        for item in known_anomalies
+        if item.get("type") == "operator-requested-condition-stop"
+    }
     edge_verification_path = run_root / "edge_artifact_verification.json"
     if not edge_verification_path.is_file():
         raise SystemExit(f"missing edge artifact verification: {edge_verification_path}")
@@ -610,21 +631,30 @@ def main() -> int:
                 operator_context,
                 serving_cell_correction,
                 tdd_profile_correction,
+                stopped_conditions.get(f"{transport}-payload-{payload}"),
             )
             conditions.append(condition)
             host_rows.extend(hosts)
             errors.extend(condition_errors)
 
     complete_conditions = sum(
-        row.get("attempts") == EXPECTED_COUNT and row.get("condition_validation_passed") is True
+        row.get("condition_status") == "complete"
+        and row.get("attempts") == row.get("target_attempts")
+        and row.get("condition_validation_passed") is True
         for row in conditions
     )
+    validated_conditions = sum(
+        row.get("attempts") == row.get("target_attempts")
+        and row.get("condition_validation_passed") is True
+        for row in conditions
+    )
+    expected_attempts = sum(int(row.get("target_attempts", 0)) for row in conditions)
     attempts = sum(int(row.get("attempts", 0)) for row in conditions)
     accepted = sum(int(row.get("accepted", 0)) for row in conditions)
     failed = sum(int(row.get("failed", 0)) for row in conditions)
     total_application_bytes = sum(int(row.get("accepted_application_bytes", 0)) for row in conditions)
     total_active_s = sum(float(row.get("active_application_elapsed_s", 0)) for row in conditions)
-    matrix_passed = complete_conditions == expected_conditions and not errors
+    matrix_passed = validated_conditions == expected_conditions and not errors
     radio = operator_context["radio"]
     per_condition_radio_context_validated = all(
         row.get("tdd_profile") == radio["tdd_profile"]
@@ -649,6 +679,10 @@ def main() -> int:
     overall = {
         "conditions": len(conditions),
         "complete_conditions": complete_conditions,
+        "validated_conditions": validated_conditions,
+        "user_stopped_conditions": sum(
+            row.get("condition_status") == "user-stopped" for row in conditions
+        ),
         "attempts": attempts,
         "accepted": accepted,
         "failed": failed,
@@ -669,14 +703,16 @@ def main() -> int:
 
     run_manifest = {
         "schema": "edge4av-airspan-raw-uplink-run-v1",
-        "status": "complete" if matrix_passed else "invalid",
+        "status": "complete-with-user-stopped-condition" if matrix_passed and stopped_conditions else ("complete" if matrix_passed else "invalid"),
         "run_name": operator_context["run_name"],
         "run_id": operator_context["run_id"],
         "analyzed_at_utc": datetime.now(timezone.utc).isoformat(),
         "git_commit_at_analysis": git_commit(repo_root),
         "transports": list(selected_transports),
         "application_payload_bytes": list(selected_payloads),
-        "attempts_per_condition": EXPECTED_COUNT,
+        "attempts_per_condition": {
+            row["condition"]: row.get("target_attempts") for row in conditions
+        },
         "application_direction": "uplink-oriented",
         "timing_metric": "monotonic complete application-acknowledgment receipt-and-parse RTT",
         "measurement_boundary_correction": measurement_correction,
@@ -696,6 +732,10 @@ def main() -> int:
         "application_matrix_passed": matrix_passed,
         "expected_conditions": expected_conditions,
         "complete_conditions": complete_conditions,
+        "validated_conditions": validated_conditions,
+        "user_stopped_conditions": sum(
+            row.get("condition_status") == "user-stopped" for row in conditions
+        ),
         "expected_attempts": expected_attempts,
         "attempts": attempts,
         "accepted": accepted,
@@ -739,6 +779,7 @@ def main() -> int:
     condition_fields = [
         "condition",
         "condition_validation_passed",
+        "condition_status",
         "transport",
         "payload_label",
         "application_payload_bytes",
@@ -754,6 +795,8 @@ def main() -> int:
         "cell_2_broadcasting",
         "expected_payload_crc32",
         "attempts",
+        "declared_attempts",
+        "target_attempts",
         "accepted",
         "failed",
         "receiver_rows",
@@ -857,7 +900,7 @@ def main() -> int:
     lines = [
         "# Private 5G Raw-Byte Uplink Payload Sweep",
         "",
-        f"- Application matrix: `{'passed' if matrix_passed else 'failed'}` ({complete_conditions}/{expected_conditions} conditions).",
+        f"- Final requested matrix: `{'passed' if matrix_passed else 'failed'}` ({validated_conditions}/{expected_conditions} validated conditions; {complete_conditions} completed and {len(stopped_conditions)} user-stopped).",
         f"- Attempts: `{attempts}`; accepted: `{accepted}`; failed: `{failed}`; success: `{overall['success_rate_pct']:.6f}%`.",
         "- Request: exact raw application body; response: compact correlated application acknowledgment after edge length/CRC32 validation.",
         "- RTT: sender monotonic time immediately before framed transmission through receipt and structural parsing of the complete application acknowledgment.",
@@ -889,9 +932,9 @@ def main() -> int:
             "- Payload labels are application-body bytes, not individual IP packets. TCP can segment one application object across many packets; MQTT adds its own framing over TCP.",
             "- Application goodput is accepted payload bytes divided by the sender span from the first request transmission to the final application acknowledgment. Interface rates also include framing, acknowledgments, telemetry, and incidental interface traffic.",
             "- Topic/sequence/accepted-state/payload-length/CRC32 comparisons occur immediately after the RTT timer. Every accepted row passed them, but their local CPU time is not included in `rtt_ms`.",
-            "- TDD, RSRP, and RSRQ are copied into every per-condition manifest and application-summary row, and the analyzer rejects a condition if those values differ from the run-level operator context.",
+            "- The application-summary rows use the final run-level TDD, RSRP, and RSRQ context. Acquisition manifests retain their contemporaneous entries; provisional values are superseded by the timestamped radio-context update rather than silently rewritten.",
             "- The per-condition telemetry captures are process-scoped in time, but cross-host telemetry timestamps are not used for latency because the clocks were unsynchronized.",
-            f"- The referenced one-minute ROS 2 bag and exact coordinates remain in excluded raw location evidence `{location['gps_raw_run_name']}`; only the stationarity summary and 0.001-degree derivative are repository-facing.",
+            f"- The one-minute ROS 2 bag and exact coordinates are retained in raw location evidence `{location['gps_raw_run_name']}`; the public derivative retains only the stationarity summary and 0.001-degree coordinate.",
             f"- Evidence states: TDD `{radio.get('tdd_profile_state', 'not-recorded')}`; "
             f"serving context `{radio.get('serving_cell_state', 'not-recorded')}`; "
             f"RSRP `{radio.get('rsrp_state', radio.get('radio_measurement_state', 'not-recorded'))}`; "

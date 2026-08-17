@@ -1,0 +1,25 @@
+{
+  "schema": "edge4av-airspan-raw-uplink-known-anomalies-v1",
+  "anomalies": [
+    {
+      "type": "operator-requested-condition-stop",
+      "condition": "tcp-payload-1048576",
+      "requested_attempts": 1000,
+      "retained_attempts": 227,
+      "accepted": 227,
+      "failed": 0,
+      "sender_exit_status": 143,
+      "treatment": "preserved as a user-stopped 227-sample condition and reported separately from completed declared-count conditions",
+      "validation": "sender and receiver sequences 1..227 match exactly in sequence, application-payload length, CRC32, client-send wall timestamp, and server-processing value"
+    },
+    {
+      "type": "in-run-radio-context-update",
+      "condition": "reported during tcp-payload-1048576",
+      "previous_provisional_tdd_profile": "60/20/20",
+      "reported_tdd_profile": "60/20/20",
+      "previous_provisional_rsrp_dbm": -98,
+      "reported_rsrp_dbm": -100,
+      "treatment": "the timestamped radio-context update supersedes provisional manifest context for run-level interpretation; acquisition manifests remain unchanged"
+    }
+  ]
+}

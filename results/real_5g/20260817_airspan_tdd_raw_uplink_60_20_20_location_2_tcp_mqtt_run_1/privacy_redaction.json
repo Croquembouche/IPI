@@ -1,0 +1,25 @@
+{
+  "schema": "edge4av-airspan-raw-uplink-repository-redaction-v1",
+  "host_telemetry": {
+    "files": 16,
+    "rows": 21474,
+    "hostname_policy": "Repository-facing hostnames use the logical roles car and d1.",
+    "process_policy": "Host and process resource counters are retained; process command lines are omitted.",
+    "removed_process_cmdline_fields": 57997
+  },
+  "text_artifacts": {
+    "sanitized_files": 12,
+    "policy": "Deployment-specific endpoint addresses, hostnames, absolute paths, private IP addresses, and MAC addresses are replaced with logical placeholders."
+  },
+  "edge_verification": {
+    "policy": "Remote-to-raw-local checksum comparison completed before sanitization; sanitized text files are not expected to retain raw hashes."
+  },
+  "location": {
+    "repository_coordinate_precision_deg": 0.001,
+    "fresh_gps_capture_for_this_run": true,
+    "exact_coordinates_present": false,
+    "serialized_rosbag_present": false,
+    "policy": "The public tree retains the stationary summary and 0.001-degree coordinate only. Exact GPS CSV and rosbag remain in the separately committed raw tree at the user's direction."
+  },
+  "raw_recovery": "The original files, including exact GNSS and deployment metadata, remain in the checksum-manifested raw run tree."
+}

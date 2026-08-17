@@ -1,0 +1,57 @@
+{
+  "schema": "edge4av-airspan-raw-uplink-operator-context-v1",
+  "run_name": "20260817_airspan_tdd_raw_uplink_pending_location_2_tcp_mqtt_run_1",
+  "run_id": "edge4av-real-20260817-airspan-tdd-raw-uplink-pending-location-2-tcp-mqtt-run-1",
+  "radio": {
+    "tdd_profile": "60/20/20",
+    "tdd_profile_state": "user-reported-during-run-on-2026-08-17",
+    "serving_cell": 2,
+    "serving_cell_selection": "carried-forward-mg52-locked-onto-cell-2",
+    "serving_cell_state": "carried-forward-cell-2-no-reported-handoff",
+    "handoff_state": "no-reported-handoff",
+    "cell_administrative_lock_definition": "locked means not broadcasting",
+    "cell_administrative_states": {
+      "cell_1": {"state": "locked", "broadcasting": false, "source": "carried forward from the latest 2026-08-16 user report"},
+      "cell_2": {"state": "unlocked", "broadcasting": true, "source": "carried forward from the latest 2026-08-16 user report"}
+    },
+    "rsrp_dbm": -100,
+    "rsrq_db": -13,
+    "rsrp_state": "user-reported-during-run-on-2026-08-17",
+    "rsrq_state": "carried-forward-from-most-recent-user-report-on-2026-08-16"
+  },
+  "location": {
+    "location_id": "location_2",
+    "mobility_state": "stationary",
+    "physical_placement": "new vehicle location; antenna placement not reconfirmed",
+    "repository_coordinate_0_001deg": "39.666, -75.757",
+    "exact_coordinate_repository_allowed": true,
+    "gps_raw_run_name": "20260817_airspan_tdd_raw_uplink_pending_location_2_tcp_mqtt_run_1_unredacted",
+    "fresh_gps_capture_for_this_run": true,
+    "gps_capture_relationship": "fresh pre-application stationary capture at location_2",
+    "gps_requested_duration_s": 60,
+    "gps_bag_duration_s": 59.599010966,
+    "gps_bag_messages": 16098,
+    "gps_csv_position_rows": 595,
+    "latitude_span_m": 0.232,
+    "longitude_span_m": 0.281,
+    "radial_distance_p95_m": 0.171,
+    "radial_distance_max_m": 0.189,
+    "horizontal_speed_median_mps": 0.0021,
+    "horizontal_speed_p95_mps": 0.0038,
+    "horizontal_speed_max_mps": 0.0057,
+    "stationarity_gate": "passed"
+  },
+  "evidence_qualification": {
+    "fresh_same_day_gps_capture": true,
+    "one_location_one_profile_block": true,
+    "causal_tdd_comparison": false,
+    "tdd_profile_user_reported_during_run": true,
+    "rsrp_freshly_reported_during_run": true,
+    "rsrq_freshly_reported": false,
+    "cell_administrative_states_freshly_reported": false,
+    "serving_cell_context_freshly_reported": false,
+    "timestamp_aligned_airspan_acp_export_present": false,
+    "timestamp_aligned_mg52_export_present": false,
+    "exact_gps_committed_at_user_direction": true
+  }
+}
