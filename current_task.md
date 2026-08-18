@@ -2,6 +2,151 @@
 
 Last updated: 2026-08-17
 
+## 2026-08-17 Matched 40/40/20 Location-3 Collection
+
+Complete. After the operator changed TDD to `40/40/20`, repeat the unchanged
+location-3, RSRP `-100 dBm`, RSRQ `-13 dB` measurements that were collected at
+`70/20/10`. First collect the downlink-heavy TCP/MQTT RTT matrix at 1, 10, 100,
+and 500 KiB with 1,000 exact validated responses per condition. Then collect
+10 new matched directional-throughput repetitions, each using an exact 50-MiB
+vehicle-to-d1 upload followed by an exact 50-MiB d1-to-vehicle download. Reuse
+the fresh location-3 GNSS evidence because placement is unchanged. Keep the
+profiles separate until all within-profile validation passes.
+
+Validation state: protocol, route, d1 access, source-hash, remote self-test, and
+port preflight passed. The RTT matrix completed all eight TCP/MQTT conditions
+at 1,000/1,000 accepted responses with zero failures. In the 10-repetition
+throughput stage, all 10 repetitions completed in both directions with exact
+byte-count and CRC32 validation. Receiver-observed throughput averages 2.836
+Mb/s upload (95% t interval 2.685--2.987 Mb/s) and 99.756 Mb/s download (95%
+t interval 82.316--117.195 Mb/s). No experiment process or planned listener
+remains. The final raw aggregate and repository-facing comparison are stored
+under the completed run and
+`results/real_5g/20260817_airspan_tdd_profile_comparison_location_3/`. The
+temporary d1 authorization was revoked, its local key pair and marker were
+moved to trash, and the revoked key no longer authenticates.
+
+Audit after the operator questioned the throughput result: direction handling,
+the Mb/s conversion, exact byte count, CRC32 correlation, and independent
+endpoint timers are correct. The identical SHA-256 probe was used for both TDD
+profiles, a local 50-MiB control reached 4.49 Gb/s at the receiver, and vehicle
+interface counters independently corroborate approximately 3-Mb/s transmission
+in the current run. However, a live socket inspection found the current upload
+flow at roughly 51-ms RTT with congestion window 12, 437,296 retransmitted bytes
+after 23,044,936 bytes sent, and approximately 2.42-Mb/s delivery rate. RustDesk,
+Codex/browser, and other TCP connections were also using the vehicle's `eno2`
+default route. The vehicle point-to-point address changed from `.29` during the
+70/20/10 run to `.30` after the network/TDD reconfiguration. The operator then
+confirmed that TDD was the only radio-side setting changed and that the other
+host applications contributed negligible work relative to the experiment.
+Accordingly, retain the background connections and address transition as
+experimental context rather than automatically disqualifying the comparison.
+The retransmissions and reduced congestion window may be mechanisms through
+which the `40/40/20` profile affected end-to-end TCP goodput. The result remains
+a single-flow application-goodput measurement rather than direct radio-PHY
+capacity, and the TDD state remains operator-reported without a timestamp-
+aligned configuration export.
+
+Experiment-family separation correction: do not pool or relabel the three
+measurement families. The August 15--16 TCP/MQTT experiments are uplink-heavy
+RTT measurements: the vehicle sends the declared large object to d1, and d1
+returns a compact acknowledgment. The August 17 TCP/MQTT experiments are
+downlink-heavy RTT measurements: the vehicle sends a compact request, and d1
+returns the declared large object. The August 17 exact 50-MiB TCP experiment is
+the only current bandwidth measurement and contains two separate directions:
+vehicle-to-d1 upload and d1-to-vehicle download. It is not an RTT sweep and
+must not be pooled with either TCP/MQTT request/response family. Compare TDD
+profiles only within the same experiment family, direction, transport, payload,
+location, and reported radio context; there is no single pooled "TDD latency"
+result across these three families.
+
+Final documentation and validation: E16--E17 in `experiment_summary.md` record
+the downlink-heavy RTT and exact 50-MiB results, while `remaining_exp.md`
+records which directional matrix is complete and which same-location uplink
+RTT work was not collected. All six August 17 location-3 raw trees and the
+derived result have SHA-256 manifests. Those manifests verify; all JSON parses;
+the Python probes compile; both shell runners pass syntax checks; all 16
+downlink conditions account for 16,000 accepted responses and zero failures;
+all 40 primary bulk direction-runs pass exact byte/CRC validation; and every
+derived RTT and throughput CSV value matches its source artifact.
+
+## 2026-08-17 Location-3 Directional Throughput Repetitions
+
+Complete. Collected 10 new matched repetitions of the exact 50-MiB single-flow
+TCP measurement under unchanged TDD `70/20/10`, location 3, RSRP `-100 dBm`,
+and RSRQ `-13 dB`. Every repetition runs vehicle-to-d1 upload first and
+d1-to-vehicle download second. The preceding single run remains a pilot and is
+not silently pooled into the primary `n=10` estimate. Each direction must match
+52,428,800 bytes and CRC32 at both endpoints before its repetition is accepted.
+
+All 20 direction-runs passed exact endpoint byte-count and CRC32 validation.
+Receiver-observed upload throughput has a 12.000 Mb/s mean, 12.098 Mb/s median,
+0.338 Mb/s sample standard deviation, and 11.759--12.242 Mb/s two-sided 95%
+t interval for the mean. Receiver-observed download throughput has a 126.786
+Mb/s mean, 136.166 Mb/s median, 28.643 Mb/s sample standard deviation, and
+106.296--147.277 Mb/s 95% t interval. Download contains one valid 54.050-Mb/s
+repetition and is materially more variable than upload. Cleanup and access
+revocation passed: no experiment processes or planned ports remain, and the
+temporary d1 key was revoked and removed. Aggregate structured-data, condition-
+marker, protocol self-test, shell-syntax, and `git diff --check` validation pass.
+
+## 2026-08-17 Location-3 Directional Bulk-Throughput Collection
+
+Complete. At the unchanged stationary location-3 placement and radio
+context, measure one sequential TCP bulk transfer in each direction under TDD
+`70/20/10`, RSRP `-100 dBm`, and RSRQ `-13 dB`. The vehicle first transfers
+exactly 50 MiB (52,428,800 B) to d1, then requests an exact 50-MiB reverse
+transfer from d1. Preserve iperf3 interval and end summaries from both endpoints
+and report application-layer sender/receiver throughput.
+This is a single-flow host-path measurement, not a direct estimate of radio PHY
+capacity. Reuse the immediately preceding fresh location-3 GNSS evidence.
+
+The vehicle-to-d1 upload delivered 50 MiB in 34.550 seconds at a
+receiver-observed 12.140 Mb/s. The d1-to-vehicle download delivered 50 MiB in
+2.784 seconds at a receiver-observed 150.631 Mb/s, 12.408 times the upload
+throughput in this single sequential run. Both endpoints agree on direction,
+exact byte count, and CRC32, and both servers exited with status 0. TCP
+retransmissions were not captured by this dependency-free exact-byte probe.
+
+## 2026-08-17 TCP/MQTT Raw-Downlink Collection
+
+Complete. The requested stationary experiment uses TDD `70/20/10` and
+operator-reported RSRP `-100 dBm`. The vehicle sends a compact request to d1,
+which returns an exact 1, 10, 100, or 500 KiB application body. Each TCP and
+MQTT condition declares 1,000 requests. RTT begins immediately before request
+transmission and ends only after receipt and validation of the complete
+correlated response body, including its length, sequence, and CRC32. A fresh
+60-second ROS 2 GNSS capture completed before the workload. It contains 16,102
+messages over 59.629 seconds. Its 594 BESTPOS samples have 0.021 m maximum
+radial spread, and the median position is approximately 212 m from the prior
+location-2 median; the run is therefore labeled `location_3`.
+
+RSRQ, cell administrative state, serving cell, and handoff state were not
+restated for this run. Until corrected, acquisition metadata will identify
+their values as carried forward from the immediately preceding location-2 run,
+not as fresh measurements.
+
+Working files:
+
+- `scripts/private_5g_raw_downlink_probe.py`
+- `scripts/run_airspan_uplink_payload_sweep.sh`
+- `CISCO_AIRSPAN_STATS/20260817_airspan_tdd_raw_downlink_70_20_10_location_3_tcp_mqtt_run_1_unredacted/`
+- `current_task.md`
+
+Validation state: protocol self-tests, Python compilation, shell syntax, and
+three-message TCP and MQTT loopback tests at 500 KiB pass. Fresh GNSS capture
+passes the stationary gate. The first edge attempt exposed a Python 3.8
+compatibility error after one valid TCP response; it was stopped, retained as
+a failed diagnostic run, and did not qualify as experiment data. The compatible
+implementation subsequently passed three-message 500-KiB TCP and MQTT tests
+across the actual vehicle-to-d1 path. Clean run-2 acquisition ran from
+2026-08-17 17:33:48 through 18:07:27 EDT. All eight TCP/MQTT conditions
+completed at 1,000/1,000 accepted exchanges: 8,000 complete validated
+responses with zero failures. Every condition has a complete marker and a
+validation summary confirming 1,000 matching edge receiver rows. No local or
+edge experiment process or planned port remains, and the temporary d1 key was
+revoked and removed.
+
 ## Repository README
 
 Complete. A new root `README.md` explains why IPI combines stateless CV/ITS

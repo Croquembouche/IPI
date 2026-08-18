@@ -1,0 +1,1 @@
+emitter_role,emit_time_ns,run_id,condition_id,transport,source_id,sequence,application_payload_bytes,wire_request_bytes,wire_response_bytes,accepted,client_send_wall_ns,client_receive_wall_ns,rtt_ms,server_processing_ms,payload_crc32,detail

@@ -1,0 +1,22 @@
+{
+  "application_protocol": "exact validated single-flow TCP bulk transfer",
+  "block_bytes": 65536,
+  "direction_order": [
+    "vehicle-to-d1-upload",
+    "d1-to-vehicle-download"
+  ],
+  "gnss_evidence": "../20260817_airspan_tdd_raw_downlink_70_20_10_location_3_tcp_mqtt_run_2_unredacted/location/gps",
+  "location_id": "location_3",
+  "mobility_state": "stationary",
+  "pilot_run_excluded_from_primary_estimate": "../20260817_airspan_tdd_tcp_bulk_50mib_70_20_10_location_3_run_1_unredacted",
+  "radio_context_provenance": "unchanged context reported by operator; RSRQ and cell details carried forward",
+  "repetitions": 10,
+  "rsrp_dbm": -100,
+  "rsrq_db": -13,
+  "schema": "edge4av-directional-exact-bulk-throughput-repetitions-v1",
+  "status": "complete",
+  "streams": 1,
+  "tdd_profile": "70/20/10",
+  "total_bytes_per_direction_per_repetition": 52428800,
+  "transport": "tcp"
+}

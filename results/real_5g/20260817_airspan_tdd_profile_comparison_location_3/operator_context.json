@@ -1,0 +1,20 @@
+{
+  "bandwidth_and_downlink_location": "location_3",
+  "mobility_state": "stationary",
+  "operator_confirmation": {
+    "background_host_applications": "reported to introduce negligible additional work relative to the experiment",
+    "only_radio_side_setting_changed": "tdd_profile"
+  },
+  "recorded_at": "2026-08-17T19:53:45-04:00",
+  "rsrp_dbm": -100,
+  "rsrq_db": -13,
+  "tdd_field_order": [
+    "downlink",
+    "uplink",
+    "dynamic"
+  ],
+  "tdd_profiles": [
+    "70/20/10",
+    "40/40/20"
+  ]
+}

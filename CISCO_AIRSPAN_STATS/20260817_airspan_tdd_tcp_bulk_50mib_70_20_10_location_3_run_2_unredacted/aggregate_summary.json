@@ -1,0 +1,62 @@
+{
+  "bytes_per_direction_per_repetition": 52428800,
+  "confidence_interval_method": "two-sided 95% t interval over 10 repetition-level receiver-throughput values, df=9",
+  "download_receiver_throughput_mbps": {
+    "ci95_high": 147.27658339308306,
+    "ci95_low": 106.29598904735258,
+    "coefficient_of_variation_percent": 22.592,
+    "maximum": 155.3290423145201,
+    "mean": 126.78628622021782,
+    "median": 136.16577406706284,
+    "minimum": 54.050436234188304,
+    "sample_standard_deviation": 28.643462412185826,
+    "values": [
+      106.90177423020515,
+      143.8663749940336,
+      140.11993730033157,
+      139.95095562360666,
+      54.050436234188304,
+      135.95666935842766,
+      122.04081959119144,
+      155.3290423145201,
+      136.37487877569805,
+      133.27197377997558
+    ]
+  },
+  "failed_direction_runs": 0,
+  "paired_download_to_upload_ratio": {
+    "ci95_high": 12.368971423834935,
+    "ci95_low": 8.823869845003955,
+    "maximum": 13.164849212936312,
+    "mean": 10.596420634419445,
+    "median": 11.465619299601054,
+    "minimum": 4.400988115826081,
+    "sample_standard_deviation": 2.477855322544999
+  },
+  "repetitions": 10,
+  "status": "complete",
+  "total_direction_runs": 20,
+  "upload_receiver_throughput_mbps": {
+    "ci95_high": 12.242104735833157,
+    "ci95_low": 11.758742756103226,
+    "coefficient_of_variation_percent": 2.815,
+    "maximum": 12.54738108948798,
+    "mean": 12.000423745968192,
+    "median": 12.097727956988663,
+    "minimum": 11.331668932860506,
+    "sample_standard_deviation": 0.3378467520766079,
+    "values": [
+      12.54738108948798,
+      12.104615027484572,
+      12.132826427300385,
+      12.093591446771374,
+      12.281431990198149,
+      11.94445409685951,
+      11.667632890243603,
+      11.798771091269888,
+      12.101864467205951,
+      11.331668932860506
+    ]
+  },
+  "validation": "All 20 direction-runs completed with exact endpoint byte-count and CRC32 agreement and zero failed conditions."
+}

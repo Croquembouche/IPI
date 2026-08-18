@@ -731,6 +731,82 @@ across the raw/public boundary, and the public privacy scan passes. This is a
 one-location, one-profile observation. It does not isolate TDD, signal, serving
 cell, or location effects and lacks timestamp-aligned ACP/MG52 evidence.
 
+### E16. 2026-08-17 Location-3 Downlink-Heavy TDD Comparison
+
+Primary derived folder:
+
+- `results/real_5g/20260817_airspan_tdd_profile_comparison_location_3/`
+
+Primary raw folders:
+
+- `CISCO_AIRSPAN_STATS/20260817_airspan_tdd_raw_downlink_70_20_10_location_3_tcp_mqtt_run_2_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260817_airspan_tdd_raw_downlink_40_40_20_location_3_tcp_mqtt_run_1_unredacted/`
+
+Purpose: compare downlink-heavy application RTT under `70/20/10` and
+`40/40/20` at the same stationary location. The vehicle sends a compact
+request, and d1 returns an exact 1, 10, 100, or 500 KiB body. RTT ends only
+after the vehicle receives and validates the complete response length,
+sequence, and CRC32. Every profile/transport/payload condition completed
+1,000/1,000 accepted responses with zero failures. The operator reported RSRP
+`-100 dBm`, RSRQ `-13 dB`, serving Cell 2 with no handoff, Cell 1 locked/not
+broadcasting, and TDD as the only radio-side setting changed.
+
+Each cell below is p50/p95 RTT in milliseconds. The final column gives the
+lower-latency profile and its advantage relative to the slower profile.
+
+| Transport | Payload | `70/20/10` p50/p95 | `40/40/20` p50/p95 | p50 / p95 advantage |
+|---|---:|---:|---:|---|
+| TCP | 1 KiB | 29.830 / 43.574 | 28.373 / 38.771 | `40/40/20`: 4.9% / 11.0% lower |
+| TCP | 10 KiB | 31.655 / 44.120 | 29.518 / 39.624 | `40/40/20`: 6.7% / 10.2% lower |
+| TCP | 100 KiB | 47.403 / 71.660 | 33.697 / 69.455 | `40/40/20`: 28.9% / 3.1% lower |
+| TCP | 500 KiB | 68.943 / 95.330 | 69.181 / 93.619 | split and effectively tied: `70/20/10` p50 0.3% lower; `40/40/20` p95 1.8% lower |
+| MQTT | 1 KiB | 25.631 / 39.903 | 21.727 / 31.923 | `40/40/20`: 15.2% / 20.0% lower |
+| MQTT | 10 KiB | 33.909 / 45.460 | 29.612 / 39.525 | `40/40/20`: 12.7% / 13.1% lower |
+| MQTT | 100 KiB | 39.136 / 49.067 | 37.921 / 71.866 | split: `40/40/20` p50 3.1% lower; `70/20/10` p95 31.7% lower |
+| MQTT | 500 KiB | 72.576 / 86.316 | 76.786 / 120.984 | `70/20/10`: 5.5% / 28.7% lower |
+
+Thus, `40/40/20` lowers small-response downlink RTT, while the advantage
+disappears or reverses for the larger MQTT responses. These downlink-heavy
+measurements must not be pooled with the August 15--16 uplink-heavy RTT runs,
+where the vehicle sends the declared object and d1 returns a compact
+acknowledgment. The primary August 15 uplink comparison combines E09's
+`70/20/10` run with
+`CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_40_40_20_location_1_run_3_unredacted/`.
+It shows `70/20/10` p50/p95 RTT 13.3%--68.6% below `40/40/20`; it is a
+separate experiment family and location.
+
+### E17. 2026-08-17 Location-3 Exact 50-MiB Directional Throughput
+
+Primary derived folder:
+
+- `results/real_5g/20260817_airspan_tdd_profile_comparison_location_3/`
+
+Primary raw folders:
+
+- `CISCO_AIRSPAN_STATS/20260817_airspan_tdd_tcp_bulk_50mib_70_20_10_location_3_run_2_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260817_airspan_tdd_tcp_bulk_50mib_40_40_20_location_3_run_1_unredacted/`
+
+Purpose: measure receiver-observed, single-flow TCP application goodput in both
+directions under the two TDD profiles. Each profile has 10 sequential paired
+repetitions. Every repetition transfers exactly 52,428,800 bytes from vehicle
+to d1 and then exactly 52,428,800 bytes from d1 to vehicle. All 40 direction-
+runs passed endpoint direction, byte-count, and CRC32 validation.
+
+| Direction | `70/20/10` mean (95% CI) | `40/40/20` mean (95% CI) | Difference |
+|---|---:|---:|---:|
+| Upload, vehicle to d1 | 12.000 Mb/s (11.759--12.242) | 2.836 Mb/s (2.685--2.987) | `40/40/20` is 9.164 Mb/s or 76.4% lower; `70/20/10` is 4.23x higher |
+| Download, d1 to vehicle | 126.786 Mb/s (106.296--147.277) | 99.756 Mb/s (82.316--117.195) | `40/40/20` is 27.031 Mb/s or 21.3% lower; `70/20/10` is 1.27x higher |
+
+The operator confirmed that TDD was the only radio-side setting changed and
+that other host applications introduced negligible work relative to the bulk
+transfer. A code and artifact audit found correct direction handling, exact
+byte and CRC agreement, correct Mb/s conversion, identical probe hashes, and
+independent endpoint timing. Live inspection during `40/40/20` observed TCP
+retransmissions and a reduced congestion window; under the operator's control
+statement, these may be mechanisms in the end-to-end profile effect rather
+than an unrelated workload. The result is application goodput for one TCP
+flow, not a direct measurement of radio-PHY capacity.
+
 ## Mocar V2X Experiments
 
 ### M01. Mocar Setup And Custom RX Debug

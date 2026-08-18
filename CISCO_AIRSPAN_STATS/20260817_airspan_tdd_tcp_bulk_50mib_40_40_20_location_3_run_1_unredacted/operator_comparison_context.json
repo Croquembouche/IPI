@@ -1,0 +1,9 @@
+{
+  "comparison_profile": "70/20/10",
+  "operator_confirmation": {
+    "background_host_applications": "reported to introduce negligible additional work relative to the experiment",
+    "only_radio_side_setting_changed": "tdd_profile"
+  },
+  "recorded_at": "2026-08-17T19:53:45-04:00",
+  "tdd_profile": "40/40/20"
+}

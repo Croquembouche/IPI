@@ -1,0 +1,62 @@
+{
+  "bytes_per_direction_per_repetition": 52428800,
+  "confidence_interval_method": "two-sided 95% t interval over 10 repetition-level receiver-throughput values, df=9",
+  "download_receiver_throughput_mbps": {
+    "ci95_high": 117.19535819999145,
+    "ci95_low": 82.315813150066,
+    "coefficient_of_variation_percent": 24.439,
+    "maximum": 122.8039892835678,
+    "mean": 99.75558567502873,
+    "median": 103.43308352027746,
+    "minimum": 39.596399760482406,
+    "sample_standard_deviation": 24.37912269312337,
+    "values": [
+      98.90885406984656,
+      116.56168577522581,
+      115.849524753334,
+      96.6382358567359,
+      101.1612567752107,
+      117.6171034246826,
+      39.596399760482406,
+      82.71389678585724,
+      105.70491026534422,
+      122.8039892835678
+    ]
+  },
+  "failed_direction_runs": 0,
+  "paired_download_to_upload_ratio": {
+    "ci95_high": 40.88612931087994,
+    "ci95_low": 29.179683898802228,
+    "maximum": 45.911052172207796,
+    "mean": 35.03290660484108,
+    "median": 36.11036979403549,
+    "minimum": 15.55126387867463,
+    "sample_standard_deviation": 8.182241729153624
+  },
+  "repetitions": 10,
+  "status": "complete",
+  "total_direction_runs": 20,
+  "upload_receiver_throughput_mbps": {
+    "ci95_high": 2.9873176148179685,
+    "ci95_low": 2.6851603436232785,
+    "coefficient_of_variation_percent": 7.446,
+    "maximum": 3.1681631172327682,
+    "mean": 2.8362389792206235,
+    "median": 2.9234304459088367,
+    "minimum": 2.5461853177593334,
+    "sample_standard_deviation": 0.21119338502066987,
+    "values": [
+      3.1681631172327682,
+      2.9235111153185693,
+      2.9293618435697484,
+      2.5828876748437266,
+      2.9437381907546287,
+      2.923349776499104,
+      2.5461853177593334,
+      2.6333892288630385,
+      3.036979416975899,
+      2.6748241103894164
+    ]
+  },
+  "validation": "All 20 direction-runs completed with exact endpoint byte-count and CRC32 agreement and zero failed conditions."
+}

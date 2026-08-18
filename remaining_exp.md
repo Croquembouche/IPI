@@ -10,6 +10,34 @@ runbook and decision record. Use it to prepare each collection, name and
 preserve the artifacts, determine whether a run is valid, and prevent
 unnecessary repetition of experiments that are already complete.
 
+## 2026-08-17 Directional TDD Collection Update
+
+Status: **downlink-heavy RTT and bidirectional bulk throughput complete** at
+stationary `location_3` for `70/20/10` and `40/40/20`. The operator reported
+RSRP `-100 dBm`, RSRQ `-13 dB`, unchanged placement and cell context, TDD as
+the only radio-side setting changed, and negligible additional work from the
+other host applications. Each downlink-heavy TCP/MQTT profile contains 1,000
+validated responses at 1, 10, 100, and 500 KiB. Each throughput profile
+contains 10 validated pairs of an exact 50-MiB vehicle-to-d1 upload followed by
+an exact 50-MiB d1-to-vehicle download.
+
+Keep the experiment families separate. The August 15--16 TCP/MQTT payload
+sweeps are uplink-heavy RTT measurements: the vehicle sends the declared object
+and d1 returns a compact acknowledgment. The August 17 TCP/MQTT payload sweeps
+are downlink-heavy RTT measurements: the vehicle sends a compact request and d1
+returns the declared object. The August 17 50-MiB test is the only current
+bandwidth experiment and measures both directions. No location-3 uplink-heavy
+RTT matrix was collected, so the completed data do not constitute a same-
+location bidirectional RTT matrix and must not be described as one.
+
+The derived comparison is stored under
+`results/real_5g/20260817_airspan_tdd_profile_comparison_location_3/`. Detailed
+results and claim boundaries are recorded in E16--E17 of
+`experiment_summary.md`. The location-3 collection supersedes stale language
+that describes the matched downlink/bandwidth delivery as still pending; the
+separate uplink matrix below remains a future option only if a same-location
+uplink-latency attribution is required.
+
 ## 2026-08-15 Matched TDD Collection And Uplink-Scope Decision
 
 Status: **inconclusive for TDD inference**. The historical `40/40/20` campaign

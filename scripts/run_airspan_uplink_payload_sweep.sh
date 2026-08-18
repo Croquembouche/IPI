@@ -32,14 +32,16 @@ Optional environment:
   MAX_CONDITION_SECONDS     Default: 14400
   TRANSPORTS                Default: "tcp mqtt"
   PAYLOADS                  Default: "1024 10240 102400 1048576"
+  APPLICATION_DIRECTION     uplink or downlink; default: uplink
   PREFLIGHT_ONLY            Set to 1 to validate without reserving paths
 
-The script sends an exact raw application body over TCP or an MQTT publish and
-waits for a compact, correlated application acknowledgment. It writes exact
-artifacts only below the excluded CISCO_AIRSPAN_STATS tree. It refuses to
-overwrite an incomplete condition. A completed condition is skipped on a later
-invocation, allowing safe continuation after an interruption between
-conditions.
+In uplink mode, the script sends an exact raw application body and waits for a
+compact acknowledgment. In downlink mode, it sends a compact request and waits
+for an exact response body whose length, sequence, and CRC32 are validated. It
+writes exact artifacts only below the excluded CISCO_AIRSPAN_STATS tree. It
+refuses to overwrite an incomplete condition. A completed condition is skipped
+on a later invocation, allowing safe continuation after an interruption
+between conditions.
 EOF
 }
 
@@ -62,8 +64,13 @@ EDGE_USER="${EDGE_USER:-d1}"
 EDGE_DEPLOY_ROOT="${EDGE_DEPLOY_ROOT:-/home/d1/edge4av_followup/ipi_2c043b3}"
 REMOTE_RUN_ROOT="${REMOTE_RUN_ROOT:-/home/d1/edge4av_followup/runs}"
 REMOTE_RUN_DIR="$REMOTE_RUN_ROOT/$RUN_NAME"
-LOCAL_PROBE="$REPO_ROOT/scripts/private_5g_raw_bulk_probe.py"
-REMOTE_PROBE="$REMOTE_RUN_DIR/tools/private_5g_raw_bulk_probe.py"
+APPLICATION_DIRECTION="${APPLICATION_DIRECTION:-uplink}"
+if [[ "$APPLICATION_DIRECTION" == "downlink" ]]; then
+  LOCAL_PROBE="$REPO_ROOT/scripts/private_5g_raw_downlink_probe.py"
+else
+  LOCAL_PROBE="$REPO_ROOT/scripts/private_5g_raw_bulk_probe.py"
+fi
+REMOTE_PROBE="$REMOTE_RUN_DIR/tools/$(basename "$LOCAL_PROBE")"
 COUNT="${COUNT:-1000}"
 PAYLOAD_1048576_COUNT="${PAYLOAD_1048576_COUNT:-$COUNT}"
 INTERVAL_MS="${INTERVAL_MS:-200}"
@@ -112,13 +119,17 @@ case "${TRANSPORT_LIST[*]}" in
     ;;
 esac
 case "${PAYLOAD_LIST[*]}" in
-  "1024 10240 102400"|"1024 10240 102400 1048576")
+  "1024 10240 102400"|"1024 10240 102400 1048576"|"1024 10240 102400 512000")
     ;;
   *)
-    echo 'PAYLOADS must be the 1-100 KiB quick prefix or the full four-size sweep ending at 1 MiB' >&2
+    echo 'PAYLOADS must be the 1-100 KiB prefix or the four-size sweep ending at 500 KiB or 1 MiB' >&2
     exit 2
     ;;
 esac
+if [[ "$APPLICATION_DIRECTION" != "uplink" && "$APPLICATION_DIRECTION" != "downlink" ]]; then
+  echo 'APPLICATION_DIRECTION must be uplink or downlink' >&2
+  exit 2
+fi
 if [[ "$COUNT" != "1000" || "$INTERVAL_MS" != "200" ]]; then
   echo 'COUNT and INTERVAL_MS must remain 1000 and 200 for this acquisition' >&2
   exit 2
@@ -262,13 +273,13 @@ write_manifest() {
 import json, pathlib, sys
 path = pathlib.Path(sys.argv[1])
 data = {
-    "schema": "edge4av-airspan-raw-uplink-payload-v1",
+    "schema": "edge4av-airspan-raw-" + sys.argv[21] + "-payload-v1",
     "status": "running",
     "run_id": sys.argv[2],
     "run_name": sys.argv[3],
     "condition_id": sys.argv[4],
     "transport": sys.argv[5],
-    "application_direction": "uplink-oriented",
+    "application_direction": sys.argv[21] + "-oriented",
     "application_payload_bytes": int(sys.argv[6]),
     "count": int(sys.argv[7]),
     "interval_ms": int(sys.argv[8]),
@@ -294,10 +305,10 @@ data = {
     "five_qi": 9,
     "qos_profile": "default",
     "clock_sync_state": "unsynced",
-    "timing_metric": "monotonic_complete_application_ack_rtt",
-    "timing_boundary": "immediately before first framed TCP or MQTT byte is sent through complete correlated application acknowledgment validation",
-    "payload_protocol": "exact raw application body with length and CRC32 validation",
-    "application_acknowledgment": True,
+    "timing_metric": "monotonic_complete_application_" + ("ack" if sys.argv[21] == "uplink" else "response") + "_rtt",
+    "timing_boundary": ("immediately before first framed TCP or MQTT byte is sent through complete correlated application acknowledgment validation" if sys.argv[21] == "uplink" else "immediately before the compact request is sent through receipt and validation of the complete correlated downlink response"),
+    "payload_protocol": ("exact raw application body with length and CRC32 validation" if sys.argv[21] == "uplink" else "compact request followed by exact response body with length, sequence, and CRC32 validation"),
+    "application_acknowledgment": sys.argv[21] == "uplink",
     "tcp_acknowledgment_only": False,
 }
 path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -305,7 +316,7 @@ path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf
     "$transport" "$payload" "$condition_count" "$INTERVAL_MS" "$MQTT_TIMEOUT_MS" \
     "$MAX_CONDITION_SECONDS" "$TDD_PROFILE" "$RSRP_DBM" "$RSRQ_DB" \
     "$SERVING_CELL" "$HANDOFF_STATE" "$CELL_1_ADMIN_STATE" "$CELL_2_ADMIN_STATE" \
-    "$TDD_STATE" "$RADIO_STATE" "$LOCATION_ID"
+    "$TDD_STATE" "$RADIO_STATE" "$LOCATION_ID" "$APPLICATION_DIRECTION"
 }
 
 record_timing() {
@@ -326,7 +337,7 @@ validate_condition() {
   local payload="$2"
   local condition_id="$3"
   local condition_count="$4"
-  python3 - "$CURRENT_LOCAL_DIR" "$transport" "$payload" "$condition_id" "$condition_count" <<'PY'
+  python3 - "$CURRENT_LOCAL_DIR" "$transport" "$payload" "$condition_id" "$condition_count" "$APPLICATION_DIRECTION" <<'PY'
 import csv
 import json
 import math
@@ -338,6 +349,7 @@ transport = sys.argv[2]
 payload = int(sys.argv[3])
 condition_id = sys.argv[4]
 expected = int(sys.argv[5])
+direction = sys.argv[6]
 
 with (root / "sender.csv").open(newline="", encoding="utf-8") as handle:
     rows = list(csv.DictReader(handle))
@@ -370,8 +382,12 @@ if any(row.get("condition_id") != condition_id for row in rows):
     errors.append("sender condition_id mismatch")
 if any(int(row.get("application_payload_bytes", -1)) != payload for row in rows):
     errors.append("sender application payload length mismatch")
-if any(row.get("detail") != "validated compact application acknowledgment" for row in accepted):
-    errors.append("sender application acknowledgment validation mismatch")
+expected_detail = (
+    "validated compact application acknowledgment" if direction == "uplink" else
+    "validated complete downlink response length, sequence, and CRC32"
+)
+if any(row.get("detail") != expected_detail for row in accepted):
+    errors.append("sender complete application response validation mismatch")
 if len(receiver_rows) < len(accepted):
     errors.append("receiver rows fewer than accepted sender rows")
 if any(int(row.get("application_payload_bytes", -1)) != payload for row in receiver_rows):
@@ -380,6 +396,7 @@ if any(int(row.get("application_payload_bytes", -1)) != payload for row in recei
 summary = {
     "status": "complete" if not errors else "invalid",
     "transport": transport,
+    "application_direction": direction,
     "application_payload_bytes": payload,
     "attempts": len(rows),
     "accepted": len(accepted),
@@ -465,17 +482,17 @@ start_telemetry() {
     --output "$CURRENT_LOCAL_DIR/host_telemetry/car.jsonl" \
     --interval-s 1 \
     --interface eno2 \
-    --process-match 'private_5g_raw_bulk_probe.py.*--role sender' &
+    --process-match 'private_5g_raw_(bulk|downlink)_probe.py.*--role sender' &
   LOCAL_TELEMETRY_PID=$!
   start_remote_process telemetry telemetry.out \
-    "python3 '$EDGE_DEPLOY_ROOT/scripts/collect_host_telemetry.py' --output '$CURRENT_REMOTE_DIR/host_telemetry/d1.jsonl' --interval-s 1 --interface enp0s31f6 --process-match 'private_5g_raw_bulk_probe.py.*--role receiver|threaded_mqtt_broker.py'"
+    "python3 '$EDGE_DEPLOY_ROOT/scripts/collect_host_telemetry.py' --output '$CURRENT_REMOTE_DIR/host_telemetry/d1.jsonl' --interval-s 1 --interface enp0s31f6 --process-match 'private_5g_raw_(bulk|downlink)_probe.py.*--role receiver|threaded_mqtt_broker.py'"
 }
 
 start_stack() {
   local transport="$1"
   local payload="$2"
   local condition_id="$3"
-  local common="--role receiver --run-id '$RUN_ID' --condition-id '$condition_id' --source-id veh-001 --intersection-id airspan-tdd-uplink-$LOCATION_ID --max-payload-bytes 134217728"
+  local common="--role receiver --run-id '$RUN_ID' --condition-id '$condition_id' --source-id veh-001 --intersection-id airspan-tdd-$APPLICATION_DIRECTION-$LOCATION_ID --max-payload-bytes 134217728"
   if [[ "$transport" == "tcp" ]]; then
     start_remote_process receiver receiver.csv \
       "python3 -u '$REMOTE_PROBE' --transport tcp --port '$TCP_PORT' $common"
@@ -494,7 +511,7 @@ start_stack() {
 run_condition() {
   local transport="$1"
   local payload="$2"
-  local condition_id="uplink-${transport}-payload-${payload}"
+  local condition_id="${APPLICATION_DIRECTION}-${transport}-payload-${payload}"
   local condition_count="$COUNT"
   if [[ "$payload" == "1048576" ]]; then
     condition_count="$PAYLOAD_1048576_COUNT"
@@ -513,7 +530,7 @@ run_condition() {
 
   reserve_condition "$transport" "$payload"
   write_manifest "$transport" "$payload" "$condition_id" "$condition_count"
-  printf '%s\n' "private_5g_raw_bulk_probe.py --role sender --transport $transport --host <edge-host> --port $port --count $condition_count --interval-ms $INTERVAL_MS --payload-bytes $payload" > "$CURRENT_LOCAL_DIR/commands.txt"
+  printf '%s\n' "$(basename "$LOCAL_PROBE") --role sender --transport $transport --host <edge-host> --port $port --count $condition_count --interval-ms $INTERVAL_MS --payload-bytes $payload" > "$CURRENT_LOCAL_DIR/commands.txt"
   start_telemetry
   start_stack "$transport" "$payload" "$condition_id"
 
@@ -525,7 +542,7 @@ run_condition() {
     --count "$condition_count"
     --interval-ms "$INTERVAL_MS"
     --payload-bytes "$payload"
-    --intersection-id "airspan-tdd-uplink-$LOCATION_ID"
+    --intersection-id "airspan-tdd-$APPLICATION_DIRECTION-$LOCATION_ID"
     --source-id veh-001
     --run-id "$RUN_ID"
     --condition-id "$condition_id"
@@ -563,7 +580,7 @@ run_condition() {
 }
 
 main() {
-  log "Running uplink payload-sweep preflight"
+  log "Running $APPLICATION_DIRECTION payload-sweep preflight"
   preflight
   if [[ "$PREFLIGHT_ONLY" == "1" ]]; then
     log "Preflight passed"

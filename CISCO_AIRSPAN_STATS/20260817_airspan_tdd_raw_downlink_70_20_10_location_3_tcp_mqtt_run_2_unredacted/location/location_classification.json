@@ -1,0 +1,12 @@
+{
+  "classification": "location_3",
+  "fresh_gnss_capture": true,
+  "median_latitude_deg": 39.6637222465,
+  "median_longitude_deg": -75.757027978,
+  "prior_location_2_median_latitude_deg": 39.6656279,
+  "prior_location_2_median_longitude_deg": -75.7570905,
+  "reason": "The fresh stationary median is approximately 212 m from the preceding location-2 median.",
+  "stationary_bestpos_samples": 594,
+  "stationary_radial_max_m": 0.021337039559465965,
+  "stationary_radial_p95_m": 0.019494610344875516
+}

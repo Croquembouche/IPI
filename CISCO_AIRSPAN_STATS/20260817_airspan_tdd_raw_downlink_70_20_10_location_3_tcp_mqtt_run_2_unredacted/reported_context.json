@@ -1,0 +1,25 @@
+{
+  "application_direction": "downlink-oriented",
+  "cell_1_administrative_state": "locked",
+  "cell_1_broadcasting": false,
+  "cell_2_administrative_state": "unlocked",
+  "cell_2_broadcasting": true,
+  "fresh_fields_reported_by_operator": {
+    "rsrp_dbm": -100,
+    "tdd_profile": "70/20/10"
+  },
+  "handoff_state": "no-reported-handoff",
+  "location_id": "location_3",
+  "mobility_state": "stationary",
+  "radio_fields_carried_forward_from_immediately_preceding_location_2_run": {
+    "cell_1_administrative_state": "locked",
+    "cell_2_administrative_state": "unlocked",
+    "handoff_state": "no-reported-handoff",
+    "rsrq_db": -13,
+    "serving_cell": 2
+  },
+  "rsrp_dbm": -100,
+  "rsrq_db": -13,
+  "serving_cell": 2,
+  "tdd_profile": "70/20/10"
+}

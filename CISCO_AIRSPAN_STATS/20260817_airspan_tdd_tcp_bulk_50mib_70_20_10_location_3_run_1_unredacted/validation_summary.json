@@ -1,0 +1,23 @@
+{
+  "bytes_each_direction": 52428800,
+  "download": {
+    "direction": "d1-to-vehicle",
+    "receiver_elapsed_s": 2.784495305,
+    "receiver_throughput_mbps": 150.63067236882986,
+    "sender_elapsed_s": 2.684669234,
+    "sender_throughput_mbps": 156.2316857094061,
+    "validated_exact_bytes": true
+  },
+  "download_to_upload_receiver_throughput_ratio": 12.408,
+  "payload_crc32": 34909490,
+  "status": "complete",
+  "upload": {
+    "direction": "vehicle-to-d1",
+    "receiver_elapsed_s": 34.550096484,
+    "receiver_throughput_mbps": 12.139775071083706,
+    "sender_elapsed_s": 33.841553295,
+    "sender_throughput_mbps": 12.393946470003483,
+    "validated_exact_bytes": true
+  },
+  "validation": "Both endpoints agree on direction, exact byte count, and payload CRC32; both server processes exited with status 0."
+}

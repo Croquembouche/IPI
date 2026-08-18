@@ -1,0 +1,7 @@
+{
+  "accepted_for_analysis": false,
+  "failure": "The d1 host uses Python 3.8, which rejected a Python 3.9 dictionary-union expression while writing the first receiver row.",
+  "outcome": "The acquisition was stopped after one complete validated response and subsequent connection failures. The entire attempt is retained only as diagnostic evidence.",
+  "replacement_run_name": "20260817_airspan_tdd_raw_downlink_70_20_10_location_3_tcp_mqtt_run_2",
+  "status": "failed-diagnostic"
+}

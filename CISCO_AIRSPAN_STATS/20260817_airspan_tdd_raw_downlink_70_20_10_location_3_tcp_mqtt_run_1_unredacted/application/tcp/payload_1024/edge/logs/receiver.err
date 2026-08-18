@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/d1/edge4av_followup/runs/20260817_airspan_tdd_raw_downlink_70_20_10_location_3_tcp_mqtt_run_1/tools/private_5g_raw_downlink_probe.py", line 456, in <module>
+    raise SystemExit(main())
+  File "/home/d1/edge4av_followup/runs/20260817_airspan_tdd_raw_downlink_70_20_10_location_3_tcp_mqtt_run_1/tools/private_5g_raw_downlink_probe.py", line 449, in main
+    run_tcp_receiver(args, writer)
+  File "/home/d1/edge4av_followup/runs/20260817_airspan_tdd_raw_downlink_70_20_10_location_3_tcp_mqtt_run_1/tools/private_5g_raw_downlink_probe.py", line 372, in run_tcp_receiver
+    writer.writerow(receiver_row(args, request, checksum, processing_ns, TCP_LENGTH.size + len(response)))
+  File "/home/d1/edge4av_followup/runs/20260817_airspan_tdd_raw_downlink_70_20_10_location_3_tcp_mqtt_run_1/tools/private_5g_raw_downlink_probe.py", line 341, in receiver_row
+    row = base_row(args, "raw-downlink-responder", request.sequence)
+  File "/home/d1/edge4av_followup/runs/20260817_airspan_tdd_raw_downlink_70_20_10_location_3_tcp_mqtt_run_1/tools/private_5g_raw_downlink_probe.py", line 241, in base_row
+    return {field: "" for field in CSV_FIELDS} | {
+TypeError: unsupported operand type(s) for |: 'dict' and 'dict'
