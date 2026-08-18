@@ -1,0 +1,22 @@
+{
+  "completed_direction_runs": [
+    "repetition_01/upload",
+    "repetition_01/download",
+    "repetition_02/upload"
+  ],
+  "effective_at": "2026-08-18T13:07:06-04:00",
+  "not_started": [
+    "repetition_02/download",
+    "repetition_03/upload",
+    "repetition_03/download",
+    "repetition_04/upload",
+    "repetition_04/download",
+    "repetition_05/upload",
+    "repetition_05/download"
+  ],
+  "operator_instruction": "stop the experiment after the currently active 50 MiB upload finishes",
+  "original_plan": "five sequential upload/download pairs",
+  "resulting_scope": "one complete upload/download pair plus one additional upload",
+  "schema": "edge4av-operator-stop-v1",
+  "status": "stopped-at-requested-boundary"
+}

@@ -1,0 +1,44 @@
+{
+  "application_directions": {
+    "downlink": "d1 to vehicle",
+    "uplink": "vehicle to d1"
+  },
+  "handoff_state": {
+    "provenance": "carried forward pending fresh operator report",
+    "value": "no-reported-handoff"
+  },
+  "location_id": "location_3",
+  "mobility_state": "stationary",
+  "radio": {
+    "rsrp_dbm": {
+      "current_value": -115,
+      "initial_value": -105,
+      "location_changed_at_transition": false,
+      "provenance": "operator reported; initial value reported at 2026-08-18T09:58:46-04:00, first change reported at 2026-08-18T11:22:31-04:00, and second change reported at 2026-08-18T11:34:22-04:00",
+      "transitions": [
+        {
+          "from_rsrp_dbm": -105,
+          "to_rsrp_dbm": -110,
+          "transition_at": "2026-08-18T11:07:00-04:00"
+        },
+        {
+          "from_rsrp_dbm": -110,
+          "to_rsrp_dbm": -115,
+          "transition_at": "2026-08-18T11:18:00-04:00"
+        }
+      ]
+    },
+    "rsrq_db": {
+      "provenance": "carried forward pending fresh operator report",
+      "value": -13
+    }
+  },
+  "serving_cell": {
+    "provenance": "carried forward pending fresh operator report",
+    "value": 2
+  },
+  "tdd_profile": {
+    "provenance": "operator reported for today's run",
+    "value": "40/40/20"
+  }
+}

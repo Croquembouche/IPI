@@ -21,8 +21,8 @@ for value in "$REPETITIONS" "$TOTAL_BYTES" "$BLOCK_BYTES" "$UPLOAD_PORT" "$DOWNL
   [[ "$value" =~ ^[1-9][0-9]*$ ]] || { echo "positive integer required: $value" >&2; exit 2; }
 done
 [[ -f "$SSH_KEY" ]] || { echo "SSH key not found" >&2; exit 2; }
-[[ "$REPETITIONS" == "10" && "$TOTAL_BYTES" == "52428800" ]] || {
-  echo "This acquisition requires 10 repetitions and exactly 50 MiB" >&2
+[[ "$TOTAL_BYTES" == "52428800" ]] || {
+  echo "This acquisition requires exactly 50 MiB per direction" >&2
   exit 2
 }
 

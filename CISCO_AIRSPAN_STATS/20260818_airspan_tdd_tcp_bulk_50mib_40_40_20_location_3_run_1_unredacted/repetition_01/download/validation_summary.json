@@ -1,0 +1,12 @@
+{
+  "client_local_data_elapsed_s": 9.812263179,
+  "client_local_data_throughput_mbps": 42.74553101038465,
+  "direction": "download",
+  "errors": [],
+  "payload_crc32": 34909490,
+  "receiver_throughput_mbps": 42.74553101038465,
+  "server_local_data_elapsed_s": 9.303015521,
+  "server_local_data_throughput_mbps": 45.08542408138588,
+  "status": "complete",
+  "total_bytes": 52428800
+}

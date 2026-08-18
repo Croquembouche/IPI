@@ -1,0 +1,4 @@
+repetition,direction,path,total_bytes,status,receiver_throughput_mbps,receiver_elapsed_s
+1,upload,vehicle to d1,52428800,complete,0.523642335549,800.986420550
+1,download,d1 to vehicle,52428800,complete,42.745531010385,9.812263179
+2,upload,vehicle to d1,52428800,complete,0.506610717138,827.914581771

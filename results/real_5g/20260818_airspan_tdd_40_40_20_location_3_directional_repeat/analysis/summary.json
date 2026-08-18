@@ -1,0 +1,61 @@
+{
+  "bandwidth": {
+    "complete_pairs": 1,
+    "direction_runs": 3,
+    "operator_shortened": true,
+    "repetition_01_download_mbps": 42.74553101038465,
+    "repetition_01_upload_mbps": 0.5236423355492054,
+    "repetition_02_upload_mbps": 0.5066107171379836,
+    "status": "one complete pair plus one additional upload"
+  },
+  "directions": {
+    "downlink": "vehicle sends a compact request; d1 sends the declared payload to the vehicle",
+    "upload": "vehicle to d1",
+    "uplink": "vehicle sends the declared payload to d1; d1 returns a compact acknowledgment",
+    "download": "d1 to vehicle"
+  },
+  "downlink_rtt": {
+    "accepted": 7000,
+    "conditions": 8,
+    "failed": 0,
+    "payload_validation_included_in_rtt": true,
+    "payload_validation_p50_range_ms": [
+      0.035309,
+      1.363896
+    ],
+    "payload_validation_p95_range_ms": [
+      0.04846,
+      1.700439
+    ],
+    "rsrp_dbm": -115
+  },
+  "location": {
+    "gnss_bag_duration_s": 59.505844517,
+    "gnss_messages": 16072,
+    "location_changed_during_run": false,
+    "location_id": "location_3",
+    "mobility_state": "stationary"
+  },
+  "rsrp_timeline": [
+    {
+      "rsrp_dbm": -105,
+      "time": "before 2026-08-18T11:07:00-04:00"
+    },
+    {
+      "rsrp_dbm": -110,
+      "time": "2026-08-18T11:07:00-04:00 through 2026-08-18T11:17:59.999999-04:00"
+    },
+    {
+      "rsrp_dbm": -115,
+      "time": "at or after 2026-08-18T11:18:00-04:00"
+    }
+  ],
+  "schema": "edge4av-airspan-directional-repeat-summary-v1",
+  "tdd_profile": "40/40/20",
+  "uplink_rtt": {
+    "accepted": 6500,
+    "conditions": 8,
+    "failed": 0,
+    "rsrp_context": "condition-specific; see uplink_rtt.csv and rsrp timeline"
+  }
+}

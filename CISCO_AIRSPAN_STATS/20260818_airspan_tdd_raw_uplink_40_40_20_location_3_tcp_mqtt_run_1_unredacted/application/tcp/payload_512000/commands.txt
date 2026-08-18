@@ -1,0 +1,1 @@
+private_5g_raw_bulk_probe.py --role sender --transport tcp --host <edge-host> --port 36666 --count 1000 --interval-ms 200 --payload-bytes 512000

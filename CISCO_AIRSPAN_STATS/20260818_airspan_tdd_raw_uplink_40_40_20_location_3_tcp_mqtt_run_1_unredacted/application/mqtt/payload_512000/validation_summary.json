@@ -1,0 +1,21 @@
+{
+  "accepted": 250,
+  "application_direction": "uplink",
+  "application_payload_bytes": 512000,
+  "attempts": 250,
+  "deadline_misses_1000ms": 250,
+  "deadline_misses_100ms": 250,
+  "deadline_misses_500ms": 250,
+  "errors": [],
+  "failed": 0,
+  "receiver_rows": 250,
+  "rtt_count": 250,
+  "rtt_max_ms": 10639.887505,
+  "rtt_p50_ms": 7647.557419,
+  "rtt_p95_ms": 9287.828124,
+  "rtt_p99_ms": 10099.597623,
+  "status": "complete",
+  "transport": "mqtt",
+  "wire_request_bytes_max": 512102,
+  "wire_request_bytes_min": 512102
+}

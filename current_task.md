@@ -1,6 +1,101 @@
 # Current Task
 
-Last updated: 2026-08-17
+Last updated: 2026-08-18
+
+## 2026-08-18 Full Directional TDD 40/40/20 Repeat
+
+Complete with an operator-shortened bandwidth stage. At the current stationary vehicle location and operator-reported
+TDD `40/40/20`, collect a fresh 60-second ROS 2 GNSS record, then run the
+following application and bandwidth measurements in order:
+
+1. Uplink-heavy TCP and MQTT at 1, 10, 100, and 500 KiB. The 1, 10, and
+   100-KiB conditions use 1,000 complete validated exchanges each; at the
+   operator's request during acquisition, both 500-KiB conditions stop at 250
+   exchanges. **Uplink** means the
+   vehicle sends the declared payload to d1 and d1 returns a compact
+   acknowledgment; RTT ends when that acknowledgment is received.
+2. Downlink-heavy TCP and MQTT at 1, 10, 100, and 500 KiB. The 1, 10, and
+   100-KiB conditions use 1,000 complete validated exchanges each; both
+   500-KiB conditions use 500. The downlink-heavy timing contract is:
+   (1) the vehicle sends a compact request to d1; (2) d1 sends the requested
+   1, 10, 100, or 500 KiB payload to the vehicle; (3) RTT starts immediately
+   before the vehicle sends the request; and (4) RTT ends after the vehicle
+   receives and validates the complete payload, including length, sequence
+   number, and CRC32. Store that vehicle-side validation duration separately
+   as `payload_validation_ms`, and include it within `rtt_ms`.
+3. The original plan requested five exact 50-MiB TCP bandwidth pairs.
+   **Upload** is vehicle to d1; **download** is d1 to vehicle. During
+   repetition 2 upload, the operator requested a stop after that active 50-MiB
+   transfer. The final dataset therefore contains one complete upload/download
+   pair plus one additional validated upload. Every retained transfer matches
+   52,428,800 bytes and CRC32 at both endpoints.
+
+TDD `40/40/20` is fresh operator-reported context for today's run. RSRP was
+operator-reported as `-105 dBm` initially, `-110 dBm` from
+`2026-08-18 11:07 EDT`, and `-115 dBm` from `11:18 EDT` onward, with no
+location change. Conditions completed before 11:07 retain `-105 dBm`;
+conditions wholly within 11:07--11:18 use `-110 dBm`; conditions starting at
+or after 11:18 use `-115 dBm`; any condition crossing a boundary records every
+applicable time segment and must not be summarized under a single RSRP value.
+Fresh RSRQ, cell
+administrative state, serving cell, and handoff state have not yet been
+reported; do not silently describe carried-forward values as new measurements.
+
+Working files:
+
+- `scripts/private_5g_raw_downlink_probe.py`
+- `scripts/run_airspan_uplink_payload_sweep.sh`
+- `scripts/run_airspan_directional_bulk_repetitions.sh`
+- `results/real_5g/20260818_airspan_tdd_40_40_20_location_3_directional_repeat/`
+- `current_task.md`
+
+Validation state: the protocol self-tests, Python compilation, shell syntax,
+vehicle-to-d1 route over `eno2`, temporary-key d1 access, source deployment and
+hash matching, remote Python 3.8 self-tests, and planned-port checks pass for
+both application directions. The fresh GNSS bag contains 16,072 messages over
+59.506 seconds; its median is 1.80 m from the August 17 location-3 reference,
+and the recorded maximum speed is 0.012 m/s, so this run is labeled stationary
+`location_3`. Uplink-heavy TCP 1 KiB, 10 KiB, and 100 KiB have each completed
+at 1,000/1,000 accepted exchanges with zero failures. TCP 500 KiB was stopped
+after 260 accepted exchanges when the operator reduced its target to 250; the
+full 260-row capture is retained as overrun diagnostic evidence and the first
+250 exchanges are the declared condition. MQTT uplink 1 KiB and 10 KiB each
+completed at 1,000/1,000 with zero failures, and MQTT uplink 100 KiB is now
+complete at 1,000/1,000 with zero failures. That condition crossed both RSRP
+transitions and is explicitly a mixed `-105`/`-110`/`-115 dBm` condition.
+MQTT uplink 500 KiB completed at 250/250 with zero failures wholly after 11:18
+at `-115 dBm`. All eight downlink-heavy TCP/MQTT conditions then completed at
+their declared counts with zero failures under RSRP `-115 dBm`. The five-pair
+bandwidth stage ended at the operator-requested boundary. Repetition 1 passed
+exact byte/CRC validation in both directions: 0.524 Mb/s vehicle-to-d1 upload
+and 42.746 Mb/s d1-to-vehicle download. Repetition 2 vehicle-to-d1 upload also
+passed at 0.507 Mb/s. Repetition 2 download and repetitions 3--5 did not start.
+No experiment process or planned listener remains. The temporary d1 key was
+revoked, the revoked key no longer authenticates, and the local temporary key
+and controller were moved to trash.
+
+Downlink timing implementation validation: the revised probe passes Python
+compilation and its protocol self-test. Three-message 500-KiB TCP and MQTT
+loopback tests pass with `payload_validation_ms` present and positive on every
+accepted row and `rtt_ms >= payload_validation_ms` on every row. The observed
+loopback validation times were approximately 0.48--0.69 ms. The live downlink
+stage used the revised boundary and schema on every accepted row. Across the
+eight downlink conditions, validation p50 ranges from 0.035 to 1.364 ms and
+validation p95 ranges from 0.048 to 1.700 ms; every condition summary confirms
+that validation is included in RTT.
+
+An attempted bandwidth preflight exposed that the bandwidth driver does not
+implement a `--help`/preflight mode and therefore began a transfer. That
+transfer was stopped before completion, is retained under an explicitly named
+`unintended_partial` diagnostic tree, and will not be counted. No associated
+process or planned listener remains. The accepted bandwidth data use a separate
+clean result path. SHA-256 manifests for all five raw trees and the derived
+result verify; all JSON parses; every one of the 16 derived RTT rows and three
+derived bandwidth rows matches its raw source summary; the Python probes
+compile; both shell runners pass syntax checks; and `git diff --check` passes
+for the edited documentation, scripts, and derived summaries. The byte-exact
+raw CSV captures retain their original CRLF line endings, which the generic
+Git whitespace checker reports but which are intentionally not normalized.
 
 ## 2026-08-17 Matched 40/40/20 Location-3 Collection
 

@@ -1,0 +1,113 @@
+[2026-08-18T09:49:36-04:00] Waiting for active uplink runner PID 25807
+[2026-08-18T09:50:05-04:00] Waiting for active uplink runner PID 25807
+[2026-08-18T09:59:24-04:00] Waiting for active uplink runner PID 25807
+[2026-08-18T10:51:25-04:00] STOP: uplink runner ended without eight complete conditions
+[2026-08-18T10:53:47-04:00] Waiting for active uplink runner PID 124958
+[2026-08-18T11:23:58-04:00] Waiting for active uplink runner PID 124958
+[2026-08-18T11:36:07-04:00] Waiting for active uplink runner PID 124958
+[2026-08-18T12:08:08-04:00] Uplink matrix validated at eight complete conditions
+[2026-08-18T12:08:08-04:00] Applied operator-reported RSRP timeline: -105 before 11:07, -110 from 11:07 to 11:18, -115 dBm from 11:18 onward
+[2026-08-18T12:08:08-04:00] Running downlink payload-sweep preflight
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+[2026-08-18T12:08:20-04:00] Starting tcp payload 1024 at 2026-08-18T12:08:20-04:00
+{"accepted": 1000, "application_direction": "downlink", "application_payload_bytes": 1024, "attempts": 1000, "deadline_misses_1000ms": 0, "deadline_misses_100ms": 31, "deadline_misses_500ms": 1, "errors": [], "failed": 0, "payload_validation_count": 1000, "payload_validation_included_in_rtt": true, "payload_validation_max_ms": 0.084648, "payload_validation_p50_ms": 0.04163, "payload_validation_p95_ms": 0.058563, "payload_validation_p99_ms": 0.070464, "receiver_rows": 1000, "rtt_count": 1000, "rtt_max_ms": 585.782665, "rtt_p50_ms": 29.609896, "rtt_p95_ms": 69.797222, "rtt_p99_ms": 317.222306, "status": "complete", "transport": "tcp", "wire_request_bytes_max": 32, "wire_request_bytes_min": 32}
+[2026-08-18T12:12:20-04:00] Completed tcp payload 1024 at 2026-08-18T12:12:17-04:00
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+[2026-08-18T12:12:24-04:00] Starting tcp payload 10240 at 2026-08-18T12:12:24-04:00
+{"accepted": 1000, "application_direction": "downlink", "application_payload_bytes": 10240, "attempts": 1000, "deadline_misses_1000ms": 0, "deadline_misses_100ms": 7, "deadline_misses_500ms": 0, "errors": [], "failed": 0, "payload_validation_count": 1000, "payload_validation_included_in_rtt": true, "payload_validation_max_ms": 0.097124, "payload_validation_p50_ms": 0.056053, "payload_validation_p95_ms": 0.071654, "payload_validation_p99_ms": 0.083238, "receiver_rows": 1000, "rtt_count": 1000, "rtt_max_ms": 224.94316, "rtt_p50_ms": 31.66038, "rtt_p95_ms": 49.433345, "rtt_p99_ms": 69.952322, "status": "complete", "transport": "tcp", "wire_request_bytes_max": 32, "wire_request_bytes_min": 32}
+[2026-08-18T12:16:21-04:00] Completed tcp payload 10240 at 2026-08-18T12:16:18-04:00
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+[2026-08-18T12:16:25-04:00] Starting tcp payload 102400 at 2026-08-18T12:16:25-04:00
+{"accepted": 1000, "application_direction": "downlink", "application_payload_bytes": 102400, "attempts": 1000, "deadline_misses_1000ms": 0, "deadline_misses_100ms": 29, "deadline_misses_500ms": 0, "errors": [], "failed": 0, "payload_validation_count": 1000, "payload_validation_included_in_rtt": true, "payload_validation_max_ms": 0.463569, "payload_validation_p50_ms": 0.301865, "payload_validation_p95_ms": 0.365516, "payload_validation_p99_ms": 0.407187, "receiver_rows": 1000, "rtt_count": 1000, "rtt_max_ms": 245.284685, "rtt_p50_ms": 51.397559, "rtt_p95_ms": 89.463445, "rtt_p99_ms": 127.678556, "status": "complete", "transport": "tcp", "wire_request_bytes_max": 32, "wire_request_bytes_min": 32}
+[2026-08-18T12:20:45-04:00] Completed tcp payload 102400 at 2026-08-18T12:20:42-04:00
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+[2026-08-18T12:20:48-04:00] Starting tcp payload 512000 at 2026-08-18T12:20:48-04:00
+{"accepted": 500, "application_direction": "downlink", "application_payload_bytes": 512000, "attempts": 500, "deadline_misses_1000ms": 1, "deadline_misses_100ms": 459, "deadline_misses_500ms": 1, "errors": [], "failed": 0, "payload_validation_count": 500, "payload_validation_included_in_rtt": true, "payload_validation_max_ms": 2.00449, "payload_validation_p50_ms": 1.363896, "payload_validation_p95_ms": 1.700439, "payload_validation_p99_ms": 1.743825, "receiver_rows": 500, "rtt_count": 500, "rtt_max_ms": 2168.538904, "rtt_p50_ms": 139.91687, "rtt_p95_ms": 263.386677, "rtt_p99_ms": 344.401285, "status": "complete", "transport": "tcp", "wire_request_bytes_max": 32, "wire_request_bytes_min": 32}
+[2026-08-18T12:23:50-04:00] Completed tcp payload 512000 at 2026-08-18T12:23:47-04:00
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+[2026-08-18T12:23:57-04:00] Starting mqtt payload 1024 at 2026-08-18T12:23:57-04:00
+{"accepted": 1000, "application_direction": "downlink", "application_payload_bytes": 1024, "attempts": 1000, "deadline_misses_1000ms": 0, "deadline_misses_100ms": 4, "deadline_misses_500ms": 0, "errors": [], "failed": 0, "payload_validation_count": 1000, "payload_validation_included_in_rtt": true, "payload_validation_max_ms": 0.075768, "payload_validation_p50_ms": 0.035309, "payload_validation_p95_ms": 0.04846, "payload_validation_p99_ms": 0.058491, "receiver_rows": 1000, "rtt_count": 1000, "rtt_max_ms": 253.149705, "rtt_p50_ms": 21.538104, "rtt_p95_ms": 39.609562, "rtt_p99_ms": 60.696636, "status": "complete", "transport": "mqtt", "wire_request_bytes_max": 100, "wire_request_bytes_min": 100}
+[2026-08-18T12:27:46-04:00] Completed mqtt payload 1024 at 2026-08-18T12:27:43-04:00
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+[2026-08-18T12:27:55-04:00] Starting mqtt payload 10240 at 2026-08-18T12:27:55-04:00
+{"accepted": 1000, "application_direction": "downlink", "application_payload_bytes": 10240, "attempts": 1000, "deadline_misses_1000ms": 0, "deadline_misses_100ms": 4, "deadline_misses_500ms": 0, "errors": [], "failed": 0, "payload_validation_count": 1000, "payload_validation_included_in_rtt": true, "payload_validation_max_ms": 0.133805, "payload_validation_p50_ms": 0.06733, "payload_validation_p95_ms": 0.083194, "payload_validation_p99_ms": 0.098901, "receiver_rows": 1000, "rtt_count": 1000, "rtt_max_ms": 279.741783, "rtt_p50_ms": 29.637612, "rtt_p95_ms": 45.673036, "rtt_p99_ms": 67.565252, "status": "complete", "transport": "mqtt", "wire_request_bytes_max": 100, "wire_request_bytes_min": 100}
+[2026-08-18T12:31:50-04:00] Completed mqtt payload 10240 at 2026-08-18T12:31:47-04:00
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+[2026-08-18T12:31:59-04:00] Starting mqtt payload 102400 at 2026-08-18T12:31:59-04:00
+{"accepted": 1000, "application_direction": "downlink", "application_payload_bytes": 102400, "attempts": 1000, "deadline_misses_1000ms": 0, "deadline_misses_100ms": 41, "deadline_misses_500ms": 1, "errors": [], "failed": 0, "payload_validation_count": 1000, "payload_validation_included_in_rtt": true, "payload_validation_max_ms": 0.549557, "payload_validation_p50_ms": 0.313499, "payload_validation_p95_ms": 0.416016, "payload_validation_p99_ms": 0.431573, "receiver_rows": 1000, "rtt_count": 1000, "rtt_max_ms": 573.24819, "rtt_p50_ms": 59.480176, "rtt_p95_ms": 97.518829, "rtt_p99_ms": 165.523512, "status": "complete", "transport": "mqtt", "wire_request_bytes_max": 100, "wire_request_bytes_min": 100}
+[2026-08-18T12:36:25-04:00] Completed mqtt payload 102400 at 2026-08-18T12:36:23-04:00
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+[2026-08-18T12:36:33-04:00] Starting mqtt payload 512000 at 2026-08-18T12:36:33-04:00
+{"accepted": 500, "application_direction": "downlink", "application_payload_bytes": 512000, "attempts": 500, "deadline_misses_1000ms": 0, "deadline_misses_100ms": 399, "deadline_misses_500ms": 0, "errors": [], "failed": 0, "payload_validation_count": 500, "payload_validation_included_in_rtt": true, "payload_validation_max_ms": 2.846783, "payload_validation_p50_ms": 1.338032, "payload_validation_p95_ms": 1.401162, "payload_validation_p99_ms": 1.754172, "receiver_rows": 500, "rtt_count": 500, "rtt_max_ms": 429.078242, "rtt_p50_ms": 124.310687, "rtt_p95_ms": 226.787326, "rtt_p99_ms": 301.902778, "status": "complete", "transport": "mqtt", "wire_request_bytes_max": 100, "wire_request_bytes_min": 100}
+[2026-08-18T12:39:27-04:00] Completed mqtt payload 512000 at 2026-08-18T12:39:24-04:00
+[2026-08-18T12:39:27-04:00] All 8 payload conditions complete
+[2026-08-18T12:39:27-04:00] Downlink matrix validated at eight complete conditions
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+[2026-08-18T12:39:32-04:00] Starting repetition_01 upload
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+{"client_local_data_elapsed_s": 800.116074186, "client_local_data_throughput_mbps": 0.524211940657121, "direction": "upload", "errors": [], "payload_crc32": 34909490, "receiver_throughput_mbps": 0.5236423355492054, "server_local_data_elapsed_s": 800.98642055, "server_local_data_throughput_mbps": 0.5236423355492054, "status": "complete", "total_bytes": 52428800}
+[2026-08-18T12:52:55-04:00] Completed repetition_01 upload
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+[2026-08-18T12:52:59-04:00] Starting repetition_01 download
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+{"client_local_data_elapsed_s": 9.812263179, "client_local_data_throughput_mbps": 42.74553101038465, "direction": "download", "errors": [], "payload_crc32": 34909490, "receiver_throughput_mbps": 42.74553101038465, "server_local_data_elapsed_s": 9.303015521, "server_local_data_throughput_mbps": 45.08542408138588, "status": "complete", "total_bytes": 52428800}
+[2026-08-18T12:53:11-04:00] Completed repetition_01 download
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+[2026-08-18T12:53:15-04:00] Starting repetition_02 upload
+Warning: Permanently added '10.100.100.6' (ED25519) to the list of known hosts.
+{"client_local_data_elapsed_s": 826.869987431, "client_local_data_throughput_mbps": 0.5072507242681853, "direction": "upload", "errors": [], "payload_crc32": 34909490, "receiver_throughput_mbps": 0.5066107171379836, "server_local_data_elapsed_s": 827.914581771, "server_local_data_throughput_mbps": 0.5066107171379836, "status": "complete", "total_bytes": 52428800}
+[2026-08-18T13:07:05-04:00] Completed repetition_02 upload
+[2026-08-18T13:07:06-04:00] Operator stop applied after repetition 02 upload completed; no repetition 02 download or later repetition started.

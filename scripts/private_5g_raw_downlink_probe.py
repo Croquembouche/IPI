@@ -31,7 +31,7 @@ CSV_FIELDS = (
     "source_id", "sequence", "application_payload_bytes",
     "wire_request_bytes", "wire_response_bytes", "accepted",
     "client_send_wall_ns", "client_receive_wall_ns", "rtt_ms",
-    "server_processing_ms", "payload_crc32", "detail",
+    "payload_validation_ms", "server_processing_ms", "payload_crc32", "detail",
 )
 
 
@@ -260,7 +260,7 @@ def connect_tcp(args: argparse.Namespace) -> socket.socket:
 
 def complete_sender_row(args: argparse.Namespace, row: dict[str, object],
                         response: Response, finish_ns: int, start_ns: int,
-                        wire_response_bytes: int) -> None:
+                        validation_ns: int, wire_response_bytes: int) -> None:
     receive_wall_ns = time.time_ns()
     row.update(
         emit_time_ns=receive_wall_ns, accepted="true",
@@ -268,6 +268,7 @@ def complete_sender_row(args: argparse.Namespace, row: dict[str, object],
         wire_response_bytes=wire_response_bytes,
         client_receive_wall_ns=receive_wall_ns,
         rtt_ms=f"{(finish_ns - start_ns) / 1_000_000:.6f}",
+        payload_validation_ms=f"{validation_ns / 1_000_000:.6f}",
         server_processing_ms=f"{response.server_processing_ns / 1_000_000:.6f}",
         payload_crc32=response.payload_crc32,
         detail="validated complete downlink response length, sequence, and CRC32",
@@ -288,10 +289,14 @@ def run_tcp_sender(args: argparse.Namespace, writer: csv.DictWriter) -> None:
             start_ns = time.monotonic_ns()
             send_tcp_message(sock, request)
             data = receive_tcp_message(sock, RESPONSE_HEADER.size + args.max_payload_bytes)
+            validation_start_ns = time.monotonic_ns()
             response = parse_response(data, args.max_payload_bytes)
-            finish_ns = time.monotonic_ns()
             validate_response(response, sequence, args.payload_bytes, expected_crc)
-            complete_sender_row(args, row, response, finish_ns, start_ns, TCP_LENGTH.size + len(data))
+            finish_ns = time.monotonic_ns()
+            complete_sender_row(
+                args, row, response, finish_ns, start_ns,
+                finish_ns - validation_start_ns, TCP_LENGTH.size + len(data),
+            )
         except Exception as error:
             row.update(accepted="false", client_receive_wall_ns=time.time_ns(), detail=str(error))
             if sock is not None:
@@ -321,13 +326,17 @@ def run_mqtt_sender(args: argparse.Namespace, writer: csv.DictWriter) -> None:
             start_ns = time.monotonic_ns()
             client.sock.sendall(packet)
             topic, data = client.receive_publish()
-            response = parse_response(data, args.max_payload_bytes)
-            finish_ns = time.monotonic_ns()
             if topic != response_topic(args):
                 raise ValueError("unexpected MQTT downlink response topic")
+            validation_start_ns = time.monotonic_ns()
+            response = parse_response(data, args.max_payload_bytes)
             validate_response(response, sequence, args.payload_bytes, expected_crc)
+            finish_ns = time.monotonic_ns()
             wire_response = len(client.publish_packet(response_topic(args), data))
-            complete_sender_row(args, row, response, finish_ns, start_ns, wire_response)
+            complete_sender_row(
+                args, row, response, finish_ns, start_ns,
+                finish_ns - validation_start_ns, wire_response,
+            )
         except Exception as error:
             row.update(accepted="false", client_receive_wall_ns=time.time_ns(), detail=str(error))
             if client is not None:

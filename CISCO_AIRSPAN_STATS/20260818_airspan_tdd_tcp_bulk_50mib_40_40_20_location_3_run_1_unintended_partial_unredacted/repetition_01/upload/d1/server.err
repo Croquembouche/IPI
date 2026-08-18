@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/d1/edge4av_followup/runs/20260818_airspan_tdd_tcp_bulk_50mib_40_40_20_location_3_run_1/tools/private_5g_bulk_throughput.py", line 208, in <module>
+    raise SystemExit(main())
+  File "/home/d1/edge4av_followup/runs/20260818_airspan_tdd_tcp_bulk_50mib_40_40_20_location_3_run_1/tools/private_5g_bulk_throughput.py", line 201, in main
+    output = run_server(args) if args.role == "server" else run_client(args)
+  File "/home/d1/edge4av_followup/runs/20260818_airspan_tdd_tcp_bulk_50mib_40_40_20_location_3_run_1/tools/private_5g_bulk_throughput.py", line 141, in run_server
+    output = handle_server(args, conn)
+  File "/home/d1/edge4av_followup/runs/20260818_airspan_tdd_tcp_bulk_50mib_40_40_20_location_3_run_1/tools/private_5g_bulk_throughput.py", line 122, in handle_server
+    local_elapsed, checksum = receive_payload(conn, total_bytes, args.block_bytes)
+  File "/home/d1/edge4av_followup/runs/20260818_airspan_tdd_tcp_bulk_50mib_40_40_20_location_3_run_1/tools/private_5g_bulk_throughput.py", line 60, in receive_payload
+    raise ConnectionError("peer closed before exact payload was received")
+ConnectionError: peer closed before exact payload was received

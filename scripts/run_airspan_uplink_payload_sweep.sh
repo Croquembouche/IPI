@@ -26,6 +26,7 @@ Optional environment:
   RSRQ_DB                   Default: -13
   RADIO_STATE               Default: operator-reported
   COUNT                     Default: 1000
+  PAYLOAD_512000_COUNT      Default: COUNT; permits a shorter 500-KiB condition
   PAYLOAD_1048576_COUNT     Default: COUNT; permits a shorter 1,024-KiB condition
   INTERVAL_MS               Default: 200
   MQTT_TIMEOUT_MS           Default: 60000
@@ -72,6 +73,7 @@ else
 fi
 REMOTE_PROBE="$REMOTE_RUN_DIR/tools/$(basename "$LOCAL_PROBE")"
 COUNT="${COUNT:-1000}"
+PAYLOAD_512000_COUNT="${PAYLOAD_512000_COUNT:-$COUNT}"
 PAYLOAD_1048576_COUNT="${PAYLOAD_1048576_COUNT:-$COUNT}"
 INTERVAL_MS="${INTERVAL_MS:-200}"
 TCP_PORT="${TCP_PORT:-36666}"
@@ -104,7 +106,7 @@ for name in RUN_NAME RUN_ID LOCATION_ID; do
     exit 2
   fi
 done
-for name in COUNT PAYLOAD_1048576_COUNT INTERVAL_MS TCP_PORT MQTT_PORT MQTT_TIMEOUT_MS MAX_CONDITION_SECONDS; do
+for name in COUNT PAYLOAD_512000_COUNT PAYLOAD_1048576_COUNT INTERVAL_MS TCP_PORT MQTT_PORT MQTT_TIMEOUT_MS MAX_CONDITION_SECONDS; do
   value="${!name}"
   if [[ ! "$value" =~ ^[1-9][0-9]*$ ]]; then
     echo "$name must be a positive integer" >&2
@@ -134,8 +136,8 @@ if [[ "$COUNT" != "1000" || "$INTERVAL_MS" != "200" ]]; then
   echo 'COUNT and INTERVAL_MS must remain 1000 and 200 for this acquisition' >&2
   exit 2
 fi
-if (( PAYLOAD_1048576_COUNT > COUNT )); then
-  echo 'PAYLOAD_1048576_COUNT cannot exceed COUNT' >&2
+if (( PAYLOAD_512000_COUNT > COUNT || PAYLOAD_1048576_COUNT > COUNT )); then
+  echo 'Per-payload count cannot exceed COUNT' >&2
   exit 2
 fi
 if [[ "$TDD_PROFILE" != "40/40/20" && "$TDD_PROFILE" != "60/20/20" && "$TDD_PROFILE" != "70/20/10" ]]; then
@@ -307,6 +309,8 @@ data = {
     "clock_sync_state": "unsynced",
     "timing_metric": "monotonic_complete_application_" + ("ack" if sys.argv[21] == "uplink" else "response") + "_rtt",
     "timing_boundary": ("immediately before first framed TCP or MQTT byte is sent through complete correlated application acknowledgment validation" if sys.argv[21] == "uplink" else "immediately before the compact request is sent through receipt and validation of the complete correlated downlink response"),
+    "payload_validation_metric": (None if sys.argv[21] == "uplink" else "vehicle monotonic time for response length, sequence, and CRC32 validation"),
+    "payload_validation_included_in_rtt": (None if sys.argv[21] == "uplink" else True),
     "payload_protocol": ("exact raw application body with length and CRC32 validation" if sys.argv[21] == "uplink" else "compact request followed by exact response body with length, sequence, and CRC32 validation"),
     "application_acknowledgment": sys.argv[21] == "uplink",
     "tcp_acknowledgment_only": False,
@@ -357,6 +361,11 @@ with (root / "sender.csv").open(newline="", encoding="utf-8") as handle:
 accepted = [row for row in rows if row.get("accepted", "").lower() == "true"]
 failed = len(rows) - len(accepted)
 rtts = sorted(float(row["rtt_ms"]) for row in accepted if row.get("rtt_ms"))
+payload_validation = sorted(
+    float(row["payload_validation_ms"])
+    for row in accepted
+    if row.get("payload_validation_ms")
+)
 sequences = [int(row["sequence"]) for row in rows]
 wire_sizes = [int(row["wire_request_bytes"]) for row in accepted if row.get("wire_request_bytes")]
 
@@ -388,6 +397,8 @@ expected_detail = (
 )
 if any(row.get("detail") != expected_detail for row in accepted):
     errors.append("sender complete application response validation mismatch")
+if direction == "downlink" and len(payload_validation) != len(accepted):
+    errors.append("sender payload-validation timing count mismatch")
 if len(receiver_rows) < len(accepted):
     errors.append("receiver rows fewer than accepted sender rows")
 if any(int(row.get("application_payload_bytes", -1)) != payload for row in receiver_rows):
@@ -414,6 +425,15 @@ summary = {
     "deadline_misses_1000ms": expected - sum(v <= 1000 for v in rtts),
     "errors": errors,
 }
+if direction == "downlink":
+    summary.update({
+        "payload_validation_count": len(payload_validation),
+        "payload_validation_p50_ms": percentile(payload_validation, 0.50),
+        "payload_validation_p95_ms": percentile(payload_validation, 0.95),
+        "payload_validation_p99_ms": percentile(payload_validation, 0.99),
+        "payload_validation_max_ms": max(payload_validation) if payload_validation else None,
+        "payload_validation_included_in_rtt": True,
+    })
 (root / "validation_summary.json").write_text(
     json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8"
 )
@@ -513,7 +533,9 @@ run_condition() {
   local payload="$2"
   local condition_id="${APPLICATION_DIRECTION}-${transport}-payload-${payload}"
   local condition_count="$COUNT"
-  if [[ "$payload" == "1048576" ]]; then
+  if [[ "$payload" == "512000" ]]; then
+    condition_count="$PAYLOAD_512000_COUNT"
+  elif [[ "$payload" == "1048576" ]]; then
     condition_count="$PAYLOAD_1048576_COUNT"
   fi
   local local_dir="$RAW_RUN_DIR/application/$transport/payload_${payload}"

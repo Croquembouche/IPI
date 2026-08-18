@@ -1,0 +1,17 @@
+{
+  "bandwidth_raw_root": "CISCO_AIRSPAN_STATS/20260818_airspan_tdd_tcp_bulk_50mib_40_40_20_location_3_run_1_unredacted",
+  "context_and_gnss_raw_root": "CISCO_AIRSPAN_STATS/20260818_airspan_tdd_full_directional_40_40_20_location_3_run_1_unredacted",
+  "downlink_raw_root": "CISCO_AIRSPAN_STATS/20260818_airspan_tdd_raw_downlink_40_40_20_location_3_tcp_mqtt_run_1_unredacted",
+  "excluded_from_primary_analysis": [
+    {
+      "path": "CISCO_AIRSPAN_STATS/20260818_airspan_tdd_tcp_bulk_50mib_40_40_20_location_3_run_1_unintended_partial_unredacted",
+      "reason": "unintended incomplete bandwidth invocation retained only as diagnostic evidence"
+    },
+    {
+      "path": "CISCO_AIRSPAN_STATS/20260818_airspan_tdd_raw_uplink_40_40_20_location_3_tcp_mqtt_run_1_unredacted/application/tcp/payload_512000_overrun_diagnostic",
+      "reason": "untouched 260-row capture retained after the TCP 500-KiB target changed to 250; primary analysis uses sequences 1 through 250"
+    }
+  ],
+  "schema": "edge4av-airspan-directional-repeat-sources-v1",
+  "uplink_raw_root": "CISCO_AIRSPAN_STATS/20260818_airspan_tdd_raw_uplink_40_40_20_location_3_tcp_mqtt_run_1_unredacted"
+}

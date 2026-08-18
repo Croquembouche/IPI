@@ -1,0 +1,34 @@
+{
+  "cell_context": {
+    "provenance": "carried forward pending fresh operator report",
+    "serving_cell": 2
+  },
+  "location": {
+    "changed_during_run": false,
+    "id": "location_3",
+    "mobility_state": "stationary"
+  },
+  "rsrp_timeline": [
+    {
+      "rsrp_dbm": -105,
+      "time_relation": "before 2026-08-18T11:07:00-04:00"
+    },
+    {
+      "rsrp_dbm": -110,
+      "time_relation": "at or after 2026-08-18T11:07:00-04:00 and before 2026-08-18T11:18:00-04:00"
+    },
+    {
+      "rsrp_dbm": -115,
+      "time_relation": "at or after 2026-08-18T11:18:00-04:00"
+    }
+  ],
+  "rsrq_db": {
+    "provenance": "carried forward pending fresh operator report",
+    "value": -13
+  },
+  "schema": "edge4av-airspan-directional-repeat-operator-context-v1",
+  "tdd_profile": {
+    "provenance": "operator reported for this run",
+    "value": "40/40/20"
+  }
+}

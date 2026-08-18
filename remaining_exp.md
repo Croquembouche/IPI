@@ -1,6 +1,6 @@
 # Remaining Experiment Plan
 
-Last updated: 2026-08-17
+Last updated: 2026-08-18
 
 ## Purpose
 
@@ -9,6 +9,37 @@ before the Edge4AV paper can answer the current coauthor comments. It is a
 runbook and decision record. Use it to prepare each collection, name and
 preserve the artifacts, determine whether a run is valid, and prevent
 unnecessary repetition of experiments that are already complete.
+
+## 2026-08-18 Full Directional TDD 40/40/20 Repeat
+
+Status: **complete with an operator-shortened bandwidth stage** at stationary `location_3` and operator-reported TDD
+`40/40/20`. RSRP was operator-reported as `-105 dBm` initially, `-110 dBm`
+from `2026-08-18 11:07 EDT`, and `-115 dBm` from `11:18 EDT` onward, without a
+location change. A condition that crosses either boundary must retain every
+applicable RSRP/time segment and must not be assigned one scalar RSRP. Fresh
+RSRQ and cell context have not been reported
+for this run. The uplink-heavy TCP/MQTT matrix uses
+1,000 exchanges at 1, 10, and 100 KiB and 250 exchanges at 500 KiB. The
+downlink-heavy TCP/MQTT matrix uses 1,000 exchanges at 1, 10, and 100 KiB and
+500 exchanges at 500 KiB. The original bandwidth plan requested five paired
+exact 50-MiB transfers in each direction. The operator stopped collection
+after repetition 2 upload completed, leaving one complete upload/download pair
+and one additional validated upload. Do not describe this as five pairs or use
+it as a five-repetition estimate.
+
+The downlink-heavy RTT contract is:
+
+1. The vehicle sends a compact request to d1.
+2. d1 sends the requested 1, 10, 100, or 500 KiB payload to the vehicle.
+3. RTT starts immediately before the vehicle sends the request.
+4. RTT ends after the vehicle receives and validates the complete payload,
+   including length, sequence number, and CRC32.
+
+Every accepted downlink sender row must store `payload_validation_ms`, measured
+with the vehicle monotonic clock from the start of response parsing through
+the length, sequence-number, and CRC32 checks. This validation interval is
+included within `rtt_ms`; it is retained separately so analysis can quantify
+host-side validation overhead without confusing it with network transfer time.
 
 ## 2026-08-17 Directional TDD Collection Update
 

@@ -1,0 +1,21 @@
+{
+  "accepted": 1000,
+  "application_direction": "uplink",
+  "application_payload_bytes": 102400,
+  "attempts": 1000,
+  "deadline_misses_1000ms": 990,
+  "deadline_misses_100ms": 1000,
+  "deadline_misses_500ms": 1000,
+  "errors": [],
+  "failed": 0,
+  "receiver_rows": 1000,
+  "rtt_count": 1000,
+  "rtt_max_ms": 3613.545772,
+  "rtt_p50_ms": 1535.43854,
+  "rtt_p95_ms": 1873.187716,
+  "rtt_p99_ms": 2041.463724,
+  "status": "complete",
+  "transport": "tcp",
+  "wire_request_bytes_max": 102436,
+  "wire_request_bytes_min": 102436
+}

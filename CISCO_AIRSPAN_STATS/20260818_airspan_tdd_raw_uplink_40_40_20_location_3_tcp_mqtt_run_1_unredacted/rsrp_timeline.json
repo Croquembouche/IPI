@@ -1,0 +1,135 @@
+{
+  "conditions": [
+    {
+      "11_07_to_before_11_18_rows": 378,
+      "at_or_after_11_18_rows": 533,
+      "before_11_07_rows": 89,
+      "condition": "application/mqtt/payload_102400",
+      "segments": [
+        {
+          "rows": 89,
+          "rsrp_dbm": -105,
+          "time_relation": "before 2026-08-18T11:07:00-04:00"
+        },
+        {
+          "rows": 378,
+          "rsrp_dbm": -110,
+          "time_relation": "at or after 2026-08-18T11:07:00-04:00 and before 2026-08-18T11:18:00-04:00"
+        },
+        {
+          "rows": 533,
+          "rsrp_dbm": -115,
+          "time_relation": "at or after 2026-08-18T11:18:00-04:00"
+        }
+      ]
+    },
+    {
+      "11_07_to_before_11_18_rows": 0,
+      "at_or_after_11_18_rows": 0,
+      "before_11_07_rows": 1000,
+      "condition": "application/mqtt/payload_10240",
+      "segments": [
+        {
+          "rows": 1000,
+          "rsrp_dbm": -105,
+          "time_relation": "before 2026-08-18T11:07:00-04:00"
+        }
+      ]
+    },
+    {
+      "11_07_to_before_11_18_rows": 0,
+      "at_or_after_11_18_rows": 250,
+      "before_11_07_rows": 0,
+      "condition": "application/mqtt/payload_512000",
+      "segments": [
+        {
+          "rows": 250,
+          "rsrp_dbm": -115,
+          "time_relation": "at or after 2026-08-18T11:18:00-04:00"
+        }
+      ]
+    },
+    {
+      "11_07_to_before_11_18_rows": 0,
+      "at_or_after_11_18_rows": 0,
+      "before_11_07_rows": 1000,
+      "condition": "application/mqtt/payload_1024",
+      "segments": [
+        {
+          "rows": 1000,
+          "rsrp_dbm": -105,
+          "time_relation": "before 2026-08-18T11:07:00-04:00"
+        }
+      ]
+    },
+    {
+      "11_07_to_before_11_18_rows": 0,
+      "at_or_after_11_18_rows": 0,
+      "before_11_07_rows": 1000,
+      "condition": "application/tcp/payload_102400",
+      "segments": [
+        {
+          "rows": 1000,
+          "rsrp_dbm": -105,
+          "time_relation": "before 2026-08-18T11:07:00-04:00"
+        }
+      ]
+    },
+    {
+      "11_07_to_before_11_18_rows": 0,
+      "at_or_after_11_18_rows": 0,
+      "before_11_07_rows": 1000,
+      "condition": "application/tcp/payload_10240",
+      "segments": [
+        {
+          "rows": 1000,
+          "rsrp_dbm": -105,
+          "time_relation": "before 2026-08-18T11:07:00-04:00"
+        }
+      ]
+    },
+    {
+      "11_07_to_before_11_18_rows": 0,
+      "at_or_after_11_18_rows": 0,
+      "before_11_07_rows": 250,
+      "condition": "application/tcp/payload_512000",
+      "segments": [
+        {
+          "rows": 250,
+          "rsrp_dbm": -105,
+          "time_relation": "before 2026-08-18T11:07:00-04:00"
+        }
+      ]
+    },
+    {
+      "11_07_to_before_11_18_rows": 0,
+      "at_or_after_11_18_rows": 0,
+      "before_11_07_rows": 1000,
+      "condition": "application/tcp/payload_1024",
+      "segments": [
+        {
+          "rows": 1000,
+          "rsrp_dbm": -105,
+          "time_relation": "before 2026-08-18T11:07:00-04:00"
+        }
+      ]
+    }
+  ],
+  "current_rsrp_dbm": -115,
+  "initial_rsrp_dbm": -105,
+  "location_change": false,
+  "location_id": "location_3",
+  "schema": "edge4av-operator-reported-rsrp-timeline-v1",
+  "transitions": [
+    {
+      "from_rsrp_dbm": -105,
+      "to_rsrp_dbm": -110,
+      "transition_at": "2026-08-18T11:07:00-04:00"
+    },
+    {
+      "from_rsrp_dbm": -110,
+      "to_rsrp_dbm": -115,
+      "transition_at": "2026-08-18T11:18:00-04:00"
+    }
+  ]
+}

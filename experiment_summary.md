@@ -807,6 +807,76 @@ statement, these may be mechanisms in the end-to-end profile effect rather
 than an unrelated workload. The result is application goodput for one TCP
 flow, not a direct measurement of radio-PHY capacity.
 
+### E18. 2026-08-18 Full Directional `40/40/20` Repeat
+
+Primary derived folder:
+
+- `results/real_5g/20260818_airspan_tdd_40_40_20_location_3_directional_repeat/`
+
+Primary raw folders:
+
+- `CISCO_AIRSPAN_STATS/20260818_airspan_tdd_full_directional_40_40_20_location_3_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260818_airspan_tdd_raw_uplink_40_40_20_location_3_tcp_mqtt_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260818_airspan_tdd_raw_downlink_40_40_20_location_3_tcp_mqtt_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260818_airspan_tdd_tcp_bulk_50mib_40_40_20_location_3_run_1_unredacted/`
+
+Status: complete with an operator-shortened bandwidth stage at stationary `location_3`, with
+operator-reported TDD `40/40/20`. RSRP was operator-reported as `-105 dBm`
+initially, `-110 dBm` from `2026-08-18 11:07 EDT`, and `-115 dBm` from
+`11:18 EDT` onward, with no location change. Any condition crossing either
+boundary is reported with every applicable RSRP/time segment rather than one
+scalar RSRP.
+
+For the downlink-heavy RTT experiment, the measurement contract is:
+
+1. The vehicle sends a compact request to d1.
+2. d1 sends the requested 1, 10, 100, or 500 KiB payload to the vehicle.
+3. RTT starts immediately before the vehicle sends the request.
+4. RTT ends after the vehicle receives and validates the complete payload,
+   including length, sequence number, and CRC32.
+
+The vehicle stores the validation interval separately as
+`payload_validation_ms`. It begins when response parsing starts and ends after
+the length, sequence-number, and CRC32 checks finish. This interval is included
+within `rtt_ms`, allowing the final analysis to report validation overhead
+separately without subtracting it from the measured application RTT.
+
+All uplink and downlink RTT conditions completed with zero failed exchanges.
+The uplink conditions use 1,000 samples at 1, 10, and 100 KiB and 250 samples
+at 500 KiB. The downlink conditions use 1,000 samples at 1, 10, and 100 KiB
+and 500 samples at 500 KiB.
+
+| Direction | Transport | Payload | RSRP context | p50 RTT ms | p95 RTT ms |
+|---|---|---:|---|---:|---:|
+| Uplink, vehicle to d1 | TCP | 1 KiB | -105 dBm | 39.497 | 51.497 |
+| Uplink, vehicle to d1 | TCP | 10 KiB | -105 dBm | 173.310 | 269.704 |
+| Uplink, vehicle to d1 | TCP | 100 KiB | -105 dBm | 1535.439 | 1873.188 |
+| Uplink, vehicle to d1 | TCP | 500 KiB | -105 dBm | 7856.404 | 8498.015 |
+| Uplink, vehicle to d1 | MQTT | 1 KiB | -105 dBm | 39.611 | 50.274 |
+| Uplink, vehicle to d1 | MQTT | 10 KiB | -105 dBm | 191.574 | 285.447 |
+| Uplink, vehicle to d1 | MQTT | 100 KiB | mixed -105/-110/-115 dBm | 1577.191 | 2159.130 |
+| Uplink, vehicle to d1 | MQTT | 500 KiB | -115 dBm | 7647.557 | 9287.828 |
+| Downlink, d1 to vehicle | TCP | 1 KiB | -115 dBm | 29.610 | 69.797 |
+| Downlink, d1 to vehicle | TCP | 10 KiB | -115 dBm | 31.660 | 49.433 |
+| Downlink, d1 to vehicle | TCP | 100 KiB | -115 dBm | 51.398 | 89.463 |
+| Downlink, d1 to vehicle | TCP | 500 KiB | -115 dBm | 139.917 | 263.387 |
+| Downlink, d1 to vehicle | MQTT | 1 KiB | -115 dBm | 21.538 | 39.610 |
+| Downlink, d1 to vehicle | MQTT | 10 KiB | -115 dBm | 29.638 | 45.673 |
+| Downlink, d1 to vehicle | MQTT | 100 KiB | -115 dBm | 59.480 | 97.519 |
+| Downlink, d1 to vehicle | MQTT | 500 KiB | -115 dBm | 124.311 | 226.787 |
+
+Downlink payload-validation p50 ranges from 0.035 to 1.364 ms and p95 from
+0.048 to 1.700 ms. The validation cost is included within RTT and remains
+small relative to the complete request/download RTT.
+
+The bandwidth stage stopped at the requested boundary. Repetition 1 delivered
+an exact 50-MiB vehicle-to-d1 upload at 0.524 Mb/s and an exact 50-MiB
+d1-to-vehicle download at 42.746 Mb/s. Repetition 2 delivered an additional
+exact vehicle-to-d1 upload at 0.507 Mb/s. All three retained direction-runs
+passed endpoint byte-count and CRC32 validation. Repetition 2 download and
+repetitions 3--5 did not start, so this is one complete pair plus one extra
+upload, not a five-pair estimate.
+
 ## Mocar V2X Experiments
 
 ### M01. Mocar Setup And Custom RX Debug
