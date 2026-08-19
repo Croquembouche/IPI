@@ -1,0 +1,20 @@
+{
+  "completed_conditions": [
+    {
+      "accepted": 500,
+      "failed": 0,
+      "payload_bytes": 1024,
+      "transport": "tcp"
+    }
+  ],
+  "interrupted_diagnostic": {
+    "accepted": 142,
+    "failed": 0,
+    "path": "application/tcp/payload_10240_interrupted_partial_20260819T1520EDT",
+    "use_in_final_summary": false
+  },
+  "operator_action": "stop experiment now and resume later",
+  "resume_from": "clean uplink TCP payload_10240 condition",
+  "status": "paused",
+  "tdd_profile": "40/40/20"
+}

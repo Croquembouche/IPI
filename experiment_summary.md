@@ -877,6 +877,158 @@ passed endpoint byte-count and CRC32 validation. Repetition 2 download and
 repetitions 3--5 did not start, so this is one complete pair plus one extra
 upload, not a five-pair estimate.
 
+### E19. 2026-08-19 GL-X3000 Full Directional `70/20/10` Repeat
+
+Primary derived folder:
+
+- `results/real_5g/20260819_airspan_tdd_70_20_10_new_device_location_3_directional_repeat/`
+
+Primary raw folders:
+
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_full_directional_70_20_10_new_device_stationary_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_uplink_70_20_10_new_device_location_3_tcp_mqtt_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_downlink_70_20_10_new_device_location_3_tcp_mqtt_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_tcp_bulk_50mib_70_20_10_new_device_location_3_run_1_unredacted/`
+
+Purpose: repeat the full directional application and exact-byte bandwidth
+matrix after replacing the private-5G device with a GL.iNet `GL-X3000`; the
+model identity was explicitly confirmed by the operator. The operator reported
+TDD `70/20/10` and stationary placement. The fresh 59.616-second GNSS bag contains
+16,101 messages and places the vehicle 2.98 m from the August 18 location-3
+reference. Credentialed modem history retained 285 unique ten-second 5G-SA
+samples: RSRP `-104` to `-95 dBm` (median `-99 dBm`), RSRQ `-10 dB`, and SINR
+`15` to `23 dB` (median `20 dB`). Serving-cell, cell-administrative, and
+handoff state remain null because they were not freshly reported.
+
+All 16 TCP/MQTT conditions completed exactly 500 accepted exchanges with zero
+failures. Direction is explicit: uplink means vehicle sends the declared
+payload and d1 returns a compact acknowledgment; downlink means vehicle sends a
+compact request and d1 returns the declared payload. Downlink RTT ends only
+after vehicle-side length, sequence-number, and CRC32 validation. The validation
+interval is retained separately and remains included within RTT.
+
+| Direction | Transport | Payload | p50 RTT ms | p95 RTT ms | Max RTT ms |
+|---|---|---:|---:|---:|---:|
+| Uplink | TCP | 1 KiB | 41.513 | 53.352 | 69.885 |
+| Uplink | TCP | 10 KiB | 45.888 | 57.516 | 65.393 |
+| Uplink | TCP | 100 KiB | 85.091 | 102.547 | 130.876 |
+| Uplink | TCP | 500 KiB | 231.046 | 258.200 | 831.145 |
+| Uplink | MQTT | 1 KiB | 39.411 | 46.948 | 57.586 |
+| Uplink | MQTT | 10 KiB | 45.537 | 55.494 | 63.540 |
+| Uplink | MQTT | 100 KiB | 89.215 | 109.402 | 129.790 |
+| Uplink | MQTT | 500 KiB | 238.607 | 267.336 | 911.888 |
+| Downlink | TCP | 1 KiB | 36.001 | 45.814 | 53.266 |
+| Downlink | TCP | 10 KiB | 37.489 | 45.937 | 53.451 |
+| Downlink | TCP | 100 KiB | 43.857 | 82.671 | 187.940 |
+| Downlink | TCP | 500 KiB | 77.744 | 93.403 | 162.838 |
+| Downlink | MQTT | 1 KiB | 29.662 | 40.001 | 45.099 |
+| Downlink | MQTT | 10 KiB | 33.210 | 44.210 | 56.330 |
+| Downlink | MQTT | 100 KiB | 44.551 | 83.172 | 111.689 |
+| Downlink | MQTT | 500 KiB | 80.493 | 97.806 | 155.661 |
+
+Downlink payload-validation p50 spans 0.044--1.406 ms and p95 spans
+0.081--2.082 ms. Payload bytes remain in memory during all timed application
+and bandwidth operations. The measurements include transmission, complete
+receive/reassembly, and the specified validation; payload-file HDD I/O is not
+part of the measured interval. Compact result rows, summaries, and telemetry
+are written only after the applicable timing boundary.
+
+All three exact 50-MiB pairs passed endpoint byte-count and CRC32 validation.
+Receiver-observed upload goodput (vehicle to d1) averages 15.691 Mb/s, with
+15.647 Mb/s median and a 15.334--16.049 Mb/s 95% t interval. Download goodput
+(d1 to vehicle) averages 166.106 Mb/s, with 172.970 Mb/s median and a
+134.531--197.681 Mb/s interval.
+
+The closest old-device control is E17's TDD `70/20/10`, location-3 dataset at
+reported RSRP `-100 dBm`. The new-device run is 3.691 Mb/s or 30.8% higher in
+mean upload and 39.320 Mb/s or 31.0% higher in mean download. Matched downlink
+RTT is mixed rather than uniformly improved: p50 changes range from 7.5% lower
+to 20.7% higher. Compared with E18, 500-KiB uplink p50 is 97.1% lower for TCP
+and 96.9% lower for MQTT, but E18 used TDD `40/40/20`, weaker/mixed RSRP, and a
+different collection time. The severe E18 uplink condition did not persist in
+the replacement-device run, but these data cannot separate hardware,
+configuration, session state, and contemporaneous radio/path effects.
+
+### E20. 2026-08-19 GL-X3000 Full Directional `40/40/20` Repeat
+
+Primary derived folder:
+
+- `results/real_5g/20260819_airspan_tdd_40_40_20_new_device_location_3_directional_repeat/`
+
+Primary raw folders:
+
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_full_directional_40_40_20_new_device_stationary_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_uplink_40_40_20_new_device_location_3_tcp_mqtt_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_downlink_40_40_20_new_device_location_3_tcp_mqtt_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_tcp_bulk_50mib_40_40_20_new_device_location_3_run_1_unredacted/`
+
+Purpose: repeat E19's GL-X3000 matrix after the operator changed TDD from
+`70/20/10` to `40/40/20`, while preserving the same stationary location and
+device. The fresh GNSS bag spans 59.628 seconds with 16,102 messages and places
+the median 1.85 m from E19. Two modem-logging segments, separated by an
+operator-requested pause, contain 382 unique 5G-SA samples over 3,810 seconds
+of active capture: RSRP `-102` to `-93 dBm` (median `-98 dBm`), RSRQ `-10 dB`,
+and SINR `16` to `24 dB` (median `20 dB`). Cell context remains unreported.
+
+The first uplink TCP 10-KiB attempt was stopped after 142 accepted exchanges.
+It remains diagnostic-only and is not pooled. A clean 500-exchange replacement
+condition completed after resume. All 16 final conditions completed exactly
+500 accepted exchanges with zero failures.
+
+| Direction | Transport | Payload | p50 RTT ms | p95 RTT ms | Max RTT ms |
+|---|---|---:|---:|---:|---:|
+| Uplink | TCP | 1 KiB | 39.968 | 52.850 | 65.515 |
+| Uplink | TCP | 10 KiB | 62.977 | 87.639 | 279.610 |
+| Uplink | TCP | 100 KiB | 170.916 | 268.867 | 475.817 |
+| Uplink | TCP | 500 KiB | 609.652 | 1149.368 | 2041.143 |
+| Uplink | MQTT | 1 KiB | 39.220 | 49.225 | 66.901 |
+| Uplink | MQTT | 10 KiB | 59.009 | 87.707 | 490.249 |
+| Uplink | MQTT | 100 KiB | 172.946 | 252.016 | 644.436 |
+| Uplink | MQTT | 500 KiB | 580.942 | 1104.331 | 2377.005 |
+| Downlink | TCP | 1 KiB | 38.666 | 49.444 | 89.601 |
+| Downlink | TCP | 10 KiB | 39.606 | 51.624 | 309.568 |
+| Downlink | TCP | 100 KiB | 51.373 | 95.152 | 487.418 |
+| Downlink | TCP | 500 KiB | 101.529 | 320.891 | 4050.986 |
+| Downlink | MQTT | 1 KiB | 29.760 | 44.642 | 3831.198 |
+| Downlink | MQTT | 10 KiB | 34.174 | 49.778 | 1882.287 |
+| Downlink | MQTT | 100 KiB | 49.596 | 136.386 | 1153.608 |
+| Downlink | MQTT | 500 KiB | 86.417 | 138.168 | 234.548 |
+
+Downlink payload-validation p50 spans 0.043--1.335 ms and p95 spans
+0.113--2.484 ms. Validation is included within RTT and remains far too small
+to explain the multi-second tail events. Payload bodies remain in memory; no
+payload-file HDD I/O is included in RTT or goodput.
+
+All three exact 50-MiB pairs passed endpoint byte-count and CRC32 validation.
+Receiver-observed upload goodput is 7.802, 12.888, and 12.050 Mb/s, averaging
+10.913 Mb/s. Download is 142.314, 90.742, and 137.297 Mb/s, averaging 123.451
+Mb/s. The corresponding `40/40/20` 95% t intervals are wide because `n=3` and
+the repetitions vary materially.
+
+The matched E19--E20 comparison observes essentially tied 1-KiB uplink p50.
+At 10 KiB and above, `40/40/20` has higher uplink p50 and p95 for both TCP and
+MQTT. Every downlink condition also has higher p50 and p95 under `40/40/20`.
+At 500 KiB, uplink p50 is 163.9% higher for TCP and 143.5% higher for MQTT;
+downlink TCP p95 is 243.6% higher because of rare stalls. Mean upload goodput
+is 4.778 Mb/s or 30.4% below E19, and mean download is 42.655 Mb/s or 25.7%
+below E19. This is a matched sequential observation rather than direct radio-
+PHY capacity: the application matrix was split by a pause, and bandwidth has
+only three repetitions with high E20 variability.
+
+The direct comparison to the August 18 `40/40/20` run uses the preceding
+Cisco Meraki `MG52-HW` campaign gateway. At 1 KiB, uplink p50 is effectively
+tied. From 10 to 500 KiB, GL-X3000 uplink p50 is `63.7--92.4%` lower and p95 is
+`67.5--88.3%` lower across TCP and MQTT. Downlink is mixed: GL-X3000 p50 is
+higher at compact sizes, tied or lower at 100 KiB, and `27.4--30.5%` lower at
+500 KiB; p95 ranges from `39.1%` lower to `39.9%` higher. The available
+50-MiB samples give `10.913` versus `0.515 Mb/s` mean upload (`21.19x`) and
+`123.451` versus `42.746 Mb/s` download (`2.89x`). This is not a hardware-only
+A/B test: August 18 RSRP fell from `-105` to `-115 dBm`, versus measured median
+`-98 dBm` on August 19, and the August 18 bandwidth stage stopped after two
+uploads and one download. The supported conclusion is that the severe August
+18 large-uplink condition did not recur with GL-X3000; hardware, signal,
+configuration, session, and time-varying path effects remain inseparable.
+
 ## Mocar V2X Experiments
 
 ### M01. Mocar Setup And Custom RX Debug

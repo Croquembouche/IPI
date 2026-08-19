@@ -1,0 +1,40 @@
+1787166865193	geckodriver	INFO	Listening on 127.0.0.1:37557
+1787166865275	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" "/snap/firefox/current/ ... ss" "--remote-debugging-port" "43355" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilePwe4vK"
+*** You are running in headless mode.
+Gtk-Message: 15:14:25.315: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+1787166865947	Marionette	INFO	Marionette enabled
+1787166866128	Marionette	INFO	Listening on port 42777
+WebDriver BiDi listening on ws://127.0.0.1:43355
+Read port: 42777
+1787166866307	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: "Experiment desktop-release-rollout-show-relay-to-all-browsers-next-sign-up-modal-cta has unknown featureId: email-autocomplete-relay"
+console.error: "Experiment visual-card-updates has unknown featureId: newtabRefinedCardsLayout"
+console.error: "Experiment enable-nimbus-unenrollment-synchronization has unknown featureId: nimbusStore"
+console.error: "Experiment private-window-visual-refresh-design-change-only has unknown featureId: feltPrivacy"
+1787166899108	geckodriver	INFO	Listening on 127.0.0.1:47327
+1787166899210	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" "/snap/firefox/current/ ... ss" "--remote-debugging-port" "52741" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilesH9ECn"
+*** You are running in headless mode.
+Gtk-Message: 15:14:59.268: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+1787166900034	Marionette	INFO	Marionette enabled
+1787166900233	Marionette	INFO	Listening on port 42991
+WebDriver BiDi listening on ws://127.0.0.1:52741
+Read port: 42991
+1787166900433	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: "Experiment desktop-release-rollout-show-relay-to-all-browsers-next-sign-up-modal-cta has unknown featureId: email-autocomplete-relay"
+console.error: "Experiment visual-card-updates has unknown featureId: newtabRefinedCardsLayout"
+console.error: "Experiment enable-nimbus-unenrollment-synchronization has unknown featureId: nimbusStore"
+console.error: "Experiment private-window-visual-refresh-design-change-only has unknown featureId: feltPrivacy"
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.8.1."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.8.1."
+[GFX1-]: Managed to allocate after flush.
+1787167239957	Marionette	INFO	Stopped listening on port 42991
+JavaScript warning: http://192.168.8.1/js/app.5d830700.js, line 73: Script terminated by timeout at:
+d2c8/update/this.updateId<@http://192.168.8.1/js/app.5d830700.js:73:231726
+
+JavaScript error: resource://gre/modules/PrivateBrowsingUtils.sys.mjs, line 50: TypeError: can't access property "QueryInterface", aWindow.docShell is null
+1787167240432	webdriver::server	INFO	Shutting down
+1787167240455	webdriver::server	INFO	Shutting down
+1787167240465	Marionette	INFO	Stopped listening on port 42777
+JavaScript error: resource://gre/modules/PrivateBrowsingUtils.sys.mjs, line 50: TypeError: can't access property "QueryInterface", aWindow.docShell is null

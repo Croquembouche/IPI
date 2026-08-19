@@ -1,0 +1,58 @@
+{
+  "application_directions": {
+    "downlink": "d1 to vehicle",
+    "uplink": "vehicle to d1"
+  },
+  "clock_context": {
+    "cross_host_state": "unsynchronized",
+    "d1_observed_offset_from_vehicle_seconds": -188,
+    "timing_metric": "vehicle-side monotonic complete application RTT"
+  },
+  "device_context": {
+    "gateway_address": "192.168.8.1",
+    "gateway_mac": "94:83:c4:a0:52:a5",
+    "management_model": "GL-X3000",
+    "vehicle_address": "192.168.8.233",
+    "vehicle_interface": "eno2",
+    "vehicle_interface_mac": "ac:1f:6b:84:16:8f"
+  },
+  "location": {
+    "distance_to_20260818_location_3_m": 2.981704632128902,
+    "id": "location_3",
+    "max_horizontal_speed_mps": 0.006714694,
+    "max_radial_spread_m": 0.03129800053504215,
+    "mobility_state": "stationary",
+    "rosbag_duration_seconds": 59.616187415,
+    "rosbag_messages": 16101
+  },
+  "radio": {
+    "initial_history_window_seconds": 180,
+    "network_type": "NR5G-SA",
+    "rsrp_dbm": {
+      "latest": -98,
+      "maximum": -98,
+      "minimum": -101,
+      "provenance": "fresh GL-X3000 modem signal history"
+    },
+    "rsrq_db": {
+      "latest": -10,
+      "maximum": -10,
+      "minimum": -10,
+      "provenance": "fresh GL-X3000 modem signal history"
+    },
+    "sinr_db": {
+      "latest": 21,
+      "maximum": 23,
+      "minimum": 18,
+      "provenance": "fresh GL-X3000 modem signal history"
+    }
+  },
+  "serving_cell": null,
+  "cell_1_administrative_state": null,
+  "cell_2_administrative_state": null,
+  "handoff_state": null,
+  "tdd_profile": {
+    "provenance": "operator reported for this run",
+    "value": "70/20/10"
+  }
+}

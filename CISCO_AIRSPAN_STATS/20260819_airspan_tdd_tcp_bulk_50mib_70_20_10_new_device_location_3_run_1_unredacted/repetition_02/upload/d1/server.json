@@ -1,0 +1,16 @@
+{
+  "block_bytes": 65536,
+  "direction": "upload",
+  "emit_time_ns": 1787164386638929758,
+  "local_data_elapsed_s": 26.806473278,
+  "local_data_throughput_mbps": 15.646608774315172,
+  "payload_crc32": 34909490,
+  "peer_address": "10.120.121.23",
+  "peer_data_elapsed_s": null,
+  "peer_data_throughput_mbps": null,
+  "request_to_completion_s": 26.826576077,
+  "role": "server",
+  "schema": "edge4av-exact-tcp-bulk-throughput-v1",
+  "total_bytes": 52428800,
+  "validated_exact_bytes": true
+}

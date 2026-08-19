@@ -1,0 +1,12 @@
+{
+  "accepted_before_stop": 142,
+  "attempts_before_stop": 142,
+  "condition": "uplink TCP 10 KiB",
+  "declared_count": 500,
+  "failed_before_stop": 0,
+  "operator_action": "stop experiment now and resume later",
+  "status": "interrupted_partial_diagnostic_only",
+  "stopped_at": "2026-08-19T15:20:00-04:00",
+  "use_in_final_condition_summary": false,
+  "resume_rule": "start a clean 500-exchange payload_10240 condition; do not append to or pool this partial capture"
+}

@@ -1,0 +1,27 @@
+{
+  "application_direction_order": [
+    "upload: vehicle to d1",
+    "download: d1 to vehicle"
+  ],
+  "block_bytes": 65536,
+  "clock_sync_state": "unsynchronized",
+  "device_context": "new GL-X3000 private-5G gateway",
+  "location_id": "location_3",
+  "mobility_state": "stationary",
+  "payload_storage": "generated, transferred, and CRC32-validated in memory; payload bytes are not written to disk",
+  "radio_context": {
+    "continuous_timeline": "../20260819_airspan_tdd_full_directional_70_20_10_new_device_stationary_run_1_unredacted/radio/modem_signal_samples.jsonl",
+    "initial_rsrp_dbm": -98,
+    "initial_rsrq_db": -10,
+    "initial_sinr_db": 21,
+    "network_type": "NR5G-SA",
+    "provenance": "fresh GL-X3000 modem history and continuous collection"
+  },
+  "repetitions": 3,
+  "status": "complete",
+  "tdd_profile": {
+    "provenance": "operator reported",
+    "value": "70/20/10"
+  },
+  "total_bytes_per_direction": 52428800
+}

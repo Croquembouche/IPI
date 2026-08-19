@@ -1,0 +1,41 @@
+1787161962523	geckodriver	INFO	Listening on 127.0.0.1:41181
+1787161962641	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" "/snap/firefox/current/ ... ss" "--remote-debugging-port" "38803" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileWiwGp0"
+*** You are running in headless mode.
+Gtk-Message: 13:52:42.677: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+1787161963339	Marionette	INFO	Marionette enabled
+1787161963491	Marionette	INFO	Listening on port 40077
+WebDriver BiDi listening on ws://127.0.0.1:38803
+Read port: 40077
+1787161963700	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: "Experiment desktop-release-rollout-show-relay-to-all-browsers-next-sign-up-modal-cta has unknown featureId: email-autocomplete-relay"
+console.error: "Experiment visual-card-updates has unknown featureId: newtabRefinedCardsLayout"
+console.error: "Experiment enable-nimbus-unenrollment-synchronization has unknown featureId: nimbusStore"
+console.error: "Experiment private-window-visual-refresh-design-change-only has unknown featureId: feltPrivacy"
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.8.1."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.8.1."
+1787162031761	geckodriver	INFO	Listening on 127.0.0.1:41503
+1787162031842	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" "/snap/firefox/current/ ... ss" "--remote-debugging-port" "39513" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileFuMclC"
+*** You are running in headless mode.
+Gtk-Message: 13:53:51.906: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+1787162032536	Marionette	INFO	Marionette enabled
+1787162032706	Marionette	INFO	Listening on port 39611
+WebDriver BiDi listening on ws://127.0.0.1:39513
+Read port: 39611
+1787162032907	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.error: "Experiment desktop-release-rollout-show-relay-to-all-browsers-next-sign-up-modal-cta has unknown featureId: email-autocomplete-relay"
+console.error: "Experiment visual-card-updates has unknown featureId: newtabRefinedCardsLayout"
+console.error: "Experiment enable-nimbus-unenrollment-synchronization has unknown featureId: nimbusStore"
+console.error: "Experiment private-window-visual-refresh-design-change-only has unknown featureId: feltPrivacy"
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.8.1."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.8.1."
+[GFX1-]: Managed to allocate after flush.
+1787164649034	webdriver::server	INFO	Shutting down
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1787164649144	geckodriver::marionette	ERROR	Failed to close browser connection: unknown error

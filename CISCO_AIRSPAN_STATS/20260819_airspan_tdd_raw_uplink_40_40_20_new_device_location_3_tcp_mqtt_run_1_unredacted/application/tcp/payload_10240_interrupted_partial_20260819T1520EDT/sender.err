@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/hydrau/Documents/Github/IPI/scripts/private_5g_raw_bulk_probe.py", line 293, in run_tcp_sender
+    ack_data = receive_tcp_message(sock, ACK_HEADER.size)
+  File "/home/hydrau/Documents/Github/IPI/scripts/private_5g_raw_bulk_probe.py", line 132, in receive_tcp_message
+    (size,) = TCP_LENGTH.unpack(recv_exact(sock, TCP_LENGTH.size))
+  File "/home/hydrau/Documents/Github/IPI/scripts/private_5g_raw_bulk_probe.py", line 119, in recv_exact
+    chunk = sock.recv(size - len(chunks))
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/hydrau/Documents/Github/IPI/scripts/private_5g_raw_bulk_probe.py", line 497, in <module>
+    raise SystemExit(main())
+  File "/home/hydrau/Documents/Github/IPI/scripts/private_5g_raw_bulk_probe.py", line 486, in main
+    run_tcp_sender(args, writer)
+  File "/home/hydrau/Documents/Github/IPI/scripts/private_5g_raw_bulk_probe.py", line 293, in run_tcp_sender
+    ack_data = receive_tcp_message(sock, ACK_HEADER.size)
+KeyboardInterrupt

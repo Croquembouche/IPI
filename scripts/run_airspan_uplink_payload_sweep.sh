@@ -8,10 +8,6 @@ Usage: scripts/run_airspan_uplink_payload_sweep.sh
 Required environment:
   EDGE_HOST           Reachable d1 edge address
   SSH_KEY             Private key authorized for EDGE_USER on the edge
-  CELL_1_ADMIN_STATE  Airspan Cell 1 administrative state: locked or unlocked
-  CELL_2_ADMIN_STATE  Airspan Cell 2 administrative state: locked or unlocked
-  SERVING_CELL        Serving Airspan cell: 1 or 2
-  HANDOFF_STATE       no-reported-handoff or handoff-observed
 
 Optional environment:
   EDGE_USER                 Default: d1
@@ -22,9 +18,14 @@ Optional environment:
   LOCATION_ID               Default: location_1
   TDD_PROFILE               40/40/20, 60/20/20, or 70/20/10; default: 70/20/10
   TDD_STATE                 Default: operator-reported
-  RSRP_DBM                  Default: -100
-  RSRQ_DB                   Default: -13
-  RADIO_STATE               Default: operator-reported
+  RSRP_DBM                  Integer dBm or unreported; default: unreported
+  RSRQ_DB                   Integer dB or unreported; default: unreported
+  RADIO_STATE               Default: unreported
+  CELL_1_ADMIN_STATE        locked, unlocked, or unreported; default: unreported
+  CELL_2_ADMIN_STATE        locked, unlocked, or unreported; default: unreported
+  SERVING_CELL              1, 2, or unreported; default: unreported
+  HANDOFF_STATE             no-reported-handoff, handoff-observed, or unreported;
+                            default: unreported
   COUNT                     Default: 1000
   PAYLOAD_512000_COUNT      Default: COUNT; permits a shorter 500-KiB condition
   PAYLOAD_1048576_COUNT     Default: COUNT; permits a shorter 1,024-KiB condition
@@ -85,16 +86,16 @@ PAYLOAD_TEXT="${PAYLOADS:-1024 10240 102400 1048576}"
 PREFLIGHT_ONLY="${PREFLIGHT_ONLY:-0}"
 TDD_PROFILE="${TDD_PROFILE:-70/20/10}"
 TDD_STATE="${TDD_STATE:-operator-reported}"
-RSRP_DBM="${RSRP_DBM:--100}"
-RSRQ_DB="${RSRQ_DB:--13}"
-RADIO_STATE="${RADIO_STATE:-operator-reported}"
+RSRP_DBM="${RSRP_DBM:-unreported}"
+RSRQ_DB="${RSRQ_DB:-unreported}"
+RADIO_STATE="${RADIO_STATE:-unreported}"
+CELL_1_ADMIN_STATE="${CELL_1_ADMIN_STATE:-unreported}"
+CELL_2_ADMIN_STATE="${CELL_2_ADMIN_STATE:-unreported}"
+SERVING_CELL="${SERVING_CELL:-unreported}"
+HANDOFF_STATE="${HANDOFF_STATE:-unreported}"
 
 : "${EDGE_HOST:?Set EDGE_HOST to the reachable d1 edge address}"
 : "${SSH_KEY:?Set SSH_KEY to the authorized per-run private key}"
-: "${CELL_1_ADMIN_STATE:?Set CELL_1_ADMIN_STATE to locked or unlocked}"
-: "${CELL_2_ADMIN_STATE:?Set CELL_2_ADMIN_STATE to locked or unlocked}"
-: "${SERVING_CELL:?Set SERVING_CELL to 1 or 2}"
-: "${HANDOFF_STATE:?Set HANDOFF_STATE to no-reported-handoff or handoff-observed}"
 
 read -r -a TRANSPORT_LIST <<< "$TRANSPORT_TEXT"
 read -r -a PAYLOAD_LIST <<< "$PAYLOAD_TEXT"
@@ -132,8 +133,8 @@ if [[ "$APPLICATION_DIRECTION" != "uplink" && "$APPLICATION_DIRECTION" != "downl
   echo 'APPLICATION_DIRECTION must be uplink or downlink' >&2
   exit 2
 fi
-if [[ "$COUNT" != "1000" || "$INTERVAL_MS" != "200" ]]; then
-  echo 'COUNT and INTERVAL_MS must remain 1000 and 200 for this acquisition' >&2
+if (( COUNT > 1000 )) || [[ "$INTERVAL_MS" != "200" ]]; then
+  echo 'COUNT must not exceed 1000 and INTERVAL_MS must remain 200 for this acquisition' >&2
   exit 2
 fi
 if (( PAYLOAD_512000_COUNT > COUNT || PAYLOAD_1048576_COUNT > COUNT )); then
@@ -146,28 +147,32 @@ if [[ "$TDD_PROFILE" != "40/40/20" && "$TDD_PROFILE" != "60/20/20" && "$TDD_PROF
 fi
 for name in RSRP_DBM RSRQ_DB; do
   value="${!name}"
-  if [[ ! "$value" =~ ^-?[0-9]+$ ]]; then
-    echo "$name must be an integer" >&2
+  if [[ "$value" != "unreported" && ! "$value" =~ ^-?[0-9]+$ ]]; then
+    echo "$name must be an integer or unreported" >&2
     exit 2
   fi
 done
 for name in CELL_1_ADMIN_STATE CELL_2_ADMIN_STATE; do
   value="${!name}"
-  if [[ "$value" != "locked" && "$value" != "unlocked" ]]; then
-    echo "$name must be locked or unlocked" >&2
+  if [[ "$value" != "locked" && "$value" != "unlocked" && "$value" != "unreported" ]]; then
+    echo "$name must be locked, unlocked, or unreported" >&2
     exit 2
   fi
 done
-if [[ "$SERVING_CELL" != "1" && "$SERVING_CELL" != "2" ]]; then
-  echo 'SERVING_CELL must be 1 or 2' >&2
+if [[ "$SERVING_CELL" != "1" && "$SERVING_CELL" != "2" && "$SERVING_CELL" != "unreported" ]]; then
+  echo 'SERVING_CELL must be 1, 2, or unreported' >&2
   exit 2
 fi
-if [[ "$HANDOFF_STATE" != "no-reported-handoff" && "$HANDOFF_STATE" != "handoff-observed" ]]; then
-  echo 'HANDOFF_STATE must be no-reported-handoff or handoff-observed' >&2
+if [[ "$HANDOFF_STATE" != "no-reported-handoff" && "$HANDOFF_STATE" != "handoff-observed" && "$HANDOFF_STATE" != "unreported" ]]; then
+  echo 'HANDOFF_STATE must be no-reported-handoff, handoff-observed, or unreported' >&2
   exit 2
 fi
-serving_state_name="CELL_${SERVING_CELL}_ADMIN_STATE"
-if [[ "${!serving_state_name}" != "unlocked" ]]; then
+if [[ "$SERVING_CELL" == "1" || "$SERVING_CELL" == "2" ]]; then
+  serving_state_name="CELL_${SERVING_CELL}_ADMIN_STATE"
+else
+  serving_state_name=""
+fi
+if [[ -n "$serving_state_name" && "${!serving_state_name}" == "locked" ]]; then
   echo 'The serving cell must be administratively unlocked and broadcasting' >&2
   exit 2
 fi
@@ -274,6 +279,10 @@ write_manifest() {
   python3 -c '
 import json, pathlib, sys
 path = pathlib.Path(sys.argv[1])
+def optional_int(value):
+    return None if value == "unreported" else int(value)
+def optional_broadcasting(value):
+    return None if value == "unreported" else value == "unlocked"
 data = {
     "schema": "edge4av-airspan-raw-" + sys.argv[21] + "-payload-v1",
     "status": "running",
@@ -289,16 +298,16 @@ data = {
     "outer_timeout_s": int(sys.argv[10]),
     "tdd_profile": sys.argv[11],
     "tdd_state": sys.argv[18],
-    "airspan_cell": int(sys.argv[14]),
-    "serving_cell": int(sys.argv[14]),
-    "handoff_state": sys.argv[15],
+    "airspan_cell": optional_int(sys.argv[14]),
+    "serving_cell": optional_int(sys.argv[14]),
+    "handoff_state": None if sys.argv[15] == "unreported" else sys.argv[15],
     "cell_administrative_lock_definition": "locked means not broadcasting",
     "cell_1_administrative_state": sys.argv[16],
-    "cell_1_broadcasting": sys.argv[16] == "unlocked",
+    "cell_1_broadcasting": optional_broadcasting(sys.argv[16]),
     "cell_2_administrative_state": sys.argv[17],
-    "cell_2_broadcasting": sys.argv[17] == "unlocked",
-    "rsrp_dbm": int(sys.argv[12]),
-    "rsrq_db": int(sys.argv[13]),
+    "cell_2_broadcasting": optional_broadcasting(sys.argv[17]),
+    "rsrp_dbm": optional_int(sys.argv[12]),
+    "rsrq_db": optional_int(sys.argv[13]),
     "radio_state": sys.argv[19],
     "location_id": sys.argv[20],
     "mobility_state": "stationary",

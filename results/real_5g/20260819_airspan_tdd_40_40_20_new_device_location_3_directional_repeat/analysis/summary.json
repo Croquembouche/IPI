@@ -1,0 +1,84 @@
+{
+  "application": {
+    "accepted": 8000,
+    "conditions": 16,
+    "failed": 0,
+    "samples_per_condition": 500
+  },
+  "bandwidth": {
+    "download": {
+      "ci95_high_mbps": 194.094197148,
+      "ci95_low_mbps": 52.807723405,
+      "mean_mbps": 123.450960276,
+      "median_mbps": 137.297167892,
+      "sample_sd_mbps": 28.437729734
+    },
+    "exact_bytes_per_direction": 52428800,
+    "repetitions": 3,
+    "upload": {
+      "ci95_high_mbps": 17.687244296,
+      "ci95_low_mbps": 4.139753380,
+      "mean_mbps": 10.913498838,
+      "median_mbps": 12.049927392,
+      "sample_sd_mbps": 2.726799495
+    }
+  },
+  "device": {
+    "manufacturer": "GL.iNet",
+    "model": "GL-X3000",
+    "provenance": "operator confirmed 2026-08-19"
+  },
+  "excluded_interrupted_diagnostic": {
+    "accepted": 142,
+    "condition": "uplink TCP 10 KiB",
+    "failed": 0,
+    "included_in_final_results": false
+  },
+  "matched_70_20_10_comparison": {
+    "download_mean_change_mbps": -42.655082909,
+    "download_mean_change_percent": -25.679,
+    "upload_mean_change_mbps": -4.777965100,
+    "upload_mean_change_percent": -30.449
+  },
+  "previous_device_40_40_20_comparison": {
+    "bandwidth": {
+      "download_gl_x3000_ratio": 2.888,
+      "download_previous_samples": 1,
+      "upload_gl_x3000_ratio": 21.186,
+      "upload_previous_samples": 2
+    },
+    "confounders": [
+      "August 18 RSRP was -105 to -115 dBm versus August 19 median -98 dBm",
+      "August 18 bandwidth stopped after two uploads and one download",
+      "configuration, session state, and time-varying path effects are not isolated"
+    ],
+    "previous_device": "Cisco Meraki MG52-HW campaign gateway",
+    "primary_conclusion": "The severe August 18 large-uplink condition did not recur with GL-X3000; the evidence does not isolate hardware causality.",
+    "uplink_p50_change_percent_range_10_to_500_kib": {
+      "mqtt": [-92.404, -69.198],
+      "tcp": [-92.240, -63.662]
+    }
+  },
+  "radio": {
+    "active_capture_seconds": 3810,
+    "segments": 2,
+    "unique_samples": 382,
+    "rsrp_dbm": {
+      "maximum": -93,
+      "median": -98,
+      "minimum": -102
+    },
+    "rsrq_db": {
+      "maximum": -10,
+      "median": -10,
+      "minimum": -10
+    },
+    "sinr_db": {
+      "maximum": 24,
+      "median": 20,
+      "minimum": 16
+    }
+  },
+  "status": "complete",
+  "tdd_profile": "40/40/20"
+}

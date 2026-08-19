@@ -1,0 +1,55 @@
+{
+  "bandwidth": {
+    "download_d1_to_vehicle": {
+      "ci95_high_mbps": 197.6814251609883,
+      "ci95_low_mbps": 134.53066121020342,
+      "mean_mbps": 166.10604318559587,
+      "median_mbps": 172.96976335906885,
+      "n": 3,
+      "sample_sd_mbps": 12.7108017501803
+    },
+    "upload_vehicle_to_d1": {
+      "ci95_high_mbps": 16.048688575403826,
+      "ci95_low_mbps": 15.33423930030277,
+      "mean_mbps": 15.691463937853298,
+      "median_mbps": 15.646608774315172,
+      "n": 3,
+      "sample_sd_mbps": 0.14380226822666448
+    }
+  },
+  "device": {
+    "manufacturer": "GL.iNet",
+    "model": "GL-X3000",
+    "provenance": "operator confirmed 2026-08-19"
+  },
+  "device_comparison": {
+    "matched_bandwidth_download_change_percent": 31.012626158453838,
+    "matched_bandwidth_upload_change_percent": 30.75758214857706,
+    "primary_conclusion": "The severe 2026-08-18 uplink condition did not persist after device replacement, but hardware, configuration, session state, signal, and collection-time effects are not fully separable.",
+    "uplink_500k_p50_change_percent": {
+      "mqtt": -96.88,
+      "tcp": -97.059
+    }
+  },
+  "direction_contract": {
+    "download": "d1 to vehicle",
+    "downlink_rtt": "compact vehicle request through complete received-payload length, sequence, and CRC32 validation",
+    "upload": "vehicle to d1",
+    "uplink_rtt": "complete vehicle payload through compact validated d1 acknowledgment"
+  },
+  "radio": {
+    "network_type": "NR5G-SA",
+    "rsrp_dbm": {"maximum": -95, "median": -99, "minimum": -104},
+    "rsrq_db": {"maximum": -10, "median": -10, "minimum": -10},
+    "samples": 285,
+    "sinr_db": {"maximum": 23, "median": 20, "minimum": 15}
+  },
+  "rtt": {
+    "downlink_accepted": 4000,
+    "downlink_failed": 0,
+    "uplink_accepted": 4000,
+    "uplink_failed": 0
+  },
+  "status": "complete",
+  "tdd_profile": "70/20/10"
+}

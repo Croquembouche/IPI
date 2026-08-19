@@ -1,0 +1,22 @@
+{
+  "device": "new GL-X3000 private-5G gateway",
+  "fresh_gnss": {
+    "distance_to_20260818_location_3_m": 2.981704632128902,
+    "duration_seconds": 59.616187415,
+    "location_id": "location_3",
+    "messages": 16101,
+    "mobility_state": "stationary"
+  },
+  "radio_provenance": "fresh credentialed GL-X3000 signal history continuously collected without storing credentials in repository artifacts",
+  "rsrp_dbm": {"maximum": -95, "median": -99, "minimum": -104},
+  "rsrq_db": {"maximum": -10, "median": -10, "minimum": -10},
+  "serving_cell": null,
+  "cell_1_administrative_state": null,
+  "cell_2_administrative_state": null,
+  "handoff_state": null,
+  "sinr_db": {"maximum": 23, "median": 20, "minimum": 15},
+  "tdd_profile": {
+    "provenance": "operator reported",
+    "value": "70/20/10"
+  }
+}

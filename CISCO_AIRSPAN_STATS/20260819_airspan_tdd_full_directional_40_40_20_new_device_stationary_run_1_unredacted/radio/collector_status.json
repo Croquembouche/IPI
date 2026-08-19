@@ -1,0 +1,23 @@
+{
+  "collection_duration_seconds": 511,
+  "first_router_timestamp": 1787166718,
+  "last_router_timestamp": 1787167229,
+  "network_type": "NR5G-SA",
+  "rsrp_dbm": {
+    "maximum": -95,
+    "median": -98,
+    "minimum": -102
+  },
+  "rsrq_db": {
+    "maximum": -10,
+    "median": -10,
+    "minimum": -10
+  },
+  "sinr_db": {
+    "maximum": 24,
+    "median": 21,
+    "minimum": 18
+  },
+  "status": "stopped_cleanly_at_operator_pause",
+  "unique_samples": 52
+}

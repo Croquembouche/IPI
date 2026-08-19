@@ -1,0 +1,14 @@
+{
+  "browser_credentials_persisted_in_output": false,
+  "collection_duration_seconds": 2848,
+  "first_router_timestamp": 1787161784,
+  "initial_background_launch": "terminated with its launching shell after retaining the first 19 history samples",
+  "last_router_timestamp": 1787164632,
+  "managed_session": "completed at the end of the final bandwidth repetition",
+  "network_type": "NR5G-SA",
+  "rsrp_dbm": {"maximum": -95, "median": -99, "minimum": -104},
+  "rsrq_db": {"maximum": -10, "median": -10, "minimum": -10},
+  "sinr_db": {"maximum": 23, "median": 20, "minimum": 15},
+  "status": "complete",
+  "unique_samples": 285
+}

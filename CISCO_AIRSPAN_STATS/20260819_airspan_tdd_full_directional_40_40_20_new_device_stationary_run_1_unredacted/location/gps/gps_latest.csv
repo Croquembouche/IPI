@@ -1,0 +1,2 @@
+system_time_ns,ros_time_sec,sample_topic,position_source,speed_source,latitude_deg,longitude_deg,altitude_m,horizontal_speed_mps,vertical_speed_mps,north_velocity_mps,east_velocity_mps,up_velocity_mps,track_ground_deg,solution_status,position_or_velocity_type
+1787166932293291437,1787166932.291455815,/novatel/oem7/odom,/novatel/oem7/fix,/novatel/oem7/odom,39.663701198,-75.757037104,-3.750807300,0.000614878,-0.001060508,-0.000537032,-0.000299453,-0.001060508,,,

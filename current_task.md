@@ -1,6 +1,185 @@
 # Current Task
 
-Last updated: 2026-08-18
+Last updated: 2026-08-19
+
+## 2026-08-19 GL-X3000 Full Directional TDD 40/40/20 Repeat
+
+Complete after an operator-requested pause and clean resume. The immediately
+preceding replacement-device experiment was repeated after the operator changed
+the TDD profile to `40/40/20`. The raw and derived artifacts remain separate
+from the completed `70/20/10` run. A fresh 60-second ROS 2 GNSS bag and two
+modem-signal collection segments document the stationary placement and radio
+context.
+
+Device identity is now explicit: the operator confirmed that the vehicle
+private-5G gateway used for both August 19 runs is a GL.iNet `GL-X3000`. The
+preceding campaign gateway was the Cisco Meraki `MG52-HW`; the August 18
+per-run context did not repeat that model field, so its identity is tied to the
+repository's campaign context and the operator-reported replacement sequence.
+
+The unchanged application matrix contains TCP and MQTT uplink-heavy and
+downlink-heavy conditions at 1, 10, 100, and 500 KiB, with exactly 500 complete
+validated exchanges per condition. Uplink means vehicle to d1 followed by a
+compact validated acknowledgment. Downlink means a compact vehicle request
+followed by an exact d1-to-vehicle payload; RTT includes complete vehicle-side
+length, sequence-number, and CRC32 validation. After the application matrix,
+run three exact 50-MiB upload/download pairs. Upload is vehicle to d1; download
+is d1 to vehicle. Payload bodies remain in memory, and payload-file HDD I/O is
+excluded from every measured interval.
+
+Fresh host/path preflight observes vehicle address `192.168.8.233` on `eno2`,
+d1 routed through `192.168.8.1`, approximately 21-ms ICMP RTT, and d1's wall
+clock approximately 188 seconds behind the vehicle. The new GNSS bag spans
+59.628 seconds with 16,102 messages. Its 595 BESTPOS samples have 0.032 m
+maximum radial spread and 0.0090 m/s maximum speed, and its median is 1.85 m
+from the immediately preceding new-device `70/20/10` location reference; the
+stationary `location_3` gate passes. Across the initial and resumed collection
+segments, 382 unique ten-second 5G-SA samples cover 3,810 seconds of active
+capture: RSRP `-102` to `-93 dBm` (median `-98 dBm`), RSRQ constant at
+`-10 dB`, and SINR `16` to `24 dB` (median `20 dB`). Serving-cell identity,
+cell administrative states, and handoff state remain unreported.
+
+All local/remote protocol, source-hash, route, port, and Python 3.8 preflight
+checks passed. The operator stopped the first uplink TCP 10-KiB attempt after
+142 accepted exchanges. That partial capture remains a diagnostic and is
+excluded from every final result; a clean replacement condition completed
+500/500 after the resume. All 16 final application conditions contain exactly
+500 accepted exchanges and zero failures: 4,000 uplink and 4,000 downlink.
+Uplink p50 spans `39.220--609.652 ms` and p95 spans `49.225--1,149.368 ms`.
+Downlink p50 spans `29.760--101.529 ms` and p95 spans `44.642--320.891 ms`.
+Downlink validation p50 spans `0.043--1.335 ms` and p95 spans
+`0.113--2.484 ms`; validation is included within RTT and does not explain the
+observed multi-second tail events.
+
+All three exact 50-MiB upload/download pairs passed endpoint byte-count and
+CRC32 validation. Receiver-observed mean goodput is `10.913 Mb/s` upload
+(vehicle to d1) and `123.451 Mb/s` download (d1 to vehicle). Relative to the
+matched new-device `70/20/10` run, the observed means are `30.4%` and `25.7%`
+lower, respectively. Uplink RTT is effectively tied at 1 KiB, but from 10 KiB
+upward `40/40/20` has higher p50 and p95 for both transports. Every downlink
+condition also has higher p50 and p95 under `40/40/20`; the differences are
+small for compact responses but large in tail latency for several larger
+conditions. Treat this as a matched, sequential within-deployment observation:
+the bandwidth sample has only three repetitions, its `40/40/20` variation is
+large, and the application matrix was split by an operator pause.
+
+The same-profile comparison against the August 18 `40/40/20` run shows that
+GL-X3000 uplink p50 remained effectively tied at 1 KiB, then was `63.7--69.2%`
+lower at 10 KiB, `88.9--89.0%` lower at 100 KiB, and `92.2--92.4%` lower at
+500 KiB across TCP and MQTT. Downlink is mixed rather than uniformly improved:
+compact-response p50 is higher, 100-KiB p50 is tied or lower, and 500-KiB p50
+is `27.4--30.5%` lower, while p95 changes range from `39.1%` lower to `39.9%`
+higher. Available bandwidth samples are `21.19x` higher for upload and `2.89x`
+higher for download with GL-X3000. This comparison is materially confounded:
+August 18 used operator-reported RSRP from `-105` to `-115 dBm`, whereas the
+GL-X3000 run measured median RSRP `-98 dBm`; the earlier bandwidth stage also
+contains only two uploads and one download. The evidence shows that the severe
+August 18 uplink condition did not recur, but it does not isolate device
+hardware from signal, configuration, session, or time-varying path state.
+
+Validation state: all 60 raw/derived JSON documents and 6,574 JSONL records
+parse; every derived application and bandwidth row matches raw evidence; the
+8,000 final exchanges, excluded 142-row diagnostic, six exact-byte transfers,
+GNSS record, and 382 radio samples pass their declared checks. Final SHA-256,
+pause-checkpoint integrity, process/listener, credential-leak, Python compile,
+shell syntax, and documentation diff checks pass. The temporary d1 key was
+revoked, no longer authenticates, and its local directory was moved to trash.
+No experiment process or planned listener remains locally or on d1.
+The two previous-device comparison CSVs were independently recalculated from
+the August 18 and August 19 derived source rows; all values, sample counts,
+percent changes, and ratios match.
+
+Working files:
+
+- `results/real_5g/20260819_airspan_tdd_40_40_20_new_device_location_3_directional_repeat/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_full_directional_40_40_20_new_device_stationary_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_uplink_40_40_20_new_device_location_3_tcp_mqtt_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_downlink_40_40_20_new_device_location_3_tcp_mqtt_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_tcp_bulk_50mib_40_40_20_new_device_location_3_run_1_unredacted/`
+
+## 2026-08-19 GL-X3000 Full Directional TDD 70/20/10 Repeat
+
+Complete. The full directional application and exact-byte bandwidth matrix was
+repeated using the newly installed GL-X3000 private-5G gateway while the vehicle
+was stationary. A fresh 60-second ROS 2 GNSS bag was recorded before
+application traffic. This run remains separate from every earlier device/run
+so that it can be used as a device-replacement check rather than silently
+pooled with prior data.
+
+The declared application matrix contains TCP and MQTT in both directions at
+1, 10, 100, and 500 KiB, with exactly 500 complete validated exchanges per
+transport, direction, and payload. **Uplink** means the vehicle sends the
+declared payload to d1 and d1 returns a compact application acknowledgment.
+**Downlink** means the vehicle sends a compact request and d1 returns the
+declared payload; RTT ends after the vehicle receives and validates the full
+length, sequence number, and CRC32, with validation duration retained
+separately and included in RTT. After the RTT matrix, run three sequential
+exact 50-MiB TCP pairs: vehicle-to-d1 upload followed by d1-to-vehicle download.
+
+TDD `70/20/10` and stationary state are operator reported for this run.
+Credentialed modem history produced 285 unique ten-second 5G-SA samples over
+47.5 minutes: RSRP `-104` to `-95 dBm` (median `-99 dBm`), RSRQ constant at
+`-10 dB`, and SINR `15` to `23 dB` (median `20 dB`). Serving-cell identity,
+cell administrative states, and handoff state were not freshly reported and
+remain null rather than inheriting prior-device values. Initial host validation
+observed vehicle address `192.168.8.233` on `eno2`; d1 traffic used the new
+gateway at `192.168.8.1`, and d1 responded to ICMP at approximately 20 ms.
+
+The GNSS bag spans 59.616 seconds with 16,101 messages. Its 593 BESTPOS samples
+have 0.031 m maximum radial spread and 0.0067 m/s maximum speed, and its median
+is 2.98 m from the August 18 location-3 reference; the stationary and
+`location_3` gates pass. The d1 wall clock was approximately 188 seconds behind
+the vehicle, so cross-host clocks remain explicitly unsynchronized and all RTT
+uses the vehicle-side monotonic clock.
+
+All 16 application conditions completed exactly 500 accepted exchanges with
+zero failures: 4,000 uplink and 4,000 downlink. Uplink p50 RTT spans
+39.411--238.607 ms and p95 spans 46.948--267.336 ms. Downlink p50 RTT spans
+29.662--80.493 ms and p95 spans 40.001--97.806 ms. Downlink payload-validation
+p50 spans 0.044--1.406 ms and p95 spans 0.081--2.082 ms; validation remains
+included within application RTT. All six bandwidth direction-runs transferred
+exactly 52,428,800 bytes and passed endpoint CRC32 validation. Receiver-observed
+mean goodput is 15.691 Mb/s upload (vehicle to d1) and 166.106 Mb/s download
+(d1 to vehicle), with three complete repetitions in each direction.
+
+Payload bodies remain in memory throughout every timed operation. The uplink
+receiver validates length and CRC32 before sending its acknowledgment; the
+downlink vehicle validates length, sequence number, and CRC32 before ending
+RTT; the bandwidth probe validates exact bytes and CRC32. Only result rows,
+summaries, and telemetry are written after the applicable timing boundary, so
+payload-file HDD I/O is not part of the measured RTT or goodput.
+
+The closest old-device control is the August 17 TDD `70/20/10`, location-3
+dataset at reported RSRP `-100 dBm`. The new-device run has 30.8% higher mean
+upload and 31.0% higher mean download goodput, while matched downlink RTT is
+mixed: p50 changes range from 7.5% lower to 20.7% higher. Relative to the
+August 18 TDD `40/40/20` run, 500-KiB uplink p50 is 97.1% lower for TCP and
+96.9% lower for MQTT, but TDD, signal, and collection time also changed. The
+severe August 18 uplink condition did not persist during this replacement-
+device run; the current evidence cannot separate hardware, configuration,
+session state, and contemporaneous radio/path effects.
+
+Working files:
+
+- `scripts/run_airspan_uplink_payload_sweep.sh`
+- `scripts/collect_glinet_modem_signal.py`
+- `results/real_5g/20260819_airspan_tdd_70_20_10_new_device_location_3_directional_repeat/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_full_directional_70_20_10_new_device_stationary_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_uplink_70_20_10_new_device_location_3_tcp_mqtt_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_downlink_70_20_10_new_device_location_3_tcp_mqtt_run_1_unredacted/`
+- `CISCO_AIRSPAN_STATS/20260819_airspan_tdd_tcp_bulk_50mib_70_20_10_new_device_location_3_run_1_unredacted/`
+
+Validation state: all 56 raw/derived JSON documents and 5,064 JSONL records
+parse; every derived RTT and bandwidth row matches its raw summary; declared
+attempt counts, accepted counts, zero-failure states, byte counts, CRC32 values,
+GNSS duration, and signal ranges pass. SHA-256 manifests for all four raw trees
+and the derived tree verify. The Python probes compile, both runners pass shell
+syntax checks, and `git diff --check` passes for the edited documentation,
+scripts, and derived summaries. No local or d1 experiment process or planned
+listener remains. The credential file is outside the repository with user-only
+permissions, and a full repository scan found no stored password. The temporary
+d1 key was revoked, no longer authenticates, and its local directory was moved
+to trash so recovery remains possible.
 
 ## 2026-08-18 Full Directional TDD 40/40/20 Repeat
 

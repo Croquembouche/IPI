@@ -1,6 +1,6 @@
 # Remaining Experiment Plan
 
-Last updated: 2026-08-18
+Last updated: 2026-08-19
 
 ## Purpose
 
@@ -9,6 +9,57 @@ before the Edge4AV paper can answer the current coauthor comments. It is a
 runbook and decision record. Use it to prepare each collection, name and
 preserve the artifacts, determine whether a run is valid, and prevent
 unnecessary repetition of experiments that are already complete.
+
+## 2026-08-19 Fresh-Device TDD 70/20/10 Directional Repeat
+
+Status: **complete** at stationary `location_3` using the replacement GL-X3000
+private-5G gateway and operator-reported TDD `70/20/10`. A fresh 59.616-second
+ROS 2 GNSS bag contains 16,101 messages and passes the stationary/location-3
+gates. The retained modem history contains 285 unique 5G-SA samples with RSRP
+`-104` to `-95 dBm` (median `-99 dBm`), RSRQ `-10 dB`, and SINR `15` to
+`23 dB`. Serving-cell, cell-administrative, and handoff state remain unreported.
+
+TCP and MQTT uplink-heavy and downlink-heavy conditions at 1, 10, 100, and
+500 KiB each completed exactly 500 validated exchanges with zero failures.
+Three exact 50-MiB vehicle-to-d1 uploads and three exact 50-MiB d1-to-vehicle
+downloads passed endpoint byte-count and CRC32 checks. Payload bodies remain in
+memory during timed operations: the probes time transmission, complete receive,
+and the specified validation, then persist compact measurements and summaries.
+No payload-file HDD I/O is included in RTT or goodput.
+
+This run closes the requested replacement-device collection. It does not by
+itself isolate a hardware effect. The nearest same-TDD/location old-device
+control shows 30.8% higher upload and 31.0% higher download mean goodput on the
+new device, but downlink RTT changes are mixed. The much lower large-payload
+uplink RTT relative to August 18 also coincides with different TDD, signal, and
+collection time. Retain hardware, configuration, session state, and
+contemporaneous radio/path state as unresolved explanations.
+
+Primary derived folder:
+
+- `results/real_5g/20260819_airspan_tdd_70_20_10_new_device_location_3_directional_repeat/`
+
+## 2026-08-19 Fresh-Device TDD 40/40/20 Directional Repeat
+
+Status: **complete after a clean pause/resume**. Fresh stationary GNSS and two
+modem-signal acquisition segments document the same new-device `location_3`
+placement. All 16 TCP/MQTT uplink/downlink conditions contain exactly 500
+accepted exchanges with zero failures. The first 142-row uplink TCP 10-KiB
+attempt remains an explicitly excluded diagnostic; the final 10-KiB condition
+is a separate clean 500-exchange run. All three exact 50-MiB upload/download
+pairs passed endpoint byte-count and CRC32 validation.
+
+The matched new-device observation records higher `40/40/20` uplink p50/p95
+from 10 KiB upward, higher downlink p50/p95 at every payload, 30.4% lower mean
+upload goodput, and 25.7% lower mean download goodput relative to the preceding
+`70/20/10` run. Retain the scope: this is a sequential within-deployment
+comparison, the application matrix was split by an operator pause, and the
+bandwidth estimate has only three repetitions with substantial `40/40/20`
+variation.
+
+Primary derived folder:
+
+- `results/real_5g/20260819_airspan_tdd_40_40_20_new_device_location_3_directional_repeat/`
 
 ## 2026-08-18 Full Directional TDD 40/40/20 Repeat
 

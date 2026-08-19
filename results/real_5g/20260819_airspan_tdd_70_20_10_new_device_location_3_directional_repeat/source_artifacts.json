@@ -1,0 +1,8 @@
+{
+  "context_and_gnss": "CISCO_AIRSPAN_STATS/20260819_airspan_tdd_full_directional_70_20_10_new_device_stationary_run_1_unredacted",
+  "downlink_rtt": "CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_downlink_70_20_10_new_device_location_3_tcp_mqtt_run_1_unredacted",
+  "matched_old_device_comparison": "results/real_5g/20260817_airspan_tdd_profile_comparison_location_3",
+  "uplink_context_changed_comparison": "results/real_5g/20260818_airspan_tdd_40_40_20_location_3_directional_repeat",
+  "uplink_rtt": "CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_uplink_70_20_10_new_device_location_3_tcp_mqtt_run_1_unredacted",
+  "bandwidth": "CISCO_AIRSPAN_STATS/20260819_airspan_tdd_tcp_bulk_50mib_70_20_10_new_device_location_3_run_1_unredacted"
+}
