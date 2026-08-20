@@ -108,9 +108,11 @@ sweeps are uplink-heavy RTT measurements: the vehicle sends the declared object
 and d1 returns a compact acknowledgment. The August 17 TCP/MQTT payload sweeps
 are downlink-heavy RTT measurements: the vehicle sends a compact request and d1
 returns the declared object. The August 17 50-MiB test is the only current
-bandwidth experiment and measures both directions. No location-3 uplink-heavy
-RTT matrix was collected, so the completed data do not constitute a same-
-location bidirectional RTT matrix and must not be described as one.
+matched two-profile bandwidth experiment and measures both directions. The
+August 18 shortened `40/40/20` bandwidth repeat remains separate. No matched
+two-profile location-3 uplink-heavy RTT matrix was collected, so the completed
+data do not constitute a two-profile bidirectional RTT matrix and must not be
+described as one.
 
 The derived comparison is stored under
 `results/real_5g/20260817_airspan_tdd_profile_comparison_location_3/`. Detailed
@@ -178,6 +180,34 @@ An optional matched throughput control may measure sustained vehicle-to-d1
 uplink under both profiles with the same 25-Mbit/s offered rate and duration.
 The retained 13.118-Mbit/s uplink result was collected only under `70/20/10`;
 therefore, it is not a two-profile throughput comparison.
+## 2026-08-15--16 TDD Diagnostic And Uplink-Capacity Decision
+
+Status: **complete as a negative application-latency diagnostic**. Every
+private-5G application campaign collected before this diagnostic used
+`70/20/10`. Earlier `40/40/20` labels for those campaigns are superseded.
+
+The August 15--16 application RTT runs changed more than the TDD allocation.
+The private-5G route required recovery, Airspan cell administrative state
+changed, and one `40/40/20` TCP repetition used a different serving cell. The
+`40/40/20` p95 RTT also varied sharply across same-profile repetitions. These
+hardware and software state changes make the application RTT data unusable for
+ranking `40/40/20` and `70/20/10` or estimating a causal TDD latency effect.
+
+The separate 25-Mbit/s vehicle-to-edge capacity control follows the expected
+allocation direction. `70/20/10`, which assigns 20 percent of the frame to
+fixed uplink use, achieved 13.118 Mbit/s. The coauthor-reported `40/40/20`
+control, which assigns 40 percent to fixed uplink use, achieved 25.000 Mbit/s.
+The current repository contains the raw `70/20/10` trace; the raw
+`40/40/20` capacity trace remains to be added. The result record and exact
+application-repeat comparisons are stored in
+`paper/analysis/tdd_experiment_update.md` and
+`results/real_5g/tdd_comparison_status.json`.
+
+No additional TDD application-latency experiment is required for the current
+manuscript. A future causal latency study must hold the vehicle location,
+gateway placement, serving cell, radio state, route, software, application,
+payload, request cadence, and competing traffic fixed across repeated profile
+changes.
 
 ## 2026-08-12 Phone And Cell-Lock Decision
 
@@ -402,18 +432,18 @@ cells' configurations in every new run manifest.
 Airspan Cell 2 is the radio cell; it is unrelated to experiment condition C2.
 The R1 idle/uplink/downlink bins and the first valid C1 and C2 TCP runs can
 supply the `70/20/10` measurements used by R9; do not repeat those probes solely
-for R9. They remain follow-up measurements under `70/20/10`, not relabeled
-repetitions of the historical `40/40/20` runs. The attempted `30/60/10`
-configuration did not produce a usable collection and is not an experiment
-condition.
+for R9. The user later confirmed that the original campaigns also used
+`70/20/10`. The attempted `30/60/10` configuration did not produce a usable
+collection and is not an experiment condition.
 
 ### 5. Do Not Run Blocked Or Unnecessary Work
 
 - R5 remains blocked until Cisco provides and verifies a nondefault QoS flow.
 - R6 is excluded from the current paper.
 - R7 is collected opportunistically through the ACP exports accompanying R1-R4.
-- R8 requires a response-payload-capable harness. Do not claim bidirectional
-  large-payload results from the existing request-payload scripts.
+- R8 is complete for TCP/MQTT. Keep the original uplink-heavy request scripts
+  separate from the new response-payload harness and exact directional bulk
+  runner.
 - Do not repeat V2X, full payload sweeps, failure/restart, or every client-count
   experiment for this follow-up.
 
@@ -495,8 +525,8 @@ experiment matrix alone is not mistaken for completing the paper.
 | R5 | Verified default-versus-new QoS comparison | Required only if Cisco enables it | Blocked on Cisco configuration | Determine whether network-enforced QoS changes results |
 | R6 | Path-segment measurements | Optional | Excluded from the current paper scope | Future delay decomposition; the current paper reports complete-path application RTT |
 | R7 | Additional ACP/per-UE counter export | Recommended | Availability unknown | Improve radio/RAN interpretation beyond DU Cell aggregates |
-| R8 | Validate payload direction and measure selected downlink responses | Required for bidirectional payload claims | Not run | Distinguish large vehicle-to-edge requests from large edge-to-vehicle responses |
-| R9 | Compare the historical `40/40/20` results with the locked-cell `70/20/10` follow-up | Exploratory sensitivity study | `70/20/10` host/application follow-up collected and Cell 2 lock operator-verified; matched Airspan TDD evidence and a controlled same-cell reference remain | Quantify whether and by how much the changed downlink/uplink allocation is associated with application outcomes, then derive implications for future vehicular-radio and 6G design |
+| R8 | Validate payload direction and measure selected downlink responses | Required for bidirectional payload claims | Complete for TCP/MQTT at 1, 10, 100, and 500 KiB; August 17 matched profiles and August 18 weak-signal repeat retained | Distinguish large vehicle-to-edge requests from large edge-to-vehicle responses |
+| R9 | Analyze TDD application and directional-capacity evidence | Complete | August 15--16 uplink-heavy RTT is inconclusive; August 17 matched downlink-heavy RTT and exact directional goodput are valid application comparisons; DU alignment retained | Keep direction, workload family, TDD profile, and evidence level separate |
 | P1 | Complete deployment and path documentation | Required | Not complete | Vendor attribution, reproducibility, equipment scope, and V2X/5G separation |
 | P2 | Validate and document the IPI contribution | Required | Partly implemented; final validation not recorded | Answer the request to strengthen IPI without changing the paper's central logic |
 | P3 | Close manuscript claims, citations, and submission checks | Required | Not complete | Qualified conclusions, related work, anonymity, format, and evidence traceability |
@@ -524,7 +554,7 @@ No new V2X experiment is required solely for these private-5G follow-ups.
 | Configure a nondefault 5QI | Use a second Cisco-provisioned DNN with core-side proof; do not infer 5QI from IP TOS or an application label | R5 |
 | Collect RAN load counters | Use available ACP/per-UE exports. Record scheduler state and queue occupancy as unavailable unless Airspan provides another supported interface | R1, R7 |
 | Move ACP to stable UD VMware infrastructure | Coordinate installation or, until then, export after every collection day before the approximately two-day history expires | O1 |
-| Establish that 5G can carry large CAV responses, not only requests | The current probe sends the selected payload toward the edge and returns a compact acknowledgment. Run the targeted reverse-direction experiment or narrow every payload claim to the measured direction | R8, P3 |
+| Establish that 5G can carry large CAV responses, not only requests | Use the completed August 17--18 downlink-heavy TCP/MQTT runs, in which the vehicle sends a compact request and validates the declared response payload. Keep them separate from the earlier uplink-heavy request/compact-acknowledgment runs | R8, P3 |
 
 ## R0. Questions To Resolve Before Interpreting Airspan Data
 
@@ -1355,7 +1385,20 @@ metrics from application RTT.
 
 ## R8. Payload-Direction Validation
 
-### Existing Boundary
+### Current Status
+
+Complete for the current TCP/MQTT paper scope. The August 17 location-3 runs
+measure downlink-heavy RTT under both `70/20/10` and `40/40/20` at 1, 10, 100,
+and 500 KiB. The August 18 location-3 run repeats the downlink-heavy matrix
+under `40/40/20` at `-115 dBm`. The vehicle sends a compact request, and `d1`
+returns the declared payload. The vehicle validates response length, sequence,
+and CRC32 before RTT ends. The exact 50-MiB TCP runs separately validate
+upload and download direction, byte count, and checksum.
+
+The original uplink-only boundary below remains useful for interpreting all
+earlier payload sweeps. It no longer describes the complete experiment set.
+
+### Original Uplink-Only Boundary
 
 The current TCP/MQTT/UDP probe places the selected application payload in
 `Private5gProbeRequest.frame.payload`. `Private5gProbeAck` returns sequence and
@@ -1365,15 +1408,14 @@ payload sweeps therefore measure a large vehicle-to-edge request followed by a
 compact edge-to-vehicle acknowledgment. The reported RTT is round trip, but
 the payload-size intervention is primarily uplink.
 
-Decision recorded on 2026-08-15: use the second path for the current paper.
-Narrow every payload-size claim, table, figure, caption, and workload mapping to
-vehicle-to-edge request transfer with a compact edge-to-vehicle acknowledgment.
-Do not claim that the current sweeps measured equally sized edge-to-vehicle
-responses, symmetric payload transfers, or a download-heavy exchange. The user
-accepts this uplink-oriented scope, so the reverse-direction experiment below
-is optional future work rather than a manuscript prerequisite.
+The 2026-08-15 decision limited the then-current evidence to vehicle-to-edge
+request transfer with a compact edge-to-vehicle acknowledgment. The August
+17--18 downlink-heavy collection supersedes that limitation for the new TCP and
+MQTT response conditions. Earlier uplink-heavy sweeps must still be described
+using their original direction contract and must not be relabeled as symmetric
+or download-heavy exchanges.
 
-### Optional Future Reverse-Direction Harness
+### Optional Expanded Directional Harness
 
 Extend the existing probe without changing its correlation and timing model:
 
@@ -1432,33 +1474,39 @@ same application size, protocol, signal condition, endpoints, and attempt
 policy. Directional asymmetry must be reported as an observed property of the
 measured deployment and TDD configuration, not as a universal 5G property.
 
-## R9. Locked-Cell TDD Configuration Comparison
+## R9. TDD Configuration Diagnostic
 
 ### Status And Interpretation
 
-The historical campaign used the `40/40/20` TDD configuration, while the later
-follow-up used `70/20/10`. Because their placement/signal contexts differ, the
-retained campaigns do not isolate a TDD effect and cannot establish that one
-profile outperforms the other. They remain a joint-condition comparison. A new
-matched collection will measure both profiles at the same placement and under
-the same application and network controls. The attempted `30/60/10`
-configuration did not support a usable collection and produced no valid
-experiment result. Do not include it as a measured condition. The
-slash-separated values are frame allocations ordered as downlink, uplink, and
-dynamic.
+Complete with separate conclusions for each experiment family. The user
+corrected all application campaigns before August 15--16 to `70/20/10`. The
+August 15--16 uplink-heavy runs did not preserve a stable path across the
+profile changes and do not establish that either profile provides lower
+uplink-heavy application RTT. The August 17 downlink-heavy runs provide a
+matched same-location, same-cell application comparison under both profiles.
+The August 17 exact 50-MiB runs provide a separate matched endpoint-goodput
+comparison for upload and download. The slash-separated profile values are
+frame allocations ordered as downlink, uplink, and dynamic.
+
+The timestamp-aligned DU Cell analysis is stored in
+`paper/analysis/tdd_du_cell_comparison.md`. It confirms the serving traffic
+cell for the covered uplink runs and supplies clean Cell 2 context for the
+matched August 17 downlink blocks. It does not supply a matched uplink pair:
+the August 15 `40/40/20` raw timestamps are absent, and the August 16
+`70/20/10` run occurs after the retained DU coverage ends.
 
 The network administrator identifies `10D4G` as an LTE-coexistence
 frame-packing setting. Because it is fixed across both configurations, R9
 neither varies nor evaluates it. The run manifests retain the value only for
 configuration reproducibility.
 
-The original profile allocates 40 downlink, 40 uplink, and 20 dynamic frames.
-The follow-up allocates 70 downlink, 20 uplink, and 10 dynamic frames. The new
-profile therefore increases the downlink allocation and reduces the uplink
-allocation. It is a directional sensitivity condition, not an uplink-enhanced
-configuration or a proposed fix.
+The `40/40/20` profile allocates 40 downlink, 40 uplink, and 20 dynamic frames.
+The `70/20/10` profile allocates 70 downlink, 20 uplink, and 10 dynamic frames.
+Thus, `40/40/20` should provide more uplink capacity when all other conditions
+are stable. The 25-Mbit/s capacity controls follow this direction:
+`40/40/20` reached 25.000 Mbit/s and `70/20/10` reached 13.118 Mbit/s.
 
-The MG52 must remain locked to Airspan Cell 2 so that no handoff occurs. Retain
+In a future causal latency replication, the MG52 must remain locked to Airspan Cell 2 so that no handoff occurs. Retain
 the same Cell 2 NR-ARFCN, bandwidth, RF configuration, gateway placement,
 vehicle orientation, and exact fixed vehicle location across the comparison.
 Record the MG52 cell-lock setting and its serving-cell identity independently
@@ -1476,7 +1524,7 @@ the window, and do not reconfigure the cell inside a measurement window. The
 historical and follow-up data remain descriptive joint-condition evidence even
 after the matched collection is available.
 
-### Primary Matched Application Matrix
+### Future Causal Replication Requirements
 
 At one exact fixed vehicle location, collect both profiles for the 1,024-B and
 23,968-B vehicle-to-edge IPI requests over TCP and MQTT. Use 1,000 attempts per
@@ -1502,10 +1550,9 @@ traffic on the nonselected cell invalidates the affected comparison.
 
 One pair is a diagnostic result only. Collect at least two valid matched pairs,
 with three preferred. Record reconfiguration and reattachment intervals
-outside the measurement windows. A separate matched throughput control may use
-the same 25-Mbit/s offered vehicle-to-d1 uplink rate and duration under each
-profile; do not compare the existing `70/20/10`-only 13.118-Mbit/s result as if
-it were a two-profile control.
+outside the measurement windows. The current capacity result compares the same
+25-Mbit/s offered vehicle-to-d1 uplink rate under both profiles. Preserve the
+raw trace for each profile before using the pair for a reproducible analysis.
 
 For a matched pair, TDD allocation is the only intended changed parameter.
 Report signal conditions, cell load, weather, vehicle placement, serving cell,
@@ -1524,8 +1571,9 @@ the absolute and relative difference between configurations with
 repetition-level variation, not only whether the direction is better or worse.
 Interpret practical importance against the application deadlines used
 elsewhere in the paper. A repeated matched-cell, matched-placement difference
-may be attributed to the TDD allocation within this deployment. The historical
-comparison supports only a joint-condition association.
+may be attributed to the TDD allocation within this deployment. The August
+15--16 application RTT data support only the negative diagnostic because the
+path state changed across the runs.
 
 Either outcome is informative. A small matched-pair effect would show that this
 allocation change is not a dominant cause of the measured application outcomes
@@ -1892,9 +1940,8 @@ complete 1,000-message condition. All 28 fetched edge files matched before
 access revocation, and public checksums/privacy validation pass.
 
 This remains a one-location application observation with operator-reported
-TDD and radio context. It does not close R9: the matched two-location,
-directional, repeated TDD matrix with timestamp-aligned ACP/MG52 evidence is
-still required for a causal TDD claim.
+TDD and radio context. It contributes to the negative R9 latency diagnostic,
+not a causal profile ranking.
 
 ## 2026-08-17 Location-2 Raw-Uplink Collection Status
 
@@ -1906,11 +1953,11 @@ stopped by the user at 227 validated exchanges; MQTT 1,024 KiB completed its
 revised declared count of 100. A fresh 59.599-second GNSS capture passes the
 stationarity gate.
 
-This closes the requested location-2 application collection but does not close
-R9. TDD and RSRP were user-reported during the run, while RSRQ, cell
+This closes the requested location-2 application collection. TDD and RSRP were
+user-reported during the run, while RSRQ, cell
 administrative states, serving-cell selection, and no-handoff state were
-carried forward. A causal TDD comparison still requires matched profiles at the
-same locations with timestamp-aligned configuration, ACP, and MG52 evidence.
+carried forward. These data are not part of the August 15--16 `40/40/20`
+versus `70/20/10` latency diagnostic.
 
 ## Completion Definition
 
@@ -1933,12 +1980,11 @@ The remaining experiment and paper-evidence work is complete when:
 8. R6 remains excluded while the paper reports complete-path application RTT
    and makes no internal delay-decomposition claim.
 9. R7 is obtained or its unavailable fields are documented.
-10. R8 is completed for bidirectional payload claims, or the paper explicitly
-    limits its payload conclusions to large vehicle-to-edge requests followed
-    by compact acknowledgments.
-11. R9 is completed before reporting the measured effect of the TDD change;
-    the analysis states that TDD was the only changed parameter and reports
-    field conditions and repetition-to-repetition variation.
+10. R8 keeps the original uplink-heavy and new downlink-heavy payload claims
+    separate and uses only the directions implemented by each harness.
+11. R9 reports the August 15--16 uplink-heavy result as inconclusive, the
+    August 17 downlink-heavy result as a matched application comparison, and
+    exact upload and download goodput as separate directions.
 12. P1 contains source-backed deployment and path facts.
 13. P2 validates every IPI claim against the implementation and tests.
 14. P3 closes claim scope, technical citations, anonymity, format, and PDF
@@ -1979,11 +2025,12 @@ The remaining experiment and paper-evidence work is complete when:
 - [ ] R5 Cisco-approved QoS comparison completed or formally blocked.
 - [x] R6 excluded; the paper reports complete-path application RTT.
 - [ ] R7 additional Airspan export obtained or documented unavailable.
-- [x] R8 manuscript scope narrowed to an N-byte vehicle-to-edge IPI request and
-      compact edge-to-vehicle acknowledgment; a reverse-payload experiment is
-      not required for the current paper.
-- [ ] R9 new same-placement, Cell-2-locked `40/40/20` versus `70/20/10`
-      matched comparison received, validated, and analyzed.
+- [x] R8 downlink-heavy TCP/MQTT matrix and exact directional TCP transfers
+      completed; original uplink-heavy sweeps retain their compact-acknowledgment
+      direction contract.
+- [x] R9 August 15--16 uplink-heavy diagnostic, August 17 matched downlink-heavy
+      comparison, exact upload/download goodput, and DU Cell alignment recorded
+      without pooling directions or profiles.
 - [ ] P1 deployment inventory and V2X/5G path description completed.
 - [ ] P2 IPI implementation mapping and test validation completed.
 - [ ] P3 claim/citation/submission review completed.

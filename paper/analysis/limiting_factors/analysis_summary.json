@@ -1,0 +1,238 @@
+{
+  "analysis_unit": "one condition or one valid Airspan sample",
+  "condition_count": 461,
+  "condition_count_by_path": {
+    "5G Uu": 431,
+    "PC5 direct": 30
+  },
+  "attempts_described": 1785863,
+  "pca_eligible_conditions": 452,
+  "pca_features": [
+    "log10_p50",
+    "log10_p95",
+    "log10_p99",
+    "tail_log10_p95_p50",
+    "failure_fraction"
+  ],
+  "pca_explained_variance": [
+    0.6111058006677199,
+    0.20418423696964405,
+    0.17910535873640782
+  ],
+  "ranking_weights": {
+    "observed_severity": 0.3,
+    "repeatability": 0.2,
+    "evidence_breadth": 0.2,
+    "identification_strength": 0.15,
+    "complex_cav_relevance": 0.15
+  },
+  "ranked_factors": [
+    {
+      "factor": "Payload and representation scale",
+      "observed_severity": 5.0,
+      "repeatability": 5.0,
+      "evidence_breadth": 5.0,
+      "identification_strength": 4.0,
+      "complex_cav_relevance": 5.0,
+      "evidence_grade": "A-",
+      "reason": "Repeated 5G sweeps, detector replays, PC5 sweeps, and workload-size inventory all expose the same pressure.",
+      "weighted_score_100": 97.0,
+      "rank": 1,
+      "rank1_probability": 0.99415,
+      "top3_probability": 1.0,
+      "sensitivity_min_rank": 1,
+      "sensitivity_max_rank": 2
+    },
+    {
+      "factor": "Concurrent demand under no verified resource isolation",
+      "observed_severity": 5.0,
+      "repeatability": 5.0,
+      "evidence_breadth": 4.0,
+      "identification_strength": 4.5,
+      "complex_cav_relevance": 5.0,
+      "evidence_grade": "A-",
+      "reason": "Within-run load and client-count contrasts repeatedly enlarge tails; logical clients share one UE and no nondefault bearer was verified.",
+      "weighted_score_100": 94.5,
+      "rank": 2,
+      "rank1_probability": 0.00585,
+      "top3_probability": 1.0,
+      "sensitivity_min_rank": 1,
+      "sensitivity_max_rank": 3
+    },
+    {
+      "factor": "Operating path and spatial availability",
+      "observed_severity": 5.0,
+      "repeatability": 4.5,
+      "evidence_breadth": 5.0,
+      "identification_strength": 2.5,
+      "complex_cav_relevance": 5.0,
+      "evidence_grade": "B",
+      "reason": "Both paths vary strongly by field context, but PC5 RF counters and matched 5G UE radio telemetry are unavailable.",
+      "weighted_score_100": 90.5,
+      "rank": 3,
+      "rank1_probability": 0.0,
+      "top3_probability": 0.7395,
+      "sensitivity_min_rank": 2,
+      "sensitivity_max_rank": 6
+    },
+    {
+      "factor": "Application direction for large event-triggered objects",
+      "observed_severity": 5.0,
+      "repeatability": 4.0,
+      "evidence_breadth": 3.5,
+      "identification_strength": 4.5,
+      "complex_cav_relevance": 5.0,
+      "evidence_grade": "B+",
+      "reason": "A matched weak-signal 500-KiB MQTT pair shows 40.95x p95 inflation for uplink-heavy exchange, and exact directional transfers repeat the endpoint asymmetry.",
+      "weighted_score_100": 88.5,
+      "rank": 4,
+      "rank1_probability": 0.0,
+      "top3_probability": 0.1534,
+      "sensitivity_min_rank": 3,
+      "sensitivity_max_rank": 5
+    },
+    {
+      "factor": "Service interruption and state continuity",
+      "observed_severity": 5.0,
+      "repeatability": 5.0,
+      "evidence_breadth": 2.0,
+      "identification_strength": 4.5,
+      "complex_cav_relevance": 5.0,
+      "evidence_grade": "B+",
+      "reason": "All four injected restarts created 11.7-15.1 s success gaps, but there was one injection per condition and no fallback.",
+      "weighted_score_100": 86.5,
+      "rank": 5,
+      "rank1_probability": 0.0,
+      "top3_probability": 0.1071,
+      "sensitivity_min_rank": 3,
+      "sensitivity_max_rank": 7
+    },
+    {
+      "factor": "TDD profile under matched application workload",
+      "observed_severity": 4.0,
+      "repeatability": 4.0,
+      "evidence_breadth": 4.0,
+      "identification_strength": 4.5,
+      "complex_cav_relevance": 5.0,
+      "evidence_grade": "B+",
+      "reason": "Matched August 17 downlink and August 19 GL-X3000 bidirectional blocks show workload-dependent profile effects; the sequential observations are not radio-PHY capacity tests.",
+      "weighted_score_100": 84.5,
+      "rank": 6,
+      "rank1_probability": 0.0,
+      "top3_probability": 0.0,
+      "sensitivity_min_rank": 4,
+      "sensitivity_max_rank": 8
+    },
+    {
+      "factor": "Message formation and transport semantics",
+      "observed_severity": 5.0,
+      "repeatability": 4.0,
+      "evidence_breadth": 3.0,
+      "identification_strength": 3.5,
+      "complex_cav_relevance": 4.0,
+      "evidence_grade": "B",
+      "reason": "Raw UDP failed beyond its practical datagram boundary while fragmented UDP restored smaller transfers but not 60 KiB reliability.",
+      "weighted_score_100": 80.5,
+      "rank": 7,
+      "rank1_probability": 0.0,
+      "top3_probability": 0.0,
+      "sensitivity_min_rank": 6,
+      "sensitivity_max_rank": 7
+    },
+    {
+      "factor": "Local perception compute time (conditional)",
+      "observed_severity": 5.0,
+      "repeatability": 5.0,
+      "evidence_breadth": 1.0,
+      "identification_strength": 3.0,
+      "complex_cav_relevance": 2.0,
+      "evidence_grade": "B-",
+      "reason": "One full V2X-Radar detector configuration took seconds per sample; it is not an end-to-end or universal compute result.",
+      "weighted_score_100": 69.0,
+      "rank": 8,
+      "rank1_probability": 0.0,
+      "top3_probability": 0.0,
+      "sensitivity_min_rank": 7,
+      "sensitivity_max_rank": 8
+    }
+  ],
+  "benchmarks": {
+    "workload_manifest": {
+      "files": 22431,
+      "min_bytes": 143,
+      "median_bytes": 134797.0,
+      "p95_bytes": 4032174.0,
+      "p99_bytes": 4032174.0,
+      "max_bytes": 47104225,
+      "mean_bytes": 595593.3317284116,
+      "over_60000_count": 11805,
+      "over_60000_fraction": 0.5262805938210512,
+      "chunk_median": 3.0,
+      "chunk_p95": 68.0,
+      "chunk_max": 786,
+      "boundary": "Raw public-dataset file sizes and estimated IPI chunk counts; not transmitted application messages."
+    },
+    "detector_compute": {
+      "samples": 922,
+      "min_ms": 1972.371,
+      "median_ms": 3570.3415,
+      "p95_ms": 4214.3489500000005,
+      "p99_ms": 4412.88778,
+      "max_ms": 4783.675,
+      "mean_ms": 3508.0840401301516,
+      "boundary": "Offline local V2X-Radar detector on four RTX 2080 Ti GPUs; not end-to-end and not added to network RTT."
+    }
+  },
+  "pc5_spatial_bin_rows": 8,
+  "directional_host_throughput": {
+    "car_to_edge_mbps": 13.118,
+    "edge_to_car_mbps": 25.0,
+    "target_mbps_each_direction": 25.0,
+    "sources": [
+      "results/real_5g/20260805_airspan_r1_run_1/load/v2_car_client.csv",
+      "results/real_5g/20260805_airspan_r1_run_1/load/v3_edge_client.csv"
+    ],
+    "boundary": "Historical host-side direction control under 70/20/10; not pooled with the exact 50-MiB endpoint result."
+  },
+  "matched_directional_evidence": {
+    "weak_signal_mqtt_500kib": {
+      "profile": "40/40/20",
+      "reported_rsrp_dbm": -115,
+      "uplink_heavy_p50_ms": 7647.557,
+      "uplink_heavy_p95_ms": 9287.828,
+      "downlink_heavy_p50_ms": 124.311,
+      "downlink_heavy_p95_ms": 226.787,
+      "uplink_to_downlink_p50_ratio": 61.52,
+      "uplink_to_downlink_p95_ratio": 40.95
+    },
+    "exact_50mib_endpoint_goodput": {
+      "70_20_10_upload_mean_mbps": 12.000424,
+      "70_20_10_download_mean_mbps": 126.786286,
+      "40_40_20_upload_mean_mbps": 2.836239,
+      "40_40_20_download_mean_mbps": 99.755586
+    },
+    "gl_x3000_matched_profiles": {
+      "70_20_10_upload_mean_mbps": 15.691,
+      "70_20_10_download_mean_mbps": 166.106,
+      "40_40_20_upload_mean_mbps": 10.913,
+      "40_40_20_download_mean_mbps": 123.451,
+      "repetitions_per_profile_direction": 3
+    },
+    "boundary": "Application direction and endpoint goodput are measured directly; no radio-PHY capacity or hardware-only claim is made."
+  },
+  "restart_success_gap_ms_range": [
+    11714.7,
+    15100.7
+  ],
+  "excluded_or_unrankable": [
+    "PC5 RSSI/SNR/RSRP/RSRQ, MCS, BLER, retransmissions, and resource-block use: not logged",
+    "the latency-derived PC5 mobility signal score: circular with the outcomes",
+    "August 15--16 uplink-heavy cross-profile ranking: no timestamp-aligned same-cell DU pair",
+    "universal TDD ranking: the matched August 17 result is downlink-heavy and workload dependent",
+    "hardware-only gateway attribution: August 18 and August 19 differ in signal, configuration, session, device, and collection time",
+    "network-enforced 5QI effect: both observed host captures used TOS 0x0",
+    "weather: confounded with date and location",
+    "mobility speed effect: confounded with route position and run",
+    "independent-UE density: multiclient experiments use logical clients on one UE"
+  ]
+}

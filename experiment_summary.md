@@ -1,6 +1,6 @@
 # Experiment Summary
 
-Last updated: 2026-08-17.
+Last updated: 2026-08-19.
 
 This file summarizes the experiments currently present under `results/`. It is
 based on the current result artifacts, not on prior generated paper prose.
@@ -17,9 +17,9 @@ under `CISCO_AIRSPAN_STATS/`; their sanitized derivatives remain under
 
 | Result area | Scope | Current folders |
 |---|---|---:|
-| `results/real_5g/` | Private-5G TCP/MQTT/UDP latency, payload sweeps, load/QoS labels, detector-output replay, multiclient scaling, failure/fallback, deadline analysis, GPS, and signal maps | 37 dated run folders plus derived signal-map artifacts |
-| `results/mocar_v2x/` | Mocar C-V2X setup, custom RTT, stationary payload sweeps, signal probe, and radio-distance/mobility runs | 17 run folders |
-| `results/v2x_benchmarks/` | Public V2X dataset loopback, dataset/GPU processing, OpenCOOD smoke checks, and V2X-Radar detector benchmark runs | 9 result folders |
+| `results/real_5g/` | Private-5G TCP/MQTT/UDP latency, directional TDD runs, exact endpoint goodput, load/QoS labels, detector-output replay, multiclient scaling, failure/fallback, DU Cell context, GPS, and signal maps | 43 top-level result folders plus the TDD status record |
+| `results/mocar_v2x/` | Mocar C-V2X setup, custom RTT, stationary payload sweeps, signal probe, and radio-distance/mobility runs | 18 top-level folders |
+| `results/v2x_benchmarks/` | Public V2X dataset loopback, dataset/GPU processing, OpenCOOD smoke checks, and V2X-Radar detector benchmark runs | 10 top-level folders |
 | `results/local_loopback/` | Local loopback placeholder | present but empty |
 
 ## Global Measurement Caveats
@@ -38,6 +38,11 @@ under `CISCO_AIRSPAN_STATS/`; their sanitized derivatives remain under
 - Several Mocar payload sweeps were stopped at operator request after timeout-
   dominant behavior. Their summaries explicitly mark skipped or remaining
   attempts as analysis timeouts.
+- The August 19 G-NetTrack drive is radio-context evidence from a separate
+  handset, not synchronized MG52 telemetry. Its ordinary SNR column is empty;
+  the retained SINR values are nearest-time joins to the NR `ssSinr` field in
+  the verbose logs. Route-weighted sample fractions are not area-coverage
+  probabilities.
 
 ## Private-5G Experiments
 
@@ -93,6 +98,10 @@ Representative baseline rows:
 | `20260515_sunny_run_1` | MQTT 256 KiB service | 1000 | 999 | 15152.536 | 43835.616 | 199428.746 |
 
 ### E02. Signal Maps And Run Locations
+
+Current manuscript use: superseded by the August 19 Samsung 22/G-NetTrack Pro
+continuous-drive survey in E22. The current signal-survey figure and coverage
+description must use E22 rather than this earlier sparse map.
 
 Primary artifacts:
 
@@ -316,16 +325,15 @@ requests over TCP, MQTT, and UDP.
 These runs show that restart/failure events mainly appear as missed requests
 and tail spikes rather than median shifts.
 
-### E08. Airspan `70/20/10` Validation And Multi-Location Follow-Up
+### E08. Primary `70/20/10` Campaigns And Multi-Location Follow-Up
 
-**TDD inference status: inconclusive.** The retained measurements remain valid
-for their recorded direction, workload, placement, and signal contexts. They
-must not be used to rank `40/40/20` against `70/20/10`, estimate a TDD effect,
-or claim TDD sensitivity. The profile and vehicle placement/signal context
-changed together, and the `70/20/10` direction control has no matched
-`40/40/20` control. This status is recorded in
-`results/real_5g/tdd_comparison_status.json` and remains in force until a new
-same-placement matched comparison is validated.
+The user corrected the TDD record on 2026-08-17. Every private-5G application
+campaign collected before the August 15--16 TDD diagnostic used `70/20/10`,
+not `40/40/20`. The measurements remain valid for their recorded workloads,
+directions, placements, and signal contexts. Their corrected common TDD profile
+means that the multi-location results evaluate field-condition variation, not
+a TDD-configuration change. The decision record is
+`results/real_5g/tdd_comparison_status.json`.
 
 Primary folders:
 
@@ -387,25 +395,22 @@ aggregate:
 | C2 | MQTT | 59.790 | 49.753 | -16.79% | 75.752 | 59.721 | -21.16% |
 | C2 | UDP | 56.623 | 47.947 | -15.32% | 70.541 | 56.947 | -19.27% |
 
-The application-layer observations from the historical `40/40/20` campaign
-and the `70/20/10` follow-up are retained below for data provenance. The same
-sole CAV UE, dedicated radio and channel, Cell 2 path, and `10D4G` packing were
-retained across collection times, while the TDD allocation and vehicle
-location changed. Consequently, the table is inconclusive for TDD inference.
-Each cell reports p95 RTT followed by the percentage of all issued requests
-answered by 100 ms. The common/typical row pools both retained common blocks.
+The table compares application outcomes across signal and placement contexts
+under the corrected common `70/20/10` profile. Each cell reports p95 RTT
+followed by the percentage of all issued requests answered by 100 ms. The
+`-109` to `-110`-dBm row pools both retained location blocks.
 
-| TDD profile and signal/placement context | 1 KiB MQTT | 1 KiB TCP | 23,968 B MQTT | 23,968 B TCP |
+| Signal/placement context under `70/20/10` | 1 KiB MQTT | 1 KiB TCP | 23,968 B MQTT | 23,968 B TCP |
 |---|---:|---:|---:|---:|
-| `40/40/20`, favorable | 44.487 ms / 100.0% | 140.249 ms / 4.0% | 183.705 ms / 30.8% | 169.540 ms / 18.4% |
-| `70/20/10`, common/typical | 41.632 ms / 99.8% | 149.913 ms / 1.0% | 75.752 ms / 99.4% | 106.971 ms / 86.3% |
-| `70/20/10`, weak | 46.106 ms / 99.1% | 150.429 ms / 0.5% | 162.864 ms / 4.4% | 188.673 ms / 0.0% |
-| `70/20/10`, strong | 39.955 ms / 100.0% | 137.309 ms / 4.6% | 59.721 ms / 99.7% | 93.605 ms / 97.8% |
+| Baseline, `-106` dBm (weak) | 44.487 ms / 100.0% | 140.249 ms / 4.0% | 183.705 ms / 30.8% | 169.540 ms / 18.4% |
+| Follow-up, `-109` to `-110` dBm (weak) | 41.632 ms / 99.8% | 149.913 ms / 1.0% | 75.752 ms / 99.4% | 106.971 ms / 86.3% |
+| Follow-up, `-120` dBm (weak) | 46.106 ms / 99.1% | 150.429 ms / 0.5% | 162.864 ms / 4.4% | 188.673 ms / 0.0% |
+| Follow-up, `-101` dBm (common/typical) | 39.955 ms / 100.0% | 137.309 ms / 4.6% | 59.721 ms / 99.7% | 93.605 ms / 97.8% |
 
 The 1-KiB rows are comparatively stable within each transport. The 23,968-B
-rows vary sharply with signal/placement under the same `70/20/10` profile.
-These observations do not identify the effect of TDD allocation. The retained
-cross-profile data are therefore classified as inconclusive for TDD inference.
+rows vary sharply with signal and placement under the same `70/20/10` profile.
+The August 15--16 runs described in E09--E13 provide the separate TDD
+diagnostic.
 
 This supports an application-layer association between the strong-candidate
 location and lower RTT, especially for C2. It does not yet establish that RSRP
@@ -472,9 +477,8 @@ seconds. The affected rows remain included; host telemetry shows no saturation
 or failure, and the final condition maximum occurred at sequence 613 outside
 the overlap. All 95 copied edge files matched their remote hashes, both raw and
 public checksum manifests pass, and the public derivative passes its privacy
-scan. This one-location, one-profile block is not a causal TDD comparison and
-does not replace the planned two-location `40/40/20` versus `70/20/10`
-directional matrix.
+scan. This one-location `70/20/10` block supplies the first same-profile
+reference for the August 15--16 TDD diagnostic.
 
 ### E10. 2026-08-16 MQTT Same-Profile Uplink Repeat
 
@@ -660,6 +664,27 @@ checksums, structured-file parsing, retained measurement identity, and the
 privacy scan pass. The same-day validated stationary GPS capture was reused;
 no new bag was requested.
 
+#### August 15--16 TDD Interpretation
+
+The `40/40/20` allocation assigns 40 percent of the frame to fixed uplink use,
+whereas `70/20/10` assigns 20 percent. The larger fixed uplink share should
+increase uplink capacity when the radio, route, serving cell, application, and
+offered traffic are otherwise stable. The August 15--16 application RTT runs
+did not maintain those controls. The private-5G route required recovery, Cell 1
+changed administrative state, and the second August 16 `40/40/20` TCP run used
+Cell 1 rather than Cell 2. The `40/40/20` TCP p95 changes reached 169.05% across
+days and 189.83% between same-day runs. MQTT p95 changed by 9.22--163.86%
+across the two days. These data therefore cannot rank the profiles by
+application latency.
+
+The capacity control follows the expected allocation direction. With a
+25-Mbit/s offered vehicle-to-edge TCP rate, `70/20/10` achieved 13.118 Mbit/s,
+whereas the coauthor-reported `40/40/20` control achieved 25.000 Mbit/s. The
+repository contains the raw `70/20/10` trace. The `40/40/20` value is retained
+as a coauthor experimental record because its raw trace is not present in the
+current tree. The complete decision and evidence table appear in
+`paper/analysis/tdd_experiment_update.md`.
+
 ### E14. 2026-08-16 TCP `60/20/20` Payload Sweep
 
 Primary folder:
@@ -769,11 +794,12 @@ Thus, `40/40/20` lowers small-response downlink RTT, while the advantage
 disappears or reverses for the larger MQTT responses. These downlink-heavy
 measurements must not be pooled with the August 15--16 uplink-heavy RTT runs,
 where the vehicle sends the declared object and d1 returns a compact
-acknowledgment. The primary August 15 uplink comparison combines E09's
-`70/20/10` run with
+acknowledgment. A derived August 15 uplink table combines E09's `70/20/10` run
+with
 `CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_40_40_20_location_1_run_3_unredacted/`.
-It shows `70/20/10` p50/p95 RTT 13.3%--68.6% below `40/40/20`; it is a
-separate experiment family and location.
+The referenced `40/40/20` raw directory and its timestamps are absent from the
+current repository. The retained values remain historical observations, but
+they are not used to rank the profiles by uplink-heavy RTT.
 
 ### E17. 2026-08-17 Location-3 Exact 50-MiB Directional Throughput
 
@@ -1028,6 +1054,119 @@ A/B test: August 18 RSRP fell from `-105` to `-115 dBm`, versus measured median
 uploads and one download. The supported conclusion is that the severe August
 18 large-uplink condition did not recur with GL-X3000; hardware, signal,
 configuration, session, and time-varying path effects remain inseparable.
+### E21. August 15--18 TDD And DU Cell Alignment
+
+Primary analysis:
+
+- `paper/analysis/tdd_du_cell_comparison.md`
+- `results/real_5g/tdd_comparison_status.json`
+
+Primary DU Cell sources:
+
+- `CISCO_AIRSPAN_STATS/DU_Cell_Stat_Log/DUCellExport_20260816_1519.csv`
+- `CISCO_AIRSPAN_STATS/DU_Cell_Stat_Log/DUCellExport_20260818_1342.csv`
+
+Purpose: align the August 15--18 application experiments with Airspan DU Cell
+statistics while keeping uplink-heavy RTT, downlink-heavy RTT, exact upload,
+exact download, `70/20/10`, and `40/40/20` separate.
+
+The seven DU exports are overlapping snapshots. Their 10,012 physical rows
+produce 3,906 unique interval/cell keys after deduplication by node, managed
+element, cell, start time, and end time. Repeated rows have no semantic
+differences after Excel-formatted numeric strings are normalized. The DU
+timestamps have no timezone field; alignment with the August 18 direction
+transitions strongly supports interpreting them as America/New_York local time,
+although the vendor has not confirmed that setting.
+
+The August 15--16 uplink-heavy application runs do not form a clean DU-backed
+TDD pair. The August 15 `70/20/10` run has complete DU coverage, but the
+referenced August 15 `40/40/20` raw run and its timestamps are absent. The
+August 16 `40/40/20` runs have DU coverage, but the August 16 `70/20/10` run
+begins at 15:55:49 EDT, after the retained DU data end at 15:15. Moreover, the
+DU data confirm that the two August 16 `40/40/20` TCP repetitions used
+different serving cells. These uplink-heavy RTT data remain operating-condition
+measurements rather than a TDD ranking.
+
+The August 17 downlink-heavy experiment provides the clean matched DU window.
+Both TDD profiles used serving Cell 2 at stationary location 3 and reported
+RSRP `-100 dBm`. The comparison below uses only the six complete five-minute
+bins fully contained in each application block. Both windows report zero cell
+unavailability.
+
+| TDD profile | DU window | Cell DL volume | DL wall-clock load | DL active-time-derived throughput |
+|---|---|---:|---:|---:|
+| `70/20/10` | 17:35--18:05 EDT | 8,004,535 kb | 4.447 Mb/s | 54.463 Mb/s |
+| `40/40/20` | 18:50--19:20 EDT | 8,814,798 kb | 4.897 Mb/s | 61.285 Mb/s |
+
+Both selected windows are strongly downlink-heavy. The `40/40/20` window has
+10.1% more Cell downlink volume and 12.5% higher active-time-derived Cell
+downlink throughput. These quantities describe cell-level traffic during the
+application blocks. They are not endpoint goodput or a maximum-capacity
+measurement. The application logs remain the source for RTT.
+
+The August 17 exact 50-MiB result remains an endpoint-goodput comparison. The
+bulk runner alternates upload and download inside the same five-minute DU bins,
+so the DU export cannot isolate each direction. The byte-exact endpoint logs
+show 12.000 versus 2.836 Mb/s for upload and 126.786 versus 99.756 Mb/s for
+download under `70/20/10` and `40/40/20`, respectively.
+
+Finally, the August 18 MQTT 500-KiB conditions compare application direction
+under the same `40/40/20` profile, stationary location, serving Cell 2, and
+`-115 dBm` signal condition. Uplink-heavy p50/p95 RTT is
+7,647.557/9,287.828 ms, while downlink-heavy p50/p95 RTT is
+124.311/226.787 ms. The corresponding uplink-to-downlink ratios are 61.5 at
+p50 and 41.0 at p95. This matched condition establishes a large directional
+latency difference without pooling the two directions.
+
+### E22. August 19 G-NetTrack NR RSRP And SINR Drive Survey
+
+Primary folder:
+
+- `results/real_5g/20260818_19_gnettrack_rsrp_snr/`
+
+Primary combined artifacts:
+
+- `gnettrack/2026.08.19_three_drives/combined_map/combined_signal_measurements.csv`
+- `gnettrack/2026.08.19_three_drives/combined_map/combined_signal_summary.json`
+- `gnettrack/2026.08.19_three_drives/combined_map/interpolated_rsrp_osm.png`
+- `gnettrack/2026.08.19_three_drives/combined_map/interpolated_sinr_osm.png`
+
+Purpose: provide spatial private-5G radio context over three handset drive
+segments. This is a radio survey, not an IPI application RTT experiment, and
+it is not synchronized to the vehicle gateway's sender records.
+
+The combined table contains 1,301 GPS rows. The preparation excludes 123 rows
+from a frozen radio-value plateau longer than five seconds and retains 1,178
+valid NR rows. All valid rows report band 48; 402 use PCI 1 and 776 use PCI 2.
+Drive 1 contributes 737 valid rows, Drive 2 contributes seven, and Drive 3
+contributes 434. The seven-row Drive 2 segment is too short to treat as an
+independent route-level distribution.
+
+| Metric | Minimum | p5 | p25 | Median | p75 | p95 | Maximum |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Recovered NR RSRP (dBm) | -121 | -118 | -113 | -108 | -102 | -93.85 | -88 |
+| Recovered NR SINR (dB) | -20 | -6 | 4 | 9 | 13 | 24 | 30 |
+| Recovered RSRQ (dB) | -18 | -13 | -12 | -11 | -11 | -11 | -11 |
+
+Using the report's handset-RSRP bins, 83/1,178 samples (7.0%) are strong at or
+above -95 dBm, 340 (28.9%) are common/typical from -105 to below -95 dBm, and
+755 (64.1%) are weak below -105 dBm. These are fractions of temporally sampled
+route records. They are not estimates of the percentage of geographic area in
+each bin because the drives do not sample every location equally.
+
+The ordinary G-NetTrack SNR field contains zero values. The SINR map instead
+uses timestamped NR `ssSinr` recovered from the verbose logs and aligned to the
+nearest GPS record. Among the 1,178 valid joins, 134 (11.4%) are below 0 dB and
+523 (44.4%) are at or above 10 dB. Sample-level RSRP and recovered SINR have a
+Pearson correlation of 0.426. That descriptive correlation does not identify a
+radio mechanism and is affected by repeated callbacks and spatial/temporal
+autocorrelation.
+
+The survey strengthens the coverage description by replacing a sparse visual
+context with a route-resolved RSRP/SINR map. It does not justify joining a
+handset reading to an individual IPI request, attributing the matched August
+application differences to RSRP alone, or treating the interpolated map as
+timestamp-aligned MG52 telemetry.
 
 ## Mocar V2X Experiments
 
@@ -1300,21 +1439,66 @@ response. This is a derived analysis of the retained experiments, not a new
 network experiment. It includes conditions with at least 20 finite successful
 RTTs and gives each experimental condition equal weight.
 
-The analysis retains 1,688,330 finite successful RTT records from 355
+The refreshed analysis retains 1,765,930 finite successful RTT records from 452
 conditions. Because RTT spans multiple orders of magnitude, the primary
 variance decomposition uses `log10(RTT)`. Differences between condition means
-explain 89.1% of successful-attempt variance, while attempt-to-attempt variation
-within a fixed condition explains 10.9%. Thus, when IPI succeeds, the operating
+explain 91.2% of successful-attempt variance, while attempt-to-attempt variation
+within a fixed condition explains 8.8%. Thus, when IPI succeeds, the operating
 condition determines the latency regime more strongly than ordinary jitter
 within one condition.
 
-Across the 355 conditions, the median coefficient of variation is 0.282 and
-the median p95/p50 ratio is 1.427. The 95th-percentile condition has a p95/p50
-ratio of 6.223, and the maximum is 12.029. The median p95/p50 ratio is 1.456
-for the 330 private-5G conditions and 1.089 for the 25 direct-PC5 conditions.
+On raw RTT in milliseconds squared, within-condition variance explains 66.2%
+and between-condition means explain 33.8% because rare seconds-scale tails
+receive much more weight. Across the 452 conditions, the median coefficient of
+variation is 0.282 and the median p95/p50 ratio is 1.419. The 95th-percentile
+condition has a p95/p50 ratio of 5.539, and the maximum is 12.029. The median
+p95/p50 ratio is 1.446 for the 427 private-5G conditions and 1.089 for the 25
+direct-PC5 conditions.
 The direct-PC5 value is conditional on receiving at least 20 replies: complete
 and near-complete outages remain in the delivery analysis and are not evidence
 of low variance.
+
+The new August families separate direction-specific successful-response
+dispersion. Across 57 completed uplink-heavy conditions, the median p95/p50
+ratio is 1.319 and 46,600 successful RTTs are retained. Across 40 completed
+downlink-heavy conditions, the median ratio is 1.484 and 31,000 RTTs are
+retained. These family medians do not overturn the matched 500-KiB direction
+result because p95/p50 measures within-condition tail inflation rather than the
+absolute latency difference between directions.
+
+## Derived PCA And Limiting-Factor Refresh
+
+Primary artifacts:
+
+- `paper/analysis/limiting_factors/condition_level_metrics.csv`
+- `paper/analysis/limiting_factors/pca_loadings.csv`
+- `paper/analysis/limiting_factors/matched_contrasts.csv`
+- `paper/analysis/limiting_factors/analysis_summary.json`
+
+The refreshed condition ledger contains 461 observations: 431 private-5G Uu
+and 30 direct-PC5 conditions. It represents 1,785,863 issued attempts and
+1,765,939 accepted responses. The 97 completed August 15--19 RTT conditions
+add 46,600 uplink-heavy and 31,000 downlink-heavy exchanges. The analysis
+excludes user-stopped partials, preflights, same-host loopbacks, the August 18
+overrun diagnostic, and the interrupted August 19 pre-resume condition.
+
+PCA uses the 452 conditions with at least 20 accepted replies. PC1 explains
+61.11% of standardized outcome variance and remains the latency/tail axis:
+its loadings are 0.514 on log p50, 0.569 on log p95, 0.566 on log p99, and
+0.297 on log p95/p50. PC2 explains 20.42% and loads 0.882 on failure fraction,
+so availability loss remains distinct from high latency among successful
+responses. PC3 explains 17.91%; the first three components explain 99.44%.
+
+The updated matched contrasts continue to identify payload and representation
+scale as the strongest broad latency factor. Across 45 finite within-run
+payload contrasts, the median absolute p95 fold change is 6.49 and the maximum
+is 230.92. Concurrent demand retains a 2.84 median and 55.96 maximum p95
+multiplier across 16 contrasts. Seventeen matched application-direction
+contrasts have a 1.70 median and 40.92 maximum absolute p95 fold change. The
+24 matched TDD contrasts from the August 17 and August 19 blocks have a 1.20
+median and 4.45 maximum absolute p95 fold change. PCA describes the outcome
+axes; these contrasts, not PCA alone, connect experimental factors to those
+axes.
 
 ## Cross-Experiment Takeaways For Future Paper Drafting
 
@@ -1330,11 +1514,36 @@ These are evidence summaries, not final paper claims:
   application content is the conservative measured ceiling for a 500-ms p95
   guarantee on TCP/MQTT. This boundary occurred with one UE, a dedicated
   40-MHz n48 channel, and no ambient contention.
-- The `40/40/20` and `70/20/10` application outcomes vary jointly with the
-  signal/placement context, payload, and transport. A TDD profile must be
-  evaluated with the vehicular field condition and workload mix.
+- Every application campaign before the August 15--16 TDD diagnostic used
+  `70/20/10`. The August 15--16 uplink-heavy RTT runs cannot rank the profiles
+  because the path, cell state, and serving cell changed and no clean matched
+  DU pair exists. The August 17 downlink-heavy blocks provide a matched
+  same-cell comparison: `40/40/20` lowers small-response RTT, but its advantage
+  disappears or reverses for the larger MQTT tails. The matched 50-MiB endpoint
+  result is separate: `70/20/10` measures 12.000 versus 2.836 Mb/s upload and
+  126.786 versus 99.756 Mb/s download. These data do not support one universal
+  TDD ranking across directions and workloads.
+- The August 19 GL-X3000 blocks add a same-device, same-location bidirectional
+  comparison. At 10 KiB and above, `40/40/20` has higher uplink p50/p95 for
+  both transports, and all downlink p50/p95 values are also higher. At 500 KiB,
+  its uplink p95 is 4.45x higher for TCP and 4.13x higher for MQTT. Mean exact
+  50-MiB goodput is 15.691 versus 10.913 Mb/s for upload and 166.106 versus
+  123.451 Mb/s for download under `70/20/10` and `40/40/20`, respectively.
+  This is a matched sequential end-to-end observation, not a radio-PHY
+  capacity test or a universal profile ranking.
+- The severe August 18 large-uplink condition did not recur with GL-X3000, but
+  the old/new device comparison also changes signal, configuration, session,
+  and collection time. It cannot isolate a hardware effect.
 - Application-level `5qi-mapped` labels were collected, but current packet
   capture does not verify network-enforced QoS or 5QI behavior.
+- The matched August 18 500-KiB MQTT pair shows that application direction can
+  dominate large-object latency: uplink-heavy p50/p95 is 61.5/41.0 times the
+  downlink-heavy result under the same profile, location, serving cell,
+  transport, payload, and reported signal value.
+- The August 19 G-NetTrack drive retains 1,178 valid band-48 RSRP/SINR joins.
+  Its median RSRP is -108 dBm and median recovered NR SINR is 9 dB; 64.1% of
+  the route-weighted samples are below -105 dBm. This is separate-handset
+  coverage context, not a synchronized causal join to IPI application RTT.
 - Mocar V2X compact payload RTT can be stable near 100 ms for successful
   stationary links, but moving into weak- or no-signal locations produces large
   reliability differences. Successful-packet RTT alone is not enough; success

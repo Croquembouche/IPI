@@ -1,0 +1,59 @@
+\PassOptionsToPackage{draft}{hyperref}
+\documentclass[sigconf,10pt,anonymous,balance=false]{acmart}
+
+\setcopyright{none}
+\settopmatter{printacmref=false, printccs=false, printfolios=true}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+\pagestyle{plain}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{placeins}
+% MobiCom review PDFs must not contain active link annotations.
+\hypersetup{draft}
+
+\newcommand{\ipi}{IPI}
+\newcommand{\edge}{Edge4AV}
+\newcommand{\mocar}{Mocar}
+\newcommand{\cvx}{C-V2X}
+\newcommand{\fiveg}{private 5G}
+
+\acmConference[MobiCom '26]{}{}{}
+\acmYear{2026}
+\acmISBN{}
+\acmDOI{}
+
+\title{\edge{}: Is Today's Edge Ready for Tomorrow's CAVs?}
+
+\author{Anonymous Author(s)}
+\affiliation{%
+  \institution{Anonymous Institution}
+  \country{}}
+
+\begin{document}
+
+\begin{abstract}
+\input{sections/00_abstract}
+\end{abstract}
+
+\keywords{connected and autonomous vehicles, V2X, private 5G, edge computing,
+smart intersections}
+
+\maketitle
+
+\input{sections/01_introduction}
+\input{sections/02_related_works}
+\input{sections/03_ipi}
+\input{sections/03_Testbed}
+\input{sections/04_methods}
+\input{sections/05_experiment_results}
+\input{sections/06_challenges}
+\input{sections/07_conclusion}
+
+\clearpage
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\end{document}

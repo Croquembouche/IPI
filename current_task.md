@@ -1,6 +1,457 @@
 # Current Task
 
-Last updated: 2026-08-19
+Last updated: 2026-08-20
+
+## 2026-08-20 Paper and Proposal Publication
+
+Complete. The current paper and proposal work was separated on branch
+`codex/paper-proposal-updates-20260820`. Proposal commit `1ba2ef7` contains
+only the revised Year 2 implementation report and its new 10-page version.
+The following paper commit contains the current manuscript source and PDFs,
+the retained 28-page comparison PDF, required figure assets and generators,
+paper analysis and review records, aggregated signal-map inputs, and the
+tracked experiment-evidence records and analysis scripts used by the paper.
+Temporary renders, LaTeX auxiliary files, hidden editor files, and the raw
+G-NetTrack export tree remain outside the commits. The branch was pushed to
+`origin` with the two scopes kept separate.
+
+## 2026-08-20 Detailed Experiment Appendix Revision
+
+Complete. The Results section now keeps the argument-critical comparisons in
+the main manuscript and places the complete numerical accounts for prose-only
+experimental conditions in a new Appendix D. The appendix preserves four
+groups of detailed evidence: field-specific uplink payload and transport
+results, gateway and TDD replications, sustained-stream load and packet
+marking, and concurrent-client behavior. Experiments already represented by a
+dedicated result figure or table remain in the main paper.
+
+The main manuscript does not direct readers to the appendix. The previous
+setup-section appendix reference was removed, and a source audit across the
+abstract through conclusion finds no appendix reference or appendix label.
+The main results remain self-contained; Appendix D provides the fuller record
+for readers who choose to examine material beyond the core paper.
+
+Validation: the manuscript rebuild completes at 23 US-letter pages. The final
+log has no overfull boxes, undefined citations or references, or rerun warning.
+Results pages 10--17 and appendix pages 20--23 were rendered and inspected;
+the revised prose and appendix have no clipping or overlap. The final PDF
+contains zero annotations. Its size is 1,028,884 bytes and its SHA-256 is
+`756773c116d53ba1e8a066dfadb85e6323762a02875f3b62095e66ea5a86c64e`.
+`git diff --check` passes. No page-limit work was performed. No commit or push
+was performed.
+
+## 2026-08-20 Manuscript Unit Normalization
+
+Complete. The manuscript now defines and applies one dimensionally consistent
+unit convention. Protocol fields and serialization additions use bytes (B).
+Application payloads and transferred objects use kibibytes (KiB) or mebibytes
+(MiB). Link rates and application goodput use the decimal bit-rate units
+kbit/s, Mbit/s, or Gbit/s. Ambiguous forms such as KB, MB, kbps, and Mbps do
+not appear in the manuscript.
+
+The PC5 and transport figures now express every payload tick in KiB rather
+than mixing B and KiB on one axis. The 60,000-B stress object is correctly
+reported as 58.6 KiB, the exact directional transfer is consistently reported
+as 50 MiB, and the application-requirements table uses KiB for finite object
+sizes. The IPI packaging table uses B throughout because it compares exact
+serialized frame additions. The deadline-completion function now uses
+$C(D)$, removing the previous conflict between the deadline symbol and B for
+bytes. The Makefile also tracks the appendix source so appendix-only edits
+trigger a manuscript rebuild.
+
+Validation: both figure scripts pass `py_compile`; all affected figures were
+regenerated. The manuscript rebuild completes at 23 US-letter pages. The final
+log has no overfull boxes, undefined citations or references, or rerun warning.
+Pages 3--17 and 21--23 were rendered and inspected; the unit definitions,
+tables, axes, captions, results, and appendices have no clipping or overlap.
+The final PDF contains zero annotations. Its size is 1,026,104 bytes and its
+SHA-256 is
+`bd2740ba5bfd122597adf6e2b8ae2e874a554ab4221a08c155ec94b695d239a6`.
+The source and extracted-PDF audits find no KB, MB, kbps, Mbps, stale
+60-KiB label, or stale $C(B)$ notation. `git diff --check` passes. No overall
+page-limit work was performed. No commit or push was performed.
+
+## 2026-08-20 Second Annotated-Manuscript Revision
+
+Complete. All 12 new substantive comments embedded in
+`paper/manuscript/main.pdf` were treated as revision instructions, including
+their recurring implications elsewhere in the manuscript. The Introduction is
+now 490 source words and the Related Work section is 647 source words. Related
+Work plus Figure 1 occupies the requested approximately one-and-one-half-page
+span. The protocol, measurement, and field-evidence gaps remain intact after
+condensation.
+
+Figure 5 now places the retained RSRP and SINR OpenStreetMap panels side by side
+in a shorter two-column figure. The application-traffic schematic and every
+reference to it were removed. The PC5 result now uses a line plot for stationary
+payload completion, labels P1 as the building-obstructed NLOS point, and
+describes the driven collections as route-coverage evidence rather than a
+mobility effect. The transport-completion figure is also a line plot, with
+unevaluated transport-size pairs preserved as gaps.
+
+The Results section adds a dedicated figure for detector-sized uplink behavior
+across four stationary RSRP conditions and a separate subsection and figure for
+downlink-heavy CAV objects. The downlink subsection defines the compact vehicle
+request and validated edge-to-vehicle return of sensor, perception, planning,
+control, or other application state. The following subsection now focuses on
+TDD and gateway effects. The sustained-load and packet-marking figure is
+single-column. The client-demand/interruption figure exposes milliseconds,
+seconds, counts, and percentages directly in the axes and cells. The final
+cross-application figure no longer uses a latency-derived V2X signal score; it
+places each measured response p95 and application deadline on one millisecond
+axis, with the connector showing whether the measured tail meets or misses the
+deadline.
+
+`paper/general_academic_writing_lessons.md` now records two generalized rules:
+choose a visual encoding that matches the reader's comparison, and do not treat
+the data-collection method as the measured cause of a result. The manuscript
+Makefile now regenerates all Section 5 figures from the plotting script.
+
+Validation: both plotting scripts pass `py_compile`; all revised figures were
+regenerated and inspected both independently and at manuscript scale. The
+manuscript rebuild completes at 23 US-letter pages. The final log has no
+overfull boxes, undefined citations or references, or rerun warning. Pages
+1--3, 7, and 10--16 were rendered and inspected; the revised section lengths,
+side-by-side maps, line plots, single-column figure, unit labels, and deadline
+comparison have no clipping or overlap. The rebuilt PDF contains zero
+annotations. Its size is 1,025,724 bytes and its SHA-256 is
+`6e40922e6bc9df465e4d327874dd015d4a037bdce8a25cba6f37d3ee6284c1c5`.
+`git diff --check` passes. No overall page-limit condensation was performed.
+No commit or push was performed.
+
+## 2026-08-20 Annotated-Manuscript Revision
+
+Complete. All 19 substantive comments embedded in
+`paper/manuscript/main.pdf` were treated as revision instructions. Section 4
+now introduces application workloads by payload, direction, duration, and
+deadline. Emergency-vehicle signal priority uses the current SRM-to-SSM
+interaction, remote assistance replaces vague CAV retrieval terminology, and
+the workload families are presented as a short numbered structure. Table 1 now
+maps experimental controls to their analytical roles without acquisition dates.
+Tables 2 and 3 use shorter, centered comparisons with explicit traffic
+directions.
+
+Figure 5 now reformats the retained OpenStreetMap RSRP/SINR maps as one
+single-column figure with readable paper-sized scales. Figure 7 uses P1--P5,
+distance, and a separate 7-m reference label instead of qualitative PC5 signal
+names. Figure 8 removes request counts from the plot; the text reports 752,200
+issued requests across its eight disjoint groups. Figure 9 now reads the raw
+sender CSVs, separates TCP, MQTT, raw UDP, and fragmented UDP, and marks
+unevaluated transport-payload cells explicitly. This removes the previous
+unmeasured 1,400-B TCP/MQTT value. Figure 13 now precedes the Summary and
+Insights subsection and no longer splits an insight.
+
+Section 5 is ordered from packaging and PC5 limits through 5G uplink payload,
+transport, and signal comparisons; the bidirectional TDD/gateway subsection
+then identifies how the MG52 and GL-X3000 collections test device-related
+instability before the load, client-demand, and interruption results. A current
+SAE J2735 reference was added for SRM/SSM roles. General lessons on table
+purpose, concrete application interactions, analytical aggregation, unmeasured
+visual cells, and replication logic were added to
+`paper/general_academic_writing_lessons.md`.
+
+Validation: both figure scripts pass `py_compile`; all affected figures were
+regenerated and visually inspected at manuscript scale. The manuscript rebuild
+completes at 24 US-letter pages. The final log has no overfull boxes, undefined
+citations or references, or rerun warning. Pages 7--18 were rendered and
+inspected; the revised tables, figures, captions, and Figure 13 placement have
+no clipping or overlap. The rebuilt PDF contains zero annotations. Its size is
+1,043,647 bytes and its SHA-256 is
+`00c5985e4850465dcb9074b24b7aef1be272e4f3e1381d689a37010661848a9e`.
+No page-limit work was performed. No commit or push was performed.
+
+## 2026-08-20 Continuous-Drive RSRP/SINR Manuscript Revision
+
+Complete. The previously downloaded Google Drive folder was verified as the
+source of the updated radio maps. Figure 5 now uses the two August 19
+OpenStreetMap figures for RSRP and recovered NR SINR instead of the earlier
+16-point RSRP/RSRQ/SNR graphic. The manuscript identifies the measurement
+device as a Samsung 22 handset running G-NetTrack Pro and describes the collection
+as three continuous drive segments through the testbed.
+
+The combined trace contains 1,301 GNSS records. The preparation removes 123
+records from a frozen radio-value interval longer than five seconds and retains
+1,178 valid band-48 records. RSRP ranges from -121 to -88 dBm with a median of
+-108 dBm. Recovered NR SINR ranges from -20 to 30 dB with a median of 9 dB.
+The temporal sample distribution is 7.0% strong, 28.9% common/typical, and
+64.1% weak under the manuscript's three-bin RSRP scale. The ordinary
+G-NetTrack Pro SNR field is empty; the SINR figure uses timestamped NR
+`ssSinr` values recovered from the verbose logs and aligned to GNSS records.
+
+Section 4, Table 1, the Figure 5 caption and description, the results figure
+description, Appendix B, Table 6, Table 7, and the manuscript Makefile now use
+the continuous-drive collection and updated source figures. The application
+campaigns remain stationary workload experiments with their own signal
+records; the Samsung 22 drive survey supplies route-level testbed coverage.
+`experiment_summary.md` marks the earlier sparse signal map as superseded for
+current manuscript use.
+
+Validation: the manuscript rebuild completes at 24 US-letter pages. The log has
+no overfull boxes, undefined citations or references, or rerun warning. Pages
+7--9 and 21--24 were rendered and visually inspected. The RSRP and SINR maps,
+caption, deployment table, appendix text, and detailed configuration table have
+no clipping or overlap. The final PDF is 3,339,161 bytes with SHA-256
+`7774c9ce19b52a46fdc0cfd34079825a8a3bd6985cb42b8f05a25eaf624acedf`.
+No page-limit work was performed. No commit or push was performed.
+
+## 2026-08-20 Testbed Figure Order Revision
+
+Complete. Section 4 now introduces the experimental setup from overview to
+detail. Figure 3 presents the testbed topology and identifies the vehicle,
+PC5, Uu, roadside/radio, private-5G, routing, and d1 equipment. Figure 4 then
+expands those components into the direct-PC5 and network-assisted-Uu request,
+response, and sender-side RTT paths. The existing signal survey and
+application-traffic figures consequently become Figures 5 and 6.
+
+The surrounding text follows the same order. The subsection first locates the
+equipment, then describes the PC5 and Uu implementations, and finally defines
+the data direction, response type, validation, and RTT boundary for each path.
+The later timing paragraph now cites Figure 4 for request/response events and
+Figure 6 for the communication resources within the paths. The manuscript
+Makefile tracks the detailed data-path PDF as an input dependency.
+
+Validation: the manuscript rebuild completes at 24 US-letter pages. The log has
+no overfull boxes, undefined citations or references, or rerun warning. Pages
+5--10 were rendered and visually inspected; Figures 3 and 4 appear in the
+requested order on page 6 without clipping or overlap, and Figures 5 and 6 are
+correctly renumbered. The final PDF is 3,096,905 bytes with SHA-256
+`5b5d67fd90fc537fe84c19b73035aef619ef908f8fa2f20630e4595b35f99414`.
+No page-limit work was performed. No commit or push was performed.
+
+## 2026-08-20 Abstract Length Revision
+
+Complete. The abstract was reduced from approximately 399 to 285 words. Its
+rendered text now occupies the left column below the title, or approximately
+one-third of the full first page, within the requested one-quarter-to-one-half
+page range.
+
+The revision preserves the binding argument order: 1) the readiness question;
+2) the distinction between compact, stateless CV/ITS messages and correlated,
+stateful CAV operations; 3) the common-interface and cross-path measurement
+gaps; 4) the two contributions; and 5) exactly three numbered insights. The
+measurement contribution receives more detail than IPI. It retains the real
+vehicle, both communication paths, the sole physical CAV UE, dedicated radio,
+clean 40-MHz n48 channel, controlled demand, varied workload conditions, and
+the three application-level metrics. Detailed experimental results remain in
+Section 5 rather than being repeated in the abstract.
+
+Validation: the manuscript rebuild completes at 23 US-letter pages. The log has
+no overfull boxes, undefined citations or references, or rerun warning. Pages 1
+and 2 were rendered and visually inspected; the shorter abstract, Introduction
+opening, contribution list, insights, and transition to Related Work have no
+clipping or overlap. The final PDF is 3,009,876 bytes with SHA-256
+`d634718b64fa9bbe2b91d5532a8273f2b26122cf5199a29bf74119447601111f`.
+No other page-limit work was performed. No commit or push was performed.
+
+## 2026-08-20 Related Work and Figure 1 Revision
+
+Complete. Section 2 now uses one argument across standards, CAV systems, and
+field measurements. The standards discussion distinguishes message, service,
+edge, architecture, and deployment layers before identifying the specific
+missing application contract. The CAV-systems discussion connects exchanged
+representations to complete-object deadlines and distinguishes IPI's domain
+contract from Tentacles-style network selection. The field-evidence discussion
+credits application-level PC5, commercial-5G, teleoperation, automotive MEC,
+TDD, and cross-path corridor studies before isolating the remaining comparison
+gap.
+
+The Figure 1 caption and every Section 2 reference to the figure now follow its
+four rows: system integration, application timing, communication capability,
+and operational robustness. The caption explains the current-state, gap, and
+longer-term-capability columns and the meanings of the `Paper addresses`,
+`Field corroborated`, and `Field quantified` labels. The closing synthesis maps
+IPI to the protocol/shared-semantics gap and maps the PC5/Uu study to the
+cross-path evidence/support-boundary gap. It also preserves the experiment
+boundary: the PC5 path uses J2735 functional checks and payload-varied direct
+responses, while the Uu path carries IPI workload frames.
+
+The transition into Section 3 now starts from the two application-contract
+requirements established in Related Work. Primary standards and the closest
+system and field baselines were checked before the rewrite. No page-limit
+condensation was performed.
+
+Validation: the manuscript rebuild completes at 23 pages on US letter paper.
+The log has no overfull boxes, undefined citations or references, or rerun
+warning. Pages 2--4 were rendered and visually inspected; Figure 1, its revised
+caption, both text columns, and the transition into Section 3 have no clipping
+or overlap. The final PDF is 3,010,501 bytes with SHA-256
+`3f2c2da9a69c8d4e1930d286d929fdf35ccc0afcb876a3620398e4446aa198bd`.
+No commit or push was performed.
+
+## 2026-08-20 CAV Traffic and Radio-Provider Results Revision
+
+Complete. The manuscript now distinguishes finite, event-triggered CAV bursts
+from sustained directional streams such as remote-teleoperation video and
+control traffic. It also evaluates the case in which deadline-sensitive
+exchanges begin while a sustained stream remains active. Insight 3 now asks
+5G/6G radio vendors and mobile network operators to support event-triggered
+bursts, sustained streams, and concurrent deadline-sensitive traffic through
+stable radio configurations and scheduling based on direction, deadline, and
+duration.
+
+The results section incorporates the August 19 same-device GL-X3000 comparison
+without pooling directions, transports, payload sizes, or TDD profiles. The
+four-panel Figure 9 overlays TCP and MQTT within separate uplink-heavy and
+downlink-heavy p95 RTT panels at 1, 10, 100, and 500 KiB, followed by exact
+50-MiB upload and download goodput. Color identifies the TDD profile, while
+marker and line style identify the transport. This layout reduces the generated
+figure height by 26.6% without pooling or removing measurements. The text reports all 16,000
+completed exchanges, deadline-miss rates,
+the 500-KiB response tails, common RSRP/SINR support, the exact-transfer rates,
+and the closest MG52 control. Device-associated differences are reported
+separately from the same-device TDD comparison.
+
+The abstract, introduction, setup, results, future research directions,
+conclusion, and `agent_context.md` use the same traffic distinction and Insight
+3 scope. The application table now describes remote recovery as an
+event-triggered session with a sustained uplink video stream and returned
+control or path data. No page-limit condensation was performed.
+
+Validation: the figure generator passes `py_compile` and completes. Independent
+CSV checks reproduce the 14/16 p50 and 15/16 p95 orderings, the 100/500/1,000-ms
+miss rates, all exact-transfer means, and the 30.8%/31.0% GL-X3000-to-MG52
+goodput differences. The manuscript rebuild completes at 23 pages. The log has
+no overfull boxes, undefined references, or rerun warning. The revised pages
+and all-page contact sheet were rendered and visually inspected; the new figure
+and table have no clipping or overlap. Staged and unstaged whitespace checks
+pass. No commit or push was performed.
+
+## 2026-08-19 Latest Experiment Data Pull
+
+Complete. The local `main` branch was fast-forwarded from
+`a1e006909de0e89945993356bb3798a545974f02` to
+`8cc0818a39873a75c4172f6e80e4e83aef0bf006`, matching `origin/main`. The
+incoming commit is `Add August 19 GL-X3000 5G experiment results`. It adds 899
+files with 92,401 insertions and 35 deletions.
+
+The incoming evidence contains separate August 19 `70/20/10` and `40/40/20`
+stationary radio/GNSS records, TCP and MQTT uplink-heavy and downlink-heavy
+payload sweeps, exact 50-MiB bidirectional bulk-transfer repetitions, and two
+repository-facing directional-repeat summaries. The pull also adds the
+GL-X3000 modem collector and updates the experiment documentation and uplink
+runner. No result interpretation or manuscript revision was performed as part
+of this synchronization.
+
+The pull used `git pull --rebase --autostash origin main`. Restoring the local
+work produced conflicts in `current_task.md` and `experiment_summary.md`
+because both the incoming commit and the local work added August 19 records at
+the same insertion points. Both records were retained, the experiment entries
+were numbered E19--E22, and no raw artifact was modified. The exact pre-pull
+staging boundary was restored: five previously staged paths remain staged,
+three previously unstaged paths remain unstaged, and the three previously mixed
+paths remain mixed. The conflict-preserving autostash remains available with
+the two earlier autostashes; none was dropped. The untracked G-NetTrack import
+remains intact at 427 files and 102,683,139 bytes.
+
+Validation: all ten incoming `SHA256SUMS` manifests verify, covering 884
+manifest entries. All 116 incoming JSON files and all 93 incoming JSONL files
+parse. The three incoming Python files parse successfully, and the changed
+shell runner passes `bash -n`. Git reports no unresolved path, local `HEAD`
+equals `origin/main`, and the staged and unstaged whitespace checks pass. No
+commit or push was performed.
+
+## 2026-08-19 GL-X3000 Same-Device TDD Analysis
+
+Complete. The August 19 GL-X3000 data were analyzed as a same-device,
+same-location comparison of the deployed `70/20/10` and `40/40/20` profiles.
+The comparison keeps uplink, downlink, TCP, MQTT, and the 1-, 10-, 100-, and
+500-KiB application payloads separate. Each of the 32 profile/direction/
+transport/payload conditions contains exactly 500 validated exchanges, for
+16,000 final attempts. All attempts completed; the result concerns latency,
+deadline completion, and goodput rather than failures.
+
+The deployed `40/40/20` configuration has higher p50 RTT in 14 of 16 matched
+workload cells and higher p95 RTT in 15 of 16. The only practical tie is the
+1-KiB uplink. At 10 KiB and above, `40/40/20` has higher p50 and p95 for both
+transports and both directions. The uplink effect grows sharply with payload:
+
+| Workload | `70/20/10` p50 / p95 | `40/40/20` p50 / p95 | `40/40/20` ratio |
+|---|---:|---:|---:|
+| 500-KiB TCP uplink | 231.046 / 258.200 ms | 609.652 / 1,149.368 ms | 2.64x / 4.45x |
+| 500-KiB MQTT uplink | 238.607 / 267.336 ms | 580.942 / 1,104.331 ms | 2.44x / 4.13x |
+| 500-KiB TCP downlink | 77.744 / 93.403 ms | 101.529 / 320.891 ms | 1.31x / 3.44x |
+| 500-KiB MQTT downlink | 80.493 / 97.806 ms | 86.417 / 138.168 ms | 1.07x / 1.41x |
+
+Across the equally sized workload matrix, the 100-ms deadline-miss rate rises
+from 14.537% under `70/20/10` to 30.850% under `40/40/20`. At 500 ms it rises
+from 0.038% to 9.812%, and at one second it rises from zero to 1.262%.
+`40/40/20` produces 101 second-scale exchanges, including 82 in the two
+500-KiB uplink conditions; `70/20/10` produces none. Downlink also contains
+rare second-scale events under `40/40/20`, including a 4.051-second TCP
+500-KiB response and a 3.831-second MQTT 1-KiB response. The compact MQTT
+outlier shows that these events are not explained by large-object
+serialization alone.
+
+The exact 50-MiB transfers agree with the latency result. Mean vehicle-to-d1
+goodput is 15.691 Mb/s under `70/20/10` and 10.913 Mb/s under `40/40/20`, a
+30.4% reduction. Mean d1-to-vehicle goodput is 166.106 versus 123.451 Mb/s, a
+25.7% reduction. All three individual `40/40/20` samples are below all three
+`70/20/10` samples in both directions. Short-run variability is also higher:
+the upload coefficient of variation rises from 0.009 to 0.250, and download
+rises from 0.077 to 0.230. With only three repetitions, these values remain
+descriptive rather than a population-level capacity estimate.
+
+All 16,000 application attempts were joined to the nearest GL-X3000 radio
+sample within six seconds. The p95 join distance is 4.76 seconds for both
+profiles. `40/40/20` has RSRP `-102` to `-93 dBm` with median `-98 dBm`, while
+`70/20/10` has `-104` to `-95 dBm` with median `-99 dBm`. Both have median
+SINR 20 dB and RSRQ `-10 dB`; the complete SINR ranges are 16--24 and
+15--23 dB, respectively. Restricting the comparison to the common RSRP/SINR
+support retains 15,153 attempts and the same 14-of-16 p50 and 15-of-16 p95
+directions. Thus, the overall `40/40/20` disadvantage is not explained by
+weaker measured RSRP or SINR. The stored modem metric is NR SINR, not plain
+SNR, and its ten-second cadence cannot exclude shorter channel events.
+
+Server processing and downlink payload validation remain small and similar
+between profiles. At 500-KiB TCP uplink, for example, server-processing p50 is
+1.617 ms under `70/20/10` and 1.619 ms under `40/40/20`, while application RTT
+p50 changes from 231.046 to 609.652 ms. Processing therefore does not explain
+the communication-latency difference. The dedicated clean-band, sole-UE setup
+also excludes background-user contention as the cause of the cross-profile
+change.
+
+The device-replacement result is consequential but not hardware-causal. Under
+`40/40/20`, the previous August 18 500-KiB uplink p50 values were approximately
+7.65--7.86 seconds; the GL-X3000 values are 0.581--0.610 seconds. Available
+mean upload goodput rises from 0.515 to 10.913 Mb/s, a 21.19x ratio. Therefore,
+the catastrophic August 18 condition did not persist after replacement.
+However, August 18 also had substantially weaker reported RSRP, from -105 to
+-115 dBm, and fewer complete bandwidth repetitions. The evidence does not
+isolate hardware from signal, session, or path state. The same-device August
+19 comparison nevertheless shows that the previous gateway cannot be the sole
+cause, because `40/40/20` still underperforms `70/20/10` on the GL-X3000.
+
+Several observations bound the TDD interpretation. First, `70/20/10` was
+collected before `40/40/20`; the order was not counterbalanced. Second, the
+`40/40/20` application run was paused after the first 1-KiB TCP condition and
+an excluded 142-exchange partial 10-KiB condition, then resumed approximately
+2 hours and 20 minutes later. Third, the profiles are operator reported; fresh
+serving-cell, handoff, MCS, PRB, and DU-counter evidence is unavailable. The
+vehicle address also changes from `10.120.121.23` to `10.120.121.20`, which is
+consistent with a new session or reattachment. Finally, the vehicle `eno2`
+interface accumulates 354 receive errors and 185 frame-error increments during
+four `40/40/20` downlink conditions, versus nine and nine under `70/20/10`.
+These local-link errors may explain part of the downlink tail. They do not
+explain the uplink penalty or the exact-transfer result, because no interface
+error increment occurs during either uplink application matrix or either
+bulk-transfer stage.
+
+Conclusion: **the deployed `40/40/20` configuration performs worse than
+`70/20/10` in the August 19 same-device experiment, especially for larger
+uplink objects, but the data do not establish that its nominal frame allocation
+is inherently or universally worse.** Because `40/40/20` nominally provides
+more fixed uplink opportunity, its lower measured uplink performance points to
+an implementation, scheduler, reconfiguration, interoperability, or session-
+state problem in the tested deployment. A causal TDD result requires balanced
+profile alternation with identical stabilization and warm-up handling, fresh
+profile and serving-cell verification, and block-level statistical analysis.
+
+Validation: all ten incoming manifests verify; all 16,000 final sender and
+receiver rows match in sequence, payload size, acceptance, and CRC32; all 44
+derived application and bandwidth rows match their raw validation summaries;
+and the independently recomputed p50, p95, p99, maximum, deadline, signal,
+goodput, and interface-counter results agree with the stored artifacts. No
+manuscript revision, commit, or push was performed.
 
 ## 2026-08-19 GL-X3000 Full Directional TDD 40/40/20 Repeat
 
@@ -180,6 +631,218 @@ listener remains. The credential file is outside the repository with user-only
 permissions, and a full repository scan found no stored password. The temporary
 d1 key was revoked, no longer authenticates, and its local directory was moved
 to trash so recovery remains possible.
+## 2026-08-19 G-NetTrack RSRP And SINR Drive Import
+
+Complete. The Google Drive folder supplied by the user was downloaded to
+`results/real_5g/20260818_19_gnettrack_rsrp_snr/` with its full `gnettrack/`
+hierarchy preserved. The import contains the August 18 validation collections,
+the August 18 drive, the three August 19 drives, raw KML and text logs,
+visualization products, the combined measurement table, the RSRP and SINR PNG
+figures, and the offline OpenStreetMap assets needed by the standalone map.
+
+The Drive inventory contains 427 files totaling 102,683,139 bytes. All 427
+local files match their Drive-reported byte sizes, no `.part` file remains, and
+both primary figures decode as 1,880-by-1,974 RGB PNGs. The key products are:
+
+- `gnettrack/2026.08.19_three_drives/combined_map/interpolated_rsrp_osm.png`
+- `gnettrack/2026.08.19_three_drives/combined_map/interpolated_sinr_osm.png`
+- `gnettrack/2026.08.19_three_drives/combined_map/combined_signal_measurements.csv`
+- `gnettrack/2026.08.19_three_drives/combined_map/combined_signal_report.md`
+- `gnettrack/2026.08.19_three_drives/combined_map/combined_signal_summary.json`
+
+The imported report records 1,301 GPS samples, excludes 123 samples from a
+signal-loss plateau, and retains 1,178 valid NR RSRP and SINR samples. The
+ordinary G-NetTrack SNR field is empty. The second map is therefore an NR SINR
+map reconstructed from the verbose logs' timestamped `ssSinr` field, not an
+ordinary G-NetTrack SNR map. This distinction must be preserved in any later
+paper text or figure caption.
+
+No manuscript claim or figure reference was changed, and no commit or push was
+made.
+
+## 2026-08-19 Bidirectional Event-Triggered CAV Bursts
+
+Complete. The manuscript now treats event-triggered burst behavior as a core
+CAV workload property. A driving event, service request, or fault can initiate
+an exchange instead of waiting for a fixed periodic schedule. The large object
+can originate at the vehicle, creating an uplink-heavy burst, or be returned by
+the edge after a compact vehicle request, creating a downlink-heavy burst.
+Independent operations can also overlap and compete for radio resources.
+
+The application model, Figure 5, and Table 2 now distinguish periodic CV/ITS
+messages, event-triggered stateful CAV exchanges, and sustained traffic such as
+remote-assistance video. The experimental interpretation connects this workload
+property to the measured direction asymmetry, concurrent-demand deadline
+crossings, and TDD operational evidence. The paper does not claim to measure a
+stochastic burst-arrival distribution; it measures the communication
+consequences of representative uplink-heavy, downlink-heavy, and overlapping
+workloads.
+
+Insight 3 now states: **5G/6G radios must support event-triggered CAV bursts in
+either direction and isolate concurrent flows.** The supporting text calls for
+stable TDD implementation and reconfiguration, scheduling based on each burst's
+direction and deadline, and isolation among simultaneous exchanges. The same
+logic appears in the abstract, introduction, setup, results, future research
+directions, conclusion, `paper/paper_outline.md`, and `agent_context.md`.
+
+Validation: `make` completes; the log contains no overfull boxes, undefined
+citations, or undefined references; the affected pages were rendered and
+visually inspected; and the redundant shared-resource label that overlapped
+Figure 5 was removed. The 22-page US-letter PDF contains no annotations or
+embedded links. It is 3,025,873 bytes and has SHA-256
+`41e5bb61851ebf7ab2b9555ddc3d02c4bb9195c344a3d0dd500a815d5597cdbe`.
+No page-limit optimization was performed. `paper/manuscript/28p.pdf` remains
+preserved with SHA-256
+`6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
+The ignored paper tree was not force-added, and no commit or push was made.
+
+## 2026-08-19 TDD, Downlink, And Manuscript Update
+
+Complete. The manuscript now incorporates the August 15--18 TDD study, the DU
+Cell context, and the new downlink-heavy application experiments without
+pooling communication directions, transports, TDD profiles, or endpoint and
+cell estimators.
+
+The revised argument distinguishes deployment maturity from an intrinsic TDD
+ranking. The long-used `70/20/10` profile produced repeatable uplink-heavy RTT
+on August 15--16. The transition to `40/40/20` changed route and serving-cell
+state, so those repetitions remain inconclusive for profile ranking and instead
+show that this deployment did not preserve a stable end-to-end path during the
+alternative-profile rollout. The matched August 17 `40/40/20` block completed
+all 8,000 downlink-heavy exchanges. Its latency advantage was confined to
+smaller responses and reversed in the larger MQTT tails. Therefore, the paper
+does not claim that `40/40/20` is inherently unstable or universally inferior.
+It concludes that uplink-oriented TDD support needs interoperable
+implementations, stable reconfiguration, direction-aware scheduling, and
+concurrent-flow isolation.
+
+Two full-width figures now present the result. The TDD figure separates
+uplink-heavy TCP, uplink-heavy MQTT, matched downlink-heavy TCP, and matched
+downlink-heavy MQTT. It marks the August 15 `40/40/20` values as a derived
+reference because their raw timestamps are unavailable. Its matched panels are
+qualified by six complete five-minute Cell 2 bins per profile with zero DU
+unavailability. The directional-workload figure separately plots all ten exact
+50-MiB upload repetitions, all ten exact download repetitions, their means and
+95% confidence intervals, and the matched August 18 500-KiB MQTT direction
+comparison. DU active-time throughput is not plotted as endpoint goodput
+because the estimators and time support differ.
+
+The application matrix now includes downlink-heavy CAV data retrieval: a
+vehicle sends a compact request and the edge returns raw sensor, perception,
+planning, control, or other data. The setup defines this timing boundary and
+the exact directional-transfer boundary. The abstract, introduction, related
+work, setup, results, future research directions, conclusion, appendices, and
+`paper/paper_outline.md` now carry the direction and TDD evidence consistently.
+Insight 3 states that 5G/6G radios must support event-triggered CAV bursts in
+either direction and isolate concurrent flows. Its supporting argument retains
+the need for interoperable TDD implementations, stable reconfiguration,
+direction-aware scheduling, and concurrent-flow isolation.
+
+Working files include:
+
+- `paper/manuscript/scripts/build_section5_figures.py`
+- `paper/manuscript/sections/00_abstract.tex`
+- `paper/manuscript/sections/01_introduction.tex`
+- `paper/manuscript/sections/02_related_work.tex`
+- `paper/manuscript/sections/04_system_design_setup.tex`
+- `paper/manuscript/sections/05_experiment_results.tex`
+- `paper/manuscript/sections/06_future_research_directions.tex`
+- `paper/manuscript/sections/07_conclusion.tex`
+- `paper/manuscript/sections/08_appendices.tex`
+- `paper/manuscript/figures/section5_tdd_profiles.pdf`
+- `paper/manuscript/figures/section5_directional_workloads.pdf`
+- `paper/manuscript/figures/section5_mixed_load_qos.pdf`
+- `paper/manuscript/main.pdf`
+- `paper/paper_outline.md`
+
+Validation: the plotted values were checked against the retained August 17 and
+18 comparison CSVs; the matched DU context agrees with the deduplicated Cell 2
+windows; `make` completes; the log contains no overfull boxes, undefined
+citations, or undefined references; and all 22 rendered pages were visually
+inspected. The PDF is US letter, 3,024,169 bytes, and has SHA-256
+`5304efda1241c0b3da86937ce6fdd9a3d0cafadeb36b2b06513f04309089757a`.
+No page-limit optimization was performed. `paper/manuscript/28p.pdf` remains
+preserved with SHA-256
+`6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
+The ignored paper tree was not force-added, and no commit or push was made.
+
+## 2026-08-18 TDD And DU Cell Comparison
+
+Complete. The August 15--18 application records were aligned with the Airspan
+DU Cell exports without pooling uplink-heavy RTT, downlink-heavy RTT, exact
+upload, exact download, `70/20/10`, or `40/40/20`. The complete analysis is in
+`paper/analysis/tdd_du_cell_comparison.md`, and the machine-readable evidence
+decision is in `results/real_5g/tdd_comparison_status.json`.
+
+The seven overlapping DU exports contain 10,012 physical rows and 3,906 unique
+node/managed-element/cell/start/end keys. Repeated rows agree after numeric
+normalization. The analysis uses complete five-minute bins within each
+experiment window, matches the serving cell, excludes zero-duration rows and
+nonzero-unavailability bins from clean comparisons, and recomputes throughput
+as summed volume divided by summed active time. DU timestamps are interpreted
+as America/New_York local time because their direction changes align with the
+application records; the CSV itself does not contain a timezone, so this
+interpretation remains inferred rather than vendor-confirmed.
+
+The August 15--16 uplink-heavy data remain inconclusive for a TDD ranking. The
+August 15 `40/40/20` raw run and timestamps are absent, while the August 16
+`70/20/10` run begins after retained DU coverage ends. The DU rows confirm that
+the two August 16 `40/40/20` TCP repetitions used different serving cells.
+
+The August 17 downlink-heavy blocks provide the clean same-cell DU comparison.
+Six complete Cell 2 bins per profile contain zero reported unavailability.
+`70/20/10` has 8,004,535 kb of Cell downlink volume and 54.463 Mb/s of
+active-time-derived Cell downlink throughput; `40/40/20` has 8,814,798 kb and
+61.285 Mb/s. The application result remains payload- and transport-dependent:
+`40/40/20` lowers small-response RTT, while its advantage disappears or
+reverses in the larger MQTT tails.
+
+The exact 50-MiB endpoint results remain separate by direction. On August 17,
+`70/20/10` versus `40/40/20` measures 12.000 versus 2.836 Mb/s upload and
+126.786 versus 99.756 Mb/s download. The alternating upload/download schedule
+shares five-minute DU bins, so DU counters are not used to estimate each bulk
+direction. At the matched August 18 `40/40/20`, MQTT, 500-KiB, `-115 dBm`
+condition, uplink-heavy p50/p95 RTT is 61.5/41.0 times the downlink-heavy RTT.
+
+Documentation updates also remove the stale claim that reverse-direction
+payloads were not measured. `experiment_summary.md`, `remaining_exp.md`, and
+`agent_context.md` now route future work to the separated evidence decision.
+No manuscript source was changed.
+
+Validation: `results/real_5g/tdd_comparison_status.json` parses with
+`python -m json.tool`; every reported application value was checked against the
+stored comparison CSVs; the matched DU values were recomputed from deduplicated
+source rows; the two selected August 17 DU windows contain exactly six complete
+five-minute bins each; and `git diff --check` passes for the edited text and
+JSON files.
+
+## 2026-08-18 Latest Experiment Data Pull
+
+Complete. `git pull --rebase --autostash origin main` fast-forwarded local
+`main` from `b3ae0975b02e0d13ac8cbd8bfa8be30211a92026` to
+`a1e006909de0e89945993356bb3798a545974f02` (`Add August 18 directional 5G
+experiment`). The incoming commit changes 416 files. It adds the August 18
+location-3 `40/40/20` uplink-heavy and downlink-heavy TCP/MQTT collections,
+fresh GNSS and host telemetry, the operator-shortened directional 50-MiB
+throughput collection, a clearly excluded unintended partial preflight, and
+the repository-facing directional analysis. It also updates three experiment
+scripts and the experiment documentation.
+
+The autostash restored the pre-existing staged repository records. Its only
+content conflict was an insertion-point conflict in `current_task.md`; the
+incoming August 18 experiment record and the local DU-log, Figure 2, and prior
+pull records were all retained. No raw result or manuscript file conflicted.
+Local `HEAD` and `origin/main` both resolve to `a1e0069`. No incoming result was
+interpreted, and no manuscript source or experiment artifact was modified as
+part of this pull.
+
+Validation: all six incoming `SHA256SUMS` manifests verify, including the
+repository-facing result and the raw, shortened, and explicitly excluded
+diagnostic trees. All incoming JSON files parse. The changed Python probe
+parses successfully, both changed shell runners pass `bash -n`, and the staged
+and unstaged whitespace checks pass. Git reports no unresolved path. The
+conflict-preserving autostash remains available as `stash@{0}` for recovery;
+it was not dropped.
 
 ## 2026-08-18 Full Directional TDD 40/40/20 Repeat
 
@@ -275,7 +938,60 @@ compile; both shell runners pass syntax checks; and `git diff --check` passes
 for the edited documentation, scripts, and derived summaries. The byte-exact
 raw CSV captures retain their original CRLF line endings, which the generic
 Git whitespace checker reports but which are intentionally not normalized.
+## 2026-08-18 DU Cell Statistics Log Download and Refresh
 
+Complete. Downloaded the public Google Drive folder `DU Cell Stat Log` from
+`https://drive.google.com/drive/folders/15SyzOEdhmJ3bMEzYWgKMJhGlPhQRYEt4?usp=sharing`
+into `CISCO_AIRSPAN_STATS/DU_Cell_Stat_Log/`. A later folder refresh found and
+downloaded `DUCellExport_20260818_1342.csv` without redownloading or overwriting
+the six earlier exports. All seven CSV exports are preserved byte-for-byte under
+their Drive filenames. They cover exports dated August 5, August 6, August 16,
+and August 18, 2026.
+
+Validation: all seven files are CSV text rather than HTML download pages. Each
+file has 45 columns, every parsed row has the declared 45-column width, and the
+collection contains 10,012 data rows and 1,652,350 bytes. `SHA256SUMS` verifies
+all seven files. `download_manifest.json` records the source folder, Drive file
+identifiers, initial download and latest refresh times, download tool, file
+sizes, row and column counts, and SHA-256 digests. No CSV content was changed,
+no result interpretation was made, and no manuscript source was modified for
+this download or refresh.
+
+## Figure 2 IPI Architecture Replacement
+
+Complete. The TikZ-based two-column Figure 2 in
+`paper/manuscript/sections/03_ipi_protocol_design.tex` was replaced with the
+user-supplied `paper/figs/Fig2_ipi_protocol_architecture_editable.pptx.pdf`.
+The new figure uses a single-column `figure` float and is rendered at
+`\columnwidth`. The figure label remains `fig:ipi-architecture`, its alternative
+description now follows the supplied architecture, and the manuscript Makefile
+tracks the new PDF asset as a build dependency.
+
+Validation: a forced LaTeX and BibTeX rebuild completed successfully. Figure 2
+appears in the right column of page 4, remains within the column boundary, and
+does not overlap the caption or surrounding manuscript text. The final log has
+no LaTeX errors, undefined citations or references, rerun requests, or overfull
+boxes. The manuscript remains 19 US-Letter pages. The supplied Figure 2 PDF has
+SHA-256 `743d5c8f458eb22b5ccbf361ab6772ac9c8b0184ebbb1cd55d70662a4f94454c`,
+and the rebuilt manuscript PDF has SHA-256
+`e703e17564775bc99c0d9b1aad686506d07502b87b2b234e91fafa83aab12f9a`.
+The supplied artwork itself retains a source-level overlap between
+"Operation mode" and "Correlated CAV operations"; the asset was embedded
+unchanged as requested. No page-limit optimization was performed.
+
+## 2026-08-18 Latest Results Pull
+
+Complete. `git pull --rebase --autostash origin main` fast-forwarded local
+`main` from `8641b0dc64dbc5c6e2f74d2cabb72f673bf69aa7` to
+`b3ae0975b02e0d13ac8cbd8bfa8be30211a92026` (`Add location 3 TDD comparison
+results`). The incoming commit adds the matched location-3 `40/40/20` and
+`70/20/10` downlink-heavy TCP/MQTT RTT results, repeated bidirectional 50-MiB
+TCP throughput measurements, their raw collections, derived comparison, and
+updated experiment scripts and documentation. Restoring the pre-existing local
+paper and TDD notes produced insertion-point conflicts in `current_task.md` and
+`remaining_exp.md`; both chronological records were retained, with the newer
+location-3 results placed before the earlier notes. No raw result or manuscript
+file conflicted.
 ## 2026-08-17 Matched 40/40/20 Location-3 Collection
 
 Complete. After the operator changed TDD to `40/40/20`, repeat the unchanged
@@ -420,6 +1136,106 @@ responses with zero failures. Every condition has a complete marker and a
 validation summary confirming 1,000 matching edge receiver rows. No local or
 edge experiment process or planned port remains, and the temporary d1 key was
 revoked and removed.
+## August 15--16 TDD Experiment Update
+
+Complete. The TDD evidence, manuscript, figures, outline, and experiment
+records now use the user's corrected configuration history. Every private-5G
+application campaign collected before the August 15--16 diagnostic is labeled
+`70/20/10`. Earlier entries that classified those campaigns as `40/40/20` are
+superseded.
+
+The August 15--16 application RTT data are retained as a negative diagnostic.
+The `70/20/10` TCP p95 values changed by 0.61%, 0.22%, and 1.29% across 1-,
+10-, and 100-KiB requests. The `40/40/20` TCP p95 values changed by as much as
+169.05% across dates and 189.83% across same-day repetitions. MQTT p95 under
+`40/40/20` changed by 9.22--163.86% as payload increased from 1 KiB to 1 MiB.
+Route recovery, cell administrative-state changes, and a serving-cell change
+occurred across these runs. Therefore, the application RTT data cannot rank
+the two TDD profiles or estimate a causal latency effect.
+
+The sustained-capacity result is reported separately. With a 25-Mbit/s offered
+vehicle-to-edge TCP stream, `70/20/10` achieved 13.118 Mbit/s and the
+coauthor-reported `40/40/20` control achieved 25.000 Mbit/s. This direction is
+consistent with increasing the fixed uplink share from 20% to 40%. The current
+repository contains the raw `70/20/10` trace. The `40/40/20` value is recorded
+as a coauthor experimental result because its raw trace is not present in the
+current tree.
+
+Updated evidence records include
+`results/real_5g/tdd_comparison_status.json`,
+`paper/analysis/tdd_experiment_update.md`, `experiment_summary.md`,
+`remaining_exp.md`, and `agent_context.md`. The manuscript setup, Results,
+Future Research Directions, Conclusion, appendix, figure-building script, and
+`paper_outline.md` carry the same interpretation. Figure 9 now shows the
+August 15--16 TCP and MQTT repetitions. Figure 10(a) now compares the two
+uplink TDD-capacity controls and the retained `70/20/10` downlink control.
+
+Validation: the result-status JSON parses successfully; the figure script and
+full manuscript build complete successfully; the final LaTeX log contains no
+undefined citations, undefined references, overfull boxes, or fatal errors;
+and `git diff --check` passes. The 19-page US-letter PDF was rendered and the
+updated setup table, Figures 9 and 10, Results discussion, insights,
+future-research text, Conclusion, and appendix tables show no clipping or
+overlap. No page-limit optimization was performed. The preserved 28-page
+reference PDF remains unchanged with SHA-256
+`6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
+The rebuilt manuscript PDF SHA-256 is
+`be365f5a3c0121d2eb8c5a573c4435e7d60907d3d7b7a1e131f59434fd107cfc`.
+
+## Latest Data Pull
+
+Complete. `git pull --rebase --autostash origin main` fast-forwarded the local
+`main` branch from `e3b9f6c80863b57147f6a78bb7331503f793cd84` to
+`8641b0dc64dbc5c6e2f74d2cabb72f673bf69aa7` (`Add location 2 private 5G TCP
+MQTT results`). The autostash restored the existing local Figure 1 task note
+without conflict. The incoming commit changes 322 files, including the public
+location-2 result tree at
+`results/real_5g/20260817_airspan_tdd_raw_uplink_60_20_20_location_2_tcp_mqtt_run_1/`
+and its raw collection at
+`CISCO_AIRSPAN_STATS/20260817_airspan_tdd_raw_uplink_pending_location_2_tcp_mqtt_run_1_unredacted/`.
+It also updates the experiment documentation and the raw-uplink collection and
+analysis scripts.
+
+Validation: local `HEAD` and `origin/main` both resolve to `8641b0d`. The
+`SHA256SUMS` manifests pass for both new result trees. The public validation
+record reports 6,327 accepted exchanges, no failed exchanges, eight validated
+conditions, seven declared-count-complete conditions, and one preserved
+user-stopped 1-MiB TCP condition. A commit-range whitespace check reports
+line-ending/trailing-whitespace warnings in newly pulled generated CSV and log
+artifacts; these raw records were preserved unchanged. The local working-tree
+whitespace check passes. No result interpretation, manuscript claim, or paper
+source was changed during this pull.
+
+## Figure 1 Replacement
+
+Complete. The Related Work section now uses the user-supplied
+`paper/figs/edge4av_fig1.pptx.pdf` asset instead of the earlier TikZ summary.
+The figure label remains `fig:rw-gap`, and the caption and accessibility
+description now match the replacement's current-status, key-gap, and
+zero-fatality-vision structure. The manuscript Makefile tracks the new figure
+as a build dependency. No page-limit optimization is included in this task.
+
+Updated files:
+
+- `paper/manuscript/sections/02_related_work.tex`
+- `paper/manuscript/Makefile`
+- `paper/manuscript/main.pdf`
+- `current_task.md`
+
+Validation: a forced LaTeX and BibTeX rebuild completed successfully. The final
+log contains no compilation errors, undefined citations or references, rerun
+requests, or overfull boxes. Figure 1 resolves on page 3 and was rendered at
+240 dpi; its labels, caption, and surrounding text are legible without overlap
+or clipping. The PDF contains 19 US-Letter pages, zero annotations, zero links,
+zero embedded files, no author or title metadata, and fully embedded fonts. No
+page-limit optimization was performed. `paper/manuscript/28p.pdf` remains
+byte-identical with SHA-256
+`6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
+The replacement source has SHA-256
+`12236bfdb5ff9e1ea253bc859cfc0c4d3fb4290270606528d75da2df1f616c0f`,
+and the rebuilt `paper/manuscript/main.pdf` has SHA-256
+`df8d909f91e0d18165d876b6c6edcdd1cfe3b5f53194d22b8580e55a04f9fbcd`.
+`git diff --check` passes.
 
 ## Repository README
 
@@ -5034,3 +5850,128 @@ Current integration validation:
 - A whole-paper three-perspective MobiCom integration review is running against
   `paper/manuscript/` only. Its brief explicitly excludes page-count criticism
   and forbids use of `paper/legacy_draft/`.
+
+## Active Task Update: Year 2 Implementation Report Evidence Refresh
+
+Task update requested 2026-08-19: read the newly retained experiment data,
+summarize it at the strength supported by the artifacts, refresh the derived
+PCA and successful-response variance analyses, and update the Year 2 proposal
+implementation report.
+
+Status: complete. The report at
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2.docx` now covers
+the retained evidence through August 19, 2026. The revision adds the matched
+August 17 downlink-heavy TDD comparison, exact bidirectional 50 MiB endpoint
+goodput, DU Cell 2 traffic context, the matched August 18 weak-signal direction
+pair, and the August 19 G-NetTrack route context. It also refreshes the full
+condition ledger, PCA, matched-factor ranking, successful-response variance,
+application decisions, evidence boundaries, reproducibility manifest, and
+proposal-commitment closure.
+
+Key evidence retained in the report:
+
+- The condition ledger contains 429 rows, 399 private-5G Uu conditions, 30
+  historical direct-PC5 conditions, and 1,769,863 issued attempts.
+- The matched August 17 comparison contains eight matched conditions and 8,000
+  exchanges per profile, all accepted. The median absolute p95 difference
+  between the 70/20/10 and 40/40/20 profiles is 1.14x and the maximum is
+  1.47x; the sign
+  changes with payload, transport, and percentile, so it does not support a
+  universal profile ranking.
+- Exact 50 MiB endpoint goodput is 12.000 versus 2.836 Mb/s for vehicle-to-d1
+  upload and 126.786 versus 99.756 Mb/s for d1-to-vehicle download under the
+  recorded 70/20/10 and 40/40/20 profiles, respectively. These are endpoint
+  flow measurements, not PHY-capacity estimates.
+- The matched August 18 500 KiB MQTT direction pair holds profile, location,
+  serving cell, reported signal, transport, and object size constant. Its
+  uplink-heavy versus downlink-heavy p95 ratio is 40.95x, establishing
+  application direction as a major conditional factor without identifying a
+  scheduler mechanism.
+- The G-NetTrack route analysis retains 1,178 valid NR RSRP/ssSinr joins after
+  excluding a 123-sample frozen-radio plateau. Because the phone and MG52 are
+  separate unsynchronized UEs, these samples are spatial context rather than
+  per-request radio telemetry or a causal latency model.
+- PCA uses 420 eligible conditions. PC1 explains 60.9935% and is the main
+  latency/tail outcome axis; PC2 explains 20.4769% and is dominated by failure
+  fraction. The first three components explain 99.49%.
+- Successful-response variance uses 1,749,930 finite RTTs from 420 equally
+  weighted conditions. On log10 RTT, 91.117% of variance lies between
+  conditions and 8.883% within conditions; on raw RTT squared, 66.322% lies
+  within conditions because rare seconds-scale tails dominate. Median
+  condition p95/p50 is 1.428 and median coefficient of variation is 0.285.
+
+Validation completed for this refresh:
+
+- `scripts/analyze_cav_limiting_factors.py` and
+  `scripts/analyze_successful_ipi_variance.py` were refreshed and run against
+  the current retained evidence; the generated CSV, JSON, Markdown, and figure
+  artifacts were regenerated.
+- The updated DOCX is a valid ZIP/Open XML package. It contains 14,265 words,
+  41 tables, 11 numbered figures, 65 Heading 1/Heading 2 paragraphs, and one
+  US-letter section.
+- The DOCX accessibility audit reports zero high-, medium-, or low-severity
+  findings.
+- The report was rendered with LibreOffice 7.3.7.2 to a 31-page US-letter PDF.
+  All 31 pages were inspected at original detail; no clipping, overlap, broken
+  table, missing glyph, misplaced figure, or unintended blank page is visible.
+- A targeted content audit found none of the superseded headline condition,
+  attempt, PCA, variance, or factor-ranking values in the report.
+- The final DOCX SHA-256 is
+  `22e34628f8fc4339257a0cce9ee830104579e5c36422baac5e244844a45a8988`.
+
+## Active Task Update: 10-Page Year 2 Implementation Report
+
+Task update requested 2026-08-19: create a separate 10-page version of the
+Year 2 proposal implementation report using the current repository evidence,
+including the newly retained August 19 GL-X3000 directional campaigns.
+
+Status: complete. The condensed report is retained at
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2_10_Page.docx`.
+The 31-page source report was preserved unchanged.
+
+The 10-page report contains:
+
+- the implemented IPI contract, session lifecycle, wire validation, PC5
+  adapter, activation, tiered service policy, offload decision, fallback, and
+  ROS 2 decision-publication boundaries;
+- separate experimental methods and claim boundaries for private-5G Uu and
+  historical direct-PC5 measurements, including the explicit statement that
+  the historical PC5 field runs used a sequence-matched vendor packet/echo
+  object rather than the later host-validated formal J2735/IP5X adapter;
+- the refreshed condition ledger: 461 conditions, 431 private-5G Uu
+  conditions, 30 direct-PC5 conditions, 1,785,863 issued attempts, and 452
+  PCA-eligible conditions;
+- the August 19 GL-X3000 matched 70/20/10 versus 40/40/20 campaigns, including
+  16 completed RTT conditions and three exact 50 MiB transfers per direction
+  under each profile, with no accepted-response failures in the completed RTT
+  cells;
+- the refreshed PCA and matched-factor result: PC1 explains 61.11% of
+  standardized outcome variance and is the accepted-response latency/tail
+  axis; payload/representation has the largest broad matched p95 shift at a
+  6.49x median, while direction reaches 40.92x and matched TDD reaches 4.45x
+  in specific conditions;
+- the refreshed successful-response analysis: 1,765,930 finite RTTs from 452
+  equally weighted conditions, 91.2% between-condition and 8.8%
+  within-condition variance on log10 RTT, and a median condition p95/p50 ratio
+  of 1.419; and
+- CAV/ITS application decisions, limits on causal radio and hardware claims,
+  proposal work-package status, evidence routing, and consolidated
+  conclusions.
+
+Validation completed for the 10-page report:
+
+- the DOCX is a valid ZIP/Open XML package and retains one portrait US-letter
+  section with the source report's header, footer, margins, and style system;
+- the rendered output is exactly 10 pages and contains 3,549 words, seven
+  numbered inline figures, 10 Heading 1 paragraphs, and 12 Heading 2
+  paragraphs;
+- all 10 rendered pages were inspected at original detail; no clipping,
+  overlap, split-row defect, missing glyph, unintended blank page, or
+  unreadable figure is visible;
+- the DOCX accessibility audit reports zero high-, medium-, or low-severity
+  findings;
+- the original 31-page report remains byte-for-byte unchanged at SHA-256
+  `22e34628f8fc4339257a0cce9ee830104579e5c36422baac5e244844a45a8988`;
+  and
+- the final 10-page DOCX SHA-256 is
+  `ba9c3390ee2bbffdf2bac09794ac44a182c3e848437e7255b0ab59a3f283f27f`.

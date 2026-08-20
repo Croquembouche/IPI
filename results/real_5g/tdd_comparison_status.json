@@ -1,67 +1,232 @@
 {
-  "schema": "edge4av-tdd-comparison-status-v1",
-  "last_updated": "2026-08-15",
-  "status": "inconclusive",
-  "scope": "all retained evidence that could be interpreted as a comparison of 40/40/20 and 70/20/10 TDD allocations",
-  "reason": "The TDD allocation and vehicle placement/signal context changed together. No newly collected same-placement 40/40/20 control exists for the 70/20/10 follow-up.",
-  "valid_uses": [
-    "report RTT, response availability, and deadline availability for each recorded operating condition",
-    "report the 70/20/10 vehicle-to-edge and edge-to-vehicle direction controls as single-profile measurements",
-    "use the retained values as provenance and as inputs to the design of the new matched comparison"
+  "schema": "edge4av-tdd-comparison-status-v3",
+  "last_updated": "2026-08-18",
+  "configuration_order": "downlink/uplink/dynamic",
+  "analysis_scope": "application and DU Cell evidence collected from 2026-08-15 through 2026-08-18 for 70/20/10 and 40/40/20",
+  "grouping_rule": [
+    "experiment_family",
+    "application_direction",
+    "tdd_profile",
+    "run_id",
+    "transport",
+    "payload_bytes",
+    "location_id",
+    "signal_segment",
+    "serving_cell"
   ],
-  "prohibited_inferences": [
-    "rank 40/40/20 against 70/20/10",
-    "attribute an observed latency, availability, or throughput difference to TDD allocation",
-    "estimate a causal TDD effect",
-    "describe the retained data as evidence of TDD sensitivity",
-    "generalize the 70/20/10 directional throughput result to another TDD profile"
-  ],
-  "evidence_families": [
-    {
-      "name": "cross-profile compact application observations",
-      "status": "inconclusive_for_tdd",
-      "logical_payload_bytes": 1024,
-      "historical_40_40_20_artifacts": [
-        "results/real_5g/20260513_sunny_fintechparking_run_1/p5g-mqtt-service-payload-1024_sender.csv",
-        "results/real_5g/20260513_sunny_fintechparking_run_1/p5g-tcp-service-payload-1024_sender.csv"
+  "prior_campaign_correction": {
+    "status": "superseded",
+    "correct_profile": "70/20/10",
+    "scope": "all application experiments collected before the August 15-16 TDD diagnostic",
+    "note": "Earlier records that labeled these campaigns 40/40/20 are incorrect. Their application results remain valid, but they are all 70/20/10 observations and do not form a TDD comparison."
+  },
+  "du_cell_alignment": {
+    "status": "complete_for_available_august_15_to_18_exports",
+    "source_directory": "CISCO_AIRSPAN_STATS/DU_Cell_Stat_Log/",
+    "physical_rows": 10012,
+    "unique_interval_cell_keys": 3906,
+    "deduplication_key": [
+      "Node Name",
+      "Managed Element ID",
+      "Cell",
+      "Start Time",
+      "End Time"
+    ],
+    "semantic_disagreements_after_numeric_normalization": 0,
+    "timestamp_timezone": "America/New_York",
+    "timestamp_timezone_status": "inferred from experiment-volume alignment; not vendor-confirmed",
+    "primary_bin_rule": "complete nonzero-duration five-minute bins fully contained in one run window, matched to the serving cell, with nonzero unavailability bins excluded or flagged",
+    "throughput_rule": "recompute 1000 * sum(volume_kb) / sum(active_time_ms); do not average exported throughput rows",
+    "metric_boundary": "cell-level volume and active-time context; not endpoint goodput, radio capacity, per-request latency, or a per-UE measurement",
+    "missing_fields": [
+      "TDD profile",
+      "RSRP",
+      "RSRQ",
+      "SINR",
+      "CQI",
+      "MCS",
+      "BLER",
+      "PRB utilization",
+      "retransmission counters",
+      "queue state",
+      "per-UE identifier"
+    ]
+  },
+  "uplink_heavy_latency_result": {
+    "status": "not_usable_for_cross_profile_ranking",
+    "scope": "vehicle-to-d1 IPI workload request plus compact correlated acknowledgment RTT",
+    "reason": "No timestamp-aligned, same-cell DU pair exists across the two TDD profiles. The August 15 40/40/20 raw run and timestamps are absent, and the August 16 70/20/10 run occurs after the retained DU data end. The 40/40/20 repetitions also changed serving cell and cell state.",
+    "conclusion": "The uplink-heavy observations cannot establish whether 40/40/20 or 70/20/10 provides lower application RTT.",
+    "du_context": [
+      {
+        "run": "20260815 70/20/10 TCP+MQTT run 2",
+        "serving_cell": 2,
+        "complete_interior_bins": 22,
+        "uplink_active_time_derived_cell_throughput_mbps": 12.106846,
+        "reported_unavailability_in_included_bins": 0
+      },
+      {
+        "run": "20260816 40/40/20 MQTT repeat 1",
+        "serving_cell": 2,
+        "complete_clean_interior_bins": 18,
+        "excluded_nonzero_fault_unavailability_bins": 1,
+        "uplink_active_time_derived_cell_throughput_mbps": 6.482072
+      },
+      {
+        "run": "20260816 40/40/20 TCP quick run 1",
+        "serving_cell": 2,
+        "complete_interior_bins": 3,
+        "uplink_active_time_derived_cell_throughput_mbps": 6.555411,
+        "reported_unavailability_in_included_bins": 0
+      },
+      {
+        "run": "20260816 40/40/20 TCP quick run 2",
+        "serving_cell": 1,
+        "complete_interior_bins": 4,
+        "uplink_active_time_derived_cell_throughput_mbps": 5.638341,
+        "reported_unavailability_in_included_bins": 0
+      },
+      {
+        "run": "20260816 70/20/10 TCP quick run 1",
+        "serving_cell": 2,
+        "du_coverage": "none; experiment starts at 15:55:49 EDT and retained DU rows end at 15:15 EDT"
+      },
+      {
+        "run": "20260818 40/40/20 uplink directional repeat",
+        "serving_cell": 2,
+        "complete_interior_bins": 29,
+        "uplink_active_time_derived_cell_throughput_mbps": 2.542349,
+        "reported_unavailability_in_included_bins": 0
+      }
+    ],
+    "valid_uses": [
+      "report each run as an observation of its recorded operating state",
+      "report the close same-profile 70/20/10 repeat values",
+      "report the payload-dependent 40/40/20 variation",
+      "use the DU export to confirm the serving traffic cell and cell-unavailability context"
+    ],
+    "prohibited_inferences": [
+      "rank 40/40/20 and 70/20/10 by uplink-heavy application RTT",
+      "attribute the August 15-16 uplink-heavy RTT differences to TDD allocation alone",
+      "pool Cell 1 and Cell 2",
+      "pool the August 17 or August 18 direction and signal conditions into the August 15-16 uplink result"
+    ]
+  },
+  "downlink_heavy_latency_result": {
+    "status": "valid_matched_application_comparison",
+    "scope": "compact vehicle request plus exact 1, 10, 100, or 500 KiB d1-to-vehicle response at location 3 on 2026-08-17",
+    "application_validation": {
+      "accepted_per_profile": 8000,
+      "failed_per_profile": 0,
+      "transports": [
+        "TCP",
+        "MQTT"
       ],
-      "followup_70_20_10_artifacts": [
-        "results/real_5g/20260806_airspan_followup_run_1/",
-        "results/real_5g/20260806_airspan_followup_common_typical_run_2/",
-        "results/real_5g/20260806_airspan_followup_weak_run_1/",
-        "results/real_5g/20260806_airspan_followup_strong_run_2/"
-      ]
-    },
-    {
-      "name": "cross-profile detector-sized application observations",
-      "status": "inconclusive_for_tdd",
-      "logical_payload_bytes": 23968,
-      "historical_40_40_20_artifacts": [
-        "results/real_5g/20260702_detector_output_to_ipi_run_1/p5g-mqtt-detector-output-payload-23968_sender.csv",
-        "results/real_5g/20260702_detector_output_to_ipi_run_1/p5g-tcp-detector-output-payload-23968_sender.csv"
+      "payload_kib": [
+        1,
+        10,
+        100,
+        500
       ],
-      "followup_70_20_10_artifacts": [
-        "results/real_5g/20260806_airspan_followup_run_1/",
-        "results/real_5g/20260806_airspan_followup_common_typical_run_2/",
-        "results/real_5g/20260806_airspan_followup_weak_run_1/",
-        "results/real_5g/20260806_airspan_followup_strong_run_2/"
-      ]
+      "reported_rsrp_dbm": -100,
+      "reported_rsrq_db": -13,
+      "serving_cell": 2,
+      "location": "location_3"
     },
-    {
-      "name": "70/20/10 host-side direction control",
-      "status": "valid_single_profile_measurement_inconclusive_for_tdd",
-      "artifacts": [
-        "results/real_5g/20260805_airspan_r1_run_1/"
-      ],
-      "missing_control": "same-placement 40/40/20 vehicle-to-edge and edge-to-vehicle direction measurements"
+    "application_conclusion": "40/40/20 lowers p50 and p95 RTT for 1-10 KiB responses, but its advantage disappears at 500 KiB TCP and reverses in the p95 tail for 100-500 KiB MQTT.",
+    "matched_du_windows": [
+      {
+        "tdd_profile": "70/20/10",
+        "window_edt": "2026-08-17 17:35:00 to 18:05:00",
+        "cell": 2,
+        "bins": 6,
+        "cell_downlink_volume_kb": 8004535,
+        "downlink_wall_clock_load_mbps": 4.446964,
+        "downlink_active_time_derived_cell_throughput_mbps": 54.462622,
+        "cell_unavailability_total": 0
+      },
+      {
+        "tdd_profile": "40/40/20",
+        "window_edt": "2026-08-17 18:50:00 to 19:20:00",
+        "cell": 2,
+        "bins": 6,
+        "cell_downlink_volume_kb": 8814798,
+        "downlink_wall_clock_load_mbps": 4.89711,
+        "downlink_active_time_derived_cell_throughput_mbps": 61.285375,
+        "cell_unavailability_total": 0
+      }
+    ],
+    "du_interpretation": "Both selected windows are strongly downlink-heavy and contain no reported cell unavailability. The DU counters confirm the cell-level traffic context but do not identify the mechanism behind the application RTT differences."
+  },
+  "exact_50mib_goodput_result": {
+    "status": "valid_matched_endpoint_comparison_with_directions_kept_separate",
+    "scope": "ten sequential exact 52,428,800-byte TCP uploads and ten exact downloads per TDD profile at location 3 on 2026-08-17",
+    "upload_vehicle_to_d1": {
+      "70/20/10": {
+        "n": 10,
+        "mean_mbps": 12.000424,
+        "ci95_low_mbps": 11.758743,
+        "ci95_high_mbps": 12.242105
+      },
+      "40/40/20": {
+        "n": 10,
+        "mean_mbps": 2.836239,
+        "ci95_low_mbps": 2.68516,
+        "ci95_high_mbps": 2.987318
+      },
+      "comparison": "40/40/20 measured application goodput is 76.4 percent lower; 70/20/10 is 4.23 times higher"
     },
-    {
-      "name": "30/60/10 attempted configuration",
-      "status": "no_valid_experiment_result"
+    "download_d1_to_vehicle": {
+      "70/20/10": {
+        "n": 10,
+        "mean_mbps": 126.786286,
+        "ci95_low_mbps": 106.295989,
+        "ci95_high_mbps": 147.276583
+      },
+      "40/40/20": {
+        "n": 10,
+        "mean_mbps": 99.755586,
+        "ci95_low_mbps": 82.315813,
+        "ci95_high_mbps": 117.195358
+      },
+      "comparison": "40/40/20 measured application goodput is 21.3 percent lower; 70/20/10 is 1.27 times higher"
+    },
+    "du_boundary": "The bulk experiment alternates upload and download inside the same five-minute DU bins. DU counters are not used to estimate direction-specific endpoint goodput."
+  },
+  "weak_signal_direction_result": {
+    "status": "valid_same_profile_direction_comparison",
+    "scope": "2026-08-18 MQTT 500 KiB at 40/40/20, location 3, serving Cell 2, and -115 dBm",
+    "uplink_heavy": {
+      "accepted": 250,
+      "attempts": 250,
+      "p50_rtt_ms": 7647.557,
+      "p95_rtt_ms": 9287.828
+    },
+    "downlink_heavy": {
+      "accepted": 500,
+      "attempts": 500,
+      "p50_rtt_ms": 124.311,
+      "p95_rtt_ms": 226.787
+    },
+    "ratio_uplink_to_downlink": {
+      "p50": 61.52,
+      "p95": 40.95
+    },
+    "conclusion": "Application direction dominates communication latency for the matched large-object weak-signal condition."
+  },
+  "historical_pre_august_15_capacity_control": {
+    "status": "outside_current_august_15_to_18_comparison",
+    "offered_rate_mbit_per_s": 25.0,
+    "profile_70_20_10": {
+      "achieved_rate_mbit_per_s": 13.118,
+      "artifact": "results/real_5g/20260805_airspan_r1_run_1/",
+      "artifact_status": "stored_host-side trace"
+    },
+    "profile_40_40_20": {
+      "achieved_rate_mbit_per_s": 25.0,
+      "artifact": null,
+      "artifact_status": "coauthor-reported; raw trace not present in the current repository"
     }
-  ],
-  "replacement_evidence": {
-    "status": "pending",
-    "requirement": "new same-placement, same-signal-context, Cell-2-locked matched blocks under 40/40/20 and 70/20/10 with all other application and network controls held constant"
-  }
+  },
+  "primary_analysis": "paper/analysis/tdd_du_cell_comparison.md"
 }

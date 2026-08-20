@@ -1,0 +1,699 @@
+{
+  "definition": "RTT variance conditional on an accepted IPI response with a finite positive sender-side RTT",
+  "analysis_unit": "one experimental condition, weighted equally; individual RTT records are used within each condition",
+  "minimum_successful_rtts_per_condition": 20,
+  "condition_inventory": 461,
+  "eligible_conditions": 452,
+  "successful_rtt_records": 1765930,
+  "accepted_rows_in_eligible_conditions": 1765931,
+  "missing_source_conditions": [],
+  "accepted_rtt_count_mismatches": [
+    {
+      "family": "payload_sweep",
+      "run": "edge4av-real-20260515-sunny-run-1",
+      "condition": "p5g-mqtt-service-payload-131072",
+      "accepted_rows": 999,
+      "finite_successful_rtt_rows": 998
+    }
+  ],
+  "all_conditions": {
+    "conditions": 452,
+    "successful_rtt_records": 1765930,
+    "coefficient_of_variation": {
+      "minimum": 0.041612103672250655,
+      "p25": 0.1686271531938098,
+      "median": 0.2818120018898582,
+      "p75": 0.5851397879394107,
+      "p90": 1.2984268567606774,
+      "p95": 1.686818415985927,
+      "maximum": 6.4134249433314885
+    },
+    "p95_p50_ratio": {
+      "minimum": 1.0557404046578065,
+      "p25": 1.2310038130626808,
+      "median": 1.4188543762190822,
+      "p75": 1.93508376403277,
+      "p90": 3.424580933913395,
+      "p95": 5.539172429543287,
+      "maximum": 12.029359730536715
+    },
+    "standard_deviation_ms": {
+      "minimum": 4.885147440097022,
+      "p25": 12.819176130309007,
+      "median": 29.136029083381324,
+      "p75": 121.71278463164955,
+      "p90": 360.34761705199156,
+      "p95": 898.9370280387384,
+      "maximum": 42110.33958387594
+    },
+    "raw_rtt_equal_condition_decomposition": {
+      "within_condition_variance": 7166584.201708564,
+      "between_condition_variance": 3652100.804606291,
+      "total_variance": 10818685.006314855,
+      "within_condition_fraction": 0.6624265516119044,
+      "between_condition_fraction": 0.33757344838809555
+    },
+    "log10_rtt_equal_condition_decomposition": {
+      "within_condition_variance": 0.027800867716741173,
+      "between_condition_variance": 0.28831679425502577,
+      "total_variance": 0.31611766197176694,
+      "within_condition_fraction": 0.08794468345531456,
+      "between_condition_fraction": 0.9120553165446854
+    }
+  },
+  "by_path": {
+    "5G Uu": {
+      "conditions": 427,
+      "successful_rtt_records": 1743322,
+      "coefficient_of_variation": {
+        "minimum": 0.041612103672250655,
+        "p25": 0.1691448845356879,
+        "median": 0.28626330670370664,
+        "p75": 0.5888963355304881,
+        "p90": 1.330287265432346,
+        "p95": 1.7005391592755656,
+        "maximum": 6.4134249433314885
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.0557404046578065,
+        "p25": 1.2507495163454556,
+        "median": 1.446032074709847,
+        "p75": 1.9742815919759782,
+        "p90": 3.58819376716908,
+        "p95": 5.585101185970076,
+        "maximum": 12.029359730536715
+      },
+      "standard_deviation_ms": {
+        "minimum": 4.885147440097022,
+        "p25": 12.491276030367075,
+        "median": 32.15366526535493,
+        "p75": 138.19779962651825,
+        "p90": 375.7664128854729,
+        "p95": 974.5021782919767,
+        "maximum": 42110.33958387594
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 7586103.741813927,
+        "between_condition_variance": 3855176.623277077,
+        "total_variance": 11441280.365091003,
+        "within_condition_fraction": 0.6630467482433368,
+        "between_condition_fraction": 0.33695325175666324
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.028800600014428145,
+        "between_condition_variance": 0.3019937447072787,
+        "total_variance": 0.3307943447217068,
+        "within_condition_fraction": 0.08706497095244398,
+        "between_condition_fraction": 0.9129350290475561
+      }
+    },
+    "PC5 direct": {
+      "conditions": 25,
+      "successful_rtt_records": 22608,
+      "coefficient_of_variation": {
+        "minimum": 0.10642827790416888,
+        "p25": 0.16224427655048085,
+        "median": 0.22627009731424724,
+        "p75": 0.47526578808478226,
+        "p90": 0.6658269008565746,
+        "p95": 0.804435809045321,
+        "maximum": 1.0983260445487841
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.0672482384493673,
+        "p25": 1.077798923087504,
+        "median": 1.08864774458116,
+        "p75": 1.1076550199893413,
+        "p90": 1.477170951785894,
+        "p95": 1.4991654342606142,
+        "maximum": 1.9671574201372894
+      },
+      "standard_deviation_ms": {
+        "minimum": 7.523916622564308,
+        "p25": 15.059699439235233,
+        "median": 19.77648419441039,
+        "p75": 31.658842561072547,
+        "p90": 61.42936530798294,
+        "p95": 66.92454143829637,
+        "maximum": 84.43444926598688
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 1190.4567089284099,
+        "between_condition_variance": 502.8491638852655,
+        "total_variance": 1693.3058728136753,
+        "within_condition_fraction": 0.7030370165493444,
+        "between_condition_fraction": 0.2969629834506557
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.01072544007224781,
+        "between_condition_variance": 0.029256817170100015,
+        "total_variance": 0.03998225724234782,
+        "within_condition_fraction": 0.26825499138872516,
+        "between_condition_fraction": 0.7317450086112749
+      }
+    }
+  },
+  "by_family": {
+    "airspan_followup": {
+      "conditions": 60,
+      "successful_rtt_records": 325655,
+      "coefficient_of_variation": {
+        "minimum": 0.08549089021994775,
+        "p25": 0.13458685087431416,
+        "median": 0.21319280011556463,
+        "p75": 0.28394925525719045,
+        "p90": 0.332741614237705,
+        "p95": 0.4278676539897737,
+        "maximum": 0.7206958939746143
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.1491270709795638,
+        "p25": 1.1990888379947129,
+        "median": 1.2239110649456437,
+        "p75": 1.3739486836854846,
+        "p90": 1.4370802407160623,
+        "p95": 1.4899983550222198,
+        "maximum": 3.0901668428438067
+      },
+      "standard_deviation_ms": {
+        "minimum": 5.436993847129445,
+        "p25": 7.255641777659929,
+        "median": 11.546819650695504,
+        "p75": 24.611171970438654,
+        "p90": 48.26357353658814,
+        "p95": 78.05708943154592,
+        "maximum": 127.49976636404311
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 1185.2825304389983,
+        "between_condition_variance": 4856.318607242964,
+        "total_variance": 6041.601137681962,
+        "within_condition_fraction": 0.19618682257031067,
+        "between_condition_fraction": 0.8038131774296894
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.008432283459979206,
+        "between_condition_variance": 0.09199722125660142,
+        "total_variance": 0.10042950471658063,
+        "within_condition_fraction": 0.08396221293509037,
+        "between_condition_fraction": 0.9160377870649096
+      }
+    },
+    "detector_replay": {
+      "conditions": 47,
+      "successful_rtt_records": 45785,
+      "coefficient_of_variation": {
+        "minimum": 0.0718944396934978,
+        "p25": 0.21016552770582242,
+        "median": 0.32514098521325707,
+        "p75": 0.4826532490270815,
+        "p90": 0.5917976469788099,
+        "p95": 0.6459840165051509,
+        "maximum": 0.660293731088779
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.0906051187275987,
+        "p25": 1.4233446817281714,
+        "median": 1.6797764391616914,
+        "p75": 1.9562205153510421,
+        "p90": 2.3438706351207235,
+        "p95": 2.5102081097429654,
+        "maximum": 3.199380608603909
+      },
+      "standard_deviation_ms": {
+        "minimum": 10.16062898770986,
+        "p25": 18.806635764132814,
+        "median": 26.961174811639193,
+        "p75": 58.860652431986416,
+        "p90": 103.59635487266569,
+        "p95": 131.80662800915712,
+        "maximum": 203.82222341556636
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 4202.912928612495,
+        "between_condition_variance": 6669.95785107085,
+        "total_variance": 10872.870779683344,
+        "within_condition_fraction": 0.38655043491052127,
+        "between_condition_fraction": 0.6134495650894788
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.0138759902818576,
+        "between_condition_variance": 0.08813853613461162,
+        "total_variance": 0.10201452641646921,
+        "within_condition_fraction": 0.1360197490424997,
+        "between_condition_fraction": 0.8639802509575003
+      }
+    },
+    "logical_clients": {
+      "conditions": 42,
+      "successful_rtt_records": 1116420,
+      "coefficient_of_variation": {
+        "minimum": 0.10782470349572622,
+        "p25": 0.20628488361332967,
+        "median": 0.3861155988716527,
+        "p75": 0.5512565283705215,
+        "p90": 0.8389726340419407,
+        "p95": 1.6968653241001255,
+        "maximum": 6.4134249433314885
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.1814615877396144,
+        "p25": 1.3767940081552192,
+        "median": 1.6933020268788552,
+        "p75": 2.3396422894134647,
+        "p90": 3.4000284126406894,
+        "p95": 5.5477751446466845,
+        "maximum": 7.166800306047985
+      },
+      "standard_deviation_ms": {
+        "minimum": 5.621265935774227,
+        "p25": 13.321794064269458,
+        "median": 24.681839736125447,
+        "p75": 42.44691141785367,
+        "p90": 86.19043569628599,
+        "p95": 641.9024251215253,
+        "maximum": 17462.10093153688
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 7730159.522440686,
+        "between_condition_variance": 180337.02685222687,
+        "total_variance": 7910496.549292913,
+        "within_condition_fraction": 0.9772028183403548,
+        "between_condition_fraction": 0.02279718165964518
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.031216638704508283,
+        "between_condition_variance": 0.13130174286164295,
+        "total_variance": 0.16251838156615123,
+        "within_condition_fraction": 0.19208066437581345,
+        "between_condition_fraction": 0.8079193356241866
+      }
+    },
+    "message_formation_diagnostic": {
+      "conditions": 2,
+      "successful_rtt_records": 1300,
+      "coefficient_of_variation": {
+        "minimum": 0.4018912491114316,
+        "p25": 0.41049481011027655,
+        "median": 0.41909837110912157,
+        "p75": 0.4277019321079666,
+        "p90": 0.43286406870727356,
+        "p95": 0.43458478090704256,
+        "maximum": 0.43630549310681155
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.7611602462828708,
+        "p25": 1.8243044674541982,
+        "median": 1.8874486886255253,
+        "p75": 1.9505929097968524,
+        "p90": 1.9884794424996488,
+        "p95": 2.0011082867339143,
+        "maximum": 2.0137371309681797
+      },
+      "standard_deviation_ms": {
+        "minimum": 13.338482404824878,
+        "p25": 13.681933340545939,
+        "median": 14.025384276266998,
+        "p75": 14.368835211988056,
+        "p90": 14.574905773420692,
+        "p95": 14.643595960564905,
+        "maximum": 14.712286147709117
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 196.73352844869618,
+        "between_condition_variance": 9.108930628100255,
+        "total_variance": 205.84245907679644,
+        "within_condition_fraction": 0.9557480479539847,
+        "between_condition_fraction": 0.044251952046015265
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.02238053604053676,
+        "between_condition_variance": 0.0018492693805756434,
+        "total_variance": 0.024229805421112405,
+        "within_condition_fraction": 0.9236779103903038,
+        "between_condition_fraction": 0.07632208960969619
+      }
+    },
+    "payload_sweep": {
+      "conditions": 127,
+      "successful_rtt_records": 124694,
+      "coefficient_of_variation": {
+        "minimum": 0.08239226738468834,
+        "p25": 0.1485715974799245,
+        "median": 0.23855690548321218,
+        "p75": 0.6458992192855437,
+        "p90": 1.5523910070970988,
+        "p95": 1.8192035296129598,
+        "maximum": 3.734814967833099
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.1060919287635977,
+        "p25": 1.2363260339930002,
+        "median": 1.36230706416562,
+        "p75": 1.8307728767149305,
+        "p90": 6.125774145840616,
+        "p95": 7.588776503728497,
+        "maximum": 12.029359730536715
+      },
+      "standard_deviation_ms": {
+        "minimum": 4.885147440097022,
+        "p25": 12.994503744393135,
+        "median": 64.94069592433394,
+        "p75": 301.12008085876346,
+        "p90": 1285.2697065122657,
+        "p95": 2533.92656843163,
+        "maximum": 42110.33958387594
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 22873086.307647288,
+        "between_condition_variance": 8922888.187612278,
+        "total_variance": 31795974.495259568,
+        "within_condition_fraction": 0.7193705074539362,
+        "between_condition_fraction": 0.2806294925460638
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.032788954255702885,
+        "between_condition_variance": 0.4475501695846956,
+        "total_variance": 0.4803391238403985,
+        "within_condition_fraction": 0.06826209365073001,
+        "between_condition_fraction": 0.93173790634927
+      }
+    },
+    "pc5_mobility": {
+      "conditions": 4,
+      "successful_rtt_records": 2553,
+      "coefficient_of_variation": {
+        "minimum": 0.2489511179241056,
+        "p25": 0.4186871205446131,
+        "median": 0.5803871070182749,
+        "p75": 0.7887128306010217,
+        "p90": 0.9744807589696792,
+        "p95": 1.0364034017592314,
+        "maximum": 1.0983260445487841
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.08864774458116,
+        "p25": 1.3783136715618727,
+        "median": 1.476787289914152,
+        "p75": 1.4850992977065338,
+        "p90": 1.4966079548871452,
+        "p95": 1.500444173947349,
+        "maximum": 1.5042803930075528
+      },
+      "standard_deviation_ms": {
+        "minimum": 7.523916622564308,
+        "p25": 12.387324962058093,
+        "median": 24.265969483125417,
+        "p75": 42.80463605528478,
+        "p90": 57.71072075094672,
+        "p95": 62.67941564950068,
+        "maximum": 67.64811054805467
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 1502.524352224547,
+        "between_condition_variance": 875.3178138782743,
+        "total_variance": 2377.8421661028215,
+        "within_condition_fraction": 0.6318856539949068,
+        "between_condition_fraction": 0.3681143460050932
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.014347967838550336,
+        "between_condition_variance": 0.04894281614630043,
+        "total_variance": 0.06329078398485077,
+        "within_condition_fraction": 0.22669916432042703,
+        "between_condition_fraction": 0.7733008356795729
+      }
+    },
+    "pc5_stationary": {
+      "conditions": 16,
+      "successful_rtt_records": 15056,
+      "coefficient_of_variation": {
+        "minimum": 0.11973561366433984,
+        "p25": 0.17445354489182274,
+        "median": 0.20668298033929428,
+        "p75": 0.31742624483608256,
+        "p90": 0.6090415127453784,
+        "p95": 0.6857703736150161,
+        "maximum": 0.8341676548187098
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.0692674967275326,
+        "p25": 1.0784585996079505,
+        "median": 1.0888318949227784,
+        "p75": 1.1004436359228211,
+        "p90": 1.1157946170678015,
+        "p95": 1.3347400156440183,
+        "maximum": 1.9671574201372894
+      },
+      "standard_deviation_ms": {
+        "minimum": 11.713057090508839,
+        "p25": 17.130934629537492,
+        "median": 20.31646133606767,
+        "p75": 30.72877474287038,
+        "p90": 60.77914038516286,
+        "p95": 69.13131106594415,
+        "maximum": 84.43444926598688
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 1272.2473070254796,
+        "between_condition_variance": 30.37590679480744,
+        "total_variance": 1302.623213820287,
+        "within_condition_fraction": 0.9766809723083915,
+        "between_condition_fraction": 0.023319027691608585
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.010608761108935718,
+        "between_condition_variance": 0.0011625199182977064,
+        "total_variance": 0.011771281027233424,
+        "within_condition_fraction": 0.90124100209585,
+        "between_condition_fraction": 0.09875899790415
+      }
+    },
+    "pc5_stationary_reference": {
+      "conditions": 5,
+      "successful_rtt_records": 4999,
+      "coefficient_of_variation": {
+        "minimum": 0.10642827790416888,
+        "p25": 0.12611331225353853,
+        "median": 0.15706341871695484,
+        "p75": 0.2613084931591589,
+        "p90": 0.39274771327737734,
+        "p95": 0.43656078665011677,
+        "maximum": 0.4803738600228563
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.0672482384493673,
+        "p25": 1.0691347571240675,
+        "median": 1.0693836602832272,
+        "p75": 1.0697061915138515,
+        "p90": 1.0981416894794602,
+        "p95": 1.1076201888013297,
+        "maximum": 1.1170986881231992
+      },
+      "standard_deviation_ms": {
+        "minimum": 10.484785065396613,
+        "p25": 12.400018410751128,
+        "median": 15.525355319037855,
+        "p75": 24.367644849209206,
+        "p90": 38.523625722256476,
+        "p95": 43.24228601327223,
+        "maximum": 47.96094630428799
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 679.0726803808775,
+        "between_condition_variance": 5.34401919029316,
+        "total_variance": 684.4166995711706,
+        "within_condition_fraction": 0.992191863241149,
+        "between_condition_fraction": 0.007808136758851031
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.008200790541804477,
+        "between_condition_variance": 0.00019067019797653563,
+        "total_variance": 0.008391460739781012,
+        "within_condition_fraction": 0.9772780682780731,
+        "between_condition_fraction": 0.02272193172192705
+      }
+    },
+    "restart": {
+      "conditions": 4,
+      "successful_rtt_records": 3868,
+      "coefficient_of_variation": {
+        "minimum": 0.27121278420524375,
+        "p25": 0.29596010004389406,
+        "median": 0.493813795668267,
+        "p75": 0.7092594814432569,
+        "p90": 0.7557734532175577,
+        "p95": 0.7712781104756579,
+        "maximum": 0.7867827677337582
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.275098121283434,
+        "p25": 1.4111487259981392,
+        "median": 1.4846472011126255,
+        "p75": 1.5243728514180575,
+        "p90": 1.5452121295905834,
+        "p95": 1.5521585556480921,
+        "maximum": 1.5591049817056009
+      },
+      "standard_deviation_ms": {
+        "minimum": 8.574487335029204,
+        "p25": 20.210509466668068,
+        "median": 26.51986795779866,
+        "p75": 31.883691413316843,
+        "p90": 37.16334162819782,
+        "p95": 38.92322503315815,
+        "maximum": 40.683108438118474
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 785.9485993691155,
+        "between_condition_variance": 1847.941954486097,
+        "total_variance": 2633.8905538552126,
+        "within_condition_fraction": 0.29839835152555083,
+        "between_condition_fraction": 0.7016016484744492
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.016098195663667724,
+        "between_condition_variance": 0.06944189638462803,
+        "total_variance": 0.08554009204829575,
+        "within_condition_fraction": 0.18819474328574157,
+        "between_condition_fraction": 0.8118052567142584
+      }
+    },
+    "tdd_downlink": {
+      "conditions": 40,
+      "successful_rtt_records": 31000,
+      "coefficient_of_variation": {
+        "minimum": 0.13890801545795858,
+        "p25": 0.20242977266357876,
+        "median": 0.2921622769739392,
+        "p75": 0.43770809535570626,
+        "p90": 1.1889200790778103,
+        "p95": 1.8236137417556775,
+        "maximum": 4.413265094987105
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.189286112008436,
+        "p25": 1.3389835200591598,
+        "median": 1.4840983494472448,
+        "p75": 1.8278860045224943,
+        "p90": 1.912586800702795,
+        "p95": 2.379300257876169,
+        "maximum": 3.161078118911992
+      },
+      "standard_deviation_ms": {
+        "minimum": 5.04355469317449,
+        "p25": 7.030510925334651,
+        "median": 14.775171615185965,
+        "p75": 24.11081867512582,
+        "p90": 93.49484994543671,
+        "p95": 135.00103389193157,
+        "maximum": 302.87672243428773
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 4491.673876936198,
+        "between_condition_variance": 1133.5127079689917,
+        "total_variance": 5625.18658490519,
+        "within_condition_fraction": 0.798493313802124,
+        "between_condition_fraction": 0.20150668619787596
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.016162919362500732,
+        "between_condition_variance": 0.042425932203041014,
+        "total_variance": 0.05858885156554175,
+        "within_condition_fraction": 0.27587021985607135,
+        "between_condition_fraction": 0.7241297801439286
+      }
+    },
+    "tdd_uplink": {
+      "conditions": 57,
+      "successful_rtt_records": 46600,
+      "coefficient_of_variation": {
+        "minimum": 0.041612103672250655,
+        "p25": 0.14033312953437493,
+        "median": 0.23959989600261009,
+        "p75": 0.4945181609448642,
+        "p90": 0.7851395963748952,
+        "p95": 1.0883746422770582,
+        "maximum": 2.191406158588742
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.0557404046578065,
+        "p25": 1.2185966556399526,
+        "median": 1.3185796063649324,
+        "p75": 1.5902918548221179,
+        "p90": 2.2683825113063323,
+        "p95": 2.865698042290868,
+        "maximum": 3.765797339079902
+      },
+      "standard_deviation_ms": {
+        "minimum": 5.600661919222467,
+        "p25": 7.950312027203617,
+        "median": 49.69205964577049,
+        "p75": 144.66472950648523,
+        "p90": 499.1505252081375,
+        "p95": 656.1044854915714,
+        "maximum": 1761.778922261917
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 117793.28035395959,
+        "between_condition_variance": 7239483.099378757,
+        "total_variance": 7357276.379732717,
+        "within_condition_fraction": 0.016010446566673484,
+        "between_condition_fraction": 0.9839895534333265
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.013787639960712804,
+        "between_condition_variance": 0.505349441135894,
+        "total_variance": 0.5191370810966067,
+        "within_condition_fraction": 0.026558765425864557,
+        "between_condition_fraction": 0.9734412345741356
+      }
+    },
+    "uplink_load": {
+      "conditions": 48,
+      "successful_rtt_records": 48000,
+      "coefficient_of_variation": {
+        "minimum": 0.14090485744173462,
+        "p25": 0.6163107578025467,
+        "median": 0.886224279864166,
+        "p75": 1.3634974864487337,
+        "p90": 1.6209087504551745,
+        "p95": 1.7152503345952184,
+        "maximum": 2.1108222224481286
+      },
+      "p95_p50_ratio": {
+        "minimum": 1.1515719892425678,
+        "p25": 2.453450319709918,
+        "median": 3.0728659992161496,
+        "p75": 4.667790139319928,
+        "p90": 5.728884794936726,
+        "p95": 6.3078179817610325,
+        "maximum": 7.601521503766325
+      },
+      "standard_deviation_ms": {
+        "minimum": 10.364462519061615,
+        "p25": 127.97700792388359,
+        "median": 181.82160872944985,
+        "p75": 270.0815233577292,
+        "p90": 357.26149266320954,
+        "p95": 384.3458055119054,
+        "maximum": 482.19590409040376
+      },
+      "raw_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 53157.53509694309,
+        "between_condition_variance": 6541.785848482466,
+        "total_variance": 59699.320945425556,
+        "within_condition_fraction": 0.8904211011970693,
+        "between_condition_fraction": 0.10957889880293066
+      },
+      "log10_rtt_equal_condition_decomposition": {
+        "within_condition_variance": 0.08589344858864036,
+        "between_condition_variance": 0.046971850205213266,
+        "total_variance": 0.13286529879385361,
+        "within_condition_fraction": 0.6464701420790679,
+        "between_condition_fraction": 0.35352985792093217
+      }
+    }
+  },
+  "interpretation_boundary": "The result conditions on successful responses. Complete and near-complete outages are excluded by the 20-response threshold and must be assessed with accepted delivery and deadline availability."
+}

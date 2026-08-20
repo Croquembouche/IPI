@@ -1,0 +1,66 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Connected and automated vehicles (CAVs) and connected human-driven vehicles
+need information that may be visible only to other vehicles or roadside
+infrastructure. Examples include an occluded road user, the current traffic
+signal state, and a cooperative maneuver plan. Vehicle-to-everything (V2X) and
+fifth-generation (5G) communication can deliver this information to automated
+driving systems and human drivers
+~\cite{etsi122186r19,one6g2025overview}.
+
+These applications create two communication patterns. Connected-vehicle (CV)
+and intelligent transportation system (ITS) applications commonly exchange
+compact, stateless SAE International J2735 updates. A later update replaces an
+earlier one without preserving an application session. Complex CAV
+applications instead use correlated, stateful operations for cooperative
+perception, trajectory planning, maneuver coordination, or remote assistance.
+An event or fault can trigger an uplink-heavy or downlink-heavy burst, while
+remote teleoperation can sustain video and control traffic. Both application
+classes are proposed for direct V2X and network-assisted 5G communication, yet
+they lack one application protocol and a common evaluation of their
+communication limits. We therefore ask: \emph{Can today's V2X and 5G paths
+support both CV and CAV applications, and at what workload size and operating
+conditions does each path stop meeting the required response latency,
+completion rate, or application goodput?}
+
+We answer this question with the Intersection Programming Interface (IPI) and
+a controlled, real-vehicle field study. IPI provides one transport-independent
+application protocol for stateless CV/ITS messages and stateful CAV
+operations. The study applies both workload classes to a commercial Long-Term
+Evolution cellular V2X (LTE C-V2X) direct PC5 path and a private 5G New Radio
+(NR) Uu path. The private network contains one physical CAV user equipment
+(UE), a dedicated radio, and a clean 40-MHz n48 channel. Experimental traffic
+introduces all contention. Across payload, direction, transport, radio
+condition, configuration, competing traffic, demand, and interruption, we
+measure response round-trip time (RTT), the percentage of issued requests
+answered within each application deadline, and directional application
+goodput.
+
+This paper makes two contributions:
+\begin{itemize}
+  \item \textbf{A common CV, ITS, and CAV application protocol.} IPI carries
+  typed or pre-encoded J2735 messages and correlated CAV operations through
+  the same transport-independent interface.
+  \item \textbf{A controlled communication performance evaluation.} A real
+  autonomous vehicle carries representative CV and CAV workloads over direct
+  PC5 and network-assisted Uu. The experiments locate the conditions under
+  which each path misses application deadlines or required directional rates.
+\end{itemize}
+
+The measurements yield three insights:
+\begin{enumerate}
+  \renewcommand{\labelenumi}{\arabic{enumi})}
+  \item \textbf{The measured commercial direct V2X path supports compact J2735
+  messages only within a limited payload and coverage envelope.} Roadside-unit
+  placement or a supplemental path is necessary where buildings, highway
+  geometry, or sparse infrastructure leave weak or absent coverage.
+  \item \textbf{The CAV application-packet size that the measured 5G uplink can
+  complete within a decision deadline is severely limited.} CAV developers
+  must select, compress, or progressively transmit vehicle-originated state
+  until the uplink envelope expands.
+  \item \textbf{5G/6G systems must support event-triggered CAV bursts,
+  sustained directional streams, and concurrent deadline-sensitive traffic.}
+  Radio configurations and schedulers must preserve both directions and
+  isolate simultaneous flows according to application deadline and duration.
+\end{enumerate}

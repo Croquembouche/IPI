@@ -131,18 +131,42 @@ For paper or experiment-claim changes, validate against current artifacts in
   TCP/MQTT path. Keep this value in the Results evidence and experiment summary,
   not in the top-level Insight 2 sentence. The boundary was measured with one
   UE, a dedicated 40-MHz n48 channel, and no ambient contention.
-- Classify every retained historical 40/40/20 versus follow-up 70/20/10
-  comparison as inconclusive for TDD inference. The application measurements
-  remain valid observations of their recorded operating conditions, but TDD
-  and placement/signal changed jointly. Do not rank the profiles, estimate a
-  TDD effect, or call the data a TDD sensitivity result. The 70/20/10
-  directional throughput control is also a single-profile measurement, not a
-  TDD comparison. Only a newly collected same-placement matched experiment may
-  support a within-deployment TDD conclusion.
+- Treat every private-5G application campaign collected before the August
+  15--16 TDD diagnostic as `70/20/10`. Earlier `40/40/20` labels for those
+  campaigns are superseded; the application results remain valid under the
+  corrected profile.
+- Use the August 15--16 runs only for the uplink-heavy TDD latency diagnostic.
+  The path did not remain stable across reconfiguration: route availability,
+  cell administrative state, and serving-cell selection changed, and the
+  `40/40/20` same-profile repeats developed large payload-dependent tail
+  differences. The DU Cell export confirms the serving-cell change but does
+  not provide a clean matched uplink pair. These application RTT data cannot
+  rank `40/40/20` and `70/20/10` or estimate a causal uplink-latency effect.
+- Use the August 17 location-3 runs for the matched downlink-heavy application
+  comparison and the separate exact 50-MiB endpoint-goodput comparison. Keep
+  uplink-heavy RTT, downlink-heavy RTT, exact upload, and exact download as four
+  distinct measurement families. The clean DU comparison uses six complete
+  five-minute Cell 2 bins per downlink profile block; the DU counters are
+  cell-level context rather than application goodput or radio capacity.
+- Use the August 18 `40/40/20`, MQTT, 500-KiB, `-115 dBm` pair for the matched
+  application-direction result: uplink-heavy p50/p95 RTT is 61.5/41.0 times
+  the corresponding downlink-heavy RTT. Do not pool that weak-signal result
+  with the August 17 `-100 dBm` TDD comparison.
+- The complete TDD and DU evidence decision is recorded in
+  `paper/analysis/tdd_du_cell_comparison.md` and
+  `results/real_5g/tdd_comparison_status.json`.
+- Keep the historical pre-August-15 capacity control separate from the new
+  matched experiments. With an offered 25-Mbit/s vehicle-to-edge TCP stream,
+  `70/20/10` achieved 13.118 Mbit/s and the coauthor-reported `40/40/20`
+  control achieved 25.000 Mbit/s. The current repository has the raw
+  `70/20/10` trace but not the raw `40/40/20` trace.
 - Preserve exactly three top-level insights: 1) the direct-V2X payload-and-
   coverage envelope; 2) the severe CAV packet-size limit for deadline-compliant
-  5G uplink exchange; and 3) the need for improved vehicular uplink performance
-  and concurrent-demand isolation in 5G/6G systems.
+  5G uplink exchange; and 3) the need for 5G/6G radios to support event-triggered
+  CAV bursts in either direction, sustained directional streams, and concurrent
+  deadline-sensitive traffic. The third insight combines stable TDD operation
+  with scheduling that responds to each workload's direction, deadline, and
+  duration.
 
 ## Agent Operating Boundaries
 

@@ -21,6 +21,10 @@ import json
 import math
 from pathlib import Path
 
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -137,6 +141,7 @@ def collect_condition_statistics():
     conditions = (
         limiting_factors.collect_regular_5g()
         + limiting_factors.collect_airspan()
+        + limiting_factors.collect_post_report_5g()
         + limiting_factors.collect_pc5()
     )
     conditions.sort(key=lambda row: (row["path"], row["family"], row["run"], row["condition"]))
@@ -210,6 +215,57 @@ def write_csv(path, rows):
         writer.writerows(rows)
 
 
+def make_figure(summary):
+    """Render the report figure from the machine-readable summary."""
+    overall = summary["all_conditions"]
+    raw = overall["raw_rtt_equal_condition_decomposition"]
+    log = overall["log10_rtt_equal_condition_decomposition"]
+
+    fig, axes = plt.subplots(1, 2, figsize=(11.8, 4.8))
+
+    labels = ["log10 RTT", "raw RTT squared"]
+    within = [100 * log["within_condition_fraction"], 100 * raw["within_condition_fraction"]]
+    between = [100 * log["between_condition_fraction"], 100 * raw["between_condition_fraction"]]
+    x = np.arange(len(labels))
+    axes[0].bar(x, between, color="#305F90", label="Between conditions")
+    axes[0].bar(x, within, bottom=between, color="#9CC3E5", label="Within condition")
+    axes[0].set_xticks(x, labels)
+    axes[0].set_ylim(0, 100)
+    axes[0].set_ylabel("Share of equal-condition variance (%)")
+    axes[0].set_title("Variance depends on analysis scale")
+    axes[0].legend(frameon=False, loc="lower left")
+    for index, (between_value, within_value) in enumerate(zip(between, within)):
+        axes[0].text(index, between_value / 2, f"{between_value:.1f}%", ha="center", va="center", color="white", fontweight="bold")
+        axes[0].text(index, between_value + within_value / 2, f"{within_value:.1f}%", ha="center", va="center", color="#17324D", fontweight="bold")
+
+    family_rows = []
+    for family, values in summary["by_family"].items():
+        family_rows.append((family.replace("_", " "), values["p95_p50_ratio"]["median"], values["conditions"]))
+    family_rows.sort(key=lambda item: item[1])
+    names = [item[0] for item in family_rows]
+    ratios = [item[1] for item in family_rows]
+    colors = ["#D9802B" if name in {"tdd uplink", "tdd downlink"} else "#5B7FA3" for name in names]
+    y = np.arange(len(names))
+    axes[1].barh(y, ratios, color=colors)
+    axes[1].set_yticks(y, names)
+    axes[1].set_xlabel("Median successful-response p95 / p50")
+    axes[1].set_title("Tail inflation differs by experiment family")
+    axes[1].grid(axis="x", alpha=0.2)
+    for row_index, (ratio, (_, _, condition_count)) in enumerate(zip(ratios, family_rows)):
+        axes[1].text(ratio + 0.03, row_index, f"{ratio:.2f}x (n={condition_count})", va="center", fontsize=8)
+    axes[1].set_xlim(0, max(ratios) * 1.35)
+
+    fig.suptitle(
+        f"Successful IPI RTT variance: {summary['successful_rtt_records']:,} responses in "
+        f"{summary['eligible_conditions']} equally weighted conditions",
+        fontsize=12,
+        fontweight="bold",
+    )
+    fig.tight_layout()
+    fig.savefig(OUT / "successful_attempt_variance.png", dpi=220, bbox_inches="tight")
+    plt.close(fig)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     conditions, statistics, missing_sources, mismatches = collect_condition_statistics()
@@ -255,6 +311,7 @@ def main():
     (OUT / "successful_attempt_variance_summary.json").write_text(
         json.dumps(summary, indent=2) + "\n"
     )
+    make_figure(summary)
 
     overall = summary["all_conditions"]
     log_decomposition = overall["log10_rtt_equal_condition_decomposition"]

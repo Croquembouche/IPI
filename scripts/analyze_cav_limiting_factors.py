@@ -305,6 +305,134 @@ def collect_airspan():
     return rows
 
 
+def collect_post_report_5g():
+    """Collect completed August 15--19 application RTT conditions.
+
+    These runs use two different application directions.  Uplink-heavy means
+    that the vehicle sends the declared object and receives a compact
+    acknowledgment.  Downlink-heavy means that the vehicle sends a compact
+    request and validates the declared object returned by d1.  User-stopped
+    partial conditions, preflights, the August 18 overrun diagnostic, and the
+    interrupted August 19 pre-resume condition are deliberately excluded from
+    the condition/PCA ledger.
+    """
+    specs = [
+        (
+            "CISCO_AIRSPAN_STATS/20260815_airspan_tdd_raw_uplink_70_20_10_location_1_run_2_unredacted",
+            "tdd_uplink",
+            "uplink_70_20_10_location_1_-100dBm",
+            set(),
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260816_airspan_tdd_raw_uplink_40_40_20_location_1_mqtt_repeat_run_1_unredacted",
+            "tdd_uplink",
+            "uplink_40_40_20_location_1_-100dBm",
+            {"application/mqtt/payload_2097152/sender.csv"},
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_1_unredacted",
+            "tdd_uplink",
+            "uplink_40_40_20_location_1_-100dBm_cell_2",
+            set(),
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_2_unredacted",
+            "tdd_uplink",
+            "uplink_40_40_20_location_1_-98dBm_cell_1",
+            set(),
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260816_airspan_tdd_raw_uplink_70_20_10_location_1_tcp_quick_run_1_unredacted",
+            "tdd_uplink",
+            "uplink_70_20_10_location_1_-98dBm_cell_2",
+            set(),
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260816_airspan_tdd_raw_uplink_60_30_10_location_1_tcp_run_1_unredacted",
+            "tdd_uplink",
+            "uplink_60_20_20_location_1_-98dBm_cell_2",
+            {"application/tcp/payload_1048576/sender.csv"},
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260817_airspan_tdd_raw_uplink_pending_location_2_tcp_mqtt_run_1_unredacted",
+            "tdd_uplink",
+            "uplink_60_20_20_location_2_-100dBm",
+            {"application/tcp/payload_1048576/sender.csv"},
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260817_airspan_tdd_raw_downlink_70_20_10_location_3_tcp_mqtt_run_2_unredacted",
+            "tdd_downlink",
+            "downlink_70_20_10_location_3_-100dBm_cell_2",
+            set(),
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260817_airspan_tdd_raw_downlink_40_40_20_location_3_tcp_mqtt_run_1_unredacted",
+            "tdd_downlink",
+            "downlink_40_40_20_location_3_-100dBm_cell_2",
+            set(),
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260818_airspan_tdd_raw_uplink_40_40_20_location_3_tcp_mqtt_run_1_unredacted",
+            "tdd_uplink",
+            "uplink_40_40_20_location_3_-105_to_-115dBm_cell_2",
+            {"application/tcp/payload_512000_overrun_diagnostic/sender.csv"},
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260818_airspan_tdd_raw_downlink_40_40_20_location_3_tcp_mqtt_run_1_unredacted",
+            "tdd_downlink",
+            "downlink_40_40_20_location_3_-115dBm_cell_2",
+            set(),
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_uplink_70_20_10_new_device_location_3_tcp_mqtt_run_1_unredacted",
+            "tdd_uplink",
+            "uplink_70_20_10_location_3_GL-X3000_median_-99dBm",
+            set(),
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_downlink_70_20_10_new_device_location_3_tcp_mqtt_run_1_unredacted",
+            "tdd_downlink",
+            "downlink_70_20_10_location_3_GL-X3000_median_-99dBm",
+            set(),
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_uplink_40_40_20_new_device_location_3_tcp_mqtt_run_1_unredacted",
+            "tdd_uplink",
+            "uplink_40_40_20_location_3_GL-X3000_median_-98dBm",
+            {
+                "application/tcp/payload_10240_interrupted_partial_20260819T1520EDT/sender.csv",
+            },
+        ),
+        (
+            "CISCO_AIRSPAN_STATS/20260819_airspan_tdd_raw_downlink_40_40_20_new_device_location_3_tcp_mqtt_run_1_unredacted",
+            "tdd_downlink",
+            "downlink_40_40_20_location_3_GL-X3000_median_-98dBm",
+            set(),
+        ),
+    ]
+
+    rows = []
+    for relative_root, family, context, excluded in specs:
+        root = ROOT / relative_root
+        files = []
+        for file in sorted(root.glob("application/*/payload_*/sender.csv")):
+            relative_file = str(file.relative_to(root))
+            if relative_file not in excluded:
+                files.append(file)
+        rows += aggregate_sender_files(
+            files,
+            path_name="5G Uu",
+            family=family,
+            context=context,
+            source_note=(
+                "Completed declared August 15--19 IPI RTT condition; application "
+                "direction, TDD profile, location, serving cell, and signal context "
+                "remain separate. User-stopped partial and diagnostic rows are excluded."
+            ),
+        )
+    return rows
+
+
 def collect_pc5():
     rows = []
     # The final reference summary consolidates the July 3 stable payload runs.
@@ -564,6 +692,158 @@ def build_contrasts(rows):
             if lo and hi:
                 add_contrast(contrasts, "payload and representation scale", f"detector replay {context}: {transport}, 4KiB to 60KiB", lo, hi, "within run/transport", f"{lo['source_files']};{hi['source_files']}")
 
+    # Completed August 15--19 directional payload sweeps.  Uplink-heavy and
+    # downlink-heavy runs stay in separate families.
+    for family in ("tdd_uplink", "tdd_downlink"):
+        for run in sorted({r["run"] for r in rows if r["family"] == family}):
+            for transport in ("tcp", "mqtt"):
+                items = select(rows, family=family, run=run, transport=transport)
+                if len(items) < 2:
+                    continue
+                low = min(items, key=lambda x: x["payload_bytes"])
+                high = max(items, key=lambda x: x["payload_bytes"])
+                add_contrast(
+                    contrasts,
+                    "payload and representation scale",
+                    f"{run}: {transport} {low['payload_bytes']}B to {high['payload_bytes']}B",
+                    low,
+                    high,
+                    "within completed run, transport, and application direction",
+                    f"{low['source_files']};{high['source_files']}",
+                )
+
+    # August 17 provides the clean same-location, same-cell downlink-heavy TDD
+    # comparison.  Keep it distinct from the inconclusive August 15--16
+    # uplink-heavy profile observations.
+    downlink_70 = [
+        r for r in rows
+        if r["family"] == "tdd_downlink"
+        and "20260817-airspan-tdd-raw-downlink-70-20-10" in r["run"]
+    ]
+    downlink_40 = [
+        r for r in rows
+        if r["family"] == "tdd_downlink"
+        and "20260817-airspan-tdd-raw-downlink-40-40-20" in r["run"]
+    ]
+    for before in downlink_70:
+        after = next(
+            (
+                r for r in downlink_40
+                if r["transport"] == before["transport"]
+                and r["payload_bytes"] == before["payload_bytes"]
+            ),
+            None,
+        )
+        if after:
+            add_contrast(
+                contrasts,
+                "TDD profile under matched application workload",
+                f"August 17 {before['transport']} {before['payload_bytes']}B: 70/20/10 to 40/40/20",
+                before,
+                after,
+                "same stationary location, serving Cell 2, reported -100 dBm; matched DU windows",
+                f"{before['source_files']};{after['source_files']}",
+            )
+
+    # August 19 adds a same-device, same-location GL-X3000 comparison for both
+    # application directions.  The profile blocks are sequential, so this is
+    # an end-to-end matched observation rather than a radio-PHY capacity test.
+    for direction, family in (("uplink", "tdd_uplink"), ("downlink", "tdd_downlink")):
+        profile_70 = [
+            r for r in rows
+            if r["family"] == family
+            and f"20260819-airspan-tdd-raw-{direction}-70-20-10-new-device" in r["run"]
+        ]
+        profile_40 = [
+            r for r in rows
+            if r["family"] == family
+            and f"20260819-airspan-tdd-raw-{direction}-40-40-20-new-device" in r["run"]
+        ]
+        for before in profile_70:
+            after = next(
+                (
+                    r for r in profile_40
+                    if r["transport"] == before["transport"]
+                    and r["payload_bytes"] == before["payload_bytes"]
+                ),
+                None,
+            )
+            if after:
+                add_contrast(
+                    contrasts,
+                    "TDD profile under matched application workload",
+                    f"August 19 GL-X3000 {direction} {before['transport']} {before['payload_bytes']}B: 70/20/10 to 40/40/20",
+                    before,
+                    after,
+                    "same device and stationary location; adjacent profile blocks with measured median RSRP -99/-98 dBm",
+                    f"{before['source_files']};{after['source_files']}",
+                )
+
+    # Within each August 19 GL-X3000 profile, match application direction at
+    # identical transport and object size.
+    for profile in ("70-20-10", "40-40-20"):
+        uplink_rows = [
+            r for r in rows
+            if r["family"] == "tdd_uplink"
+            and f"20260819-airspan-tdd-raw-uplink-{profile}-new-device" in r["run"]
+        ]
+        downlink_rows = [
+            r for r in rows
+            if r["family"] == "tdd_downlink"
+            and f"20260819-airspan-tdd-raw-downlink-{profile}-new-device" in r["run"]
+        ]
+        for downlink in downlink_rows:
+            uplink = next(
+                (
+                    r for r in uplink_rows
+                    if r["transport"] == downlink["transport"]
+                    and r["payload_bytes"] == downlink["payload_bytes"]
+                ),
+                None,
+            )
+            if uplink:
+                add_contrast(
+                    contrasts,
+                    "application direction for large event-triggered objects",
+                    f"August 19 GL-X3000 {profile} {downlink['transport']} {downlink['payload_bytes']}B: downlink-heavy to uplink-heavy",
+                    downlink,
+                    uplink,
+                    "same device, profile, stationary location, transport, and payload; sequential direction blocks",
+                    f"{downlink['source_files']};{uplink['source_files']}",
+                )
+
+    # The August 18 MQTT 500-KiB pair holds profile, location, serving cell,
+    # signal context, transport, and payload constant while reversing the
+    # large-object application direction.
+    uplink_direction = next(
+        (
+            r for r in rows
+            if r["family"] == "tdd_uplink"
+            and "20260818-airspan-tdd-raw-uplink-40-40-20" in r["run"]
+            and r["condition"] == "uplink-mqtt-payload-512000"
+        ),
+        None,
+    )
+    downlink_direction = next(
+        (
+            r for r in rows
+            if r["family"] == "tdd_downlink"
+            and "20260818-airspan-tdd-raw-downlink-40-40-20" in r["run"]
+            and r["condition"] == "downlink-mqtt-payload-512000"
+        ),
+        None,
+    )
+    if downlink_direction and uplink_direction:
+        add_contrast(
+            contrasts,
+            "application direction for large event-triggered objects",
+            "August 18 MQTT 500KiB: downlink-heavy to uplink-heavy",
+            downlink_direction,
+            uplink_direction,
+            "same 40/40/20 profile, location 3, serving Cell 2, and reported -115 dBm",
+            f"{downlink_direction['source_files']};{uplink_direction['source_files']}",
+        )
+
     # PC5 same-point payload sensitivity.
     for context in ("stable_reference", "P2_113m", "P3_212m", "P4_377m"):
         items = [r for r in rows if r["path"] == "PC5 direct" and r["context"] == context]
@@ -631,6 +911,13 @@ def factor_ranking():
             "reason": "Both paths vary strongly by field context, but PC5 RF counters and matched 5G UE radio telemetry are unavailable.",
         },
         {
+            "factor": "Application direction for large event-triggered objects",
+            "observed_severity": 5.0, "repeatability": 4.0, "evidence_breadth": 3.5,
+            "identification_strength": 4.5, "complex_cav_relevance": 5.0,
+            "evidence_grade": "B+",
+            "reason": "A matched weak-signal 500-KiB MQTT pair shows 40.95x p95 inflation for uplink-heavy exchange, and exact directional transfers repeat the endpoint asymmetry.",
+        },
+        {
             "factor": "Service interruption and state continuity",
             "observed_severity": 5.0, "repeatability": 5.0, "evidence_breadth": 2.0,
             "identification_strength": 4.5, "complex_cav_relevance": 5.0,
@@ -645,11 +932,11 @@ def factor_ranking():
             "reason": "Raw UDP failed beyond its practical datagram boundary while fragmented UDP restored smaller transfers but not 60 KiB reliability.",
         },
         {
-            "factor": "Directional capacity and frame allocation",
-            "observed_severity": 4.0, "repeatability": 3.0, "evidence_breadth": 3.0,
-            "identification_strength": 2.5, "complex_cav_relevance": 5.0,
-            "evidence_grade": "C+",
-            "reason": "Host tests show uplink/downlink asymmetry, but the TDD profiles lack a matched same-cell causal comparison and cell counters.",
+            "factor": "TDD profile under matched application workload",
+            "observed_severity": 4.0, "repeatability": 4.0, "evidence_breadth": 4.0,
+            "identification_strength": 4.5, "complex_cav_relevance": 5.0,
+            "evidence_grade": "B+",
+            "reason": "Matched August 17 downlink and August 19 GL-X3000 bidirectional blocks show workload-dependent profile effects; the sequential observations are not radio-PHY capacity tests.",
         },
         {
             "factor": "Local perception compute time (conditional)",
@@ -861,7 +1148,12 @@ def make_figures(rankings, loadings, score_rows, contrasts, spatial_bins):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    conditions = collect_regular_5g() + collect_airspan() + collect_pc5()
+    conditions = (
+        collect_regular_5g()
+        + collect_airspan()
+        + collect_post_report_5g()
+        + collect_pc5()
+    )
     # Stable ordering makes diffs reproducible.
     conditions.sort(key=lambda r: (r["path"], r["family"], r["run"], r["condition"]))
     write_csv(OUT / "condition_level_metrics.csv", conditions)
@@ -906,13 +1198,41 @@ def main():
                 "results/real_5g/20260805_airspan_r1_run_1/load/v2_car_client.csv",
                 "results/real_5g/20260805_airspan_r1_run_1/load/v3_edge_client.csv",
             ],
-            "boundary": "Host-side directional throughput; not a causal TDD estimate.",
+            "boundary": "Historical host-side direction control under 70/20/10; not pooled with the exact 50-MiB endpoint result.",
+        },
+        "matched_directional_evidence": {
+            "weak_signal_mqtt_500kib": {
+                "profile": "40/40/20",
+                "reported_rsrp_dbm": -115,
+                "uplink_heavy_p50_ms": 7647.557,
+                "uplink_heavy_p95_ms": 9287.828,
+                "downlink_heavy_p50_ms": 124.311,
+                "downlink_heavy_p95_ms": 226.787,
+                "uplink_to_downlink_p50_ratio": 61.52,
+                "uplink_to_downlink_p95_ratio": 40.95,
+            },
+            "exact_50mib_endpoint_goodput": {
+                "70_20_10_upload_mean_mbps": 12.000424,
+                "70_20_10_download_mean_mbps": 126.786286,
+                "40_40_20_upload_mean_mbps": 2.836239,
+                "40_40_20_download_mean_mbps": 99.755586,
+            },
+            "gl_x3000_matched_profiles": {
+                "70_20_10_upload_mean_mbps": 15.691,
+                "70_20_10_download_mean_mbps": 166.106,
+                "40_40_20_upload_mean_mbps": 10.913,
+                "40_40_20_download_mean_mbps": 123.451,
+                "repetitions_per_profile_direction": 3,
+            },
+            "boundary": "Application direction and endpoint goodput are measured directly; no radio-PHY capacity or hardware-only claim is made.",
         },
         "restart_success_gap_ms_range": [11714.7, 15100.7],
         "excluded_or_unrankable": [
             "PC5 RSSI/SNR/RSRP/RSRQ, MCS, BLER, retransmissions, and resource-block use: not logged",
             "the latency-derived PC5 mobility signal score: circular with the outcomes",
-            "TDD causal effect: no matched same-cell baseline with contemporaneous counters",
+            "August 15--16 uplink-heavy cross-profile ranking: no timestamp-aligned same-cell DU pair",
+            "universal TDD ranking: the matched August 17 result is downlink-heavy and workload dependent",
+            "hardware-only gateway attribution: August 18 and August 19 differ in signal, configuration, session, device, and collection time",
             "network-enforced 5QI effect: both observed host captures used TOS 0x0",
             "weather: confounded with date and location",
             "mobility speed effect: confounded with route position and run",

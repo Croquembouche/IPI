@@ -1,0 +1,97 @@
+\section{Related Work}
+\label{sec:related}
+
+Prior work provides standards for interoperable communication, systems that
+connect communication to autonomous-driving tasks, and field measurements of
+direct and network-assisted paths. Figure~\ref{fig:rw-gap} organizes these
+foundations around four requirements for cooperative transportation. The
+comparison exposes two unresolved capabilities: one application contract for
+CV, ITS, and CAV applications, and comparable measurements that locate the
+application support boundaries of direct and network-assisted communication.
+
+\begin{figure*}[!t]
+  \centering
+  \includegraphics[width=\textwidth]{../figs/edge4av_fig1.pptx.pdf}
+  \caption{Communication capabilities required for cooperative transportation.
+  Each row connects an existing limitation, the protocol or measurement gap
+  addressed in this paper, and the capability needed for system integration,
+  application timing, path support, or operational safety.}
+  \Description{A three-column, four-row diagram connects current CV, CAV, and
+  ITS communication, the remaining protocol and measurement gaps, and future
+  capabilities for unified applications, deadline-aware communication,
+  coordinated paths, and resilient cooperative safety.}
+  \label{fig:rw-gap}
+\end{figure*}
+
+\textbf{Standards and application platforms.}
+Vehicular interoperability is divided across message, service, and edge
+layers. SAE J2735 defines safety, road-user, map, signal, and priority messages
+for CV and ITS applications~\cite{saej2735_2020}. The 3GPP V2X architecture
+defines PC5 and Uu communication, while its V2X Application Enabler supports
+registration, delivery, resource management, continuity, and session
+procedures~\cite{etsi123287r18,etsi123286r18}. The ETSI Multi-access Edge
+Computing V2X Information Service provides PC5/Uu provisioning, predicted
+quality of service, and publish/subscribe procedures~\cite{etsimec030}.
+Architectures and platforms from the 5G Automotive Association, ETSI, V2X Hub,
+and CARMA connect selected actors and functions
+~\cite{fivegaa2020architecture,etsi302665,usdotv2xhub,usdotcarma}.
+
+These layers solve complementary interoperability problems. J2735 defines
+individual messages, 3GPP manages application services and sessions, and MEC
+distributes V2X information. Their composition does not provide one
+implemented application-level data model that preserves J2735 messages and
+represents the state of a correlated CAV operation through the same interface.
+IPI provides this common data model and transport-independent interface.
+
+\textbf{CAV systems and middleware.}
+EMP and AutoCast select and exchange cooperative perception information
+~\cite{zhang2021emp,qiu2022autocast}. VIPS, VI-Map, and SOAR return fused
+perception, compact maps, and coordinated services from roadside
+infrastructure~\cite{shi2022vips,he2023vimap,shi2024soar}. Their objects range
+from intermediate features to detections, trajectories, and control state.
+This representation determines the transmitted size, while the driving task
+determines its deadline.
+
+D3 schedules autonomous-driving operators against end-to-end deadlines
+~\cite{gog2022d3}. Tentacles selects or combines networks, adapts data quality,
+and invokes local fallback when a remote result misses its deadline
+~\cite{wu2024tentacles}. AutowareV2X selects the fresher collective perception
+message received over Wi-Fi or LTE~\cite{asabe2024autowarev2x}. These systems
+demonstrate application-aware execution and communication, but their exchanged
+objects and operation state remain application specific. IPI makes the message
+type, operation identity, timing, and response state available through one
+interface, allowing network-selection and adaptation mechanisms to operate on
+both CV and CAV applications.
+
+\textbf{Direct V2X and cellular field evidence.}
+SEE-V2X combines commercial C-V2X traces with awareness and perception
+workloads. Ku et~al. measure complete fragmented-image delivery, National
+Institute of Standards and Technology testing examines device
+interoperability, and recent hardware-in-the-loop and CooperScene studies
+connect PC5 behavior to control and perception
+~\cite{mo2025seev2x,ku2022adaptive,song2024nist,zhan2026hil,wu2026cooperscene}.
+Together, these studies show why packet delivery alone can overstate
+application availability: a missing fragment or late update can invalidate an
+object.
+
+Cellular studies use application-specific completion measures. Vehicle-data
+upload, teleoperation, and TARGET-X trials report throughput, frame latency,
+freshness, service quality, or edge behavior
+~\cite{carpenter2023multimodal,kakkavas2022teso,fezeu2025teleoperating,
+nasreddine2026targetx}. The Next Generation Mobile Networks Alliance identifies
+implementation and interoperability requirements for balanced and
+uplink-oriented time-division-duplex frames~\cite{ngmn2021tdd}. Demircioglu's
+40-km private 5G standalone corridor provides the closest cross-path baseline:
+it integrates PC5 and Uu and measures application-layer latency and packet
+delivery for six Cooperative ITS scenarios across speed and traffic-density
+conditions~\cite{demircioglu2026corridor}.
+
+The literature establishes useful applications, middleware, and deployed PC5
+and 5G communication. It does not yet provide a common CV/CAV interface and a
+cross-path evaluation that applies both compact messages and larger stateful
+objects, retains every issued request in the denominator, and tests each
+response against its application deadline. IPI supplies the common interface.
+The field study then locates PC5 and Uu support boundaries across payload,
+direction, radio condition, continuous traffic, concurrent demand, and
+interruption. Section~\ref{sec:ipi} defines IPI, and
+Sections~\ref{sec:setup} and \ref{sec:results} present the evaluation.

@@ -1,0 +1,289 @@
+\section{IPI Reference Schema}
+\label{app:ipi}
+
+Table~\ref{tab:ipi-schema} summarizes the public data model used by the
+reference implementation. Message-mode calls use an envelope around a typed or
+pre-encoded payload. Operation-mode calls add a session identifier and operation
+state. The reference facade stores active sessions and responses in memory and
+exposes registration, heartbeat, telemetry, invocation, response retrieval,
+and termination calls.
+
+\begin{table*}[t]
+  \caption{IPI reference data model.}
+  \label{tab:ipi-schema}
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}p{0.18\textwidth}p{0.34\textwidth}p{0.39\textwidth}@{}}
+    \toprule
+    Object & Principal fields & Function \\
+    \midrule
+    Envelope metadata & Message, source, intersection, send time, transport class, optional session and correlation identifiers & Identifies an independent message or envelope-based operation \\
+    J2735 payload & Message type, encoding, typed content or pre-encoded bytes, optional frame counter & Carries typed BSM, PSM, MAP, SPaT, SRM, and SSM profiles or preserves any encoded J2735 message \\
+    CAV operation request & Operation class, vehicle, request, optional session, location, application context, desired horizon, opaque data & Describes a perception, planning, control, or map operation \\
+    CAV operation result & Session, vehicle, operation class, progress state, expiration, confidence, typed or opaque content & Represents an update, completion, or rejection associated with a CAV operation \\
+    Session records & Vehicle profile, role, requested operations, state, lease, heartbeat interval, telemetry, responses & Maintains the application state used by continuing operations \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+The C++17 implementation maps supported J2735 structures into the common IPI
+envelope. It preserves externally encoded J2735 messages byte for byte. The
+cooperative-service object uses a canonical binary encoding. Its validators
+bound identifiers, strings, waypoints, detected objects, control commands,
+confidence, and opaque payload length. Seven automated tests cover selected
+BSM and PSM round trips, a SPaT transport loopback, one cooperative-message
+round trip, byte preservation, truncated-input rejection, session operations,
+topic parsing, and TCP/MQTT probe loopback. Correlation-identifier uniqueness,
+state-transition policy, security, admission, scheduling, and path selection
+remain application and deployment policies in the reference interface.
+
+\section{Deployment and Measurement Details}
+\label{app:setup}
+
+Table~\ref{tab:radio-details} expands the deployment context from
+Section~\ref{sec:setup}. The AirSpeed inventory records versions
+\texttt{22.0-24-0.0} and \texttt{22.00-53-0.0}. Its two
+enabled n48 cells map to two sector carriers. The primary application traffic
+used 70/20/10 and Cell~2. The August 15--19 TDD study records application
+direction, serving cell, location, reported signal context, and both cells'
+administrative state. Seven overlapping DU Cell exports provide five-minute
+cell counters for the available experiment windows. Their zone-less timestamps
+are interpreted as EDT from traffic alignment. The CBRS export records
+Category~B General Authorized Access
+operation, one requested and authorized grant, no suspended grant, and a
+successful Spectrum Access System heartbeat.
+
+\begin{table*}[t]
+  \caption{Detailed radio, gateway, and endpoint configuration.}
+  \label{tab:radio-details}
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{2.7pt}
+  \begin{tabular}{@{}p{0.16\textwidth}p{0.39\textwidth}p{0.37\textwidth}@{}}
+    \toprule
+    Element & Retained configuration & Measurement record \\
+    \midrule
+    5G radio & Dedicated AirSpeed 2900; NR n48; TDD; 40~MHz; 30-kHz control and synchronization-signal subcarrier spacing; 20-ms synchronization block period & Clean n48 band without ambient traffic; one uplink and up to two downlink layers configured; downlink 256-quadrature-amplitude modulation enabled as a cell capability \\
+    Cells & Cell~1: absolute radio-frequency channel number 637992 and synchronization signal at 3558.720~MHz; Cell~2: 645334 and 3669.600~MHz & Primary traffic and the matched August 17 blocks used Cell~2; the second August 16 40/40/20 TCP repetition used Cell~1; the 70/20/10 Cell~2 lock was operator-reported \\
+    Power and antenna & 33-dBm cell transmit power; 34~dBm/MHz effective isotropic radiated power; 17-dBi cross-polarized integrated antenna & Product pattern approximately $65^{\circ}$ azimuth by $8^{\circ}$ elevation; structural centerline 20~ft above roof level \\
+    Duplex configuration & Established application profile: 70/20/10 downlink/uplink/dynamic frames; August 15--19 comparison: 40/40/20 and 70/20/10; fixed 10D4G packing & Route, cell state, and serving cell changed during the August 15--16 transition; August 17 and 19 supplied matched workload comparisons; separate 60/20/20 runs are excluded; the attempted 30/60/10 configuration produced no valid experiment \\
+    Vehicle gateway & Cisco Meraki MG52-HW campaign gateway with Telit FN990A40 modem and internal antenna; GL.iNet GL-X3000 replacement gateway; 1-Gbit/s full-duplex Ethernet & The August 19 GL-X3000 repeat records gateway RSRP, RSRQ, and SINR while evaluating both TDD profiles at one stationary location \\
+    Session and endpoint & SIM provisioned on Data Network Name \texttt{cisco5g}; operator-reported default 5G QoS Identifier 9; on-site MX250 and directly connected d1 host & Host captures observed TOS \texttt{0x0} for default and \texttt{5qi-mapped} experiment labels \\
+    Field context & Sole experiment UE; separate three-drive survey with a Samsung 22 handset running G-NetTrack Pro; 1,178 valid band-48 records; RSRP $-121$ to $-88$~dBm; recovered NR SINR $-20$ to 30~dB & Drive-survey medians: $-108$~dBm RSRP and 9~dB SINR; August 17: operator-reported $-100$-dBm RSRP and $-13$-dB RSRQ; August 18: $-105$ to $-115$~dBm; August 19 gateway medians: $-99$ and $-98$~dBm RSRP and 20-dB SINR \\
+    PC5 hardware & Mocar OBU, HUALI RSU, 2020 vendor J2735 stack, packet type \texttt{0x1b}, 4,080-B installed-interface limit & GNSS-joined application outcomes; no received-power, channel, resource-pool, modulation, or retransmission export \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+One CAV gateway serves as the sole physical experiment UE. The dedicated radio
+and 40-MHz channel operate in a clean n48 band without ambient contention. The load experiment
+places one to four streams behind it. The client-demand experiment places
+1--100 closed-loop clients behind the same attachment. These workloads
+traverse the gateway, Uu path, private core, transport, and d1 responder. The
+matrix excludes public-network handover and roaming. This controlled
+radio-band context removes ambient users as an explanation for the results.
+Profile transitions can still change route, cell state, serving cell, signal,
+and transport state, so those fields remain part of each comparison.
+
+The 5G radio survey comprises three continuous drives through the testbed.
+After removing 123 records from a frozen radio-value interval, it retains
+1,178 band-48 records with a median RSRP of $-108$~dBm and a median recovered
+NR SINR of 9~dB. We use this survey for route-level coverage and retain the
+signal records collected with each stationary application campaign for its
+workload comparisons.
+The PC5 collections include a reference point, a building-obstructed NLOS
+point, successive stationary field points, and four driven routes. Exact GNSS
+coordinates are transformed to a local frame in the analysis artifacts.
+
+\section{Workload and Experiment Matrix}
+\label{app:matrix}
+
+The PC5 stationary sweep sends 0, 0.25, 0.5, 1, and 2~KiB, normally for
+1,000 requests per size at 100-ms intervals and a 1,000-ms harness timeout.
+Timeout-dominant collections retain every transmitted request. The four route
+collections send 0.25-KiB requests at 200-ms intervals. One stopped route contains
+675 attempts; the other routes contain 1,000 attempts each.
+
+The five stationary uplink-heavy 5G payload campaigns were collected on May 13, 14, 15, 21,
+and 22, 2026. Most completed conditions contain 1,000 requests at 200-ms
+intervals. Every application request uses an IPI cooperative-service frame.
+The requested size denotes its application content; sender logs retain the encoded
+IPI frame size. The dataset manifest contains 22,431 artifacts from
+OpenDAIR-V2X, V2X-Seq, TruckV2X, and V2X-Radar. Images span 25.5--666.9~KiB,
+point clouds span 15~KiB--3.85~MiB, and maps span 22.3--44.9~MiB. These ranges
+motivate the fixed-size sweeps. The 128--512-KiB and 1--2-MiB transfers
+represent chunks drawn from these application-payload scales.
+
+We derive payload sizes from 922 saved V2X-Radar validation outputs. The model
+assigns a 256-B header and 96~B per predicted object. Payloads range from
+12.9 to 24.4~KiB, with median, p95, and p99 sizes of 19.2, 22.3, and
+23.4~KiB. Network replay fills an IPI cooperative-service content field to each
+representative size. The
+58.6-KiB condition is a separate stress payload. The responder returns a
+compact correlated acknowledgment immediately after decoding the frame.
+
+The August 15--16 TDD runs retain the same uplink-heavy timing contract. The
+August 17 matched experiment instead uses a compact vehicle request followed by
+an exact 1-, 10-, 100-, or 500-KiB edge-to-vehicle response. Each profile
+contains 1,000 validated TCP and MQTT exchanges per payload. The vehicle timer
+includes complete payload receipt and sequence, length, and checksum
+validation. The same experiment then performs ten exact 50-MiB TCP
+uploads and ten exact downloads per profile. Endpoint byte counts, checksums,
+and receiver-observed durations define application goodput.
+
+The August 18 40/40/20 repeat uses 1,000 uplink-heavy and downlink-heavy
+exchanges at 1, 10, and 100~KiB. Each transport contains 250 declared
+uplink-heavy exchanges at 500~KiB and 500 downlink-heavy exchanges. Reported RSRP
+changes from $-105$ to $-110$ and then $-115$~dBm during the run. Its shortened
+bulk stage contains one complete upload/download pair and one additional
+upload. The failed August 17 downlink preflight, the bulk pilot, and the
+unintended August 18 partial preflight remain diagnostic artifacts outside the
+primary estimates.
+The August 19 GL-X3000 repeat uses 500 validated exchanges for every
+combination of direction, transport, profile, and 1-, 10-, 100-, or 500-KiB
+payload. It adds three exact 50-MiB uploads and three exact downloads per
+profile. The two profile blocks retain separate gateway radio records and use
+the same stationary location.
+Table~\ref{tab:experiment-matrix} records the controlled conditions and the
+corresponding measurement for every experiment family.
+
+\begin{table*}[t]
+  \caption{Complete workload and communication experiment matrix.}
+  \label{tab:experiment-matrix}
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{2.7pt}
+  \begin{tabular}{@{}p{0.18\textwidth}p{0.36\textwidth}p{0.36\textwidth}@{}}
+    \toprule
+    Question & Controlled conditions & Recorded outcome \\
+    \midrule
+    Message and compact exchange & J2735 callback checks; local IPI tests; PC5 echo; Uu 0--4-KiB IPI frames over TCP/MQTT & Decode or callback result, response completion, RTT \\
+    Payload scale & PC5 0--2~KiB; uplink-heavy Uu IPI frames with 0--2~MiB vehicle-originated content; downlink-heavy Uu frames with 1--500~KiB returned content; detector-derived sizes; 58.6-KiB stress payload & $C(D)$ and response p50/p95/p99 \\
+    Field and route coverage & PC5 stationary points and four routes; original Uu stationary collections and Samsung 22 continuous-drive survey; matched August 17 location~3; August 18 time-segmented context; August 19 same-location gateway measurements & GNSS-joined response completion, RTT, and separate radio context \\
+    Protocol formation & TCP, MQTT QoS~0 over TCP, raw UDP, and UDP with 1,400-B application fragments & Returned acknowledgment after decode or returned payload after reassembly and validation \\
+    TDD and application direction & August 15--16 uplink-heavy repetitions; August 17 matched downlink-heavy responses and exact transfers; August 18 weak-signal direction repeat; August 19 same-device 1--500-KiB bidirectional and exact-transfer matrix under both profiles & Profile-transition repeatability, response RTT, deadline completion, exact application goodput, device sensitivity, and radio context \\
+    Exact directional transfer & Ten exact 50-MiB uploads and downloads per August 17 profile; three per August 19 profile and direction; receiver byte-count and checksum validation & Individual transfer goodput, mean, and 95\% confidence interval \\
+    Competing traffic & Separate historical 15-minute offered controls; 1-KiB foreground with one to four offered 25-Mbit/s uplink streams & Achieved background rate and foreground deadline completion \\
+    Application demand & 1, 2, 5, 10, 20, 50, and 100 clients; 1-KiB closed-loop requests; sole experiment UE & Aggregate and per-client response completion and RTT \\
+    Packet marking & Default and \texttt{5qi-mapped} application labels & Vehicle-interface Internet Protocol header capture \\
+    Interruption & TCP receiver, UDP receiver, MQTT receiver, or MQTT broker restarted for 10~s & Missing attempts, deadline completion, and response gap \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+In the closed-loop application-demand collection, each application client waits
+for a response or timeout before the next
+request from that client and then applies a 200-ms interval. At negligible
+response time, five requests/s/client is the maximum nominal rate. A
+locked-cell 70/20/10 collection additionally uses four conditions: one idle 1-KiB client,
+one idle 23.4-KiB client, the 1-KiB client with offered uplink traffic, and 100
+1-KiB clients. TCP, MQTT, and UDP occupy separate five-minute collection bins
+with two repetitions. The first three conditions use 500 probes per repetition;
+the 100-client condition uses 500 probes per client per repetition.
+
+Every issued primary request/response attempt remains in its condition
+denominator, including missing, timed-out, late, and failed attempts. Entirely
+excluded diagnostic roots and never-started bulk repetitions do not enter a
+primary estimate. Operator-shortened conditions use their declared retained
+counts. The request/response experiments carry application-derived workloads
+in IPI cooperative-service frames and measure RTT and deadline completion.
+PC5 uses sequence-matched workload echoes. Exact bulk transfers instead use
+validated bytes, checksum, receiver duration, and application goodput.
+
+\section{Detailed Results for Additional Conditions}
+\label{app:detailed-results}
+
+Several experiment families include conditions that are not represented by
+dedicated figure panels. This section reports their complete numerical
+outcomes.
+
+\subsection{Field-Specific Uplink Payload and Transport Results}
+
+Field collections changed the response tail across both payload and transport.
+In one collection, 0--4-KiB p95 RTT was 36--49~ms for MQTT and 100--140~ms for
+TCP. At 2~MiB, p95 reached 2,536 and 3,633~ms. At another location, 2-MiB TCP
+p95 reached 10,767~ms. In a variable-path collection, empty-payload TCP and
+MQTT p95 rose to 1,142 and 510~ms. The 256-KiB MQTT condition returned
+999/1,000 responses with a 43,836-ms p95.
+
+The transport comparison used empty-payload controls, detector-derived
+payloads, and the 58.6-KiB stress payload. In the $-106$-dBm collection, TCP and
+MQTT returned every response at each size. MQTT p95 RTT increased from
+49.826~ms with an empty payload to 183.705~ms for the 23--24-KiB group and
+403.790~ms at 58.6~KiB. The corresponding TCP values were 151.696,
+169.540--213.894, and 381.409~ms. In the $-120$-dBm collection, 58.6-KiB MQTT
+and TCP p95/p99 increased to 770/1,230 and 662/1,027~ms.
+
+Raw UDP returned 1,000/1,000 empty-payload and 300/300 1-KiB responses. It
+returned 0/45, 0/100, and 0/100 at 1.37, 4, and 19.2~KiB. Application
+fragmentation and receiver reassembly increased response completion at
+$-106$~dBm. Completed responses reached 99.5--100.0\% through 23.4~KiB, while
+the 58.6-KiB condition returned 20/100 responses. At $-120$~dBm, payloads
+through 4~KiB returned 99.9--100.0\%, 19--25-KiB payloads returned
+93.5--96.1\%, and 58.6~KiB returned 0/100.
+
+\subsection{Gateway and TDD Replication Results}
+
+At 70/20/10, the closest MG52 control and the GL-X3000 repeat had reported or
+measured median RSRP of $-100$ and $-99$~dBm. The GL-X3000 repeat measured
+15.691~Mbit/s upload and 166.106~Mbit/s download goodput. These rates are
+30.8\% and 31.0\% above the MG52 control rates of 12.000 and
+126.786~Mbit/s. Under 40/40/20, the earlier MG52 collection crossed weaker
+reported signal levels from $-105$ to $-115$~dBm. The later GL-X3000
+collection at median $-98$~dBm measured 10--500-KiB vehicle-to-edge p50 RTTs
+63.7--92.4\% below the earlier MG52 collection, so the earlier large-uplink
+collapse did not recur. The same-device comparison still produced lower burst
+latency and higher sustained goodput under 70/20/10. The higher rates in the
+replacement-device run therefore did not remove the measured gap between the
+two deployed configurations.
+
+Consecutive 70/20/10 runs changed TCP p95 RTT by only 0.22--1.29\% across
+1--100~KiB. During the initial 40/40/20 rollout, the route required recovery,
+cell administrative state changed, and separate repetitions selected different
+serving cells. A later matched MG52 downlink block completed all 8,000
+exchanges, although its payload and transport effects differed. The GL-X3000
+repeat completed both directional matrices but retained the large-object
+latency and goodput gap.
+
+\subsection{Sustained-Stream Load and Packet-Marking Results}
+
+The two $-106$-dBm repetitions achieved 1.320--2.267~Mbit/s of background
+traffic. MQTT $C(100\,\mathrm{ms})$ fell from 99.70\% at idle to 40.15\% with
+the generator active. At 200~ms, it changed from 99.95\% to 98.00\%. TCP
+achieved 0.75\% and 0.40\% at 100~ms. Its 200-ms completion fell from 97.90\%
+to 59.00\%. Across one, two, and four background streams, achieved throughput
+ranged from 1.990 to 5.743~Mbit/s. The pooled active-generator conditions in
+two weak-band collections produced MQTT/TCP 200-ms completion of
+83.63\%/38.40\% and 91.90\%/49.17\%.
+
+At $-106$~dBm, the active generator increased MQTT p95 from 52--60 to
+174--176~ms. TCP p95 increased from 162--194 to 388--420~ms. Across the one-,
+two-, and four-stream sweep, MQTT p95 was 170, 468, and 182~ms. TCP p95 was
+391, 402, and 410~ms. The MQTT tail did not vary monotonically with the number
+of streams.
+
+The default and \texttt{5qi-mapped} labels both produced observed TOS values of
+\texttt{0x0} in the vehicle capture. The foreground and background flows
+entered the measured path without an observed packet-class difference between
+the requested labels.
+
+\subsection{Concurrent-Client Results}
+
+In the $-106$-dBm seven-point repeat, 100 clients produced aggregate p95 RTTs
+of 81.850~ms for MQTT, 264.070~ms for TCP, and 113.391~ms for UDP. MQTT and TCP
+each returned 100,000 of 100,000 responses. UDP returned 99,965 of 100,000. A
+separate 100-client repeat yielded p95 values of 177.053, 283.765, and
+145.894~ms and returned 100,000, 100,000, and 99,365 responses.
+
+The 100-client collection at $-120$~dBm produced a different ordering. MQTT
+and TCP p95 rose to 5,135.984 and 2,908.420~ms. They completed 99.499\% and
+100\% of issued requests before the harness timeout. UDP completed 90,811 of
+100,000 requests, with a p95 of 172.500~ms. Its shorter response tail coincides
+with 9,189 missing cycles.
+
+The per-client distributions reveal substantial unfairness within the shared
+attachment. Across 100 clients, the median client p95/p99 was
+3,814.102/13,149.421~ms for MQTT and 2,938.408/6,400.146~ms for TCP. Many flows
+fall outside the 100- and 200-ms application budgets even though most requests
+still receive a response before the harness timeout.

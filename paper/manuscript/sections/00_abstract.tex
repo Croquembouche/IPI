@@ -1,0 +1,33 @@
+\begin{abstract}
+Are today's vehicle-to-everything (V2X) and fifth-generation (5G) communication
+paths ready for tomorrow's connected and automated vehicle (CAV) applications?
+Conventional connected-vehicle (CV) and intelligent transportation system (ITS)
+applications exchange compact, stateless SAE International J2735 messages.
+Complex CAV applications instead use correlated, stateful operations. These
+operations may carry larger objects and generate event-triggered bursts or
+sustained streams in either direction. The current landscape lacks a common
+interface for both classes. Existing studies do not establish where either path
+misses application deadlines when carrying both workload classes.
+
+In this paper, we contribute the Intersection Programming Interface (IPI) and a
+detailed real-vehicle communication-latency study. IPI provides a
+transport-independent interface for the SAE International J2735 message set and
+correlated CAV operations. The study evaluates both classes over a commercial
+Long-Term Evolution cellular V2X (LTE C-V2X) direct PC5 path and a private 5G
+New Radio (NR) network-assisted Uu path. The 5G deployment uses one physical CAV
+user equipment (UE), a dedicated radio, and a clean 40-MHz n48 channel without
+ambient contention. Competing traffic and application-client demand are
+introduced only as experimental variables. Experiments vary payload size,
+direction, transport, radio conditions, and interruption. We report
+response round-trip time (RTT), the percentage of issued requests answered by
+each deadline, and directional application goodput.
+
+The measurements yield three insights. 1) The measured commercial direct V2X
+path supports compact J2735 messages only within a limited payload and coverage
+envelope. 2) The CAV application-packet size that the measured 5G uplink
+completes within a decision deadline is severely limited. 3) 5G and
+sixth-generation (6G) radios must support event-triggered bursts and sustained
+streams in either direction while isolating concurrent flows if cellular
+networks are to support CAV and ITS applications that advance the goal of zero
+road fatalities.
+\end{abstract}

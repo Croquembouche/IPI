@@ -1,0 +1,72 @@
+{
+  "runs": [
+    {
+      "run": "Drive 1",
+      "source": "artifacts/gnettrack/2026.08.19_three_drives/Cisco_Private_SIM2_2026.08.19_12.06.05",
+      "samples": 860,
+      "excluded_plateau_samples": 123,
+      "start": "2026.08.19_12.06.05",
+      "end": "2026.08.19_12.13.41"
+    },
+    {
+      "run": "Drive 2",
+      "source": "artifacts/gnettrack/2026.08.19_three_drives/315010_SIM2_2026.08.19_12.13.43",
+      "samples": 7,
+      "excluded_plateau_samples": 0,
+      "start": "2026.08.19_12.13.43",
+      "end": "2026.08.19_12.13.46"
+    },
+    {
+      "run": "Drive 3",
+      "source": "artifacts/gnettrack/2026.08.19_three_drives/Cisco_Private_SIM2_2026.08.19_12.14.54",
+      "samples": 434,
+      "excluded_plateau_samples": 0,
+      "start": "2026.08.19_12.14.54",
+      "end": "2026.08.19_12.18.32"
+    }
+  ],
+  "samples": 1301,
+  "start": "2026.08.19_12.06.05",
+  "end": "2026.08.19_12.18.32",
+  "plateau_threshold_s": 5.0,
+  "excluded_plateau_samples": 123,
+  "cell_records": {
+    "NR": 1356
+  },
+  "gnettrack_network_type_counts": {
+    "1000": 1299,
+    "20": 2
+  },
+  "reported_rsrp": {
+    "count": 1301,
+    "unique": 33,
+    "min": -121.0,
+    "median": -108.0,
+    "mean": -107.13528055342044,
+    "max": -88.0
+  },
+  "reported_snr": {
+    "count": 0,
+    "unique": 0,
+    "min": null,
+    "median": null,
+    "mean": null,
+    "max": null
+  },
+  "recovered_rsrp": {
+    "count": 1178,
+    "unique": 33,
+    "min": -121,
+    "median": -108.0,
+    "mean": -107.4320882852292,
+    "max": -88
+  },
+  "recovered_snr": {
+    "count": 1178,
+    "unique": 46,
+    "min": -20,
+    "median": 9.0,
+    "mean": 8.79541595925297,
+    "max": 30
+  }
+}
