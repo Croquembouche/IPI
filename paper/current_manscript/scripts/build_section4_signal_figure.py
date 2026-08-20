@@ -19,7 +19,7 @@ SOURCE = (
     / "results/real_5g/20260818_19_gnettrack_rsrp_snr/gnettrack"
     / "2026.08.19_three_drives/combined_map"
 )
-OUT = MANUSCRIPT / "figures/section4_signal_survey.pdf"
+OUT = MANUSCRIPT / "figs/section4_signal_survey.pdf"
 
 mpl.rcParams.update(
     {
@@ -42,6 +42,7 @@ def map_body(path: Path):
 
 
 def main() -> None:
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     panels = [
         (
             SOURCE / "interpolated_rsrp_osm.png",

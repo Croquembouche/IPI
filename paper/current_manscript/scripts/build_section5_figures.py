@@ -16,7 +16,7 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "figures"
+OUT = ROOT / "figs"
 OUT.mkdir(parents=True, exist_ok=True)
 
 mpl.rcParams.update(

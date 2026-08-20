@@ -22,51 +22,28 @@ second (Mbit/s), or gigabits per second (Gbit/s).
 
 \subsection{Testbed and Measured Paths}
 
-Figure~\ref{fig:testbed-overview} presents the testbed topology and equipment.
-The vehicle host runs the workload sender and sender-side timer. Its
-PC5 interface is a Mocar on-board unit (OBU), and its Uu interface is an MG52 or
-GL-X3000 gateway. The corresponding radio endpoints are a fixed HUALI roadside
-unit (RSU) and an outdoor Airspan AirSpeed 2900 gNodeB. Both paths terminate at
-the d1 application host, which connects directly to the RSU and the on-site
-MX250. The remote MX68CW manages the private 5G deployment and is outside the
-measured user-data path~\cite{cisco2025private5g,cisco2026mx250,cisco2026mx68}.
+Figure~\ref{fig:testbed-overview} shows the physical installation and the radio
+deployment. The vehicle host generates each workload and records sender-side
+round-trip time (RTT). A Mocar on-board unit (OBU) provides its PC5 interface,
+while an MG52 or GL-X3000 gateway provides its Uu interface. At the fixed site,
+a HUALI roadside unit (RSU) terminates PC5, and an outdoor Airspan AirSpeed 2900
+gNodeB terminates Uu. Both paths reach the d1 application host through direct
+wired connections to the RSU or the on-site MX250. The remote MX68CW manages
+the private 5G deployment and remains outside the measured user-data
+path~\cite{cisco2025private5g,cisco2026mx250,cisco2026mx68}.
 
 \begin{figure*}[t]
   \centering
-  \begin{tikzpicture}[
-      font=\small,
-      >={Stealth[length=2.2mm]},
-      node/.style={draw, rounded corners=2pt, align=center, minimum height=0.78cm,
-                   inner sep=3pt, text width=1.75cm},
-      host/.style={node, text width=2.35cm},
-      link/.style={<->, line width=0.8pt}]
-    \node[host, fill=blue!5] (host) at (-6.5,0)
-      {Vehicle host\\sender and timer};
-    \node[node, fill=blue!5] (obu) at (-3.5,1.0) {Mocar OBU};
-    \node[node, fill=blue!5] (mg52) at (-3.5,-1.0) {5G gateway\\MG52 or GL-X3000};
-    \node[node, fill=green!7] (rsu) at (0,1.0) {HUALI RSU};
-    \node[node, fill=green!7] (ran) at (-0.4,-1.0) {n48 gNodeB};
-    \node[node, fill=green!7] (core) at (2.4,-1.0) {Private 5G};
-    \node[node, fill=green!7] (mx) at (4.8,-1.0) {MX250};
-    \node[host, fill=orange!8] (endpoint) at (7.2,0)
-      {d1 host\\workload responder};
-    \draw[->,line width=0.8pt] (host.north east) -- (obu.west);
-    \draw[link] (obu) -- node[above] {PC5} (rsu);
-    \draw[link] (rsu) -- (endpoint);
-    \draw[->,line width=0.8pt] (host.south east) -- (mg52.west);
-    \draw[link] (mg52) -- node[above] {NR Uu} (ran);
-    \draw[link] (ran) -- (core);
-    \draw[link] (core) -- (mx);
-    \draw[link] (mx) -- (endpoint);
-  \end{tikzpicture}
-  \caption{Testbed and equipment overview. The autonomous-vehicle host reaches
-  d1 through either the commercial Mocar/HUALI PC5 equipment or the
-  MG52/GL-X3000, n48 gNodeB, private-5G, and MX250 Uu equipment. The two paths
-  share the vehicle host and d1 endpoint but were measured separately.}
-  \Description{An autonomous-vehicle host connects through an on-board unit and
-  roadside unit over PC5 or through a cellular gateway, n48 gNodeB, private 5G
-  system, and local MX250 over Uu. Both paths terminate at the directly
-  connected d1 workload responder.}
+  \includegraphics[width=\textwidth]{figs/figure03_physical_testbed.pdf}
+  \caption{Physical testbed. (a) The autonomous vehicle carries the Mocar OBU,
+  MG52 gateway, and vehicle host. (b) The fixed installation contains the
+  AirSpeed 2900 gNodeB, MX250, HUALI RSU, traffic-light controller, portable
+  OpenIntersection, and d1 application host. (c) The map locates the gNodeB and
+  PC5 RSU. Map data \copyright\ OpenStreetMap contributors.}
+  \Description{Three panels show the physical testbed. The first identifies the
+  Mocar OBU, MG52 gateway, and vehicle host installed in the autonomous vehicle.
+  The second shows the fixed private-5G and OpenIntersection equipment. The
+  third maps the locations of the 5G gNodeB and PC5 roadside unit.}
   \label{fig:testbed-overview}
 \end{figure*}
 
@@ -95,7 +72,7 @@ number, length, and checksum before stopping its RTT timer.
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\textwidth]{../figs/edge4av_figure3_editable.pptx.pdf}
+  \includegraphics[width=\textwidth]{figs/figure04_measurement_paths.pdf}
   \caption{Detailed request/response data paths and sender-side RTT boundaries.
   (a) The direct PC5 request returns a same-size, sequence-matched echo. (b) The
   network-assisted Uu path carries either a large vehicle-originated IPI
@@ -189,7 +166,7 @@ and RTT measurements along each driven path.
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=0.88\textwidth]{figures/section4_signal_survey.pdf}
+  \includegraphics[width=0.88\textwidth]{figs/section4_signal_survey.pdf}
   \caption{Continuous-drive radio survey of the private 5G testbed. A Samsung 22
   handset running G-NetTrack Pro recorded three drive segments. The maps
   interpolate (a) SS-RSRP and (b) recovered NR SINR from 1,178 valid band-48
