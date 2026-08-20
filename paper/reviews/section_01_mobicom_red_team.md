@@ -2,7 +2,7 @@
 
 Date: 2026-08-12
 
-Scope: the new `paper/manuscript/sections/01_introduction.tex` only. The panel
+Scope: the new `paper/current_manscript/sections/01_introduction.tex` only. The panel
 did not review or reuse any file under `paper/legacy_draft/`.
 
 Panel: one GPT-5.6 Terra Max subagent acting independently as 1) a MobiCom
@@ -122,4 +122,4 @@ Not applied:
    application claim was added.
 
 One implementation-expansion question remains genuinely uncertain and is
-recorded in `paper/manuscript/proposed_changes.md` for user approval.
+recorded in `paper/current_manscript/proposed_changes.md` for user approval.

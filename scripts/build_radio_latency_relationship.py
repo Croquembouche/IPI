@@ -263,7 +263,7 @@ def main():
     )
     parser.add_argument(
         "--figure",
-        default="paper/figs/fig-radio-latency-relationship.png",
+        default="paper/legacy_draft/figs/measurements/fig-radio-latency-relationship.png",
         help="Output paper figure",
     )
     parser.add_argument(

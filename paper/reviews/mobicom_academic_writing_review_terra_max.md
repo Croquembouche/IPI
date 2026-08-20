@@ -2,7 +2,7 @@
 
 Reviewer: GPT-5.6 Terra, maximum reasoning effort
 
-Scope: current manuscript source (`paper/manuscript/main.tex` and Sections
+Scope: current manuscript source (`paper/current_manscript/main.tex` and Sections
 00--08) and the current 16-page rendered PDF
 
 Review mode: read-only; no manuscript, figure, script, or PDF was edited
@@ -24,10 +24,10 @@ Finding count: **P0: 1; P1: 3; P2: 1.**
 
 Locations:
 
-- `paper/manuscript/sections/04_system_design_setup.tex:246--253`
-- `paper/manuscript/sections/05_experiment_results.tex:78--83`
-- `paper/manuscript/sections/06_future_research_directions.tex:16--18`
-- `paper/manuscript/sections/06_future_research_directions.tex:35--36`
+- `paper/current_manscript/sections/04_system_design_setup.tex:246--253`
+- `paper/current_manscript/sections/05_experiment_results.tex:78--83`
+- `paper/current_manscript/sections/06_future_research_directions.tex:16--18`
+- `paper/current_manscript/sections/06_future_research_directions.tex:35--36`
 
 Phrases such as "complete workload objects," "large transfer completion,"
 "complete results," and services that "complete in time" can move the claim
@@ -46,9 +46,9 @@ Representative replacement:
 
 Locations:
 
-- `paper/manuscript/sections/00_abstract.tex:18--24`
-- `paper/manuscript/sections/05_experiment_results.tex:125--132`
-- `paper/manuscript/sections/07_conclusion.tex:14--19`
+- `paper/current_manscript/sections/00_abstract.tex:18--24`
+- `paper/current_manscript/sections/05_experiment_results.tex:125--132`
+- `paper/current_manscript/sections/07_conclusion.tex:14--19`
 
 The paper alternates among "reliably carries," "completion," "complete-object
 loss," "dependable," and "availability." This variation makes it unclear
@@ -71,9 +71,9 @@ legends, and the conclusion.
 
 Locations:
 
-- `paper/manuscript/sections/00_abstract.tex:11--13`
-- `paper/manuscript/sections/04_system_design_setup.tex:62--67`
-- `paper/manuscript/sections/05_experiment_results.tex:258--264`
+- `paper/current_manscript/sections/00_abstract.tex:11--13`
+- `paper/current_manscript/sections/04_system_design_setup.tex:62--67`
+- `paper/current_manscript/sections/05_experiment_results.tex:258--264`
 
 PC5, Uu, RTT, and \(A_{\mathrm{cycle}}\) are not always explained where a
 reader first encounters them or where a figure may be read independently.
@@ -86,8 +86,8 @@ including missing and late responses.
 
 Locations:
 
-- `paper/manuscript/sections/02_related_work.tex:57--61`
-- `paper/manuscript/sections/03_ipi_protocol_design.tex:4--8`
+- `paper/current_manscript/sections/02_related_work.tex:57--61`
+- `paper/current_manscript/sections/03_ipi_protocol_design.tex:4--8`
 
 Related Work ends with a common-application-level evaluation gap, but the IPI
 section opens with a definition rather than explicitly showing how IPI enables
@@ -106,7 +106,7 @@ message definitions and Vehicular Application Enabler session services.
 
 Location:
 
-- `paper/manuscript/sections/04_system_design_setup.tex:226--239`
+- `paper/current_manscript/sections/04_system_design_setup.tex:226--239`
 
 One paragraph currently combines workload provenance, IPI encoding, detector
 object sizes, dataset transfer sizes, transport protocols, traffic direction,

@@ -2,7 +2,7 @@
 
 Date: 2026-08-12
 
-Reviewed artifact: `paper/manuscript/sections/02_related_work.tex`
+Reviewed artifact: `paper/current_manscript/sections/02_related_work.tex`
 
 Review panel:
 

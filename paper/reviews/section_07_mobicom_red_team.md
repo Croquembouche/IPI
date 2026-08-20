@@ -2,7 +2,7 @@
 
 ## Scope and verdict
 
-Reviewed the current conclusion source (`paper/manuscript/sections/07_conclusion.tex`), the binding conclusion outline (`paper/paper_outline.md:4317-4362`), the current introduction (`paper/manuscript/sections/01_introduction.tex`), the approved three-insight synthesis (`paper/manuscript/sections/05_experiment_results.tex:379-424`), the Section 6 closing transition, and the current rendered conclusion page in `paper/manuscript/main.pdf`. No legacy prose, web source, manuscript edit, or new claim was used.
+Reviewed the current conclusion source (`paper/current_manscript/sections/07_conclusion.tex`), the binding conclusion outline (`paper/paper_outline.md:4317-4362`), the current introduction (`paper/current_manscript/sections/01_introduction.tex`), the approved three-insight synthesis (`paper/current_manscript/sections/05_experiment_results.tex:379-424`), the Section 6 closing transition, and the current rendered conclusion page in `paper/current_manscript/main.pdf`. No legacy prose, web source, manuscript edit, or new claim was used.
 
 **Source-text verdict: PASS / Accept.** The current source is a concise, two-paragraph conclusion that narratively combines the two contributions, synthesizes exactly the three approved insights, avoids new material, preserves the semantic-service boundary, and ends with a strong application-ready criterion.
 
@@ -39,7 +39,7 @@ However, current `main.pdf` page 25 still renders the prior text:
 
 > We then use it to evaluate complete exchanges over certified LTE C-V2X PC5 and private-5G NR Uu paths on a real autonomous vehicle.
 
-The latter can imply that IPI itself ran over the PC5 experiment. That is unsupported: Section 4 defines PC5 as standard BSM/SPaT checks plus custom echoes and defines the 5G path as IPI-envelope ACK probes (`04_system_design_setup.tex:589-595,643-645`). The current source replacement is correct; **do not change it again.** Rebuild `paper/manuscript/main.pdf`, verify that the rendered text says “Alongside this protocol,” and visually recheck the conclusion page.
+The latter can imply that IPI itself ran over the PC5 experiment. That is unsupported: Section 4 defines PC5 as standard BSM/SPaT checks plus custom echoes and defines the 5G path as IPI-envelope ACK probes (`04_system_design_setup.tex:589-595,643-645`). The current source replacement is correct; **do not change it again.** Rebuild `paper/current_manscript/main.pdf`, verify that the rendered text says “Alongside this protocol,” and visually recheck the conclusion page.
 
 ## Reviewer A — CAV/CV/ITS and protocol-semantics assessment
 

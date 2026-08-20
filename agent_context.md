@@ -41,6 +41,10 @@ folders may exist and should remain in their respective locations.
 - `web/experiment-tracker/` - static browser experiment tracker.
 - `results/` - collected experiment evidence. Keep raw files intact unless the
   user explicitly asks to remove them.
+- `paper/current_manscript/` - the self-contained current paper draft, including
+  TeX sources, build scripts, manuscript PDFs, and its local `figs/` directory.
+- `paper/legacy_draft/` - the retained old paper draft and its local `figs/`
+  directory for older concept, map, and measurement assets.
 
 ## Results Map
 

@@ -9,7 +9,23 @@ tmp/
 paper_attemp1/
 paper_attempt2/
 paper_attempt3/
-paper/
+# Keep untracked paper work private by default, while allowing the current
+# manuscript sources and publication figures to be versioned normally.
+paper/*
+!paper/current_manscript/
+paper/current_manscript/*
+!paper/current_manscript/28p.pdf
+!paper/current_manscript/Makefile
+!paper/current_manscript/main.pdf
+!paper/current_manscript/main.tex
+!paper/current_manscript/proposed_changes.md
+!paper/current_manscript/references.bib
+!paper/current_manscript/figs/
+!paper/current_manscript/figs/**
+!paper/current_manscript/scripts/
+!paper/current_manscript/scripts/*.py
+!paper/current_manscript/sections/
+!paper/current_manscript/sections/*.tex
 __pycache__/
 *.pyc
 log/

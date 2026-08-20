@@ -21,10 +21,10 @@ The five corrections requested during review are now materially correct:
 
 | Corrected point | Current manuscript status | Code/test evidence |
 |---|---|---|
-| Envelope scope | Correctly limited to “message or service request submitted through the envelope API” at [§3 L107](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:107); heartbeat/telemetry are said to carry session ID directly. | `HeartbeatUpdate` and `TelemetrySubmission` contain session-scoped fields rather than `EnvelopeMetadata` at [types.hpp L271](/media/william/blueicedrive/Github/IPI/cpp/include/ipi/api/types.hpp:271). |
-| Opaque J2735 path | Correctly says opaque bytes are preserved rather than decoded at [§3 L149](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:149). | Opaque ingest checks only nonempty bytes and stores them at [edge4av_interface.cpp L99](/media/william/blueicedrive/Github/IPI/cpp/src/api/edge4av_interface.cpp:99). |
-| Cooperative class/content consistency | Correctly says it is not enforced at [§3 L151](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:151). | `CooperativeServiceMessage::validate()` checks selected bounds but does not bind `serviceClass` to planning/perception/control payloads at [ipi_cooperative_service.cpp L69](/media/william/blueicedrive/Github/IPI/cpp/src/core/ipi_cooperative_service.cpp:69). |
-| Unknown-session scope | Correctly limits directory checks to heartbeat, patch, and termination at [§3 L251](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:251). | `invokeService()` and `submitTelemetry()` append data without a lookup at [receiver.cpp L146](/media/william/blueicedrive/Github/IPI/cpp/src/api/receiver.cpp:146). |
+| Envelope scope | Correctly limited to “message or service request submitted through the envelope API” at [§3 L107](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:107); heartbeat/telemetry are said to carry session ID directly. | `HeartbeatUpdate` and `TelemetrySubmission` contain session-scoped fields rather than `EnvelopeMetadata` at [types.hpp L271](/media/william/blueicedrive/Github/IPI/cpp/include/ipi/api/types.hpp:271). |
+| Opaque J2735 path | Correctly says opaque bytes are preserved rather than decoded at [§3 L149](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:149). | Opaque ingest checks only nonempty bytes and stores them at [edge4av_interface.cpp L99](/media/william/blueicedrive/Github/IPI/cpp/src/api/edge4av_interface.cpp:99). |
+| Cooperative class/content consistency | Correctly says it is not enforced at [§3 L151](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:151). | `CooperativeServiceMessage::validate()` checks selected bounds but does not bind `serviceClass` to planning/perception/control payloads at [ipi_cooperative_service.cpp L69](/media/william/blueicedrive/Github/IPI/cpp/src/core/ipi_cooperative_service.cpp:69). |
+| Unknown-session scope | Correctly limits directory checks to heartbeat, patch, and termination at [§3 L251](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:251). | `invokeService()` and `submitTelemetry()` append data without a lookup at [receiver.cpp L146](/media/william/blueicedrive/Github/IPI/cpp/src/api/receiver.cpp:146). |
 | MAP/SRM/SSM test coverage | Current test paragraph no longer says those serializers are covered. | The named `j2735_message_flow` test exercises BSM, PSM, one cooperative message, opaque TIM, and truncated PSM only at [j2735_message_flow_test.cpp L67](/media/william/blueicedrive/Github/IPI/cpp/tests/j2735_message_flow_test.cpp:67). |
 
 The changes above should stay. The residual mismatches below are the ones that remain high-impact.
@@ -33,7 +33,7 @@ The changes above should stay. The residual mismatches below are the ones that r
 
 ## P0-1. “UPER” and J2735 wording still risks a false formal-conformance implication
 
-**Manuscript locations:** [§3 L119–136](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:119), especially L127–134; [§3 Table 1, L149](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:149).
+**Manuscript locations:** [§3 L119–136](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:119), especially L127–134; [§3 Table 1, L149](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:149).
 
 **Why this remains high risk:** The prose properly says that the profile is not SAE’s production ASN.1 codec. But it continues to call the reference implementation a “bit-packed profile,” labels the API encoding `UPER`, and describes the cooperative bytes as a future J2735 regional-extension route. A standards reviewer can still reasonably infer that the actual serialized bytes are formal UPER or a defined regional extension.
 
@@ -64,7 +64,7 @@ Without that, do **not** use “UPER-conformant,” “J2735-compatible” for t
 
 ## P0-2. The manuscript still claims an MQTT/session topic binding that the repository does not implement
 
-**Manuscript locations:** [§3 L226–237](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:226); Figure 3 and caption at [§3 L70–101](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:70).
+**Manuscript locations:** [§3 L226–237](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:226); Figure 3 and caption at [§3 L70–101](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:70).
 
 **Why this is a direct implementation mismatch:**
 
@@ -101,7 +101,7 @@ Therefore, “This hierarchy makes an operation observable and routable when MQT
 
 ## P0-3. Lifecycle, session state, patch/termination, and failure semantics are represented but not enforced
 
-**Manuscript locations:** [§3 L203–213](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:203), [§3 L217–224](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:217), and Table 1 at [§3 L152–153](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:152).
+**Manuscript locations:** [§3 L203–213](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:203), [§3 L217–224](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:217), and Table 1 at [§3 L152–153](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:152).
 
 The current qualifier at L211–213—“the in-memory implementation does not enforce every legal transition”—is necessary but still too soft. The actual gap is more specific:
 
@@ -138,7 +138,7 @@ Thus §3 L223–224 currently overstates user-visible API behavior: the lower-le
 
 ## P0-4. The private-5G probe is a parsing/acceptance RTT harness, not a completed stateful CAV-service execution
 
-**Manuscript locations:** [§3 L264–285](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:264), especially L269–282.
+**Manuscript locations:** [§3 L264–285](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:264), especially L269–282.
 
 The paragraph says that adapters frame “correlated requests and acknowledgements” and log “application outcome.” That wording exceeds the code:
 
@@ -164,7 +164,7 @@ The paragraph says that adapters frame “correlated requests and acknowledgemen
 
 ## P0-5. Fallback and transport-independence wording overstates retained behavior
 
-**Manuscript locations:** [§3 L239–246](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:239).
+**Manuscript locations:** [§3 L239–246](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:239).
 
 The high-level distinction between application information and transport mechanisms is good. Two details need tightening:
 
@@ -179,7 +179,7 @@ The high-level distinction between application information and transport mechani
 
 ## P1-1. “One interface” is correct as a C++ facade claim, but not as a deployed binding claim
 
-**Residual mismatch:** [§3 L52–58](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:52) says both modes “draw from the same source, place, time, transport, and correlation vocabulary.” The parent’s envelope correction at L107–117 is accurate, but L57 and Figure 3 still imply that all stateful calls have that metadata.
+**Residual mismatch:** [§3 L52–58](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:52) says both modes “draw from the same source, place, time, transport, and correlation vocabulary.” The parent’s envelope correction at L107–117 is accurate, but L57 and Figure 3 still imply that all stateful calls have that metadata.
 
 Heartbeat and telemetry are direct session calls, not envelope calls; compare [types.hpp L271](/media/william/blueicedrive/Github/IPI/cpp/include/ipi/api/types.hpp:271) with envelope metadata at [types.hpp L121](/media/william/blueicedrive/Github/IPI/cpp/include/ipi/api/types.hpp:121).
 
@@ -191,7 +191,7 @@ Heartbeat and telemetry are direct session calls, not envelope calls; compare [t
 
 ## P1-2. The test paragraph still overstates correlation, routing, and malformed-input coverage
 
-**Manuscript locations:** [§3 L273–285](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:273).
+**Manuscript locations:** [§3 L273–285](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:273).
 
 The sentence still says tests cover “session topics” and “request correlation,” and that the test retrieves a “correlated session response.” The actual coverage is narrower:
 
@@ -209,7 +209,7 @@ This paragraph is accurate, strong enough for a reference artifact, and less vul
 
 ## P1-3. Partial validators should not be described as generic malformed-input protection
 
-**Manuscript locations:** [§3 L127–130](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:127), Table 1 [§3 L149–151](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:149), and [§3 L248–257](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:248).
+**Manuscript locations:** [§3 L127–130](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:127), Table 1 [§3 L149–151](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:149), and [§3 L248–257](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:248).
 
 The present prose says broadly that the implementation rejects invalid ranges, lengths, truncation, and type mismatches. It does reject many selected cases, but not all of those classes:
 
@@ -226,7 +226,7 @@ This is a prose-only correction. Achieving a security/robustness claim requires 
 
 ## P1-4. PC5 and ROS 2 figure/caption claims need to distinguish source-tree examples from facade bindings
 
-**Manuscript locations:** Figure 3 [§3 L83–101](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:83).
+**Manuscript locations:** Figure 3 [§3 L83–101](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:83).
 
 The code has useful device and conversion material, but not a single facade-to-device transport:
 
@@ -241,9 +241,9 @@ The code has useful device and conversion material, but not a single facade-to-d
 
 # P2 — Lower-priority but worthwhile precision repairs
 
-- **Table caption:** At [§3 L139–140](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:139), add: “Required and optional identify the intended object schema; they do not imply that every listed field is runtime-enforced by the reference implementation.” The structs are default-constructible, and source/intersection emptiness is deliberately not rejected.
+- **Table caption:** At [§3 L139–140](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:139), add: “Required and optional identify the intended object schema; they do not imply that every listed field is runtime-enforced by the reference implementation.” The structs are default-constructible, and source/intersection emptiness is deliberately not rejected.
 
-- **Identifier scope:** §3 correctly says IDs are prototype policies at [§3 L113–117](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/03_ipi_protocol_design.tex:113), but should state that derived correlation is merely `std::to_string(request.requestId)` at [edge4av_interface.cpp L200](/media/william/blueicedrive/Github/IPI/cpp/src/api/edge4av_interface.cpp:200). A 16-bit request ID and per-process counters are not sufficient across vehicles, restart, or concurrent request originators.
+- **Identifier scope:** §3 correctly says IDs are prototype policies at [§3 L113–117](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/03_ipi_protocol_design.tex:113), but should state that derived correlation is merely `std::to_string(request.requestId)` at [edge4av_interface.cpp L200](/media/william/blueicedrive/Github/IPI/cpp/src/api/edge4av_interface.cpp:200). A 16-bit request ID and per-process counters are not sufficient across vehicles, restart, or concurrent request originators.
 
   Safe addition:
 
@@ -257,7 +257,7 @@ The code has useful device and conversion material, but not a single facade-to-d
 
 **Assessment:** The best defensible novelty is a deliberately narrow, typed reference contract that puts selected J2735-profile/opaque-message operations and stateful service metadata under one C++ facade, then uses that vocabulary to normalize the paper’s workload and readiness discussion. That can be useful, but it is not yet a strong standalone MobiCom systems contribution.
 
-**High-priority novelty issue:** Section 2 already explains that VAE offers session procedures and that Tentacles provides generic QoS/timing/execution-state abstractions at [02_related_work.tex L21](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/02_related_work.tex:21) and [02_related_work.tex L80](/media/william/blueicedrive/Github/IPI/paper/manuscript/sections/02_related_work.tex:80). Section 3 must make the irreducible delta precise:
+**High-priority novelty issue:** Section 2 already explains that VAE offers session procedures and that Tentacles provides generic QoS/timing/execution-state abstractions at [02_related_work.tex L21](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/02_related_work.tex:21) and [02_related_work.tex L80](/media/william/blueicedrive/Github/IPI/paper/current_manscript/sections/02_related_work.tex:80). Section 3 must make the irreducible delta precise:
 
 - What exact operation representation cannot be expressed by existing VAE/MEC/Tentacles interfaces?
 - What is normative rather than merely represented by a C++ struct?

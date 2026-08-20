@@ -1,6 +1,6 @@
 # Section 4 MobiCom Red-Team Review
 
-**Review target.** `paper/manuscript/sections/04_system_design_setup.tex`, rendered in `paper/manuscript/main.pdf` (18 pages; Section 4 spans PDF pp. 10--17).
+**Review target.** `paper/current_manscript/sections/04_system_design_setup.tex`, rendered in `paper/current_manscript/main.pdf` (18 pages; Section 4 spans PDF pp. 10--17).
 
 **Review basis.** I read the binding Section 4 outline (`paper/paper_outline.md`, especially lines 1724--1733, 2797--2844, 2911--3138, and 3155--3173), `experiment_summary.md`, `current_task.md`, current result/config artifacts, and the current C++ probe, sender, receiver, and test sources. I also rendered and visually inspected the Section 4 PDF pages. This is a source-and-artifact review, not a new standards or web-literature survey.
 
@@ -35,7 +35,7 @@ The following claims are supported and should be retained.
 
 5. **PC5/J2735 claim scope is mostly careful.** The custom RTT probe is explicitly not a standardized J2735 message (lines 185--198), and the unavailable lower-layer PC5 parameters are listed rather than inferred (lines 200--207). The actual setup evidence supports 10/10 SPaT forwarding/OBU callbacks and observed bidirectional BSM reception: `results/mocar_v2x/20260703_setup_test/summary.md` lines 80--103. It also supports the `mde_v2x_custom_send()` no-op and the `v2x_packet_data_send(..., 0x1b)` workaround (`experiment_summary.md` lines 394--403).
 
-6. **Application-envelope arithmetic checks out.** At 25 mph, 11.18 m/s times 100/10/3 ms is 1.118/0.1118/0.0335 m, consistent with lines 433--442. The 46.3 m stopping-distance calculation is consistent with \(v(2.5)+v^2/(2\cdot3.4)\), and the 0.45 m relative-gap and 0.278/0.556 m low-speed values are arithmetically correct. Citation keys used for the table and its explanatory prose are present in `paper/manuscript/references.bib`. The manuscript also correctly calls the VSC values design targets rather than regulations (lines 406--412).
+6. **Application-envelope arithmetic checks out.** At 25 mph, 11.18 m/s times 100/10/3 ms is 1.118/0.1118/0.0335 m, consistent with lines 433--442. The 46.3 m stopping-distance calculation is consistent with \(v(2.5)+v^2/(2\cdot3.4)\), and the 0.45 m relative-gap and 0.278/0.556 m low-speed values are arithmetically correct. Citation keys used for the table and its explanatory prose are present in `paper/current_manscript/references.bib`. The manuscript also correctly calls the VSC values design targets rather than regulations (lines 406--412).
 
 7. **Workload provenance has real artifacts, once accurately labeled.** The 922-sample V2X-Radar detector run exists (`experiment_summary.md` lines 613--633). The estimated payload summary exists in `results/real_5g/20260702_detector_output_to_ipi_run_1/detector_output_ipi_payloads.json`, with 256 base bytes, 96 bytes per predicted box, and the stated 13,216/19,648/22,816/23,968/25,024 byte statistics. The 22,431-file manifest and category statistics also exist in `results/v2x_benchmarks/latest/v2x_ipi_payload_manifest.json`.
 

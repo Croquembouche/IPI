@@ -2,7 +2,7 @@
 
 ## Review scope and bottom line
 
-This review covers only the current manuscript in `paper/manuscript`: `main.tex`,
+This review covers only the current manuscript in `paper/current_manscript`: `main.tex`,
 Sections 0--7, `references.bib`, and the rendered `main.pdf`. The implementation,
 `experiment_summary.md`, the outline, and prior section-review reports were used
 only to audit claims. No material from `paper/legacy_draft` was read or reused.

@@ -13,7 +13,7 @@ from matplotlib.lines import Line2D  # noqa: E402
 
 
 RESULTS_DIR = Path("results/real_5g")
-FIG_DIR = Path("paper/figs")
+FIG_DIR = Path("paper/legacy_draft/figs/concepts")
 
 RUNS = {
     "Run 1": RESULTS_DIR / "20260513_sunny_fintechparking_run_1",
