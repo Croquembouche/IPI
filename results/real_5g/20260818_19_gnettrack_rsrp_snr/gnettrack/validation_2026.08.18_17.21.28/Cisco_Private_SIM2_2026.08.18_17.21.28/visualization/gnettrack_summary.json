@@ -1,0 +1,43 @@
+{
+  "samples": 18,
+  "start": "2026.08.18_17.21.28",
+  "end": "2026.08.18_17.21.44",
+  "cell_records": {
+    "NR": 32
+  },
+  "gnettrack_network_type_counts": {
+    "1000": 18
+  },
+  "reported_rsrp": {
+    "count": 18,
+    "unique": 1,
+    "min": -96.0,
+    "median": -96.0,
+    "mean": -96.0,
+    "max": -96.0
+  },
+  "reported_snr": {
+    "count": 0,
+    "unique": 0,
+    "min": null,
+    "median": null,
+    "mean": null,
+    "max": null
+  },
+  "recovered_rsrp": {
+    "count": 18,
+    "unique": 1,
+    "min": -96,
+    "median": -96.0,
+    "mean": -96.0,
+    "max": -96
+  },
+  "recovered_snr": {
+    "count": 18,
+    "unique": 2,
+    "min": 23,
+    "median": 24.0,
+    "mean": 23.77777777777778,
+    "max": 24
+  }
+}

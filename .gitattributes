@@ -1,0 +1,9 @@
+# Preserve vendor-generated G-NetTrack exports byte-for-byte. Their raw text,
+# KML, and offline-map files use acquisition-tool formatting that should not be
+# normalized or evaluated as source-code whitespace.
+results/real_5g/20260818_19_gnettrack_rsrp_snr/**/*.txt -text -diff
+results/real_5g/20260818_19_gnettrack_rsrp_snr/**/*.kml -text -diff
+results/real_5g/20260818_19_gnettrack_rsrp_snr/**/*.csv -text -diff
+results/real_5g/20260818_19_gnettrack_rsrp_snr/**/*.html -text -diff
+results/real_5g/20260818_19_gnettrack_rsrp_snr/**/*.css -text -diff
+results/real_5g/20260818_19_gnettrack_rsrp_snr/**/*.js -text -diff

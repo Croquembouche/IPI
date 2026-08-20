@@ -2,6 +2,28 @@
 
 Last updated: 2026-08-20
 
+## 2026-08-20 Raw Signal Artifact Publication and Main Merge
+
+Complete. At the user's explicit request, the remaining August 18--19
+G-NetTrack exports, validation collections, interactive maps, offline assets,
+and OpenStreetMap tile cache were retained in a separate data commit after the
+paper and proposal commits. The publication adds 420 previously untracked
+artifacts totaling 98,636,075 bytes. The largest individual file is 1,970,704
+bytes, below GitHub's normal blob limit.
+
+The pre-publication scan found no API keys, passwords, bearer tokens, private
+keys, or credential-bearing URLs. The vendor schemas contain IMEI, IMSI, and
+MSISDN field names, but no populated numeric values for those fields were
+detected. The exports do contain the expected exact GNSS route records. They
+were published following the user's explicit instruction to commit and merge
+the remaining files into the public repository.
+
+The feature branch was pushed after the data commit. Local `main` was then
+fast-forwarded to the complete feature-branch history and pushed to
+`origin/main`. The proposal, paper, and raw-data scopes remain separate
+commits. Local `main`, `origin/main`, and the feature branch resolve to the
+same final commit, and the tracked worktree and index are clean.
+
 ## 2026-08-20 Paper and Proposal Publication
 
 Complete. The current paper and proposal work was separated on branch
@@ -12,8 +34,8 @@ the retained 28-page comparison PDF, required figure assets and generators,
 paper analysis and review records, aggregated signal-map inputs, and the
 tracked experiment-evidence records and analysis scripts used by the paper.
 Temporary renders, LaTeX auxiliary files, hidden editor files, and the raw
-G-NetTrack export tree remain outside the commits. The branch was pushed to
-`origin` with the two scopes kept separate.
+G-NetTrack export tree remained outside the first two commits. The initial
+branch push kept the paper and proposal scopes separate.
 
 ## 2026-08-20 Detailed Experiment Appendix Revision
 

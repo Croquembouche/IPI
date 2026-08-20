@@ -1,0 +1,1 @@
+Timestamp	Longitude	Latitude	Operatorname	Node	CellID	LAC	NetworkTech	Level	Qual	SNR	CQI	LTERSSI	EventType	EventDetails	State

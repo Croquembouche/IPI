@@ -1,0 +1,45 @@
+{
+  "samples": 362,
+  "start": "2026.08.18_16.42.25",
+  "end": "2026.08.18_16.55.09",
+  "cell_records": {
+    "NR": 1457,
+    "LTE": 81
+  },
+  "gnettrack_network_type_counts": {
+    "20": 322,
+    "13": 40
+  },
+  "reported_rsrp": {
+    "count": 362,
+    "unique": 1,
+    "min": -105.0,
+    "median": -105.0,
+    "mean": -105.0,
+    "max": -105.0
+  },
+  "reported_snr": {
+    "count": 362,
+    "unique": 1,
+    "min": 13.0,
+    "median": 13.0,
+    "mean": 13.0,
+    "max": 13.0
+  },
+  "recovered_rsrp": {
+    "count": 322,
+    "unique": 35,
+    "min": -126,
+    "median": -107.0,
+    "mean": -108.01863354037268,
+    "max": -84
+  },
+  "recovered_snr": {
+    "count": 322,
+    "unique": 39,
+    "min": -12,
+    "median": 6.0,
+    "mean": 7.8354037267080745,
+    "max": 31
+  }
+}
