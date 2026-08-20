@@ -2,6 +2,97 @@
 
 Last updated: 2026-08-20
 
+## 2026-08-20 Manuscript Reorganization Publication
+
+Complete. At the user's request, the current manuscript reorganization and
+Figure 3 replacement were divided into separate commits on branch
+`codex/manuscript-reorganization-figure3-20260820` and pushed to `origin`.
+
+1. Commit `b305ef7d60e17e5e0903b8ddd72c85706cde2279` reorganizes the active
+   manuscript as the self-contained `paper/current_manscript` draft, moves its
+   current figures under the local `figs` directory, installs the new physical
+   testbed as Figure 3, preserves the detailed request/response diagram as
+   Figure 4, and publishes a clean source-consistent `main.pdf`.
+2. Commit `d81182dc91cf3ca82717108480e237de9bb035e6` updates repository
+   documentation, review links, figure-generation paths, and targeted ignore
+   rules for the new current and legacy draft structure.
+3. This task record is the final documentation commit for the publication.
+
+Validation: all four affected Python scripts pass `py_compile`; all 14 current
+`includegraphics` paths resolve; and a complete LaTeX/BibTeX build succeeds at
+23 US-letter pages without missing figures, overfull boxes, undefined citations
+or references, or a rerun warning. The published
+`paper/current_manscript/main.pdf` contains zero annotations and has SHA-256
+`129d5e2fc21bebb24ebaeed33dca2e88646fbdc664c9bd61750205c9d3e7a6d7`.
+The ignored local `main_annotated.pdf` retains all 22 annotation objects and
+SHA-256
+`3ce0c27e461576fe38f3cdddca6897516e883254697187876f01f2e01f056d6d`.
+No LaTeX auxiliary file, cache, temporary render, editor-held file, or annotated
+PDF appears in the published commit range. No page-limit work was performed.
+
+## 2026-08-20 Figure 3 Physical-Testbed Replacement
+
+Complete. The supplied
+`edge4av_figure3_physical_testbed_hybrid_editable_boxed_v2.pptx` artwork now
+replaces the former inline topology diagram used as Figure 3. The matching
+one-page PDF export was renamed to
+`paper/current_manscript/figs/figure03_physical_testbed.pdf`. The existing
+detailed request/response-path asset remains Figure 4 and was renamed to
+`paper/current_manscript/figs/figure04_measurement_paths.pdf` so that both asset
+names match their manuscript roles.
+
+`paper/current_manscript/sections/04_system_design_setup.tex` now includes the
+new Figure 3 PDF and describes its vehicle installation, fixed infrastructure,
+and deployment map. The surrounding testbed paragraph, caption, and accessible
+description were revised to match the new artwork. Figure 4's include path and
+the current Makefile dependencies were updated for the two descriptive asset
+names.
+
+Validation: a separate three-pass LaTeX/BibTeX build completed at 23 US-letter
+pages. Figures 3 and 4 resolve as Figures 3 and 4 on pages 5 and 6. Full-page
+renders of pages 4--6 show readable labels and no clipping or overlap. The log
+contains no overfull boxes, missing figures, undefined citations or references,
+or rerun warning. Existing underfull-box warnings remain. The annotated review
+PDF was preserved unchanged. A clean `main.pdf` was later rebuilt for
+publication, as recorded in the publication entry above. No page-limit work was
+performed.
+
+## 2026-08-20 Self-Contained Draft Directory Reorganization
+
+Complete. The user replaced the root-level figure-tree design with two
+self-contained draft directories. `paper/current_manscript` now contains all
+current TeX sources, build scripts, manuscript PDFs, and its local `figs`
+directory. The 15 current figure PDFs include the 14 figures referenced by the
+current TeX and the additional directional-workload figure produced by the
+current generator. `paper/legacy_draft` retains the old TeX draft and its local
+`figs` directory. The 54 old or unused assets remain grouped as concepts, maps,
+and measurements inside that directory. The temporary root-level
+`paper/figures` tree and the former `paper/manuscript` directory no longer
+exist.
+
+All current and legacy TeX image paths resolve within their own draft
+directories. The current Makefile, both current figure generators, two older
+root-level figure scripts, repository documentation, historical review paths,
+and targeted `.gitignore` exceptions use the new locations. The current draft
+sources and figures can be versioned normally. The old figure collection
+remains ignored unless explicitly selected for publication.
+
+Validation: all 13 current and eight legacy `includegraphics` paths exist. The
+four affected Python scripts pass `py_compile`, and both current figure
+generators completed in `paper/current_manscript/figs`. A separate current-draft
+build completed at 23 US-letter pages with no missing figures, overfull boxes,
+undefined citations or references, or rerun warning. The retained old draft
+also built successfully at 14 pages, and its supplementary appendix built at
+five pages. The appendix retains its pre-existing 20.33-point overfull vertical
+box; the directory move introduced no missing asset or new build failure. All
+three validation PDFs were rendered and visually inspected without missing,
+clipped, or overlapping figures.
+
+At the time of the directory move, the two user-annotated current-draft PDFs
+were preserved without rebuilding. The later publication step rebuilt a clean
+`main.pdf` while retaining the ignored `main_annotated.pdf` unchanged. No
+page-limit work was performed.
+
 ## 2026-08-20 Raw Signal Artifact Publication and Main Merge
 
 Complete. At the user's explicit request, the remaining August 18--19
@@ -96,7 +187,7 @@ page-limit work was performed. No commit or push was performed.
 ## 2026-08-20 Second Annotated-Manuscript Revision
 
 Complete. All 12 new substantive comments embedded in
-`paper/manuscript/main.pdf` were treated as revision instructions, including
+`paper/current_manscript/main.pdf` were treated as revision instructions, including
 their recurring implications elsewhere in the manuscript. The Introduction is
 now 490 source words and the Related Work section is 647 source words. Related
 Work plus Figure 1 occupies the requested approximately one-and-one-half-page
@@ -144,7 +235,7 @@ No commit or push was performed.
 ## 2026-08-20 Annotated-Manuscript Revision
 
 Complete. All 19 substantive comments embedded in
-`paper/manuscript/main.pdf` were treated as revision instructions. Section 4
+`paper/current_manscript/main.pdf` were treated as revision instructions. Section 4
 now introduces application workloads by payload, direction, duration, and
 deadline. Emergency-vehicle signal priority uses the current SRM-to-SSM
 interaction, remote assistance replaces vague CAV retrieval terminology, and
@@ -713,7 +804,7 @@ visually inspected; and the redundant shared-resource label that overlapped
 Figure 5 was removed. The 22-page US-letter PDF contains no annotations or
 embedded links. It is 3,025,873 bytes and has SHA-256
 `41e5bb61851ebf7ab2b9555ddc3d02c4bb9195c344a3d0dd500a815d5597cdbe`.
-No page-limit optimization was performed. `paper/manuscript/28p.pdf` remains
+No page-limit optimization was performed. `paper/current_manscript/28p.pdf` remains
 preserved with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 The ignored paper tree was not force-added, and no commit or push was made.
@@ -762,19 +853,19 @@ direction-aware scheduling, and concurrent-flow isolation.
 
 Working files include:
 
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/02_related_work.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/06_future_research_directions.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
-- `paper/manuscript/sections/08_appendices.tex`
-- `paper/manuscript/figures/section5_tdd_profiles.pdf`
-- `paper/manuscript/figures/section5_directional_workloads.pdf`
-- `paper/manuscript/figures/section5_mixed_load_qos.pdf`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/02_related_work.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/06_future_research_directions.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
+- `paper/current_manscript/sections/08_appendices.tex`
+- `paper/current_manscript/figs/section5_tdd_profiles.pdf`
+- `paper/current_manscript/figs/section5_directional_workloads.pdf`
+- `paper/current_manscript/figs/section5_mixed_load_qos.pdf`
+- `paper/current_manscript/main.pdf`
 - `paper/paper_outline.md`
 
 Validation: the plotted values were checked against the retained August 17 and
@@ -783,7 +874,7 @@ windows; `make` completes; the log contains no overfull boxes, undefined
 citations, or undefined references; and all 22 rendered pages were visually
 inspected. The PDF is US letter, 3,024,169 bytes, and has SHA-256
 `5304efda1241c0b3da86937ce6fdd9a3d0cafadeb36b2b06513f04309089757a`.
-No page-limit optimization was performed. `paper/manuscript/28p.pdf` remains
+No page-limit optimization was performed. `paper/current_manscript/28p.pdf` remains
 preserved with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 The ignored paper tree was not force-added, and no commit or push was made.
@@ -982,8 +1073,8 @@ this download or refresh.
 ## Figure 2 IPI Architecture Replacement
 
 Complete. The TikZ-based two-column Figure 2 in
-`paper/manuscript/sections/03_ipi_protocol_design.tex` was replaced with the
-user-supplied `paper/figs/Fig2_ipi_protocol_architecture_editable.pptx.pdf`.
+`paper/current_manscript/sections/03_ipi_protocol_design.tex` was replaced with the
+user-supplied `paper/current_manscript/figs/figure02_ipi_protocol_architecture.pdf`.
 The new figure uses a single-column `figure` float and is rendered at
 `\columnwidth`. The figure label remains `fig:ipi-architecture`, its alternative
 description now follows the supplied architecture, and the manuscript Makefile
@@ -1231,7 +1322,7 @@ source was changed during this pull.
 ## Figure 1 Replacement
 
 Complete. The Related Work section now uses the user-supplied
-`paper/figs/edge4av_fig1.pptx.pdf` asset instead of the earlier TikZ summary.
+`paper/current_manscript/figs/figure01_related_work_landscape.pdf` asset instead of the earlier TikZ summary.
 The figure label remains `fig:rw-gap`, and the caption and accessibility
 description now match the replacement's current-status, key-gap, and
 zero-fatality-vision structure. The manuscript Makefile tracks the new figure
@@ -1239,9 +1330,9 @@ as a build dependency. No page-limit optimization is included in this task.
 
 Updated files:
 
-- `paper/manuscript/sections/02_related_work.tex`
-- `paper/manuscript/Makefile`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/sections/02_related_work.tex`
+- `paper/current_manscript/Makefile`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: a forced LaTeX and BibTeX rebuild completed successfully. The final
@@ -1250,12 +1341,12 @@ requests, or overfull boxes. Figure 1 resolves on page 3 and was rendered at
 240 dpi; its labels, caption, and surrounding text are legible without overlap
 or clipping. The PDF contains 19 US-Letter pages, zero annotations, zero links,
 zero embedded files, no author or title metadata, and fully embedded fonts. No
-page-limit optimization was performed. `paper/manuscript/28p.pdf` remains
+page-limit optimization was performed. `paper/current_manscript/28p.pdf` remains
 byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 The replacement source has SHA-256
 `12236bfdb5ff9e1ea253bc859cfc0c4d3fb4290270606528d75da2df1f616c0f`,
-and the rebuilt `paper/manuscript/main.pdf` has SHA-256
+and the rebuilt `paper/current_manscript/main.pdf` has SHA-256
 `df8d909f91e0d18165d876b6c6edcdd1cfe3b5f53194d22b8580e55a04f9fbcd`.
 `git diff --check` passes.
 
@@ -1298,10 +1389,10 @@ are weak.
 
 Updated files:
 
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/references.bib`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/references.bib`
 - `paper/paper_outline.md`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: a forced LaTeX and BibTeX rebuild completed successfully. The
@@ -1311,9 +1402,9 @@ annotations, zero links, zero embedded files, no author or title metadata, and
 fully embedded fonts. Manuscript pages 4--6 and reference page 16 were rendered
 and inspected; the new paragraph, Table 1, Figure 4 caption, and both new
 references are legible without overlap or clipping. No page-limit optimization
-was performed. `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+was performed. `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
-The revised `paper/manuscript/main.pdf` has SHA-256
+The revised `paper/current_manscript/main.pdf` has SHA-256
 `e97c2be08737f7f32c058c3c8619c25f86eaed05abf44d53fc8efa2aa3be6f56`.
 `git diff --check` passes.
 
@@ -1376,7 +1467,7 @@ operator-reported because no timestamp-aligned ACP/MG52 exports are stored.
 
 ## Results-Presentation and Signal-Classification Annotation Revision
 
-Complete. Seven substantive highlights in `paper/manuscript/main.pdf` were
+Complete. Seven substantive highlights in `paper/current_manscript/main.pdf` were
 treated as manuscript-wide revision instructions. The annotated input contained
 fourteen PDF annotation objects because each highlight had an associated popup.
 It is preserved at
@@ -1424,19 +1515,19 @@ records the errors in domain-independent form as Lessons 15 and 16.
 
 Updated files include:
 
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/02_related_work.tex`
-- `paper/manuscript/sections/03_ipi_protocol_design.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/06_future_research_directions.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
-- `paper/manuscript/sections/08_appendices.tex`
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/figures/section5_*.pdf`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/02_related_work.tex`
+- `paper/current_manscript/sections/03_ipi_protocol_design.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/06_future_research_directions.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
+- `paper/current_manscript/sections/08_appendices.tex`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/figs/section5_*.pdf`
 - `paper/paper_outline.md`
 - `paper/general_academic_writing_lessons.md`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/main.pdf`
 
 Validation: the figure-generation script and forced LaTeX/BibTeX build complete
 successfully. The final LaTeX pass contains no compilation errors, undefined
@@ -1446,14 +1537,14 @@ US-Letter pages as a build fact, zero annotations, zero links, no author or titl
 metadata, and fully embedded fonts. All 19 pages were rendered and inspected;
 the revised Figures 6--12 were checked at higher resolution. No overlap,
 clipping, missing figure, or broken table remains. No page-limit optimization
-was performed, and `paper/manuscript/28p.pdf` was not changed. The revised PDF
+was performed, and `paper/current_manscript/28p.pdf` was not changed. The revised PDF
 SHA-256 is
 `50194c7d3f012cb8a555ee82e2dda1cc1d3d91b8ea8b9e4e75377d36706bc44b`.
 `git diff --check` passes.
 
 ## Parallel Application-Class Annotation Revision
 
-Complete. The new page-3 highlight in `paper/manuscript/main.pdf` was treated as
+Complete. The new page-3 highlight in `paper/current_manscript/main.pdf` was treated as
 a manuscript-wide revision instruction. The annotated input contained two PDF
 annotation objects: one substantive highlight and its popup. It is preserved at
 `tmp/pdfs/protocol_scope_comment_20260816/main_annotated_before_revision.pdf`
@@ -1488,16 +1579,16 @@ lesson contains no terminology from this paper or its technical domain.
 
 Updated files:
 
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/02_related_work.tex`
-- `paper/manuscript/sections/03_ipi_protocol_design.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/02_related_work.tex`
+- `paper/current_manscript/sections/03_ipi_protocol_design.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
 - `paper/paper_outline.md`
 - `paper/general_academic_writing_lessons.md`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/main.pdf`
 
 Validation: a forced LaTeX/BibTeX rebuild completed successfully. The final
 LaTeX pass contains no compilation errors, undefined citations, undefined
@@ -1512,7 +1603,7 @@ found. `git diff --check` passes. The revised PDF SHA-256 is
 ## Protocol-Gap Logic Annotation Revision
 
 Complete. The three substantive highlights on pages 2--3 of
-`paper/manuscript/main.pdf` were treated as manuscript-wide revision
+`paper/current_manscript/main.pdf` were treated as manuscript-wide revision
 instructions. The annotated input contained six PDF annotation objects because
 each highlight had an associated popup. It is preserved at
 `tmp/pdfs/related_work_comments_round2_20260816/main_annotated_before_revision.pdf`
@@ -1553,13 +1644,13 @@ from this paper or its technical domain.
 
 Updated files:
 
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/02_related_work.tex`
-- `paper/manuscript/sections/03_ipi_protocol_design.tex`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/02_related_work.tex`
+- `paper/current_manscript/sections/03_ipi_protocol_design.tex`
 - `paper/paper_outline.md`
 - `paper/general_academic_writing_lessons.md`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/main.pdf`
 
 Validation: a forced LaTeX/BibTeX rebuild completed successfully. The final
 LaTeX pass contains no compilation errors, undefined citations, undefined
@@ -1574,7 +1665,7 @@ found. `git diff --check` passes. The revised PDF SHA-256 is
 ## Related Work Annotation Revision
 
 Complete. The seven substantive highlights on pages 2--3 of
-`paper/manuscript/main.pdf` were treated as revision instructions. The annotated
+`paper/current_manscript/main.pdf` were treated as revision instructions. The annotated
 input contained fourteen PDF annotations because each highlight had an
 associated popup. It is preserved at
 `tmp/pdfs/related_work_comments_20260816/main_annotated_before_revision.pdf`
@@ -1612,14 +1703,14 @@ was changed, and no page-limit optimization was performed.
 
 Updated files:
 
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/02_related_work.tex`
-- `paper/manuscript/sections/03_ipi_protocol_design.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/02_related_work.tex`
+- `paper/current_manscript/sections/03_ipi_protocol_design.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
 - `paper/paper_outline.md`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/main.pdf`
 
 Validation: a forced LaTeX/BibTeX rebuild completed without compilation errors,
 undefined citations, undefined references, rerun requests, or overfull boxes.
@@ -1633,7 +1724,7 @@ figure, or broken table was found. The revised PDF SHA-256 is
 ## Additional Wording Annotation Revision
 
 Complete. The three new substantive annotations on pages 1--2 of
-`paper/manuscript/main.pdf` were treated as revision instructions. The
+`paper/current_manscript/main.pdf` were treated as revision instructions. The
 stateless-update definition now compares messages directly: a newer message
 supersedes the previous message without preserving an application session. The
 confusing statement that IPI `places` two workload classes at an application
@@ -1654,13 +1745,13 @@ changed.
 
 Updated files:
 
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/03_ipi_protocol_design.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/03_ipi_protocol_design.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
 - `paper/paper_outline.md`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/main.pdf`
 
 Validation: the full LaTeX/BibTeX rebuild completed without compilation errors,
 undefined citations, undefined references, rerun requests, or overfull boxes.
@@ -1678,7 +1769,7 @@ SHA-256
 ## Content-Flow Annotation Revision
 
 Complete. The five new substantive annotations in
-`paper/manuscript/main.pdf` were treated as revision instructions. The opening
+`paper/current_manscript/main.pdf` were treated as revision instructions. The opening
 argument was rebuilt around one causal sequence: vehicles need information
 distributed across other vehicles and roadside infrastructure; applications
 exchange that information through stateless updates and stateful operations;
@@ -1699,15 +1790,15 @@ result was changed.
 
 Updated manuscript files:
 
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/02_related_work.tex`
-- `paper/manuscript/sections/03_ipi_protocol_design.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
-- `paper/manuscript/sections/08_appendices.tex`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/02_related_work.tex`
+- `paper/current_manscript/sections/03_ipi_protocol_design.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
+- `paper/current_manscript/sections/08_appendices.tex`
+- `paper/current_manscript/main.pdf`
 
 Validation: a full LaTeX/BibTeX rebuild completed without compilation errors,
 undefined citations, undefined references, rerun requests, or overfull boxes.
@@ -1742,7 +1833,7 @@ documentation-only update.
 ## Transition-Logic Annotation Revision
 
 Complete. The seven substantive annotations in
-`paper/manuscript/main.pdf` were treated as revision instructions. The marked
+`paper/current_manscript/main.pdf` were treated as revision instructions. The marked
 Introduction passages were rebuilt around their actual logical relationships:
 the opening now gives one shared information need for automated and
 human-driven vehicles; the traffic-controller and cooperative-maneuver ideas
@@ -1763,16 +1854,16 @@ unchanged.
 
 Updated manuscript files:
 
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/02_related_work.tex`
-- `paper/manuscript/sections/03_ipi_protocol_design.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/06_future_research_directions.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
-- `paper/manuscript/sections/08_appendices.tex`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/02_related_work.tex`
+- `paper/current_manscript/sections/03_ipi_protocol_design.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/06_future_research_directions.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
+- `paper/current_manscript/sections/08_appendices.tex`
+- `paper/current_manscript/main.pdf`
 
 Validation: a forced LaTeX/BibTeX rebuild completed without compilation errors,
 undefined citations, undefined references, rerun requests, or overfull boxes.
@@ -1807,7 +1898,7 @@ instruction, no manuscript TeX, paper outline, figure, caption, generated
 figure, or PDF was changed. A new same-placement matched collection will
 replace this inconclusive evidence when it is received and validated.
 Validation: the status JSON parses successfully, `git diff --check` passes,
-and no file under `paper/manuscript/` was modified.
+and no file under `paper/current_manscript/` was modified.
 
 ## Pending Matched TDD Collection And Manuscript Continuation
 
@@ -1889,16 +1980,16 @@ Updated files include:
 - `experiment_summary.md`
 - `paper/analysis/5g_experiment_summary.md`
 - `paper/paper_outline.md`
-- `paper/manuscript/Makefile`
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/06_future_research_directions.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
-- `paper/manuscript/figures/section5_tdd_sensitivity.pdf`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/Makefile`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/06_future_research_directions.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
+- `paper/legacy_draft/figs/measurements/section5_tdd_sensitivity.pdf`
+- `paper/current_manscript/main.pdf`
 
 Validation: the pooled common, weak, and strong C1/C2 values were independently
 recomputed from the retained sender CSVs and checked against the stored
@@ -1917,7 +2008,7 @@ The updated private-5G summary SHA-256 is
 The pre-revision PDF is preserved at
 `tmp/pdfs/tdd_signal_revision/main_before_revision.pdf` with SHA-256
 `737a81beb252495332e981b72ce8b53ef7e2237577ce1f8d6cf2dcc387ca005f`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## Private-5G Experiment Summary
@@ -2036,13 +2127,13 @@ updated throughout.
 
 Updated files include:
 
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/06_future_research_directions.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/06_future_research_directions.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
 - `paper/paper_outline.md`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/main.pdf`
 
 Validation: three stable LaTeX builds completed without undefined citations,
 undefined references, rerun requests, overfull boxes, compilation errors, or
@@ -2057,7 +2148,7 @@ fonts. Its SHA-256 is
 The pre-revision PDF was preserved at
 `tmp/pdfs/deeper_stakeholder_insights/main_before_revision.pdf` with SHA-256
 `a395de990fce0dbef06b14e4aba92c5174b0ae1eecde8d2830522e7b135fdddd`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## General Academic Writing Lessons
@@ -2097,7 +2188,7 @@ Conclusion without overlap, clipping, or awkward list wrapping. The PDF has 17
 US-Letter pages, zero annotations, zero links, zero embedded files, no author or
 title metadata, and fully embedded fonts. Its SHA-256 is
 `a395de990fce0dbef06b14e4aba92c5174b0ae1eecde8d2830522e7b135fdddd`.
-No page-limit optimization was performed, and `paper/manuscript/28p.pdf`
+No page-limit optimization was performed, and `paper/current_manscript/28p.pdf`
 remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
@@ -2125,16 +2216,16 @@ exchanges.
 
 Updated manuscript files include:
 
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/02_related_work.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/06_future_research_directions.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
-- `paper/manuscript/sections/08_appendices.tex`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/02_related_work.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/06_future_research_directions.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
+- `paper/current_manscript/sections/08_appendices.tex`
 - `paper/paper_outline.md`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/main.pdf`
 
 Validation: a forced LaTeX rebuild completed without undefined citations,
 undefined references, rerun requests, overfull boxes, compilation errors, or
@@ -2148,12 +2239,12 @@ and no author or title metadata. Its SHA-256 is
 The annotated input was preserved at
 `tmp/pdfs/full_matrix_annotations/main_annotated.pdf` with SHA-256
 `e7c8674a739d2fa828d1f34d5d8b48b3cfb421a4da8e722f12d5d86ba56486f4`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## New Page-1 Annotation Review
 
-Complete as a read-only review. The current `paper/manuscript/main.pdf` has
+Complete as a read-only review. The current `paper/current_manscript/main.pdf` has
 SHA-256 `e7c8674a739d2fa828d1f34d5d8b48b3cfb421a4da8e722f12d5d86ba56486f4`
 and contains twelve annotation objects on page 1: six substantive highlights
 and six associated popup containers. The comments request: 1) describe the
@@ -2179,7 +2270,7 @@ source or PDF was revised during this review.
 ## Abstract and Introduction Annotation Revision
 
 Complete. All fifteen substantive highlights in the annotated
-`paper/manuscript/main.pdf` were treated as revision instructions. The abstract
+`paper/current_manscript/main.pdf` were treated as revision instructions. The abstract
 and Introduction were rebuilt around the user's communication-readiness
 question, and recurring instructions were propagated through Related Work, IPI
 design, setup, results, future directions, the appendix, figure labels, and the
@@ -2202,17 +2293,17 @@ condensed, expanded, or reflowed to meet a page limit.
 
 Updated files include:
 
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/02_related_work.tex`
-- `paper/manuscript/sections/03_ipi_protocol_design.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/06_future_research_directions.tex`
-- `paper/manuscript/sections/08_appendices.tex`
-- `paper/manuscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/02_related_work.tex`
+- `paper/current_manscript/sections/03_ipi_protocol_design.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/06_future_research_directions.tex`
+- `paper/current_manscript/sections/08_appendices.tex`
+- `paper/current_manscript/scripts/build_section5_figures.py`
 - `paper/paper_outline.md`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: three-pass LaTeX builds succeed without undefined citations,
@@ -2228,7 +2319,7 @@ or title metadata. The annotated input was preserved at
 SHA-256 `f073a087293e64c8c379a3523e9058f5b5f531b7f829b312d5348e4674e7d2c8`.
 The revised PDF SHA-256 is
 `8de0b9aa01d09875b30ddd072765c3533ad662cc3cff760d545f268541580551`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## Year 2 IPI Implementation and Experimental Report
@@ -2279,7 +2370,7 @@ is `d7abf87b0cb70d3f5389b7b41cdd12c90b268de43b6332306a24b16759766bc1`.
 
 ## Annotated-PDF Revision
 
-Complete. The five highlight comments in the prior `paper/manuscript/main.pdf`
+Complete. The five highlight comments in the prior `paper/current_manscript/main.pdf`
 were treated as binding revision instructions. The abstract now opens with the
 communication-readiness question and introduces the two contributions with
 `In this paper, we contribute`. The three insights now address distinct
@@ -2292,14 +2383,14 @@ and limiting-factor logic.
 
 Updated files:
 
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/02_related_work.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/06_future_research_directions.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/02_related_work.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/06_future_research_directions.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
 - `paper/paper_outline.md`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: two stable LaTeX builds succeed without undefined citations or
@@ -2312,7 +2403,7 @@ pages; core content ends on page 12 and references begin on page 13. All fonts
 are embedded. The final PDF contains zero annotations, no embedded files, and
 no author metadata, so the original comments are absent. Its SHA-256 is
 `d8655ff35c445ac16e441755c6d3f5db1bc1ca0f72ff24e517bf801febd21bcb`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## Communication-Latency Terminology Revision
@@ -2341,15 +2432,15 @@ the references begin on page 13.
 
 Updated files:
 
-- `paper/manuscript/main.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/02_related_work.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/06_future_research_directions.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
+- `paper/current_manscript/main.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/02_related_work.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/06_future_research_directions.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
 - `paper/paper_outline.md`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: two stable LaTeX builds succeed without undefined citations or
@@ -2360,7 +2451,7 @@ Related Work caption, latency definition, Results transitions, Future Research
 Directions, conclusion, and reference transition are legible without overlap,
 clipping, or crowding. The final PDF remains 16 US-Letter pages. Its SHA-256 is
 `c1e40321ab5fb0173c79952c939cdde2db0067968d944b3071b6acf927da561c`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## Abstract Contribution-Balance Revision
@@ -2377,8 +2468,8 @@ retains exactly three concise insights. The revised abstract is 228 words.
 
 Updated files:
 
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the full LaTeX build succeeds with stable cross-references. Page 1
@@ -2386,7 +2477,7 @@ was rendered at 220 dpi and inspected; the revised three-paragraph abstract and
 the transition into the Introduction are legible without overlap, clipping, or
 crowding. The PDF remains 16 US-Letter pages. The final PDF SHA-256 is
 `c73030976e95f93f4bf431b6c8906205fb82bf9482504b8c0e1afcbde36a5a24`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## Task
@@ -2520,10 +2611,10 @@ values and denominators were not changed.
 
 Updated files:
 
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/figures/section5_5g_deadline_envelope.pdf`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/figs/section5_5g_deadline_envelope.pdf`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the figure generator passes Python compilation, regenerates the
@@ -2537,7 +2628,7 @@ page 12, references begin on page 13, and appendices begin on page 15. All fonts
 are embedded, and the PDF contains no annotations, embedded files, or author
 metadata. The final PDF SHA-256 is
 `1b41a1fc2e98ab75b9203b74293e2ab6d1e2d98f3a4d07817260e2e098b73253`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## Section 5.1 IPI Packaging-Overhead Revision
@@ -2562,10 +2653,10 @@ correlated CAV request, update, completion, and rejection operations.
 
 Updated files:
 
-- `paper/manuscript/sections/03_ipi_protocol_design.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/sections/03_ipi_protocol_design.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the table values were recomputed from all 1,000 sender records in
@@ -2581,7 +2672,7 @@ page 13, and appendices begin on page 15. All fonts are embedded, and the PDF
 contains no annotations, embedded files, or author metadata. The final PDF
 SHA-256 is
 `710b69491487dd7def51f51c456084ad17bd8419df7aba8b484b3803ab36a93a`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## Table 1 Caption Correction
@@ -2594,8 +2685,8 @@ an appendix, so no additional captions were changed.
 
 Updated files:
 
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the full LaTeX build succeeds. Page 5 was rendered at 300 dpi and
@@ -2607,7 +2698,7 @@ page 12, references begin on page 13, and appendices begin on page 15. All fonts
 are embedded, and the PDF contains no annotations, embedded files, or author
 metadata. The final PDF SHA-256 is
 `a5cc7eb7b52bdd5e406f768c7b8e3ff7f440d365414e8218d774311608448312`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## Figure 4 Overlap Correction
@@ -2623,11 +2714,11 @@ The caption now states that the run markers are directly labeled.
 
 Updated files:
 
-- `paper/figs/fig-signal-osm-runs.svg`
-- `paper/figs/fig-signal-osm-runs.png`
+- `paper/legacy_draft/figs/maps/fig-signal-osm-runs.svg`
+- `paper/legacy_draft/figs/maps/fig-signal-osm-runs.png`
 - `scripts/build_signal_strength_maps.py`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the generator passes Python compilation and a focused marker test.
@@ -2642,7 +2733,7 @@ page 13, and appendices begin on page 15. All fonts are embedded, and the PDF
 contains no annotations, embedded files, or author metadata. The final PDF
 SHA-256 is
 `770a56c495bf1300d0a70f3c438f26364b3909c69ffb4392be6df8900bca29a6`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## Figure 12 V2X Signal-Strength Estimate
@@ -2665,12 +2756,12 @@ larger two-panel figure did not create an orphaned content page.
 
 Updated files:
 
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
-- `paper/manuscript/figures/section5_cross_application_comparison.pdf`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
+- `paper/current_manscript/figs/section5_cross_application_comparison.pdf`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the figure generator passes Python compilation and reproduces the
@@ -2684,7 +2775,7 @@ references begin on page 13, and appendices begin on page 15. All fonts are
 embedded, and the PDF contains no annotations, embedded files, or author
 metadata. The final PDF SHA-256 is
 `122c9446a903f077d068faf285808983a257a692dbb3be0c327c016300b667f3`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## Figure 12 Redesign
@@ -2715,10 +2806,10 @@ deadline, ratio, or conclusion changed.
 
 Updated files:
 
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/figures/section5_cross_application_comparison.pdf`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/figs/section5_cross_application_comparison.pdf`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the figure generator and full LaTeX build complete successfully.
@@ -2732,7 +2823,7 @@ page 12, references begin on page 13, and appendices begin on page 15. All fonts
 are embedded, and the PDF contains no annotations, embedded files, or author
 metadata. The final PDF SHA-256 is
 `d4b5b24041897d14fba0930eee775fea3bc45b9722cd09e2631bb10bf2ad4234`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## Figure 11 Overlap Correction
@@ -2750,10 +2841,10 @@ the visual encodings directly.
 
 Updated files:
 
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/figures/section5_concurrency_interruption.pdf`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/figs/section5_concurrency_interruption.pdf`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the figure generator and full LaTeX build complete successfully.
@@ -2767,7 +2858,7 @@ page 13, and appendices begin on page 15. All fonts are embedded, and the PDF
 contains no annotations, embedded files, or author metadata. The final PDF
 SHA-256 is
 `1a0329bef212e26e56949e4d8446d4d65c88d1171aaf6c4b4cf5d98bce2795b1`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## Figure 10 Direction-Control Correction
@@ -2793,10 +2884,10 @@ and the sender sustained the configured 25.000 Mbit/s for 900 s.
 
 Updated files:
 
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/figures/section5_mixed_load_qos.pdf`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/figs/section5_mixed_load_qos.pdf`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the figure generator and full LaTeX build complete successfully.
@@ -2809,9 +2900,9 @@ overfull box, compilation error, or fatal error. The PDF remains 16 US-Letter
 pages; core content ends on page 12, references begin on page 13, and
 appendices begin on page 15. All fonts are embedded, and the PDF contains no
 annotations, embedded files, or author metadata. The preserved
-`paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+`paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
-The revised `paper/manuscript/main.pdf` has SHA-256
+The revised `paper/current_manscript/main.pdf` has SHA-256
   `a20a788d52937734befed3fe2d082ffab2e91e1309aefd1f8961a2bccc849433`.
 
 ## Figure 9 TDD Comparison Correction
@@ -2832,10 +2923,10 @@ MQTT, 1-KiB TCP, 23,968-B MQTT, and 23,968-B TCP, respectively.
 
 Updated files:
 
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/figures/section5_tdd_sensitivity.pdf`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/legacy_draft/figs/measurements/section5_tdd_sensitivity.pdf`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the figure generator and full LaTeX build complete successfully.
@@ -2847,10 +2938,10 @@ citation/reference, changed-label request, overfull box, compilation error, or
 fatal error. The PDF remains 16 US-Letter pages; core content ends on page 12,
 references begin on page 13, and appendices begin on page 15. All fonts are
 embedded, and the PDF contains no annotations, embedded files, or author
-metadata. The preserved `paper/manuscript/28p.pdf` remains byte-identical with
+metadata. The preserved `paper/current_manscript/28p.pdf` remains byte-identical with
 SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
-The revised `paper/manuscript/main.pdf` has SHA-256
+The revised `paper/current_manscript/main.pdf` has SHA-256
 `9ba3ce786b7cbdcdb7579a633d6155a0cdde564320f53dae242ca4f7d4e3e097`.
 
 ## Figure 8 Payload-Terminology Correction
@@ -2871,15 +2962,15 @@ claims without changing the measurements or the three insights.
 
 Updated files:
 
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/06_future_research_directions.tex`
-- `paper/manuscript/sections/08_appendices.tex`
-- `paper/manuscript/figures/section5_protocol_completion.pdf`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/06_future_research_directions.tex`
+- `paper/current_manscript/sections/08_appendices.tex`
+- `paper/current_manscript/figs/section5_protocol_completion.pdf`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the figure generator and full LaTeX build complete successfully.
@@ -2890,10 +2981,10 @@ final log contains no undefined citation/reference, changed-label request,
 overfull box, compilation error, or fatal error. The PDF remains 16 US-Letter
 pages; core content ends on page 12, references begin on page 13, and
 appendices begin on page 15. The PDF contains no annotations, embedded files,
-or author metadata. The preserved `paper/manuscript/28p.pdf` remains
+or author metadata. The preserved `paper/current_manscript/28p.pdf` remains
 byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
-The revised `paper/manuscript/main.pdf` has SHA-256
+The revised `paper/current_manscript/main.pdf` has SHA-256
 `f38234dee8ed0553cae8f141f8f85a09da9182194b4f165763bd1795ab867ce5`.
 
 ## Figure 7 Unit and Legend Correction
@@ -2909,10 +3000,10 @@ the plotted workload rows.
 
 Updated files:
 
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/figures/section5_5g_deadline_envelope.pdf`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/figs/section5_5g_deadline_envelope.pdf`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the figure generator and full LaTeX build complete successfully.
@@ -2924,10 +3015,10 @@ citation/reference, changed-label request, overfull box, compilation error, or
 fatal error. The PDF remains 16 US-Letter pages; core content ends on page 12,
 references begin on page 13, and appendices begin on page 15. All fonts are
 embedded, and the PDF contains no annotations, embedded files, or author
-metadata. The preserved `paper/manuscript/28p.pdf` remains byte-identical with
+metadata. The preserved `paper/current_manscript/28p.pdf` remains byte-identical with
 SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
-The revised `paper/manuscript/main.pdf` has SHA-256
+The revised `paper/current_manscript/main.pdf` has SHA-256
 `8a22da66dca494a82161691b0e25f8dce5d8d3a5b509df9cb9caf32a0f950b0a`.
 
 ## Figure 6 Layout Correction
@@ -2940,9 +3031,9 @@ plot space, separate from the 10-, 25-, and 100-ms reference lines.
 
 Updated files:
 
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/figures/section5_pc5_payload_route.pdf`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/figs/section5_pc5_payload_route.pdf`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the figure generator and full LaTeX build complete successfully.
@@ -2952,15 +3043,15 @@ references, axes, values, caption, and adjacent Figure 7 are legible without
 overlap or clipping. The final log contains no undefined citation/reference,
 overfull box, compilation error, or fatal error. The PDF remains 16 US-Letter
 pages with embedded fonts, no annotations, and no embedded files. The preserved
-`paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+`paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
-The revised `paper/manuscript/main.pdf` has SHA-256
+The revised `paper/current_manscript/main.pdf` has SHA-256
 `dabbfc09a9646cb60830815d67ced04e9bb8010a4e8f8730e8fbee6d683056dc`.
 
 ## Figure 4 OpenStreetMap Revision
 
 Complete. Figure 4 now directly reuses the existing publication-oriented
-`paper/figs/fig-signal-osm-runs.png` rather than reconstructing a new map. Its
+`paper/legacy_draft/figs/maps/fig-signal-osm-runs.png` rather than reconstructing a new map. Its
 three OpenStreetMap panels show triangulated spatial interpolation of the
 separate-handset RSRP, RSRQ, and reported-SNR samples and identify the five
 stationary Uu workload collections. The system-design prose, caption, and
@@ -2969,10 +3060,10 @@ attribution. The temporary duplicate map-rendering code is no longer used.
 
 Updated files:
 
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/Makefile`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/Makefile`
+- `paper/current_manscript/main.pdf`
 - `current_task.md`
 
 Validation: the full LaTeX build completes successfully. Figure 4 and
@@ -2981,9 +3072,9 @@ maps, metric scales, sample and run markers, caption, and attribution are
 legible without clipping or overlap. The final log contains no undefined
 citation/reference, overfull box, or compilation error. The PDF remains 16
 US-Letter pages with embedded fonts and no annotations. The preserved
-`paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+`paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
-The revised `paper/manuscript/main.pdf` has SHA-256
+The revised `paper/current_manscript/main.pdf` has SHA-256
 `aa7585a831d66eae79bb04c016704038c43081f851e1c19d1d7692f397b3a334`.
 
 ## Prior Abstract Revision
@@ -3002,8 +3093,8 @@ changing the 12-page core-paper boundary.
 
 Updated files:
 
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
 - `current_task.md`
 
 Validation: the full LaTeX build passes with no undefined citation/reference,
@@ -3015,7 +3106,7 @@ clipping or overlap. All fonts are embedded, and the PDF contains no
 annotations or identifying author metadata. `git diff --check` passes. The
 final PDF SHA-256 is
 `8683e14c361933a0819651657f49f2e6f6ec13c14d95b40310f4860606f4aa92`.
-The preserved `paper/manuscript/28p.pdf` remains byte-identical with SHA-256
+The preserved `paper/current_manscript/28p.pdf` remains byte-identical with SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
 
 ## Prior Academic-Writing Review
@@ -3045,14 +3136,14 @@ figures now use `workload response` or `received response`.
 
 Updated manuscript files:
 
-- `paper/manuscript/sections/00_abstract.tex`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
-- `paper/manuscript/sections/08_appendices.tex`
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/proposed_changes.md`
+- `paper/current_manscript/sections/00_abstract.tex`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
+- `paper/current_manscript/sections/08_appendices.tex`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/proposed_changes.md`
 
 Validation: the figure-generation script and `make all` completed successfully.
 The final LaTeX log has no undefined citation/reference, overfull box, or
@@ -3062,9 +3153,9 @@ no annotations or identifying author metadata. Pages 1, 3--9, 11--12, and 15
 were rendered and visually inspected; the revised text and figure labels are
 legible and have no clipping, overlap, or broken layout. The preserved full
 draft remains byte-identical at
-`paper/manuscript/28p.pdf`, SHA-256
+`paper/current_manscript/28p.pdf`, SHA-256
 `6b4d18f3e50d722560f565ec37f2ace30e80ade484776684c75c8c53b63a6307`.
-The corrected current PDF is `paper/manuscript/main.pdf`, SHA-256
+The corrected current PDF is `paper/current_manscript/main.pdf`, SHA-256
 `107af03cc356cc44fbb9fb3d3870b16fe88a8e53a62d5950d7711873ae018ba5`.
 
 ## Prior Limiting-Factor Analysis Status
@@ -3113,8 +3204,8 @@ the four figures were rendered and visually inspected.
 ## Prior Condensed-Manuscript Status
 
 Complete. The prior full-length rendering remains byte-identical at
-`paper/manuscript/28p.pdf`, and the current source builds the condensed paper as
-`paper/manuscript/main.pdf`. Core content occupies pages 1--12, references
+`paper/current_manscript/28p.pdf`, and the current source builds the condensed paper as
+`paper/current_manscript/main.pdf`. Core content occupies pages 1--12, references
 begin on page 13, and appendices occupy pages 15--16. The source retains the
 approved outline, exactly two contributions, and exactly three insights.
 Detailed IPI, radio, workload, and experiment-matrix records remain in the
@@ -3135,14 +3226,14 @@ The abstract contains 166 words. The Introduction contains 402 words; Related
 Work contains 569; IPI contains 439; Setup contains 1,967; Results contains
 2,237; Future Research Directions contains 281; and the Conclusion contains
 163 words. Approval-only implementation and experiment expansions remain in
-`paper/manuscript/proposed_changes.md`; none is claimed as current behavior.
+`paper/current_manscript/proposed_changes.md`; none is claimed as current behavior.
 
 ## Final Condensed-Draft Validation: 2026-08-13
 
-- Current manuscript: `paper/manuscript/main.tex` with Sections 0--7 and
+- Current manuscript: `paper/current_manscript/main.tex` with Sections 0--7 and
   post-bibliography appendices A--C.
-- Current rendered draft: `paper/manuscript/main.pdf`.
-- Preserved full draft: `paper/manuscript/28p.pdf`.
+- Current rendered draft: `paper/current_manscript/main.pdf`.
+- Preserved full draft: `paper/current_manscript/28p.pdf`.
 - Structure: exactly two contribution bullets and exactly three approved
   insight bullets; Section 5 repeats the same three insights.
 - Workload boundary: J2735 functional checks, PC5 custom sequence-matched
@@ -3167,7 +3258,7 @@ Work contains 569; IPI contains 439; Setup contains 1,967; Results contains
 - Condensed PDF SHA-256:
   `53b368b9cb7b6f7786983f43ddfe2adc3ca45218bf2f42fb9e202a56ec6268f0`.
 - Deferred proposals: P-001 through P-004 in
-  `paper/manuscript/proposed_changes.md` require user approval plus
+  `paper/current_manscript/proposed_changes.md` require user approval plus
   implementation, tests, and/or new experiments.
 
 ## Evidence-Source Correction: 2026-08-12
@@ -3185,9 +3276,9 @@ Updated files:
 
 - `remaining_exp.md`
 - `experiment_summary.md`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/proposed_changes.md`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/proposed_changes.md`
 - `current_task.md`
 
 Validation: `make clean all` completed successfully. The final LaTeX pass has
@@ -5611,7 +5702,7 @@ for user approval.
 
 Status: in progress. The stale and new paper sources are physically
 separated. `paper/legacy_draft/` contains the former TeX, bibliography,
-Makefile, and compiled artifacts. `paper/manuscript/` is the only active draft
+Makefile, and compiled artifacts. `paper/current_manscript/` is the only active draft
 and contains a new wrapper, new bibliography, and newly written Sections 1--4.
 The clean wrapper does not input any file from `paper/legacy_draft/`.
 
@@ -5633,7 +5724,7 @@ Current stage:
 - The Introduction contains exactly two contribution bullets and exactly three
   approved insight bullets. The word `strictly` was restored in Insight 2.
 - One possible protocol and conformance expansion is genuinely uncertain and
-  remains unapplied as P-001 in `paper/manuscript/proposed_changes.md`.
+  remains unapplied as P-001 in `paper/current_manscript/proposed_changes.md`.
 - Section 2, `Related Work`, was written from the approved two-gap structure
   and newly verified primary sources. It synthesizes standards and platforms,
   CAV applications and middleware, direct-PC5 evidence, cellular/5G trials,
@@ -5667,7 +5758,7 @@ Current stage:
   conformance, an enforced session state machine, a broker-backed session
   adapter, or complete negative-test coverage.
 - P-001 remains pending. P-002 was added to
-  `paper/manuscript/proposed_changes.md` for an enforced cross-transport session
+  `paper/current_manscript/proposed_changes.md` for an enforced cross-transport session
   path, terminal outcomes, correlation checks, retained fallback inputs, and
   expanded negative and interoperability tests. Neither proposal was applied.
 - Section 4, `System Design and Experimental Setup`, was rebuilt from the
@@ -5690,7 +5781,7 @@ Current stage:
   context comes from a separate iPhone survey and is not MG52 telemetry.
   Logical-client traffic is a closed-loop sequential workload with a maximum
   nominal rate, not a fixed open-loop rate or a multi-UE field test.
-- P-003 was added to `paper/manuscript/proposed_changes.md` for monotonic timing,
+- P-003 was added to `paper/current_manscript/proposed_changes.md` for monotonic timing,
   workload correlation, native detector serialization, and matched radio
   exports. It remains unapplied pending user approval.
 - Section 5, `Experiment Results`, was written as a comparison-first answer to
@@ -5749,24 +5840,24 @@ Current stage:
 
 Files created or reorganized:
 
-- `paper/manuscript/main.tex`
-- `paper/manuscript/Makefile`
-- `paper/manuscript/references.bib`
-- `paper/manuscript/sections/01_introduction.tex`
-- `paper/manuscript/sections/02_related_work.tex`
-- `paper/manuscript/sections/03_ipi_protocol_design.tex`
-- `paper/manuscript/sections/04_system_design_setup.tex`
-- `paper/manuscript/sections/05_experiment_results.tex`
-- `paper/manuscript/sections/06_future_research_directions.tex`
-- `paper/manuscript/sections/07_conclusion.tex`
-- `paper/manuscript/scripts/build_section5_figures.py`
-- `paper/manuscript/figures/section5_pc5_payload_route.pdf`
-- `paper/manuscript/figures/section5_5g_deadline_envelope.pdf`
-- `paper/manuscript/figures/section5_protocol_completion.pdf`
-- `paper/manuscript/figures/section5_mixed_load_qos.pdf`
-- `paper/manuscript/figures/section5_concurrency_interruption.pdf`
-- `paper/manuscript/proposed_changes.md`
-- `paper/manuscript/main.pdf`
+- `paper/current_manscript/main.tex`
+- `paper/current_manscript/Makefile`
+- `paper/current_manscript/references.bib`
+- `paper/current_manscript/sections/01_introduction.tex`
+- `paper/current_manscript/sections/02_related_work.tex`
+- `paper/current_manscript/sections/03_ipi_protocol_design.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/06_future_research_directions.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/figs/section5_pc5_payload_route.pdf`
+- `paper/current_manscript/figs/section5_5g_deadline_envelope.pdf`
+- `paper/current_manscript/figs/section5_protocol_completion.pdf`
+- `paper/current_manscript/figs/section5_mixed_load_qos.pdf`
+- `paper/current_manscript/figs/section5_concurrency_interruption.pdf`
+- `paper/current_manscript/proposed_changes.md`
+- `paper/current_manscript/main.pdf`
 - `paper/reviews/section_01_mobicom_red_team.md`
 - `paper/reviews/section_02_mobicom_red_team.md`
 - `paper/reviews/section_03_mobicom_red_team.md`
@@ -5779,7 +5870,7 @@ Files created or reorganized:
 
 Validation completed after the Section 5 red-team pass:
 
-- `make` succeeds from `paper/manuscript/` using `pdflatex` and `bibtex`.
+- `make` succeeds from `paper/current_manscript/` using `pdflatex` and `bibtex`.
 - The final-pass build log has no undefined citation, undefined reference,
   LaTeX error, or overfull-box warning.
 - The ACM-format Sections 1--5 draft is 25 pages including references. Page
@@ -5857,7 +5948,7 @@ research direction was removed to reduce page count.
 
 Current integration validation:
 
-- `make -C paper/manuscript clean all` succeeds.
+- `make -C paper/current_manscript clean all` succeeds.
 - The final build pass contains no undefined citation, undefined reference,
   LaTeX error, or overfull-box warning.
 - The current PDF is 27 US-letter pages including references and is 707,837
@@ -5870,7 +5961,7 @@ Current integration validation:
 - The current PDF SHA-256 is
   `91d27901fee64f56d31ba5200033a9092f9f554b9c50ecf39a10c7a8eb4b6404`.
 - A whole-paper three-perspective MobiCom integration review is running against
-  `paper/manuscript/` only. Its brief explicitly excludes page-count criticism
+  `paper/current_manscript/` only. Its brief explicitly excludes page-count criticism
   and forbids use of `paper/legacy_draft/`.
 
 ## Active Task Update: Year 2 Implementation Report Evidence Refresh
