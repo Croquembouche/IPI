@@ -7,7 +7,7 @@ Directions, followed by a concise Conclusion. The paper should be written as a
 MobiCom systems argument: it should
 establish an important communication-readiness question, explain why the
 question cannot be answered from standards targets or peak throughput alone,
-show how IPI and the experiments answer it, and turn the resulting evidence into
+show how the experiments answer it and how IPI enables the comparison, and turn the resulting evidence into
 a field-level research agenda.
 
 ### Binding abstract structure — not a manuscript section
@@ -20,11 +20,12 @@ a field-level research agenda.
   and deadline-miss evidence. The empirical question tests both workload
   classes over both V2X and 5G. Do not assume a fixed CV-to-V2X and CAV-to-5G
   assignment.
-- Introduce the two contributions with `In this paper, we contribute`: 1) the
-  unified IPI application interface; and 2) the detailed real-vehicle
-  communication-latency study. The measurement contribution must receive at
-  least as much explanatory space as IPI. Do not mention the packaging-overhead
-  result in the abstract.
+- Introduce the controlled real-vehicle communication study as the primary
+  scientific contribution. Then introduce IPI as the enabling systems
+  contribution developed to represent both workload classes consistently. The
+  abstract's causal order is measurement question, missing comparable evidence,
+  measurement study, need for one workload contract, IPI, and empirical
+  insights. Do not mention the framing-cost result in the abstract.
 - State that IPI carries the SAE International J2735 message set; do not narrow
   the abstract claim to a selected subset. Typed helpers may still be identified
   separately from the encoded-message path in the protocol section.
@@ -37,9 +38,9 @@ a field-level research agenda.
   systems`, or `For 5G/6G` audience prefixes. Instead, name the affected system
   and decision directly. The three implications must remain technically
   distinct: 1) the measured commercial direct V2X path supports compact J2735
-  messages only within a limited payload and coverage envelope; 2) the CAV
-  application-packet size that the measured 5G uplink can complete within a
-  decision deadline is severely limited; and 3) 5G/6G radios must support
+  messages only within a limited payload and coverage envelope; 2) the measured
+  5G uplink supports only severely limited CAV packet sizes within decision
+  deadlines; and 3) 5G/6G radios must support
   event-triggered CAV bursts in either direction and isolate concurrent flows
   if cellular networks are to support CAV and ITS applications that advance the
   goal of zero road fatalities.
@@ -784,16 +785,7 @@ section.
 Keep the contributions separate from the experimental insights. This paper has
 two main contributions:
 
-1. **IPI protocol and implementation.** We design and implement the
-   Intersection Programming Interface, a transport-independent,
-   J2735-compatible protocol/interface that supports stateless CV/ITS
-   applications and stateful CAV applications. IPI carries the J2735 message set while
-   adding the session, request correlation, freshness, payload, operation-status,
-   and failure semantics needed by applications such as perception assistance,
-   planning assistance,
-   signal-service requests, warnings, map updates, and edge-assisted
-   computation.
-2. **Application-driven field evaluation.** We conduct a systematic evaluation
+1. **Application-driven field evaluation.** We conduct a systematic evaluation
    on a real autonomous vehicle using two independently measured communication
    paths: a certified off-the-shelf LTE C-V2X PC5 OBU--RSU path and an on-site
    private-5G NR Uu vehicle-to-edge path containing the radio, gateway, SIM,
@@ -803,14 +795,21 @@ two main contributions:
    distance and obstruction, mobility, mixed foreground/background uplink load,
    application-client demand, application time budget, QoS condition, and endpoint or
    broker interruption.
+2. **Enabling IPI protocol and implementation.** We design and implement the
+   Intersection Programming Interface, an application-layer protocol that
+   supports compact CV/ITS messages and correlated CAV operations through one
+   logical application contract. IPI preserves typed or pre-encoded J2735
+   content and adds operation association, freshness, generic outcome, and
+   application-content fields through profile-specific wire representations.
 
 End the contribution paragraph with this logical bridge rather than introducing
 a third, overlapping contribution:
 
-> Together, these contributions determine how far each measured communication
-> path can support both CV and CAV workload classes before response latency or
-> availability no longer meets the application requirement. The evaluation
-> produces three main insights.
+> IPI makes both workload classes available to the same application-facing
+> evaluation. The field study then determines how far each measured
+> communication path supports them before response latency, deadline completion,
+> or directional goodput no longer meets the application requirement. The
+> measurements produce three main insights.
 
 ### Paragraph 8 — Three insights
 
@@ -825,8 +824,8 @@ additional top-level insight.
    infrastructure can make these messages useful at urban intersections.
    Building-obstructed streets, highways, and sparsely served roads may require
    carefully placed roadside infrastructure or a supplemental path.
-2. **The CAV application-packet size that the measured 5G uplink can complete
-   within a decision deadline is severely limited.** Until the uplink envelope
+2. **The measured 5G uplink supports only severely limited CAV packet sizes
+   within decision deadlines.** Until the uplink envelope
    expands, CAV developers must select, compress, or progressively transmit
    vehicle-originated state according to the decision deadline. Keep the
    approximately 20-KiB measured boundary and the matched downlink contrast in
@@ -840,8 +839,9 @@ additional top-level insight.
 
 ### Claim boundaries to preserve when writing the introduction
 
-- Do not call the work a testbed contribution. The contribution is IPI plus an
-  evidence-grounded readiness characterization and design guidance.
+- Do not call the work a testbed contribution. The primary contribution is the
+  evidence-grounded communication-readiness characterization; IPI is the
+  enabling systems contribution that supplies its common workload contract.
 - Do not present Mocar as the paper or system name. It is the equipment vendor.
 - Do not present Edge4AV as the proposed system. It is the paper title.
 - Do not imply that the experiments measured NR-V2X sidelink, independent
@@ -917,20 +917,18 @@ below are outline scaffolding only. They are not proposed subsection headings
 or manuscript wording. The final paper should express each sequence as
 connected academic prose. Standards and application platforms,
 application-specific CAV systems, and field studies of direct and
-network-assisted paths address different parts of CV/CAV communication. Two
-gaps remain in the current CV/CAV/ITS landscape:
+network-assisted paths address different parts of CV/CAV communication. The
+primary gap is an **evidence gap**: existing evaluations do not determine
+whether today's direct V2X and 5G paths can each carry both workload classes or
+identify the payload sizes and network conditions at which either path misses
+application deadlines.
 
-- a **protocol gap** because the landscape lacks a coherent application
-  protocol that supports stateless CV/ITS applications and stateful CAV
-  applications; and
-- an **evidence gap** because existing evaluations do not determine whether
-  today's direct V2X and 5G paths can each carry both workload classes or
-  identify the payload sizes and network conditions at which either path
-  misses application deadlines.
-
-IPI fills the protocol gap. The real-vehicle experiments fill the evidence
-gap. The three insights explain what the combined findings mean for CAV, CV,
-ITS, carrier, radio, and 5G-Advanced/6G researchers.
+The evaluation also needs a stable application representation for both
+workload classes. IPI fills this enabling systems gap by placing compact J2735
+content and correlated CAV operations behind one application contract with
+profile-specific serialized forms. The real-vehicle experiments provide the
+paper's primary contribution. The three insights explain what the measured
+findings mean for CAV, CV, ITS, carrier, radio, and 5G-Advanced/6G researchers.
 
 ### Visual presentation recommendation — existing technologies, gap, and future requirements
 
@@ -967,8 +965,9 @@ the existing pieces do not answer together:
    an application deadline?
 
 Show the paper's two contributions as the response inside or directly beneath
-this middle region: IPI addresses the protocol gap, and the application-level
-field evaluation addresses the evidence gap. Avoid a decorative bridge or
+this middle region: the application-level field evaluation addresses the
+evidence gap, and IPI supplies the workload representation needed by that
+evaluation. Avoid a decorative bridge or
 chasm metaphor; use a clean transition or narrowing flow.
 
 #### Right — communication support required by future CAV/ITS applications
@@ -1323,23 +1322,25 @@ The Related Work section should end with one direct synthesis paragraph built
 from the following logic:
 
 1. Standards and platforms provide interoperable messages, network enablers,
-   and important application integrations, but the current landscape lacks one
-   coherent application protocol spanning stateless J2735-compatible CV/ITS
-   messages and stateful CAV operations.
+   and important application integrations. Across the surveyed implementations,
+   compact J2735-compatible CV/ITS messages and correlated CAV operations remain
+   separate application representations.
 2. CAV systems and network middleware demonstrate application-specific
    cooperation, deadlines, adaptation, and multi-network operation, but do not
    close that protocol gap.
 3. PC5 and 5G studies provide substantial real-world evidence, but each
    primarily examines one path, application family, protocol adaptation, or
    deployment question. They do not apply both workload classes to both path
-   types and locate the support boundary of each measured path.
-4. Edge4AV fills these two gaps with IPI and a systematic application-level
+   types and determine where each measured path stops meeting its application
+   requirements.
+4. Edge4AV fills the primary evidence gap with a systematic application-level
    field evaluation across independently measured LTE C-V2X PC5 and private-5G
-   NR Uu paths.
+   NR Uu paths. IPI supplies the enabling application contract used to represent
+   both workload classes.
 5. The resulting three insights state that the measured commercial direct V2X
    path supports compact J2735 messages only within its payload-and-coverage
-   envelope; the CAV application-packet size that the measured 5G uplink
-   completes within a decision deadline is severely limited; and 5G/6G radios
+   envelope; the measured 5G uplink supports only severely limited CAV packet
+   sizes within decision deadlines; and 5G/6G radios
    must support event-triggered CAV bursts in either direction and isolate
    concurrent flows.
 
@@ -1348,26 +1349,28 @@ from the following logic:
 > Prior work has standardized V2X messages, integrated selected cooperative
 > applications, developed deadline-aware and multi-network middleware, and
 > measured direct PC5 and cellular 5G in increasingly realistic settings.
-> However, these efforts leave two connected gaps: no common application
-> protocol spans stateless CV/ITS applications and stateful CAV applications,
-> and existing evaluations do not apply both workload classes to
+> However, these efforts leave two connected gaps: the surveyed implementations
+> do not expose compact CV/ITS messages and correlated CAV operations through
+> one application contract, and existing evaluations do not apply both workload classes to
 > both path types to determine where each path stops meeting application
 > deadlines.
-> This paper fills the first gap with IPI and the second with a
-> real-vehicle, application-level evaluation of a
+> This paper fills the primary evidence gap with a real-vehicle,
+> application-level evaluation of a
 > certified LTE C-V2X PC5 path and an on-site private-5G NR Uu path. Together,
-> they connect application semantics to measured communication outcomes and
-> expose the requirements that future CAV and 5G-Advanced/6G systems must
+> IPI supplies the common workload contract that connects application meaning
+> to measured communication outcomes. The measurements then expose the
+> requirements that future CAV and 5G-Advanced/6G systems must
 > address.
 
 ## 3. IPI Protocol Design
 
 ### Section purpose and argument
 
-This section presents the first main contribution: a transport-independent
-application protocol that provides one interface for stateless CV/ITS
-applications and stateful CAV applications. It must answer four questions before the
-evaluation begins:
+This section presents the enabling systems contribution: an application-layer
+protocol that provides one logical contract for compact CV/ITS messages and
+correlated CAV operations. The protocol exists because the primary measurement
+study requires consistent workload meaning across the measured paths. It must
+answer four questions before the evaluation begins:
 
 1. What application-level information is missing when an implementation only
    exposes a radio link, IP socket, or individual J2735 message?
@@ -1380,11 +1383,19 @@ evaluation begins:
    library, and which remain design hooks rather than experimentally validated
    mechanisms?
 
-The section must establish IPI as a protocol/interface contribution, not merely
-the experiment's packet format. It should be detailed enough for an ITS or CAV
-developer to understand how to represent an application exchange and for a
-networking reviewer to see what constitutes a correlated, complete, fresh, or
-failed exchange.
+The section must establish IPI as a protocol/interface contribution rather than
+an arbitrary experiment header, but it must not turn the manuscript into a
+standalone protocol paper. It should be detailed enough for an ITS or CAV
+developer to understand the represented workloads and for a networking reviewer
+to identify the application identity, correlation, outcome, freshness, binding,
+and measured size boundary.
+
+The main manuscript should answer those questions in approximately one page.
+The detailed field inventory, full lifecycle rules, byte layouts, versioning,
+error behavior, and golden vectors belong in the appendix or repository
+artifact. A full autonomous-driving application, protocol-only campaign, or
+performance comparison against TCP or MQTT is not required for this enabling
+contribution.
 
 ### 3.1 Design goals and non-goals
 
@@ -1392,8 +1403,9 @@ failed exchange.
 
 - **One interface across ITS, CV, and CAV applications.** A traffic signal,
   roadside unit, connected vehicle, automated vehicle, pedestrian device, edge
-  service, or cloud service should use the same envelope and endpoint contract
-  even when its payload and communication path differ.
+  application, or cloud application should use the same logical application
+  contract even when its payload, serialized profile, and communication path
+  differ.
 - **Preserve deployed message ecosystems.** IPI must carry the J2735 messages
   already used for safety, signal, and intersection applications rather than
   requiring those applications to adopt a new incompatible message family.
@@ -1401,9 +1413,10 @@ failed exchange.
   broadcast object: they need service identity, request correlation, session
   state, progress, completion or rejection, freshness/expiration, and explicit
   failure handling.
-- **Separate application semantics from transport.** The application object and
-  its completion criterion should not change merely because it is carried over
-  direct C-V2X, 5G, TCP, MQTT, UDP, a wired link, or a future transport.
+- **Separate application meaning from transport.** The application object and
+  its completion criterion should not change merely because a path-specific
+  profile is carried over direct C-V2X, 5G, TCP, MQTT, UDP, a wired link, or a
+  future transport.
 - **Make readiness measurable.** Message identifiers, source and intersection
   identity, send time, session/correlation identifiers, status, payload type,
   and acknowledgements must let an evaluator distinguish a completed response,
@@ -1443,9 +1456,10 @@ failed exchange.
 > service, which response belongs to that request, whether the result remains
 > fresh, whether the service is still in progress, and whether it completed or
 > failed. IPI provides this contract without discarding deployed J2735
-> messages. It gives conventional CV/ITS exchanges and stateful CAV operations a
-> shared envelope, service vocabulary, and completion semantics that can be
-> bound to direct V2X or network-assisted communication.
+> messages. It gives conventional CV/ITS exchanges and correlated CAV operations
+> shared application identity, content typing, timing, association, and outcome
+> semantics represented through workload-specific profiles and carried through
+> path-specific bindings over direct V2X or network-assisted communication.
 
 ### 3.2 One interface, two application interaction modes
 
@@ -1460,9 +1474,10 @@ than separate systems.
 - This mode supports periodic or event-driven BSM, PSM, MAP, SPaT, SRM, SSM,
   and opaque pre-encoded messages such as a full TIM not modeled by the
   lightweight reference types.
-- The application envelope adds source, intersection, time, transport, and
-  optional correlation metadata without changing the meaning of the J2735
-  payload.
+- The logical application contract associates source, intersection, time,
+  transport, and optional correlation metadata with the J2735 payload. The
+  compact serialized message profile does not have to reproduce every optional
+  operation field.
 - The primary completion question is whether the expected message or response
   was received while it was still useful. Not every conventional broadcast
   requires a session.
@@ -1485,21 +1500,25 @@ Use a compact left-to-right figure with three regions:
 
 1. **Applications:** conventional ITS/CV applications above and stateful CAV
    services below;
-2. **IPI contract:** one common envelope in the center, with a J2735 message
-   path and a session/service path inside it;
+2. **IPI contract:** one logical application contract in the center, with a
+   compact J2735 message profile and a correlated-operation profile inside it;
 3. **Bindings:** direct PC5 hardware, TCP/MQTT/UDP over Uu, ROS 2 adapters, and
    future transports on the right.
 
-Show that both application modes share identity, time, source, intersection,
-transport annotation, correlation, and status where applicable. Do not draw
-IPI as replacing J2735 or as a network layer. Do not imply that every listed
-binding is evaluated in this paper.
+Show that the two modes share identity, time, source, context, content typing,
+and optional operation association at the application-contract level. Label the
+serialized forms as profile specific so the figure does not imply that every
+field appears in every compact wire frame. Do not draw IPI as replacing J2735 or
+as a network layer. Do not imply that every listed binding is evaluated in this
+paper.
 
-### 3.3 Common envelope, identity, and correlation
+### 3.3 Logical application contract, identity, and correlation
 
 #### Envelope metadata
 
-Every IPI application object uses a typed envelope with the following metadata:
+The high-level IPI data model can associate the following metadata with an
+application object. A serialized binding profile selects the fields needed by
+its exchange:
 
 - `messageId`: unique application-message identifier;
 - `sentAt`: application send timestamp;
@@ -1558,9 +1577,10 @@ reproduction appendix rather than scattering them through prose.
 - The optional ROS 2 bridge converts the corresponding `v2x_msg` forms for BSM,
   PSM, MAP, SPaT, SRM, and SSM into the reference types. The Mocar integration
   binds selected messages to the deployed PC5 device API.
-- The standard-message path and the IPI service extension share the same
-  application envelope and sender/receiver façade. This is the concrete basis
-  for calling IPI one interface rather than two unrelated APIs.
+- The standard-message path and the IPI operation path share the same
+  application API, identity model, and content conventions while using
+  profile-specific serialized fields. This is the concrete basis for calling
+  IPI one contract rather than two unrelated APIs.
 
 #### Conventional application examples
 
@@ -1802,12 +1822,11 @@ deployment evidence.
 
 #### Section close
 
-> IPI makes conventional messages and stateful services comparable at the
-> application level by giving them explicit identity, context, correlation,
-> freshness, status, and completion semantics. Section 4 next binds this
-> contract to currently deployable direct-PC5 and 5G-Uu paths and defines the
-> experiments used to determine when each complete exchange remains available
-> within its application time budget.
+> IPI makes conventional messages and correlated CAV operations comparable at
+> the application level through shared identity, context, timing, content
+> typing, and operation association. Section 4 next maps the profile used by each
+> experiment to deployable direct-PC5 and 5G-Uu paths and defines the measured
+> size and timing boundaries.
 
 ## 4. System Design and Experimental Setup
 
@@ -2423,9 +2442,9 @@ maximums into measured performance.
 - UDP is evaluated in two distinct forms:
   - one raw UDP datagram per logical message, used to expose path-MTU/IP-
     fragmentation sensitivity;
-  - application-level fragmentation into datagrams capped at 1,400 B, with
+  - adapter-level fragmentation into datagrams capped at 1,400 B, with
     receiver-side reassembly and a correlated acknowledgment.
-- Never combine raw-UDP and application-fragmented UDP conditions into one UDP
+- Never combine raw UDP and adapter-fragmented UDP conditions into one UDP
   reliability curve. They implement different delivery behavior.
 - The vehicle-originated payload is primarily an uplink request or application
   object, and the correlated reply travels downlink. Separate direction-control
@@ -3022,7 +3041,7 @@ change availability and latency on each current path?
   collection-day weather labels remain descriptive context.
 - 5G detector replay: 0/compact controls, 19,648, 22,816, 23,968, and where
   available 25,024 B, plus the separate 60,000 B stress condition, over TCP,
-  MQTT, raw UDP, and application-fragmented UDP.
+  MQTT, raw UDP, and adapter-fragmented UDP.
 - The fragmented-UDP main payloads use 1,000 attempts at 200 ms intervals;
   the 60,000 B stress condition uses 100 attempts. Sender timeouts are 3 s for
   compact datagrams, 5 s for larger detector payloads, and 8 s for the 60,000 B
@@ -3145,11 +3164,11 @@ does that stress interact with the radio condition of the shared UE?
 **Question:** Does a nominally successful network path deliver the complete
 application object under different protocol and fragmentation choices?
 
-- Compare TCP request/reply, MQTT QoS 0 over TCP, raw UDP, and application-
-  fragmented UDP for common compact and detector-derived sizes.
+- Compare TCP request/reply, MQTT QoS 0 over TCP, raw UDP, and UDP with
+  adapter-level fragmentation for common compact and detector-derived sizes.
 - Use the raw-UDP sizes 0, 1,024, 1,400, 4,096, and 19,648 B to locate the
   onset of path-MTU/IP-fragment sensitivity in the measured path.
-- Use application-fragmented UDP with a 1,400 B maximum datagram payload for
+- Use adapter-fragmented UDP with a 1,400 B maximum datagram payload for
   0, 256, 1,024, 4,096, 19,648, 22,816, 23,968, 25,024, and 60,000 B as
   available in the good- and weak-condition runs.
 - Count a fragmented message as available only after reassembly and correlated
@@ -3341,52 +3360,39 @@ The Introduction may preview the three findings, but the Results headings and
 plots must present the comparison first so the data visibly lead to the detailed
 insight discussion rather than appearing chosen to prove fixed conclusions.
 
-### 5.1 IPI carries conventional CV/ITS messages and correlated CAV services
+### 5.1 IPI workload representation and framing cost
 
-#### Readiness condition and comparison
+#### Measurement purpose and comparison
 
-Test semantic/functional correctness before interpreting network performance.
-The criterion is binary and must be stated before the outcome:
+Establish that the enabling protocol represents the two workload classes used
+by the communication study and adds a fixed or bounded number of bytes. Keep
+this subsection proportional to a supporting systems contribution; it is not a
+separate protocol evaluation.
 
-- a J2735 message passes only if the deployed receiver decodes and delivers the
-  expected message through its standard callback;
-- an IPI request passes only if the receiver validates the envelope and payload,
-  preserves the request/session identity, and returns the expected correlated
-  response; and
-- local loopback establishes message-format acceptance only. It is not a
-  wireless latency or reliability baseline.
-
-#### Results to report
-
-- The deployed SPaT bridge delivered 10/10 standard-path messages to the OBU
-  callback, and the bring-up captured bidirectional BSM reception and the
-  bidirectional custom request/reply path. Keep these as functional checks, not
-  a sample large enough for a reliability claim.
-- Dataset-derived IPI objects at 5,262, 5,789, 10,507, 40,337, and 60,000 B,
-  together with compact controls, were all accepted in the local loopback
-  validation. This shows that later wireless failures are not automatically an
-  IPI parser-size failure.
-- Across the selected 5G SPaT/state-mirror group, all 2,000 attempts eventually
-  returned an accepted response. The p50/p95/p99 RTTs were
-  58.748/130.323/140.479 ms; deadline-qualified availability was 53.40% at
-  100 ms and 100% at both 500 and 1,000 ms.
-- Connect this comparison to Example A in Section 4.7: the 53.40% value means
-  that only 1,068 of the 2,000 acknowledged state-mirror cycles fit inside the
-  100 ms signal-warning reference. It does **not** mean that 46.60% of one-way
-  SPaT broadcasts missed 100 ms, because that one-way path was not timed with
-  this RTT method.
+- The compact profile preserves typed BSM, PSM, MAP, SPaT, SRM, and SSM content
+  and byte-exact pre-encoded J2735 content.
+- The correlated-operation profile represents request, update, completion, and
+  rejection together with session and correlation information.
+- Report the measured content representation before path-specific experiment
+  and transport framing. A preserved J2735 payload adds the measured 1-B type
+  and 4-B length fields. The measured operation representation adds 78--81 B
+  when an application object is present.
+- Distinguish these representation costs from the complete PC5 performance-frame
+  sizes and from the Uu application-object size selected before serialization.
 
 #### Presentation
 
-Use one narrow functional-coverage table with rows for J2735 SPaT/BSM, IPI
-local validation, direct custom request/reply, and 5G service request/reply.
-Columns should be interaction type, criterion, attempts when known, observed
-outcome, and claim boundary. Do not use a latency plot for local loopback.
+Use one narrow table with rows for the compact J2735 profile, a planning request
+without an object, and the measured 256-B, 1-KiB, and 4-KiB operation objects.
+Columns should show IPI fields, application content, and representation total.
+The supporting prose should explain that the added bytes remain fixed or
+bounded as the application object grows. Full wire-profile details and
+conformance evidence belong in the appendix or artifact.
 
-**One-sentence result summary:** IPI preserves the conventional message path
-and supports correlated service exchanges, but functional interoperability
-does not by itself establish that a wireless path meets an application's time
-or reliability requirement.
+**One-sentence result summary:** IPI represents both compact J2735 messages and
+correlated CAV operations with fixed or bounded framing cost, allowing the
+subsequent field experiments to compare the two workload classes through the
+same application-facing methodology.
 
 ### 5.2 Direct LTE C-V2X: payload size and radio condition jointly determine complete delivery
 
@@ -3600,12 +3606,12 @@ objects are asynchronous/bulk transfers in the measured request/reply path.
 Test whether the application receives one complete detector-derived object.
 The threshold is complete reassembly plus correlated acknowledgment within the
 selected deadline; sending one datagram or receiving some fragments is not a
-success. Separate TCP, MQTT-over-TCP, raw UDP, and application-fragmented UDP.
+success. Separate TCP, MQTT-over-TCP, raw UDP, and adapter-fragmented UDP.
 
 Use the repository's validated detector-output p99 workload to make the
 complete-object and fragmentation cost concrete. If a 23,968 B object were
 offered at 10 Hz, it would carry 1.917 Mbit/s of payload and require 180
-application fragments/s at the tested 1,400 B fragment cap; the 60,000 B stress
+adapter fragments/s at the tested 1,400 B fragment cap; the 60,000 B stress
 object would carry 4.8 Mbit/s and require 430 fragments/s. Label this as a
 workload translation, not a primary application requirement. The experiment
 sends sequential request/reply probes rather than a continuous 10 Hz stream,
@@ -3627,13 +3633,13 @@ objects, but 60 KiB MQTT p95/p99 rose to 770/1,230 ms and TCP rose to
 662/1,027 ms. Thus complete eventual response and 500/1,000 ms attainment must
 be reported separately.
 
-#### Raw and application-fragmented UDP comparison
+#### Raw and adapter-fragmented UDP comparison
 
 - On the finalized raw-UDP path, 0 and 1,024 B returned replies, whereas
   1,400, 4,096, and 19,648 B produced zero successful replies. Treat this as
   the measured path's datagram/fragmentation behavior, not a universal IP MTU
   value.
-- With 1,400 B application fragments and receiver-side reassembly, objects from
+- With 1,400 B adapter fragments and receiver-side reassembly, objects from
   0 through 23,968 B achieved 99.5--100.0% complete-response availability in
   the good condition. The 60 KiB stress object completed only 20/100 times.
 - Under the weak condition, fragmented objects through 4,096 B achieved
@@ -3649,14 +3655,14 @@ Use a small-multiple complete-object success plot:
 - x-axis: logical object size;
 - y-axis: complete-response availability;
 - panels: good and weak conditions;
-- series: TCP, MQTT, raw UDP, and application-fragmented UDP; and
+- series: TCP, MQTT, raw UDP, and adapter-fragmented UDP; and
 - threshold lines: 90%, 99%, and 99.9% as labeled comparison levels, plus
   application-specific lines only where sourced.
 
 Add p95/p99 deadline markers for TCP/MQTT in a companion panel rather than
 putting incompatible success and latency units on one axis.
 
-**One-sentence result summary:** Application fragmentation extends UDP beyond
+**One-sentence result summary:** Adapter-level fragmentation extends UDP beyond
 the raw-datagram failure point, but it does not make large complete objects
 reliable under weak signal, while TCP/MQTT preserve eventual completion at the
 cost of deadline-sensitive tails.
@@ -3994,8 +4000,8 @@ Use one compact manuscript paragraph:
 
 Use one compact manuscript paragraph:
 
-> **The CAV application-packet size that the measured 5G uplink can complete
-> within a decision deadline is severely limited.** Every evaluated TCP/MQTT detector
+> **The measured 5G uplink supports only severely limited CAV packet sizes
+> within decision deadlines.** Every evaluated TCP/MQTT detector
 > condition through 19,648 B remains below a 500-ms p95 deadline at the two
 > measured placements, while weak-path MQTT crosses the deadline at 22,816 B.
 > Approximately 20 KiB of application content is the conservative measured
@@ -4451,13 +4457,13 @@ applications, future research directions, or claims.
 
 ### Proposed conclusion paragraph
 
-> IPI gives stateless CV/ITS applications and stateful CAV applications a
-> common application interface. This interface allows both workload classes to be
-> evaluated over direct PC5 and network-assisted Uu rather than assigning each
-> class to one communication technology in advance. In a tightly controlled
-> real-vehicle deployment, the evaluation increases application payload and
-> varies communication conditions to determine where each measured path stops
-> meeting response-latency and availability requirements.
+> Edge4AV contributes an application-facing, real-vehicle measurement of whether
+> direct PC5 and network-assisted Uu support compact CV/ITS messages and
+> correlated CAV operations. The study increases application payload and varies
+> communication conditions to determine where each measured path stops meeting
+> response-latency, deadline-completion, and directional-goodput requirements.
+> IPI supplies the enabling application contract that makes the two workload
+> classes comparable through profile-specific wire representations.
 >
 > The results show that communication readiness is an application-specific
 > operating envelope. Direct PC5 carries compact J2735 messages when roadside
@@ -4479,10 +4485,10 @@ applications, future research directions, or claims.
 ### Writing discipline
 
 - Keep the final manuscript conclusion to these two compact paragraphs.
-- Preserve exactly two contributions—IPI protocol/implementation and the
-  application-driven field evaluation—by showing how they work together to make
-  the readiness question measurable. Do not label them as list items and do not
-  add a testbed contribution.
+- Preserve exactly two contributions—the primary application-driven field
+  evaluation and the enabling IPI protocol/implementation—by showing how they
+  work together to make the readiness question measurable. Do not label them as
+  list items and do not add a testbed contribution.
 - Summarize the three insights as one connected answer rather than numbering or
   re-explaining them.
 - Do not enumerate experiment dimensions or repeat experiment values, equipment

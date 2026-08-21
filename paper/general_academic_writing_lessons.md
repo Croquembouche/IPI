@@ -453,6 +453,45 @@ locations. Use mobility, speed, handover, or Doppler as explanations only when
 the experiment measures or controls those mechanisms. Figures and subsection
 titles must follow the same distinction.
 
+### 23. Treating a review comment as a local edit
+
+**Mistake:** Revising only the highlighted sentence, caption, or panel even
+though the comment changes a definition, section scope, visual encoding, or
+claim used elsewhere. The marked passage may then look corrected while later
+figures, summaries, insights, and conclusions preserve the old interpretation.
+
+**Rule:** Resolve review comments through a traceable manuscript-wide pass.
+First inventory every annotation, including highlights, notes, and replies.
+For each actionable comment, identify the underlying concept and search every
+section, table, figure, caption, axis, and appendix that depends on it. Revise
+all affected uses together, rebuild the document, and inspect the rendered
+pages at publication size. A comment is resolved only when the marked passage
+and every dependent claim use the same terminology, scope, units, denominator,
+and evidence.
+
+### 24. Giving an enabling artifact the same narrative weight as the primary study
+
+**Mistake:** Presenting a supporting protocol, dataset, interface, benchmark,
+or tool before the scientific question and primary evaluation that required it.
+This ordering makes the paper appear to claim two independent headline studies
+and invites reviewers to judge the enabling artifact under a broader standard
+than the paper intends.
+
+**Rule:** Distinguish the paper's causal and evidentiary hierarchy before
+drafting. Lead with the question and the primary contribution that answers it.
+Introduce the enabling artifact when the argument establishes why the study
+needs it. Specify the artifact precisely enough to interpret, reproduce, and
+reuse the study, but do not add an unrelated validation campaign solely to make
+the artifact appear co-equal.
+
+Keep contributions and findings distinct. A contribution is a study, method,
+artifact, dataset, or system that the paper provides. A finding is an empirical
+observation produced by that contribution. List designed contributions together,
+then present findings as the evidence-based answer to the research question.
+When the paper has one primary contribution and one enabling contribution, use
+their order and explanatory space to make that hierarchy visible without
+calling the enabling work incidental or a byproduct.
+
 ## A reusable revision procedure
 
 ### Pass 1: Reconstruct the argument

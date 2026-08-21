@@ -2,14 +2,13 @@
 \label{sec:system-design}
 \label{sec:setup}
 
-The IPI protocol supports stateless CV/ITS applications and stateful CAV
-applications. We use workload sizes and directions representative of both
-communication patterns to compare direct PC5 and network-assisted Uu. We
-measure response RTT and deadline completion for each workload. The
-exact directional transfers additionally measure receiver-observed application
-goodput after byte-count and checksum validation. The
-study covers the two access modes emphasized by the 3GPP V2X architecture:
-direct PC5 communication and network-assisted Uu communication
+The evaluation uses IPI to represent compact CV/ITS messages and correlated CAV
+operations before mapping them to the workload sizes and directions tested over
+direct PC5 and network-assisted Uu. We measure response RTT and deadline
+completion for each application workload. Separate exact directional transfers
+measure receiver-observed application goodput after byte-count and checksum
+validation. The study covers the two access modes emphasized by the 3GPP V2X
+architecture: direct PC5 communication and network-assisted Uu communication
 \cite{etsi123287r18}. PC5 exchanges data locally between vehicles and roadside
 infrastructure. Uu carries vehicle traffic through a radio access network and
 mobile core to an application endpoint. The experiments use one
@@ -22,14 +21,17 @@ second (Mbit/s), or gigabits per second (Gbit/s).
 
 \subsection{Testbed and Measured Paths}
 
-Figure~\ref{fig:testbed-overview} shows the physical installation and the radio
-deployment. The vehicle host generates each workload and records sender-side
-round-trip time (RTT). A Mocar on-board unit (OBU) provides its PC5 interface,
-while an MG52 or GL-X3000 gateway provides its Uu interface. At the fixed site,
-a HUALI roadside unit (RSU) terminates PC5, and an outdoor Airspan AirSpeed 2900
-gNodeB terminates Uu. Both paths reach the d1 application host through direct
-wired connections to the RSU or the on-site MX250. The remote MX68CW manages
-the private 5G deployment and remains outside the measured user-data
+IPI defines the application message and request/response correlation for both
+measured paths. A path-specific adapter then binds the serialized IPI exchange
+to PC5 or Uu. Figure~\ref{fig:testbed-overview} shows the corresponding physical
+installation and radio deployment. The vehicle host generates each IPI
+workload and records sender-side RTT. A Mocar on-board unit
+(OBU) provides the PC5 interface, while an MG52 or GL-X3000 gateway provides
+the Uu interface. At the fixed site, a HUALI roadside unit (RSU) terminates
+PC5, and an outdoor Airspan AirSpeed 2900 gNodeB terminates Uu. Both paths
+reach the d1 application host through direct wired connections to the RSU or
+the on-site MX250. The remote MX68CW manages the private 5G deployment and
+remains outside the measured user-data
 path~\cite{cisco2025private5g,cisco2026mx250,cisco2026mx68}.
 
 \begin{figure*}[t]
@@ -47,48 +49,74 @@ path~\cite{cisco2025private5g,cisco2026mx250,cisco2026mx68}.
   \label{fig:testbed-overview}
 \end{figure*}
 
-The PC5 equipment uses the vendor's 2020 J2735 stack. We first exercised its
-standard-message callbacks. The performance probes then used the vendor's
-packet-data interface with a sequence number and same-size echoed payload. The
-installed interface accepts application packets up to 4,080~B, and the
-evaluated sweep uses 0--2~KiB. The vendor reports protocol-conformance
-certification for the product families~\cite{huali2021certification}.
+In the July 3--4 PC5 campaigns, the PC5 adapter bound IPI to the vendor's 2020
+J2735 stack. We first exercised the standard-message callbacks to validate the
+J2735 path. Performance probes used the serialized IPI profile
+\texttt{IPI\_RTT1}. The adapter placed the complete frame in the application
+payload of the vendor's custom packet-data interface, packet type
+\texttt{0x1b}. The frame records the message
+kind, origin and responder identifiers, sequence number, endpoint timestamps,
+and configured frame length. The RSU decodes these fields and returns a response
+that copies the origin identifier, sequence number, initial send time, and
+configured length. Thus, the sequence field inside the IPI performance frame
+correlates each response with its request. For the 256--2,048-B conditions, the
+request and response each use the configured complete frame length. The zero
+setting produces the minimum valid header rather than a zero-length packet. The
+installed interface's 4,080-B limit applies to the complete serialized packet
+submitted to the vendor interface.
+The vendor reports protocol-conformance certification for the product
+families~\cite{huali2021certification}.
 
-Most Uu campaigns connect the vehicle host to a Cisco Meraki MG52 gateway over
+The Uu measurement adapters carry serialized IPI operation frames over TCP,
+MQTT, or UDP.
+Most campaigns connect the vehicle host to a Cisco Meraki MG52 gateway over
 1-Gbit/s Ethernet. The MG52 contains the subscriber identity module (SIM) and
 an internal antenna placed face-up on the trunk floor. The August 19
 directional repeat replaces the MG52 with a GL.iNet GL-X3000 gateway and
-evaluates both TDD configurations with that device. Each gateway reaches d1
+evaluates both time-division duplex (TDD) configurations with that device. Each
+gateway reaches d1
 through the AirSpeed gNodeB, the Cisco private 5G system, and the on-site MX250.
+Both measured paths therefore use IPI at the application layer. PC5 uses the
+vendor custom-data binding, whereas the Uu workload adapters use TCP, MQTT, or
+UDP.
 
 Figure~\ref{fig:measurement-paths} expands these components into the measured
-request and response paths. A PC5 request returns a sequence-matched,
-same-size echo. The Uu probes carry IPI Cooperative Service frames. In an
-uplink-heavy exchange, the vehicle sends the declared application object, and
-d1 returns a compact correlated acknowledgment after decoding it. In a
-downlink-heavy exchange, the vehicle sends a compact request, and d1 returns
-the requested application object. The vehicle validates the response sequence
-number, length, and checksum before stopping its RTT timer.
+IPI request and response paths. The PC5 binding carries a serialized IPI
+performance request and returns a response with the same configured frame size
+for every nonzero condition. The response copies the request's origin and
+sequence values. A
+Uu request carries an IPI Cooperative Service frame. In an uplink-heavy
+exchange, the vehicle sends the declared application object, and d1 returns a
+compact correlated acknowledgment after decoding it. In a downlink-heavy
+exchange, the vehicle sends a compact request, and d1 returns the requested
+application object. The vehicle validates the response sequence number,
+length, and checksum before stopping its RTT timer.
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\textwidth]{figs/figure04_measurement_paths.pdf}
-  \caption{Detailed request/response data paths and sender-side RTT boundaries.
-  (a) The direct PC5 request returns a same-size, sequence-matched echo. (b) The
-  network-assisted Uu path carries either a large vehicle-originated IPI
-  workload followed by a compact correlated response or a compact vehicle
-  request followed by the complete requested payload. PC5 and Uu were measured
+  \includegraphics[width=\textwidth]{figs/figure04_measurement_paths_flat.png}
+  \caption{IPI path bindings and sender-side RTT boundaries. (a) The direct
+  PC5 adapter carries a serialized IPI performance request through the vendor
+  packet-data interface and returns a sequence-correlated IPI response with the
+  same configured frame size for every nonzero condition. (b) The network-assisted
+  Uu adapter carries either a large
+  vehicle-originated IPI
+  workload followed by a compact correlated response or a compact IPI request
+  followed by the complete requested payload. PC5 and Uu were measured
   separately.}
   \Description{Two panels expand the testbed overview into detailed data paths.
-  The PC5 panel shows a vehicle request and same-size sequence echo through the
-  on-board and roadside units. The Uu panel shows uplink-heavy and
-  downlink-heavy IPI exchanges through the gateway, gNodeB, private 5G system,
-  MX250, and d1, together with the sender-side round-trip timing boundary.}
+  The PC5 panel shows a serialized IPI performance request and a
+  sequence-correlated IPI response with the same configured frame size carried
+  through the vendor packet-data interface, on-board unit, and roadside unit.
+  The Uu panel shows uplink-heavy
+  and downlink-heavy IPI
+  exchanges through the gateway, gNodeB, private 5G system, MX250, and d1,
+  together with the sender-side round-trip timing boundary.}
   \label{fig:measurement-paths}
 \end{figure*}
 
-The Uu deployment was tightly controlled. The vehicle gateway was the sole user
-equipment (UE), and the AirSpeed radio and its full 40-MHz channel were
+The Uu deployment was tightly controlled. The vehicle gateway was the sole UE,
+and the AirSpeed radio and its full 40-MHz channel were
 dedicated to the experiment. The Citizens Broadband Radio Service (CBRS) n48
 band was clean and carried no ambient traffic. The baseline measurements
 contained no unrelated user devices or ambient radio-band contention.
@@ -110,9 +138,9 @@ measurements and identifies the comparison enabled by each control.
     \midrule
     Radio occupancy & Dedicated 40-MHz n48 channel; no ambient users or traffic & Establishes the single-UE baseline; load is introduced only by the experiment \\
     Client population & One physical CAV UE; 1--100 logical clients share its attachment & Varies application concurrency without changing the number of radio clients \\
-    Endpoint and timing & d1 directly connected to the RSU and MX250; unsynchronized endpoint clocks & Measures sender-side RTT and validated goodput; does not infer one-way delay \\
-    Field context & Stationary workload records; continuous-drive RSRP/SINR survey; GNSS-joined PC5 outcomes & Relates application measurements to stationary conditions and route coverage \\
-    Configuration and gateway & 70/20/10 and 40/40/20; MG52 and GL-X3000 repeats & Tests whether TDD behavior persists across vehicle gateways and both traffic directions \\
+    Endpoint and timing & d1 directly connected to the RSU and MX250; unsynchronized endpoint clocks & Supports sender-side RTT and validated goodput; synchronized one-way delay is unavailable \\
+    Field context & Stationary workload records; continuous-drive radio survey; location-joined PC5 outcomes & Relates application measurements to stationary conditions and route coverage \\
+    TDD and gateway & 70/20/10 and 40/40/20; MG52 and GL-X3000 repeats & Tests whether configuration behavior persists across vehicle gateways and both traffic directions \\
     \bottomrule
   \end{tabular}
 \end{table*}
@@ -139,8 +167,8 @@ records define application RTT and goodput.
 A Samsung 22 handset running G-NetTrack Pro recorded radio conditions during
 three continuous drives through the testbed. The combined trace contains
 1,301 Global Navigation Satellite System (GNSS) records. We remove 123 records
-from a frozen radio-value interval longer than 5~s and retain 1,178 valid New
-Radio (NR) band-48 records. Reference Signal Received Power (RSRP) spans
+from a frozen radio-value interval longer than 5~s and retain 1,178 valid NR
+band-48 records. Reference Signal Received Power (RSRP) spans
 $-121$ to $-88$~dBm, with a median of $-108$~dBm. The corresponding NR
 signal-to-interference-plus-noise ratio (SINR) spans $-20$ to 30~dB, with a
 median of 9~dB. G-NetTrack Pro's ordinary signal-to-noise ratio field is empty.
@@ -164,25 +192,25 @@ the sampled boundary. The PC5 route analysis joins every issued request and
 received response to GNSS coordinates, producing spatial response-completion
 and RTT measurements along each driven path.
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=0.88\textwidth]{figs/section4_signal_survey.pdf}
-  \caption{Continuous-drive radio survey of the private 5G testbed. A Samsung 22
-  handset running G-NetTrack Pro recorded three drive segments. The maps
-  interpolate (a) SS-RSRP and (b) recovered NR SINR from 1,178 valid band-48
-  records within the sampled boundary. Records from a frozen radio-value
-  interval longer than 5~s are excluded. Map data © OpenStreetMap contributors.}
+  \includegraphics[width=\columnwidth]{figs/section4_signal_survey.pdf}
+  \caption{Continuous-drive radio survey. A Samsung 22 handset running
+  G-NetTrack Pro recorded 1,178 valid n48 samples across three drives.
+  Panels interpolate (a) SS-RSRP and (b) NR SINR within the sampled boundary
+  after removing frozen radio values longer than 5~s. Map data © OpenStreetMap
+  contributors.}
   \Description{Two OpenStreetMap panels show interpolated RSRP and recovered
   New Radio signal-to-interference-plus-noise ratio from three continuous drive
   segments recorded by a Samsung 22 handset running G-NetTrack Pro.}
   \label{fig:signal-survey}
-\end{figure*}
+\end{figure}
 
 Figure~\ref{fig:measurement-paths} defines the request and response events at
-the RTT boundary. The PC5 RTT covers the vendor
-interface, two direct-radio traversals, response handling, and correlation. The
-Uu RTT covers the vehicle host, gateway, radio access, private core, local
-routing, d1 responder, and return path. The d1
+the RTT boundary. The PC5 RTT covers the IPI-to-PC5 adapter, vendor packet-data
+interface, two direct-radio traversals, response handling, and correlation.
+The Uu RTT covers the IPI transport adapter, vehicle host, gateway, radio
+access, private core, local routing, d1 responder, and return path. The d1
 responder decodes each workload frame and immediately returns its response.
 Its direct connections to the RSU and MX250 make local wired transfer
 negligible relative to the measured communication paths. The clocks were not
@@ -235,9 +263,9 @@ share the same attachment while a continuing stream remains active.
     Application & Traffic pattern & Object size or rate & Deadline & Workload probe \\
     \midrule
     Signal phase/status & Periodic infrastructure $\downarrow$ & About 0.5~KiB at 10~Hz & 100~ms & SPaT callback; compact PC5/Uu cycles \\
-    Collision or blind-spot warning & Periodic many-to-many PC5 & About 0.2~KiB per source at 10~Hz & 100~ms & 0.25-KiB stationary and route PC5 cycles \\
+    Collision or blind-spot warning & Periodic many-to-many PC5 & About 0.2~KiB per source at 10~Hz & 100~ms & 0.25-KiB serialized IPI frames at stationary points and on routes \\
     Emergency-vehicle signal priority & SRM $\uparrow$; SSM $\downarrow$ & 0.3--1~KiB & 10~ms & SRM/SSM callbacks; 0.25--1-KiB cycles \\
-    Emergency maneuver & Reciprocal event-triggered burst $\uparrow\downarrow$ & 2--12~KiB & 3--10~ms & 2-KiB PC5; 8--16-KiB Uu cycles \\
+    Emergency maneuver & Reciprocal event-triggered burst $\uparrow\downarrow$ & 2--12~KiB & 3--10~ms & 2-KiB serialized IPI frames over PC5; 8--16-KiB Uu cycles \\
     Remote-assistance data request & Compact request $\uparrow$; application object $\downarrow$ & 1--500~KiB & 100--1,000~ms & Downlink-heavy TCP/MQTT cycles \\
     Fault-triggered remote recovery & Video/state $\uparrow$; control/path $\downarrow$ & Up to 1~KiB control; 32-Mbit/s video & 100/200~ms & Bidirectional Uu; exact transfer, load, demand, and restart \\
     \bottomrule
@@ -247,7 +275,8 @@ share the same attachment while a continuing stream remains active.
 The application conditions define four parts of the workload matrix:
 \begin{enumerate}
   \renewcommand{\labelenumi}{\arabic{enumi})}
-  \item \textbf{Payload and direction.} PC5 spans 0--2~KiB. Uu spans
+  \item \textbf{Payload and direction.} PC5 spans configured complete IPI
+  frame sizes from the minimum-header control through 2~KiB. Uu spans
   0--2~MiB using a vehicle-originated object followed by a compact
   acknowledgment. The downlink-heavy probe returns an exact 1-, 10-, 100-, or
   500-KiB object after a compact vehicle request. Separate 50-MiB transfers
@@ -256,12 +285,12 @@ The application conditions define four parts of the workload matrix:
   object lists: 19.2~KiB at the median, 23.4~KiB at the 99th percentile, and
   24.4~KiB at the maximum. Additional dataset objects span 8~KiB--2~MiB, and a
   58.6-KiB object provides a stress condition.
-  \item \textbf{Transport.} Matched IPI workloads use TCP, Message Queuing
-  Telemetry Transport (MQTT) over TCP, raw User Datagram Protocol (UDP), and
-  UDP with application-level 1,400-B fragments.
+  \item \textbf{Transport.} Uu measurement adapters carry matched IPI workload
+  frames through TCP, MQTT over TCP, raw UDP, and UDP with adapter-level
+  1,400-B fragments.
   \item \textbf{Demand, configuration, and recovery.} The experiments add one
-  to four sustained streams, 1--100 logical clients, a requested Quality of
-  Service (QoS) label, two TDD profiles, two vehicle gateways, and a 10-s
+  to four sustained streams, 1--100 logical clients, a requested QoS label,
+  two TDD profiles, two vehicle gateways, and a 10-s
   endpoint or broker interruption.
 \end{enumerate}
 These factors distinguish payload-size effects from transport, direction,
@@ -271,11 +300,11 @@ In the request/response experiments, each application client waits for its
 response or timeout before issuing the
 next request. At negligible response time, a 200-ms interval allows at most
 five requests per second per client. The 100 application clients remain
-application flows behind one vehicle gateway. The resulting matrix validates
-the unified interface before comparing payload size, protocol, direction,
+application flows behind one vehicle gateway. The resulting matrix uses one
+application contract while comparing payload size, transport, direction,
 allocation, demand, and interruption through the same communication metrics.
-Table~\ref{tab:core-matrix} orders the comparisons from interface packaging and
-single-path behavior to shared demand and interruption.
+Table~\ref{tab:core-matrix} orders the comparisons from application
+representation and single-path behavior to shared demand and interruption.
 
 \begin{table*}[t]
   \caption{Experiment comparisons. $\uparrow$ denotes vehicle-to-edge traffic,
@@ -289,11 +318,11 @@ single-path behavior to shared demand and interruption.
     \toprule
     Experiment & Varied condition & Measured outcome \\
     \midrule
-    IPI packaging & J2735 and CAV frames & Added size (B); application coverage \\
-    Payload and deadline & PC5 0--2~KiB; Uu 0--2~MiB; 3--1,000~ms & Completion; RTT boundary \\
+    IPI representation & J2735 message profile; correlated-operation profile & Added bytes; represented application content \\
+    Payload and deadline & PC5 minimum-header control and 0.25--2-KiB complete frames; Uu 0--2-MiB application objects; 3--1,000~ms & Completion; RTT boundary \\
     Field and route coverage & Stationary points; four PC5 routes & Spatial completion; response tail \\
-    Transport & TCP; MQTT; raw and fragmented UDP & Decode/reassembly completion; RTT \\
-    Direction & Object $\uparrow$ plus ACK; request plus object $\downarrow$; 50-MiB $\uparrow/\downarrow$ & Directional RTT; validated goodput \\
+    Transport & TCP; MQTT; raw UDP; UDP adapter fragmentation & Decode/reassembly completion; RTT \\
+    Direction & Object $\uparrow$ plus compact acknowledgment; request plus object $\downarrow$; 50-MiB $\uparrow/\downarrow$ & Directional RTT; validated goodput \\
     TDD and gateway & 70/20/10 and 40/40/20; MG52 and GL-X3000 & Stability; latency; goodput \\
     Shared demand & Sustained streams; 1--100 clients; application label & Foreground completion; achieved rate \\
     Interruption & 10-s endpoint restarts & Missing attempts; recovery gap \\
@@ -311,10 +340,11 @@ rate as the fraction of issued requests answered within $D$:
  {N_{\mathrm{issued\ requests}}}.
  \label{eq:deadline-completion}
 \end{equation}
-A PC5 timing cycle models the SRM-to-SSM direction in
-Table~\ref{tab:application-envelopes}. The vehicle sends a request, and the
-infrastructure returns a status message. The measured packet response is
-sequence matched. In an uplink-heavy Uu exchange, the response is a compact
+A PC5 timing cycle models a request/status exchange such as the SRM-to-SSM
+direction in Table~\ref{tab:application-envelopes}. The vehicle sends a request,
+and the infrastructure returns a status message. The measured IPI performance
+response is matched through its origin and sequence fields. In an
+uplink-heavy Uu exchange, the response is a compact
 acknowledgment returned after the workload frame is decoded. In a
 downlink-heavy Uu exchange, the response is the complete requested payload, and
 its vehicle-side length, sequence, and checksum validation is included in RTT.
@@ -337,3 +367,6 @@ duration. The MG52 blocks contain ten repetitions per profile and direction;
 the GL-X3000 blocks contain three. We report
 the individual transfers, mean, and a $t$-based 95\% confidence interval.
 These intervals describe within-block transfer variation.
+Together, the workload mappings, timing boundaries, and issued-request
+denominators define the comparisons used in Section~\ref{sec:results} to
+determine the workload conditions that each path supports.

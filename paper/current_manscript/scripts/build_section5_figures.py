@@ -96,6 +96,7 @@ def read_csv_rows(path: Path) -> list[dict[str, str]]:
 
 
 def pc5_payload_and_route() -> None:
+    """Compare the stationary PC5 frame-size sweep and reference RTT."""
     payloads = [0, 256, 512, 1024, 2048]
     fields = [
         "P1 NLOS\n68 m",
@@ -114,7 +115,7 @@ def pc5_payload_and_route() -> None:
         ]
     ).T
     fig, axes = plt.subplots(
-        1, 3, figsize=(7.15, 2.30), gridspec_kw={"width_ratios": [1.58, 1.0, 0.94]}
+        1, 2, figsize=(7.15, 2.22), gridspec_kw={"width_ratios": [1.42, 1.0]}
     )
 
     ax = axes[0]
@@ -128,7 +129,7 @@ def pc5_payload_and_route() -> None:
             x,
             availability[:, index],
             marker=marker,
-            ms=3.7,
+            ms=4.2,
             lw=1.0,
             color=color,
             label=field.replace("\n", " "),
@@ -136,9 +137,10 @@ def pc5_payload_and_route() -> None:
     ax.axhline(90, color=GRAY, lw=0.7, ls="--")
     ax.text(4.05, 92, "90% reference", color=GRAY, fontsize=5.8, ha="right")
     ax.set_title("(a) Stationary response completion")
-    payload_labels_kib = ["0", "0.25", "0.5", "1", "2"]
-    ax.set_xticks(x, payload_labels_kib)
-    ax.set_xlabel("Requested payload (KiB)")
+    frame_labels = ["min.\n51–55 B", "0.25 KiB", "0.5 KiB", "1 KiB", "2 KiB"]
+    ax.set_xticks(x, frame_labels)
+    ax.tick_params(axis="x", labelsize=6.2)
+    ax.set_xlabel("Complete serialized IPI frame size")
     ax.set_ylabel("Issued requests completed (%)")
     ax.set_ylim(-4, 106)
     ax.grid(axis="y", color="#dddddd", lw=0.5)
@@ -157,17 +159,17 @@ def pc5_payload_and_route() -> None:
     ref_p95 = [106.873, 106.917, 106.694, 106.878, 111.663]
     ref_p99 = [111.814, 111.691, 114.577, 112.515, 120.567]
     x = np.arange(len(payloads))
-    ax.plot(x, ref_p50, "o-", color=PC5, label="p50")
-    ax.plot(x, ref_p95, "s--", color="#6baed6", label="p95")
-    ax.plot(x, ref_p99, "^:", color="#08306b", label="p99")
+    ax.plot(x, ref_p50, "o-", ms=4.2, color=PC5, label="p50")
+    ax.plot(x, ref_p95, "s--", ms=4.2, color="#6baed6", label="p95")
+    ax.plot(x, ref_p99, "^:", ms=4.2, color="#08306b", label="p99")
     for y, label in [(10, "10 ms"), (25, "25 ms"), (100, "100 ms")]:
         ax.axhline(y, color=GRAY, lw=0.7, ls="--")
         ax.text(4.05, y + 1.8, label, fontsize=6.4, color=GRAY, ha="right")
-    ax.set_xticks(x, payload_labels_kib)
+    ax.set_xticks(x, frame_labels)
     ax.tick_params(axis="x", labelsize=6.2)
     ax.set_ylim(0, 130)
     ax.set_title("(b) 7-m reference RTT")
-    ax.set_xlabel("Requested payload (KiB)")
+    ax.set_xlabel("Complete serialized IPI frame size")
     ax.set_ylabel("Response RTT (ms)")
     ax.legend(
         frameon=False,
@@ -180,28 +182,7 @@ def pc5_payload_and_route() -> None:
     )
     ax.grid(axis="y", color="#dddddd", lw=0.5)
 
-    ax = axes[2]
-    route = np.arange(1, 5)
-    route_avail = [76.3, 73.1, 59.1, 71.6]
-    route_p95 = [108.421, 41.887, 43.923, 41.621]
-    bars = ax.bar(route, route_avail, color=PC5, alpha=0.83, width=0.62, label="completion")
-    ax.axhline(90, color=GRAY, lw=0.8, ls="--")
-    ax.text(4.38, 91.5, "90% reference", color=GRAY, fontsize=6.3, ha="right")
-    ax.set_ylim(0, 120)
-    ax.set_xticks(route, [f"R{i}" for i in route])
-    ax.set_ylabel("Completed (%)")
-    ax.set_xlabel("Route collection")
-    ax.set_title("(c) Route coverage and RTT")
-    ax.grid(axis="y", color="#dddddd", lw=0.5)
-    ax2 = ax.twinx()
-    ax2.spines["right"].set_visible(True)
-    ax2.plot(route, route_p95, "D-", color="#8c2d04", ms=4, lw=1.0, label="reply p95")
-    ax2.set_ylim(0, 125)
-    ax2.set_ylabel("Reply p95 RTT (ms)")
-    for bar, value in zip(bars, route_avail):
-        ax.text(bar.get_x() + bar.get_width() / 2, value + 2.0, f"{value:.1f}", ha="center", fontsize=6.5)
-
-    fig.subplots_adjust(wspace=0.50, bottom=0.22)
+    fig.subplots_adjust(left=0.075, right=0.99, wspace=0.30, bottom=0.23)
     save(fig, "section5_pc5_payload_route.pdf")
 
 
@@ -235,7 +216,7 @@ def fiveg_deadline_envelope() -> None:
     fig, axes = plt.subplots(1, 2, figsize=(7.15, 2.65), gridspec_kw={"width_ratios": [1.38, 1.0]})
     ax = axes[0]
     im = ax.imshow(values, vmin=0, vmax=100, cmap="Oranges", aspect="auto")
-    ax.set_xticks(range(4), ["100 ms", "500 ms", "1,000 ms", "Harness\ntimeout"])
+    ax.set_xticks(range(4), ["100 ms", "500 ms", "1,000 ms", "Timeout"])
     ax.set_yticks(range(len(groups)), groups)
     ax.set_title("(a) Requests completed by deadline\n(% of all issued requests)")
     for i in range(values.shape[0]):
@@ -343,7 +324,7 @@ def protocol_completion() -> None:
         ax.set_ylim(-4, 104)
         ax.set_xlim(-0.3, len(payloads) - 0.7)
         ax.grid(axis="y", color="#e8e8e8", lw=0.5)
-    axes[0].set_ylabel("Issued requests with a complete response (%)")
+    axes[0].set_ylabel("Issued requests completed (%)")
     handles, labels = axes[0].get_legend_handles_labels()
     axes[0].legend(
         handles,
@@ -366,7 +347,7 @@ def protocol_completion() -> None:
         handlelength=1.7,
         columnspacing=0.8,
     )
-    fig.subplots_adjust(left=0.09, right=0.99, top=0.91, bottom=0.28, wspace=0.16)
+    fig.subplots_adjust(left=0.105, right=0.99, top=0.91, bottom=0.28, wspace=0.16)
     save(fig, "section5_protocol_completion.pdf")
 
 
@@ -420,7 +401,7 @@ def stationary_signal_effects() -> None:
     axes[1].text(-101.1, 92, "90% reference", color=GRAY, fontsize=6.0, ha="right")
     axes[1].set_ylabel("Completed within 100 ms (%)")
     axes[1].set_xlabel("Reported RSRP at stationary condition (dBm)")
-    axes[1].set_title("(b) All-attempt deadline completion", loc="left")
+    axes[1].set_title("(b) Issued requests completed by 100 ms", loc="left")
     axes[1].set_ylim(-4, 104)
 
     axes[1].set_xticks(rsrp, ["-120", "-109.5", "-106", "-101"])
@@ -516,8 +497,16 @@ def mixed_load_and_qos() -> None:
     for boundary in [1.5, 3.5]:
         ax.axvline(boundary, color="#dddddd", lw=0.6)
     ax.set_ylabel("Deadline completion (%)")
-    ax.set_title("(a) Foreground with uplink load", fontsize=8.0)
-    ax.legend(frameon=False, loc="lower left", ncol=2, fontsize=6.0)
+    ax.set_title("(a) Foreground with uplink load", fontsize=8.0, loc="left", y=1.24)
+    ax.legend(
+        frameon=False,
+        loc="lower center",
+        bbox_to_anchor=(0.5, 1.01),
+        ncol=2,
+        fontsize=6.0,
+        columnspacing=0.9,
+        handlelength=1.8,
+    )
     ax.grid(axis="y", color="#eeeeee", lw=0.5)
 
     ax = axes[1]
@@ -528,7 +517,7 @@ def mixed_load_and_qos() -> None:
     ax.text(0.02, 0.18, "Observed IPv4 TOS", ha="left", va="center", weight="bold", transform=ax.transAxes)
     ax.text(0.98, 0.18, "0x0 / 0x0", ha="right", va="center", color="#a50f15", transform=ax.transAxes)
 
-    fig.subplots_adjust(left=0.16, right=0.98, top=0.94, bottom=0.08, hspace=0.72)
+    fig.subplots_adjust(left=0.16, right=0.98, top=0.80, bottom=0.08, hspace=0.72)
     save(fig, "section5_mixed_load_qos.pdf")
 
 
@@ -747,12 +736,17 @@ def signal_survey() -> None:
 
 def tdd_profile_results() -> None:
     """Compare August 19 same-device CAV bursts and directional streams."""
-    fig, axes = plt.subplots(2, 2, figsize=(7.15, 4.65))
+    fig, axes = plt.subplots(
+        1,
+        3,
+        figsize=(7.15, 2.45),
+        gridspec_kw={"width_ratios": [1.0, 1.0, 0.90]},
+    )
 
     comparison = read_csv_rows(TDD_AUG19_40 / "matched_tdd_comparison.csv")
     panels = [
-        (axes[0, 0], "uplink", "(a) Vehicle-to-edge burst"),
-        (axes[0, 1], "downlink", "(b) Edge-to-vehicle burst"),
+        (axes[0], "uplink", "(a) Vehicle-to-edge burst"),
+        (axes[1], "downlink", "(b) Edge-to-vehicle burst"),
     ]
     profile_styles = {
         "70/20/10": ("tdd_70_20_10_p95_ms", TDD_BASELINE),
@@ -780,7 +774,6 @@ def tdd_profile_results() -> None:
                     ms=4.0,
                     lw=1.25,
                     color=color,
-                    label=f"{profile} {transport.upper()}",
                 )
         ax.axhline(100, color="#777777", ls=":", lw=0.75)
         ax.axhline(500, color="#333333", ls="-.", lw=0.75)
@@ -802,20 +795,24 @@ def tdd_profile_results() -> None:
         ax.set_ylabel("Response p95 RTT (ms, log scale)")
         ax.set_title(title)
         ax.grid(which="both", color="#eeeeee", lw=0.55)
-    handles, labels = axes[0, 0].get_legend_handles_labels()
+    handles = [
+        mpl.lines.Line2D([], [], color=TDD_BASELINE, lw=1.5, label="70/20/10"),
+        mpl.lines.Line2D([], [], color=TDD_ALTERNATIVE, lw=1.5, label="40/40/20"),
+        mpl.lines.Line2D([], [], color="black", marker="o", lw=1.1, label="TCP"),
+        mpl.lines.Line2D([], [], color="black", marker="s", lw=1.1, ls="--", label="MQTT"),
+    ]
     fig.legend(
-        handles,
-        labels,
+        handles=handles,
         frameon=False,
         loc="upper center",
-        bbox_to_anchor=(0.54, 0.995),
+        bbox_to_anchor=(0.50, 0.995),
         ncol=4,
-        fontsize=6.1,
-        handlelength=2.2,
-        columnspacing=1.15,
+        fontsize=6.4,
+        handlelength=1.8,
+        columnspacing=1.0,
     )
-    axes[0, 1].text(1.05, 105, "100 ms", fontsize=5.8, color="#555555")
-    axes[0, 1].text(1.05, 515, "500 ms", fontsize=5.8, color="#333333")
+    axes[1].text(1.05, 105, "100 ms", fontsize=5.8, color="#555555")
+    axes[1].text(1.05, 515, "500 ms", fontsize=5.8, color="#333333")
 
     profile_sources = {
         "70/20/10": TDD_AUG19_70 / "bandwidth.csv",
@@ -825,16 +822,13 @@ def tdd_profile_results() -> None:
         "70/20/10": TDD_BASELINE,
         "40/40/20": TDD_ALTERNATIVE,
     }
-    stream_panels = [
-        (axes[1, 0], "upload", "(c) Sustained vehicle-to-edge transfer", 35.0),
-        (axes[1, 1], "download", "(d) Sustained edge-to-vehicle transfer", 210.0),
-    ]
-    for ax, direction, title, ymax in stream_panels:
-        x = np.arange(len(profile_sources), dtype=float)
-        means = []
-        ci_low = []
-        ci_high = []
-        for xpos, (profile, path) in zip(x, profile_sources.items()):
+    ax = axes[2]
+    directions = ["upload", "download"]
+    direction_labels = ["Vehicle-to-edge", "Edge-to-vehicle"]
+    x = np.arange(len(directions), dtype=float)
+    offsets = {"70/20/10": -0.12, "40/40/20": 0.12}
+    for profile, path in profile_sources.items():
+        for direction_index, direction in enumerate(directions):
             rows = [
                 row for row in read_csv_rows(path)
                 if row["direction"] == direction and row["status"] == "complete"
@@ -843,63 +837,58 @@ def tdd_profile_results() -> None:
             mean = float(np.mean(values))
             sem = float(np.std(values, ddof=1) / np.sqrt(len(values)))
             half_width = 4.30265273 * sem  # 95% t interval with n=3 (df=2)
-            means.append(mean)
-            ci_low.append(mean - half_width)
-            ci_high.append(mean + half_width)
-            jitter = np.linspace(-0.09, 0.09, len(values))
+            center = x[direction_index] + offsets[profile]
+            jitter = np.linspace(-0.045, 0.045, len(values))
             ax.scatter(
-                xpos + jitter,
+                center + jitter,
                 values,
-                s=20,
+                s=18,
                 facecolor="white",
                 edgecolor=profile_colors[profile],
                 linewidth=0.9,
                 zorder=2,
             )
-        means_array = np.array(means)
-        errors = np.vstack(
-            (means_array - np.array(ci_low), np.array(ci_high) - means_array)
-        )
-        ax.errorbar(
-            x,
-            means_array,
-            yerr=errors,
-            fmt="D",
-            markersize=4.2,
-            color="black",
-            markerfacecolor="black",
-            capsize=3,
-            lw=1.0,
-            zorder=3,
-        )
-        for xpos, value, profile in zip(x, means_array, profile_sources):
+            ax.errorbar(
+                center,
+                mean,
+                yerr=half_width,
+                fmt="D",
+                markersize=4.0,
+                color=profile_colors[profile],
+                markerfacecolor=profile_colors[profile],
+                capsize=2.5,
+                lw=0.9,
+                zorder=3,
+            )
             ax.text(
-                xpos,
-                value + ymax * 0.045,
-                f"{value:.1f}",
+                center,
+                mean * 1.09,
+                f"{mean:.1f}",
                 ha="center",
                 va="bottom",
-                fontsize=6.4,
+                fontsize=5.7,
                 color=profile_colors[profile],
             )
-        ax.set_xticks(x, list(profile_sources))
-        ax.set_ylim(0, ymax)
-        ax.set_ylabel("Application goodput (Mbit/s)")
-        ax.set_title(title)
-        ax.grid(axis="y", color="#eeeeee", lw=0.55)
-    axes[1, 0].axhline(32, color="#555555", ls=":", lw=0.8)
-    axes[1, 0].text(
-        0.02,
-        32.5,
+    ax.axhline(32, color="#555555", ls=":", lw=0.8)
+    ax.text(
+        -0.35,
+        33.5,
         "32-Mbit/s video reference",
         fontsize=5.8,
         color="#555555",
         ha="left",
         va="bottom",
     )
+    ax.set_yscale("log")
+    ax.set_ylim(8, 230)
+    ax.set_yticks([10, 20, 32, 50, 100, 200], ["10", "20", "32", "50", "100", "200"])
+    ax.set_xticks(x, direction_labels)
+    ax.set_xlim(-0.42, 1.42)
+    ax.set_ylabel("Application goodput (Mbit/s, log scale)")
+    ax.set_title("(c) Sustained transfer goodput")
+    ax.grid(axis="y", which="both", color="#eeeeee", lw=0.55)
 
-    fig.subplots_adjust(left=0.085, right=0.99, top=0.89, bottom=0.095,
-                        hspace=0.48, wspace=0.32)
+    fig.subplots_adjust(left=0.075, right=0.995, top=0.84, bottom=0.24, wspace=0.38)
     save(fig, "section5_tdd_profiles.pdf")
 
 
@@ -1021,37 +1010,25 @@ def directional_workloads() -> None:
 
 
 def cross_application_comparison() -> None:
-    """Place measured response p95 and application deadlines on one time axis."""
+    """Compare p50, p95, and maximum RTT with application deadlines."""
     rows = [
-        ("Signal warning — PC5", "PC5", 100.0, 106.873, None),
-        ("Signal warning — 5G Uu", "5G Uu", 100.0, 34.1, None),
-        (
-            "Blind-spot warning — PC5 routes",
-            "PC5",
-            100.0,
-            42.905,
-            (41.621, 108.421),
-        ),
-        ("Emergency signal priority — PC5", "PC5", 10.0, 106.88, None),
-        ("Emergency signal priority — 5G Uu", "5G Uu", 10.0, 44.49, None),
-        ("Emergency maneuver — PC5", "PC5", 10.0, 111.66, None),
-        ("Emergency maneuver — 5G Uu", "5G Uu", 10.0, 79.60, None),
-        ("Remote recovery — 5G Uu", "5G Uu", 100.0, 175.0, None),
+        ("Signal warning — PC5 (0.25-KiB frame)", 100.0, 99.980, 106.884, 248.553),
+        ("Signal warning — 5G Uu (SPaT)", 100.0, 23.356, 34.114, 52.354),
+        ("Signal priority — PC5 (0.5-KiB frame)", 10.0, 99.972, 106.691, 364.052),
+        ("Signal priority — 5G Uu (1 KiB)", 10.0, 33.817, 44.487, 78.460),
+        ("Emergency maneuver — PC5 (2-KiB frame)", 10.0, 99.958, 111.661, 131.261),
+        ("Emergency maneuver — 5G Uu (16 KiB)", 10.0, 59.890, 79.595, 119.649),
+        ("Remote recovery — 5G Uu (1 KiB + load)", 100.0, 116.110, 175.905, 729.846),
     ]
-    fig, ax = plt.subplots(figsize=(7.15, 2.85))
+    fig, ax = plt.subplots(figsize=(7.15, 2.55))
     y = np.arange(len(rows))
+    statistic_styles = [
+        ("p50", "o", 30),
+        ("p95", "s", 32),
+        ("maximum", "^", 34),
+    ]
 
-    for index, (label, path, deadline, measured, interval) in enumerate(rows):
-        within = measured <= deadline
-        ax.hlines(
-            index,
-            min(deadline, measured),
-            max(deadline, measured),
-            color="#238b45" if within else "#cb181d",
-            lw=1.8,
-            alpha=0.75,
-            zorder=1,
-        )
+    for index, (label, deadline, p50, p95, maximum) in enumerate(rows):
         ax.scatter(
             deadline,
             index,
@@ -1061,62 +1038,51 @@ def cross_application_comparison() -> None:
             linewidth=1.6,
             zorder=3,
         )
-        color = PC5 if path == "PC5" else FIVEG
-        marker = "o" if path == "PC5" else "s"
-        ax.scatter(
-            measured,
-            index,
-            marker=marker,
-            s=34,
-            color=color,
-            edgecolor="black",
-            linewidth=0.4,
-            zorder=4,
-        )
-        if interval is not None:
-            ax.errorbar(
-                measured,
+        ax.hlines(index, p50, maximum, color="#bdbdbd", lw=1.0, zorder=1)
+        for value, (_, marker, size) in zip(
+            (p50, p95, maximum), statistic_styles
+        ):
+            ax.scatter(
+                value,
                 index,
-                xerr=[[measured - interval[0]], [interval[1] - measured]],
-                fmt="none",
-                ecolor=color,
-                capsize=2.5,
-                lw=1.1,
-                zorder=2,
+                marker=marker,
+                s=size,
+                color="#238b45" if value <= deadline else "#cb181d",
+                edgecolor="black",
+                linewidth=0.35,
+                zorder=4,
             )
-        ax.text(
-            measured * (1.06 if measured < 145 else 0.95),
-            index,
-            f"{measured:.1f} ms",
-            ha="left" if measured < 145 else "right",
-            va="center",
-            fontsize=6.0,
-        )
 
-    ax.scatter([], [], marker="|", s=135, color="black", linewidth=1.6, label="Application deadline")
-    ax.scatter([], [], marker="o", s=34, color=PC5, edgecolor="black", linewidth=0.4, label="PC5 response p95")
-    ax.scatter([], [], marker="s", s=34, color=FIVEG, edgecolor="black", linewidth=0.4, label="5G Uu response p95")
-    ax.plot([], [], color="#238b45", lw=1.8, label="Within deadline")
-    ax.plot([], [], color="#cb181d", lw=1.8, label="Exceeds deadline")
+    ax.scatter([], [], marker="|", s=135, color="black", linewidth=1.6,
+               label="Application deadline")
+    for name, marker, size in statistic_styles:
+        ax.scatter([], [], marker=marker, s=size, color="#777777", edgecolor="black",
+                   linewidth=0.35, label=name)
+    ax.scatter([], [], marker="o", s=30, color="#238b45", edgecolor="black",
+               linewidth=0.35, label="Within deadline")
+    ax.scatter([], [], marker="o", s=30, color="#cb181d", edgecolor="black",
+               linewidth=0.35, label="Exceeds deadline")
 
     ax.set_xscale("log")
-    ax.set_xlim(6, 230)
-    ax.set_xticks([10, 25, 50, 100, 200], ["10", "25", "50", "100", "200"])
+    ax.set_xlim(6, 900)
+    ax.set_xticks(
+        [10, 25, 50, 100, 200, 500],
+        ["10", "25", "50", "100", "200", "500"],
+    )
     ax.set_ylim(len(rows) - 0.45, -0.55)
     ax.set_yticks(y, [row[0] for row in rows])
-    ax.set_xlabel("Application deadline and measured response p95 RTT (ms, log scale)")
-    ax.set_title("Do measured response tails meet application deadlines?")
+    ax.set_xlabel("Application deadline and response RTT (ms, log scale)")
     ax.grid(axis="x", which="both", color="#e8e8e8", lw=0.5)
     ax.legend(
         frameon=False,
-        loc="upper center",
-        bbox_to_anchor=(0.54, 1.02),
-        ncol=5,
-        fontsize=5.9,
-        handlelength=1.5,
-        columnspacing=0.8,
+        loc="lower center",
+        bbox_to_anchor=(0.55, 1.02),
+        ncol=6,
+        fontsize=5.8,
+        handlelength=1.2,
+        columnspacing=0.7,
     )
-    fig.subplots_adjust(left=0.36, right=0.99, top=0.84, bottom=0.17)
+    fig.subplots_adjust(left=0.39, right=0.99, top=0.80, bottom=0.19)
     save(fig, "section5_cross_application_comparison.pdf")
 
 

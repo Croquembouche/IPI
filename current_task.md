@@ -1,6 +1,214 @@
 # Current Task
 
-Last updated: 2026-08-20
+Last updated: 2026-08-21
+
+## 2026-08-21 Measurement-Primary Manuscript Revision
+
+Complete. The manuscript now presents the controlled real-vehicle communication
+study as its primary scientific contribution. IPI is the enabling systems
+contribution that represents compact CV/ITS messages and correlated CAV
+operations consistently across the measured paths. The abstract and
+introduction list exactly two contributions, while the abstract, introduction,
+and results retain exactly three empirical insights.
+
+The protocol argument now distinguishes the application programming interface,
+the transport-independent wire protocol, the reference runtime, and the lower-
+layer bindings. IPI exposes one application contract through a compact J2735
+message profile and a correlated CAV-operation profile; path-specific bindings
+carry the resulting frames over PC5 custom data, TCP, MQTT, or UDP. Section 4
+states that the July 3--4 PC5 probes are complete serialized `IPI_RTT1` frames,
+that their sequence field resides inside the IPI performance frame, and that
+the 4,080-B vendor limit applies to the complete serialized packet. The private-
+5G workloads retain their separate application-object size boundary. Section
+5.1 reports measured representation cost without conflating either boundary.
+
+Related work now identifies the comparable-measurement gap before the enabling
+application-contract gap and credits the closest cross-path field studies. The
+IPI novelty claim is limited to the implemented combination supported by the
+survey. The results progress from representation and path-specific limits to
+direction, configuration, sustained load, concurrent demand, recovery, and the
+three stakeholder-facing insights. Future directions and the conclusion follow
+from those measured boundaries. Stale reviewer-facing language, the TCP analogy,
+the inaccurate common-envelope model, and semantic-completion disclaimers were
+removed. Figure 2 and Figure 4 were flattened at publication resolution to
+remove obsolete hidden text and unembedded figure fonts while preserving their
+visible content.
+
+Updated manuscript artifacts include all eight section files under
+`paper/current_manscript/sections/`, the manuscript Makefile, the affected
+figure scripts and generated figures, `paper/current_manscript/main.pdf`,
+`paper/paper_outline.md`, and `paper/general_academic_writing_lessons.md`.
+
+Validation: all 14 targeted C++ protocol and integration tests pass; both
+modified Python figure scripts pass `py_compile`; and the complete LaTeX/BibTeX
+build succeeds. The 24-page US-letter PDF was rendered and visually inspected
+page by page, including full-resolution checks of every changed page. The final
+log contains no overfull box, undefined citation, undefined reference, rerun
+request, LaTeX error, emergency stop, or fatal error. The PDF contains zero
+annotations, hyperlinks, JavaScript actions, or embedded files; all listed fonts
+are embedded; its metadata contains no author identity; and its file size is
+2,689,182 bytes. SHA-256 is
+`006404f45e57492cdc4b84d1abf1b83d1478d7cef066208d5241cfe8468e3ff7`.
+`git diff --check` passes. No page-count optimization was performed, per the
+user's instruction. The user subsequently authorized publishing this complete,
+related revision directly to `main`; this task record is included in that
+publication commit.
+
+## 2026-08-21 Table 4 Size-Boundary Correction
+
+Complete. A source-level audit found that the previous Table 4 combined two
+different size definitions. Its May 13 private-5G rows measure a CAV application
+object before IPI serialization and the resulting encoded IPI frame. In
+contrast, the July 3--4 PC5 labels already specify the complete serialized
+`IPI_RTT1` performance frame submitted to the vendor packet-data interface.
+The former table incorrectly treated the July 512-B and 2,048-B frame labels as
+application objects and added inferred IPI bytes to them.
+
+Table 4 now reports only measured IPI representation costs. A preserved J2735
+message adds 5 B. The retained CAV planning records contain 1,000 TCP sender
+frames at each measured object size: a request without an object is 63 B, while
+256-B, 1-KiB, and 4-KiB objects produce 334--337-B, 1,102--1,105-B, and
+4,174--4,177-B encoded frames. The unsupported 512-B and 2,048-B representation
+rows were removed.
+
+The PC5 method and results now use their independent boundary. Across 26,473
+retained nonzero July sender rows, `payload_bytes` and `packet_bytes` both equal
+the configured 256-, 512-, 1,024-, or 2,048-B complete frame size. The zero
+control produces a 51--55-B minimum request frame. Section 4 identifies the
+origin and sequence fields that match each response. Figure 4 now labels the
+return as a sequence-correlated response with the configured frame size.
+Section 5, Figure 6, Figure 14, Appendix B, `experiment_summary.md`, and
+`paper/analysis/v2x_experiment_summary.md` use the same distinction between a
+PC5 complete-frame size and a private-5G application-object size.
+
+Validation: the independent CSV audit reproduces every Table 4 CAV range and
+finds zero packet-length mismatches in all 26,473 retained nonzero PC5 sender
+rows. The figure scripts pass `py_compile`; the complete LaTeX/BibTeX build
+succeeds at 23 US-letter pages; and the final log contains no overfull box,
+undefined citation, undefined reference, rerun request, compilation error, or
+fatal error. Pages 6, 9, 10, and 15 were rendered at high resolution and
+inspected. Figure 4, Table 4, Figure 6, and Figure 14 are readable without
+clipping or overlap. The clean PDF contains zero annotations and has SHA-256
+`96cf91b64f91e0409fd5410d21a62968a484d2c50515a144e45435c29f4ce0a3`.
+The annotated review PDF remains unchanged with all 22 annotation objects. No
+page-limit work was performed. No commit or push was performed.
+
+## 2026-08-21 Complete Annotated-PDF Revision
+
+Complete. A page-by-page annotation-object audit of
+`paper/current_manscript/main_annotated.pdf` found 22 objects: ten highlights
+with explicit revision comments, one empty highlight without comment text or an
+identifiable visual target, and eleven associated popup objects. All ten
+actionable comments were implemented, including changes to dependent captions,
+section text, appendix evidence, and result claims rather than only the marked
+locations.
+
+The revision makes Figure 5 a compact single-column, side-by-side signal
+survey; restricts Section 5.2 and Figure 6 to stationary PC5 experiments; uses
+`timeout` consistently; and standardizes Figure 6 marker sizes. Figure 8's
+y-axis is no longer clipped. Figure 11 is now a compact three-panel TDD
+comparison, and Figure 12's legend no longer overlaps its data. Figure 13's
+caption states the 1-KiB application payload. Figure 14 now compares p50, p95,
+and maximum latency against each application deadline without overlapping
+content. The conclusion was rewritten as two connected paragraphs occupying
+approximately one quarter of its page. The complete PC5 route results removed
+from the stationary main subsection are retained in Appendix D. A generalized
+lesson on auditing and propagating review comments was added to
+`paper/general_academic_writing_lessons.md`.
+
+Updated files include:
+
+- `paper/current_manscript/scripts/build_section4_signal_figure.py`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/07_conclusion.tex`
+- `paper/current_manscript/sections/08_appendices.tex`
+- the regenerated Figure 5--14 measurement PDFs under
+  `paper/current_manscript/figs/`
+- `paper/current_manscript/main.pdf`
+- `paper/general_academic_writing_lessons.md`
+- `current_task.md`
+
+Validation: both figure-generation scripts pass `py_compile`; the complete
+LaTeX/BibTeX build succeeds at 23 US-letter pages; and the build log contains no
+undefined citation, undefined reference, rerun request, compilation error,
+fatal error, or overfull box. All 23 pages were rendered and visually inspected,
+with full-size checks of every revised figure and the conclusion. The clean PDF
+contains zero annotations and has SHA-256
+`9f965bd27c716b4e5621f3f41ece79e53bee5f42a1f28658db8178402ef4500c`.
+The annotated review PDF remains unchanged with all 22 annotation objects. No
+page-limit work was performed. No commit or push was performed.
+
+## 2026-08-21 July PC5/Newer-IPI Consistency Revision
+
+Complete. The manuscript now records the user's authoritative correction that
+the July 3--4 PC5 campaigns used the newer serialized IPI format. Section 3
+separates the IPI programming interface, wire protocol, and lower-layer
+bindings. Section 4 identifies the vendor packet-data interface and packet type
+`0x1b` as the binding beneath IPI, describes the decoded request and correlated
+IPI response, and states that PC5 and Uu both carry IPI at the application
+layer. Figure 4 replaces the old echo terminology with IPI request/response
+labels and contains no hidden legacy text.
+
+This pass initially interpreted the July PC5 size labels as application-object
+sizes. The later source-level audit recorded above supersedes that
+interpretation: the labels are complete serialized IPI performance-frame sizes,
+and Table 4 now keeps the PC5 experiment separate from the measured IPI
+representation-cost rows. The numerical July 3--4 PC5 completion and RTT
+results remain unchanged.
+
+Updated files:
+
+- `paper/current_manscript/sections/03_ipi_protocol_design.tex`
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/sections/05_experiment_results.tex`
+- `paper/current_manscript/sections/08_appendices.tex`
+- `paper/current_manscript/scripts/build_section5_figures.py`
+- `paper/current_manscript/figs/figure04_measurement_paths.pdf`
+- `paper/current_manscript/figs/section5_pc5_payload_route.pdf`
+- `paper/current_manscript/main.pdf`
+- `current_task.md`
+
+Validation: four targeted IPI tests pass (`private_session_transport`,
+`j2735_ipi_regional_codec`, `session_wire_codec`, and `pc5_ipi_adapter`). The
+full LaTeX/BibTeX build completes at 24 US-letter pages with no undefined
+citation, undefined reference, rerun request, compilation error, or fatal
+error. Pages 6 and 9--11 were rendered and inspected; Figure 4, Table 4, and
+Figure 6 are readable without clipping or overlap. The PDF contains zero
+annotations and has SHA-256
+`d97056c53ce3a8da8dd40694dc5eeab4f2009648e9a5de5ef8ca177aa03f0422`.
+The pre-existing 3.731-point vertical-box warning remains on Results page 16.
+No page-limit work was performed. No commit or push was performed.
+
+## 2026-08-20 Section 4.1 IPI Path-Binding Clarification
+
+Complete. Section 4 and Section 4.1 now identify IPI as the application
+interface used by the request/response experiments before introducing the
+physical radios. The revised path description states that IPI defines each
+application message and its request/response correlation. A path-specific
+adapter then binds the serialized exchange to direct PC5 or network-assisted
+Uu. The PC5 paragraph identifies the vendor J2735 and packet-data interfaces as
+the radio binding beneath IPI, while the Uu paragraph identifies TCP, MQTT, and
+UDP as transport bindings for IPI Cooperative Service frames. Figure 4's lead-in,
+caption, accessible description, and the later RTT-boundary paragraph use the
+same relationship. Separate exact 50-MiB transfers remain directional-goodput
+controls rather than IPI request/response workloads.
+
+Updated files:
+
+- `paper/current_manscript/sections/04_system_design_setup.tex`
+- `paper/current_manscript/main.pdf`
+- `current_task.md`
+
+Validation: the full LaTeX/BibTeX build completes; the final log contains no
+undefined citation, undefined reference, rerun request, compilation error, or
+fatal error. Manuscript pages 4--7 were rendered and visually inspected; the
+new text, Figures 3 and 4, captions, and Table 1 are readable without clipping
+or overlap. A 3.731-point vertical-box warning remains on Results page 16, whose
+render has no visible clipping or overlap. The generated figure PDFs were
+restored after the build because no figure source or data changed and those
+artifacts are outside this revision's scope. No page-limit work was performed.
 
 ## 2026-08-20 Main-Branch Consolidation
 

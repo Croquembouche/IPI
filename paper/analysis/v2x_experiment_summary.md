@@ -10,14 +10,14 @@ stack.
 
 | Item | Experimental definition |
 |---|---|
-| Functional-message validation | Standard Signal Phase and Timing (SPaT) and Basic Safety Message (BSM) paths were exercised before the payload experiments. |
-| Payload and mobility exchanges | The OBU sent a sequence-numbered request through the vendor packet interface using custom message type `0x1b`. The RSU returned a sequence-matched response of the same requested size. |
+| Functional-message validation | Standard Signal Phase and Timing (SPaT) and Basic Safety Message (BSM) paths were exercised before the frame-size experiments. |
+| Frame-size and mobility exchanges | The OBU sent a serialized `IPI_RTT1` performance request through the vendor packet interface using custom message type `0x1b`. The RSU decoded its origin and sequence fields and returned a sequence-matched IPI response. Every nonzero condition used the configured complete frame length in both directions. |
 | Timing boundary | Round-trip time (RTT) began immediately before the OBU sent a request and ended when the OBU received the matching response. Thus, RTT includes two PC5 traversals and both vendor-interface paths. |
-| Stationary workload | Requested sizes were 0, 256, 512, 1,024, and 2,048 B. Each planned phase contained 1,000 attempts, a 100-ms interval after each attempt, and a 1,000-ms response timeout. The OBU stack was restarted between payload phases. |
-| Mobility workload | Each route used 256-B requests and a 200-ms interval. Runs 1 and 2 used a 1,000-ms timeout; runs 3 and 4 used a 500-ms timeout. |
+| Stationary workload | Configured complete IPI frame sizes were 256, 512, 1,024, and 2,048 B. A separate zero control produced the minimum valid 51--55-B request header rather than a zero-length transmission. Each planned phase contained 1,000 attempts, a 100-ms interval after each attempt, and a 1,000-ms response timeout. The OBU stack was restarted between phases. |
+| Mobility workload | Each route used a complete 256-B serialized IPI frame and a 200-ms interval. Runs 1 and 2 used a 1,000-ms timeout; runs 3 and 4 used a 500-ms timeout. |
 | Availability | Availability is the percentage of planned attempts that returned the matching response. Consistent with the experiment analysis, uncompleted or skipped attempts after an operator-stopped timeout-dominant phase are counted as timeouts. |
 | Latency statistics | Mean, p50, p95, and p99 RTT are calculated only from successful responses. A dash means that the condition produced no successful response in the analysis. |
-| Requested zero-byte condition | The zero-byte condition still carried the probe header; its transmitted request and response were 52 B each. For all other conditions, the transmitted packet length equaled the requested size. |
+| Configured zero setting | The zero setting still carried the required IPI identity and timing header. The retained request records span 51--55 B as identifier and decimal field lengths change. For all nonzero conditions, the transmitted request packet length equals the configured complete frame size; the responder constructs the same configured total length. |
 | Radio measurements | The installed OBU image did not export usable PC5 received signal strength indicator (RSSI), signal-to-noise ratio (SNR), reference signal received power (RSRP), or reference signal received quality (RSRQ). The signal-diagnostic files were empty. Therefore, the retained radio outcomes are response availability, RTT, location, obstruction context, and mobility. |
 | Installed-interface limit | Static analysis of the deployed vendor SDK found a 4,080-B maximum application packet after vendor framing. The experiments intentionally stopped at 2,048 B. |
 
@@ -32,18 +32,18 @@ stack.
 | Sequence-matched custom request and response | OBU initiator to RSU responder | 10 / 10 responses | Mean 100.712 ms; minimum 84.300 ms; maximum 114.288 ms |
 
 The installed public `mde_v2x_custom_send()` entry point returned success but
-did not place an effective custom payload on the measured path. The payload and
-mobility experiments therefore used the deployed packet-data function
+did not place an effective custom payload on the measured path. The frame-size
+and mobility experiments therefore used the deployed packet-data function
 `v2x_packet_data_send(payload, len, 0x1b)`.
 
-## Stationary payload results
+## Stationary frame-size results
 
-The reference row combines five separately collected full payload runs at
+The reference row combines five separately collected full frame-size runs at
 approximately 7 m from the RSU. The continuous sweep and Points 1--5 each ran
-the payloads in ascending order at one location. Point 1 was approximately
+the configured frame sizes in ascending order at one location. Point 1 was approximately
 68 m from the RSU but had a building-obstructed non-line-of-sight path.
 
-| Location / collection | Requested size (B) | Replies / 1,000 | Availability | Mean RTT (ms) | p50 (ms) | p95 (ms) | p99 (ms) |
+| Location / collection | Configured IPI frame size (B) | Replies / 1,000 | Availability | Mean RTT (ms) | p50 (ms) | p95 (ms) | p99 (ms) |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Reference, separate full runs (approximately 7 m) | 0 | 1,000 / 1,000 | 100.0% | 93.252 | 99.939 | 106.873 | 111.814 |
 |  | 256 | 999 / 1,000 | 99.9% | 98.324 | 99.980 | 106.884 | 111.691 |
@@ -96,7 +96,7 @@ diagnostic outputs contained zero bytes.
 
 ## Mobile-route results
 
-| Route | Requested size | Attempts | Responses | Availability | Timeout (ms) | p50 RTT (ms) | p95 RTT (ms) | p99 RTT (ms) | GNSS duration (s) | Median speed |
+| Route | Configured IPI frame size | Attempts | Responses | Availability | Timeout (ms) | p50 RTT (ms) | p95 RTT (ms) | p99 RTT (ms) | GNSS duration (s) | Median speed |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | Run 1 (`173816`) | 256 B | 675 | 515 | 76.3% | 1,000 | 99.610 | 108.421 | 112.436 | 452.326 | 7.131 m/s (25.7 km/h) |
 | Run 2 (`175820`) | 256 B | 1,000 | 731 | 73.1% | 1,000 | 28.326 | 41.887 | 55.880 | 531.529 | 7.541 m/s (27.1 km/h) |
@@ -108,12 +108,12 @@ diagnostic outputs contained zero bytes.
 
 | Comparison | Result shown by the experiment |
 |---|---|
-| Payload size at a favorable point | At P2, availability remained 99.8--100.0% through 2,048 B. The measured path can therefore carry every tested size when the field condition is favorable. |
-| Payload size as the path degrades | At P3, 1,024 B retained 97.9% availability while 2,048 B fell to 0.8%. At P4, 512 B retained 96.9%, 1,024 B fell to 17.1%, and 2,048 B produced no response. Larger packets lose availability before compact packets at the same location. |
+| Complete frame size at a favorable point | At P2, availability remained 99.8--100.0% through the 2,048-B complete IPI frame. The measured path can therefore carry every tested frame size when the field condition is favorable. |
+| Complete frame size as the path degrades | At P3, 1,024-B frames retained 97.9% availability while 2,048-B frames fell to 0.8%. At P4, 512-B frames retained 96.9%, 1,024-B frames fell to 17.1%, and 2,048-B frames produced no response. Larger frames lose availability before compact frames at the same location. |
 | Obstruction versus distance | Building-obstructed P1 lost all 1,024-B and 2,048-B responses at 68 m, whereas P2 delivered 99.8--100.0% of all tested sizes at 113 m. Distance alone does not explain the stationary result. |
-| End of the measured path | P5 produced no response even for the zero-byte probe condition. Once the direct path became unavailable, reducing the application payload did not restore communication. |
+| End of the measured path | P5 produced no response even for the minimum-header control. Once the direct path became unavailable, reducing the complete IPI frame size did not restore communication. |
 | Mobility | Across the four routes, only 59.1--76.3% of 256-B attempts returned a response. In runs 2--4, the p95 RTT among returned responses remained 41.6--43.9 ms. Therefore, successful-response latency and response availability describe different parts of mobile performance. |
-| RF attribution | Because the installed devices did not export PC5 received-power or quality measurements, the data support comparisons by location, obstruction, payload size, and mobility, but they do not identify a specific radio-layer cause such as received power, modulation, resource selection, or retransmission behavior. |
+| RF attribution | Because the installed devices did not export PC5 received-power or quality measurements, the data support comparisons by location, obstruction, complete frame size, and mobility, but they do not identify a specific radio-layer cause such as received power, modulation, resource selection, or retransmission behavior. |
 
 ## Source artifacts
 

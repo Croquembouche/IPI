@@ -2,32 +2,33 @@
 Are today's vehicle-to-everything (V2X) and fifth-generation (5G) communication
 paths ready for tomorrow's connected and automated vehicle (CAV) applications?
 Conventional connected-vehicle (CV) and intelligent transportation system (ITS)
-applications exchange compact, stateless SAE International J2735 messages.
-Complex CAV applications instead use correlated, stateful operations. These
-operations may carry larger objects and generate event-triggered bursts or
-sustained streams in either direction. The current landscape lacks a common
-interface for both classes. Existing studies do not establish where either path
-misses application deadlines when carrying both workload classes.
+applications exchange compact, stateless SAE International J2735 updates.
+Complex CAV applications also require correlated, stateful operations that
+carry larger objects through event-triggered bursts or sustained streams in
+either direction. Prior field studies generally evaluate selected applications
+or one communication path. Consequently, they do not establish the workload and
+operating conditions under which both classes meet application deadlines across
+direct and network-assisted communication.
 
-In this paper, we contribute the Intersection Programming Interface (IPI) and a
-detailed real-vehicle communication-latency study. IPI provides a
-transport-independent interface for the SAE International J2735 message set and
-correlated CAV operations. The study evaluates both classes over a commercial
-Long-Term Evolution cellular V2X (LTE C-V2X) direct PC5 path and a private 5G
-New Radio (NR) network-assisted Uu path. The 5G deployment uses one physical CAV
-user equipment (UE), a dedicated radio, and a clean 40-MHz n48 channel without
-ambient contention. Competing traffic and application-client demand are
-introduced only as experimental variables. Experiments vary payload size,
-direction, transport, radio conditions, and interruption. We report
-response round-trip time (RTT), the percentage of issued requests answered by
-each deadline, and directional application goodput.
+We conduct a controlled real-vehicle study of application communication over a
+commercial Long-Term Evolution cellular V2X (LTE C-V2X) direct PC5 path and a
+private 5G New Radio (NR) network-assisted Uu path. The Intersection Programming
+Interface (IPI), an enabling application-layer protocol, supplies a compact
+profile for typed or pre-encoded J2735 messages and a correlated-operation
+profile for CAV workloads. The 5G deployment uses one physical CAV user
+equipment (UE), a dedicated radio, and a clean 40-MHz n48 channel without
+ambient contention. We vary payload size, direction, transport, radio
+condition, time-division-duplex configuration, competing traffic, concurrent
+demand, and interruption. The metrics are response round-trip time (RTT), the
+percentage of issued requests answered within each application deadline, and
+directional application goodput.
 
 The measurements yield three insights. 1) The measured commercial direct V2X
 path supports compact J2735 messages only within a limited payload and coverage
-envelope. 2) The CAV application-packet size that the measured 5G uplink
-completes within a decision deadline is severely limited. 3) 5G and
+envelope. 2) The measured 5G uplink supports only severely limited CAV packet
+sizes within decision deadlines. 3) 5G and
 sixth-generation (6G) radios must support event-triggered bursts and sustained
-streams in either direction while isolating concurrent flows if cellular
-networks are to support CAV and ITS applications that advance the goal of zero
-road fatalities.
+streams in either direction while isolating concurrent flows. These capabilities
+are necessary for CAV and ITS applications that advance the goal of zero road
+fatalities.
 \end{abstract}

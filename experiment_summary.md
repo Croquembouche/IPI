@@ -18,7 +18,7 @@ under `CISCO_AIRSPAN_STATS/`; their sanitized derivatives remain under
 | Result area | Scope | Current folders |
 |---|---|---:|
 | `results/real_5g/` | Private-5G TCP/MQTT/UDP latency, directional TDD runs, exact endpoint goodput, load/QoS labels, detector-output replay, multiclient scaling, failure/fallback, DU Cell context, GPS, and signal maps | 43 top-level result folders plus the TDD status record |
-| `results/mocar_v2x/` | Mocar C-V2X setup, custom RTT, stationary payload sweeps, signal probe, and radio-distance/mobility runs | 18 top-level folders |
+| `results/mocar_v2x/` | Mocar C-V2X setup, custom RTT, stationary IPI frame-size sweeps, signal probe, and radio-distance/mobility runs | 18 top-level folders |
 | `results/v2x_benchmarks/` | Public V2X dataset loopback, dataset/GPU processing, OpenCOOD smoke checks, and V2X-Radar detector benchmark runs | 10 top-level folders |
 | `results/local_loopback/` | Local loopback placeholder | present but empty |
 
@@ -1195,7 +1195,7 @@ Summary:
 - The folder preserves setup logs, custom RX debug notes, and local SPaT bridge
   sender evidence.
 
-### M02. Stationary Payload 0-2 KiB Sweeps
+### M02. Stationary IPI Frame-Size 0-2 KiB Sweeps
 
 Primary folders:
 
@@ -1211,17 +1211,20 @@ Primary folders:
 - `results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_155120/`
 - `results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/`
 
-Purpose: measure Mocar custom radio RTT for compact payloads from 0 to 2048 B
-under stationary LOS, NLOS, and obstruction conditions.
+Purpose: measure Mocar custom radio RTT for serialized `IPI_RTT1` performance
+frames configured from 256 to 2048 B under stationary LOS, NLOS, and
+obstruction conditions. Every nonzero label is the complete frame length
+submitted to the vendor interface; a separate zero control sends the minimum
+valid 51--55-B IPI header.
 
 Stable stationary evidence:
 
-| Source | Payload | Rows | Success | p50 RTT ms | p95 RTT ms | p99 RTT ms |
+| Source | Configured IPI frame | Rows | Success | p50 RTT ms | p95 RTT ms | p99 RTT ms |
 |---|---:|---:|---:|---:|---:|---:|
-| full single-payload run | 256 B | 1000 | 999 | 99.980 | 106.917 | 111.691 |
-| full single-payload run | 512 B | 1000 | 1000 | 99.972 | 106.694 | 114.577 |
-| full single-payload run | 1024 B | 1000 | 1000 | 99.966 | 106.878 | 112.515 |
-| full single-payload run | 2048 B | 1000 | 1000 | 99.958 | 111.663 | 120.567 |
+| full single-size run | 256 B | 1000 | 999 | 99.980 | 106.917 | 111.691 |
+| full single-size run | 512 B | 1000 | 1000 | 99.972 | 106.694 | 114.577 |
+| full single-size run | 1024 B | 1000 | 1000 | 99.966 | 106.878 | 112.515 |
+| full single-size run | 2048 B | 1000 | 1000 | 99.958 | 111.663 | 120.567 |
 | consolidated sweep | 0 B | 1000 | 1000 | 99.939 | 106.873 | 111.814 |
 | consolidated sweep | 2048 B | 1000 | 1000 | 99.958 | 111.661 | 120.562 |
 
@@ -1231,27 +1234,26 @@ Stationary radio-condition sweeps from July 4:
   succeeded. The 1024 B phase recorded 900 observed attempts, all of which
   timed out, before the run was stopped; the remaining 100 attempts and the
   skipped 2048 B phase are analysis-only timeout entries.
-- `20260704_exp_01_payload_sweep_0_2kb_144149`: all payloads from 0 to 2048 B
+- `20260704_exp_01_payload_sweep_0_2kb_144149`: all configured frame sizes from 0 to 2048 B
   had 99.8-100.0% success, with p50 near 100 ms and p95 around 107-111 ms.
-- `20260704_exp_01_payload_sweep_0_2kb_151351`: 0-1024 B mostly succeeded,
+- `20260704_exp_01_payload_sweep_0_2kb_151351`: 0-1024 B frames mostly succeeded,
   but 2048 B succeeded only 8/1000 times.
-- `20260704_exp_01_payload_sweep_0_2kb_155120`: success degraded with payload
-  size: 0 B 999/1000, 256 B 991/1000, 512 B 969/1000, 1024 B 171/1000, and
+- `20260704_exp_01_payload_sweep_0_2kb_155120`: success degraded with configured
+  frame size: 0 B 999/1000, 256 B 991/1000, 512 B 969/1000, 1024 B 171/1000, and
   2048 B treated as timeout after an operator-stopped partial run.
 - `20260704_exp_01_payload_sweep_0_2kb_164129`: final location run had 0
-  successful analysis attempts, and the remaining payloads were treated as
+  successful analysis attempts, and the remaining frame sizes were treated as
   timeouts or skipped timeout conditions.
 
-The Mocar payload results show a joint limit from signal strength and packet
-size. As normalized signal strength decreased across Points 2-4, the 2 KiB
-failure rate increased from 0.2% to 99.2%, followed by 910/910 observed failures
-at the next point. The 1 KiB failure rate increased from 0% to 2.1% and 82.9%,
-while 256-512 B packets remained more reliable until the path became
-unavailable. Point 1 has low signal despite its short distance because a
-building blocks its direct LOS path to the RSU. These results show that even 1
-KiB delivery requires strong signal and that V2X cannot reliably deliver the
-multi-packet objects required by complex CAV applications. This is the evidence
-for Insight 1: current V2X technologies cannot support complex CAV applications.
+The PC5 results show a joint limit from field condition and complete frame size.
+Across Points 2--4, the 2-KiB frame failure rate increased from 0.2% to 99.2%
+and then to 100%. The 1-KiB frame failure rate increased from 0% to 2.1% and
+82.9%, while 0.25- and 0.5-KiB frames remained available at more points. Point
+1 lost every 1- and 2-KiB response despite its shorter distance because a
+building obstructed the direct path. The installed devices did not export a
+usable PC5 received-power or quality measurement, so these records do not
+support a signal-strength attribution. They show that frame size, obstruction,
+and location jointly bound the measured direct path.
 
 ### M03. OBU Signal Probe
 

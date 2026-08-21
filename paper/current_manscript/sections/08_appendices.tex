@@ -1,42 +1,47 @@
 \section{IPI Reference Schema}
 \label{app:ipi}
 
-Table~\ref{tab:ipi-schema} summarizes the public data model used by the
-reference implementation. Message-mode calls use an envelope around a typed or
-pre-encoded payload. Operation-mode calls add a session identifier and operation
-state. The reference facade stores active sessions and responses in memory and
-exposes registration, heartbeat, telemetry, invocation, response retrieval,
-and termination calls.
+Table~\ref{tab:ipi-schema} separates the application objects from their
+serialized profiles. Message-mode calls preserve typed or pre-encoded J2735
+content. Operation-mode calls add the association and outcome fields required
+by a continuing CAV interaction. The runtime stores active sessions and
+responses, while each binding serializes the fields required by its path.
 
 \begin{table*}[t]
-  \caption{IPI reference data model.}
+  \caption{IPI application objects and serialized profiles.}
   \label{tab:ipi-schema}
   \centering
   \footnotesize
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}p{0.18\textwidth}p{0.34\textwidth}p{0.39\textwidth}@{}}
     \toprule
-    Object & Principal fields & Function \\
+    Component & Principal fields or encoding & Function \\
     \midrule
-    Envelope metadata & Message, source, intersection, send time, transport class, optional session and correlation identifiers & Identifies an independent message or envelope-based operation \\
-    J2735 payload & Message type, encoding, typed content or pre-encoded bytes, optional frame counter & Carries typed BSM, PSM, MAP, SPaT, SRM, and SSM profiles or preserves any encoded J2735 message \\
-    CAV operation request & Operation class, vehicle, request, optional session, location, application context, desired horizon, opaque data & Describes a perception, planning, control, or map operation \\
-    CAV operation result & Session, vehicle, operation class, progress state, expiration, confidence, typed or opaque content & Represents an update, completion, or rejection associated with a CAV operation \\
-    Session records & Vehicle profile, role, requested operations, state, lease, heartbeat interval, telemetry, responses & Maintains the application state used by continuing operations \\
+    Application API metadata & Message, source, context, send time, transport class, and optional session, correlation, sequence, priority, and expiration fields & Supplies application identity and context; a serialized profile selects the fields required by its exchange \\
+    Compact J2735 content profile & One-byte message type, four-byte big-endian payload length, and complete J2735 bytes & Carries typed BSM, PSM, MAP, SPaT, SRM, and SSM content or preserves a pre-encoded J2735 message in $P+5$~B \\
+    Correlated CAV operation profile & Session and vehicle identifiers, service class, request/update/completion/rejection role, option flags, expiration, confidence, and length-delimited typed or opaque content & Associates state and outcomes with a perception, planning, control, or map operation \\
+    Runtime session record & Vehicle profile, role, requested operations, state, monotonic lease, heartbeat interval, telemetry, and responses & Maintains local state for registration, heartbeat, invocation, response retrieval, and termination \\
     \bottomrule
   \end{tabular}
 \end{table*}
 
-The C++17 implementation maps supported J2735 structures into the common IPI
-envelope. It preserves externally encoded J2735 messages byte for byte. The
-cooperative-service object uses a canonical binary encoding. Its validators
-bound identifiers, strings, waypoints, detected objects, control commands,
-confidence, and opaque payload length. Seven automated tests cover selected
-BSM and PSM round trips, a SPaT transport loopback, one cooperative-message
-round trip, byte preservation, truncated-input rejection, session operations,
-topic parsing, and TCP/MQTT probe loopback. Correlation-identifier uniqueness,
-state-transition policy, security, admission, scheduling, and path selection
-remain application and deployment policies in the reference interface.
+The C++17 implementation maps supported J2735 structures into the IPI
+application contract and preserves externally encoded J2735 messages byte for
+byte. Multi-byte integers in the deterministic operation and session encodings
+use network byte order. Length-prefixed fields are checked before allocation,
+and decoders reject truncated records, unsupported enumerations, invalid field
+bounds, and trailing bytes. The cooperative-operation expiration field uses
+tenths of a second since the epoch. Session leases use a monotonic clock, so a
+wall-clock adjustment cannot extend a lease. The measurement adapters record
+wall-clock fields for trace alignment and use the sender's monotonic clock for
+RTT.
+
+The tests cover typed and pre-encoded J2735 content, independently generated
+conformance vectors, operation roles, session lifecycle, correlation, malformed
+input, PC5 framing, and broker-backed exchange. The runtime validates session
+state, request identity, correlation, expiration, and terminal-response
+behavior. Applications and deployments define domain-specific transition
+policy, security, admission, radio scheduling, and path selection.
 
 \section{Deployment and Measurement Details}
 \label{app:setup}
@@ -68,7 +73,7 @@ successful Spectrum Access System heartbeat.
     Cells & Cell~1: absolute radio-frequency channel number 637992 and synchronization signal at 3558.720~MHz; Cell~2: 645334 and 3669.600~MHz & Primary traffic and the matched August 17 blocks used Cell~2; the second August 16 40/40/20 TCP repetition used Cell~1; the 70/20/10 Cell~2 lock was operator-reported \\
     Power and antenna & 33-dBm cell transmit power; 34~dBm/MHz effective isotropic radiated power; 17-dBi cross-polarized integrated antenna & Product pattern approximately $65^{\circ}$ azimuth by $8^{\circ}$ elevation; structural centerline 20~ft above roof level \\
     Duplex configuration & Established application profile: 70/20/10 downlink/uplink/dynamic frames; August 15--19 comparison: 40/40/20 and 70/20/10; fixed 10D4G packing & Route, cell state, and serving cell changed during the August 15--16 transition; August 17 and 19 supplied matched workload comparisons; separate 60/20/20 runs are excluded; the attempted 30/60/10 configuration produced no valid experiment \\
-    Vehicle gateway & Cisco Meraki MG52-HW campaign gateway with Telit FN990A40 modem and internal antenna; GL.iNet GL-X3000 replacement gateway; 1-Gbit/s full-duplex Ethernet & The August 19 GL-X3000 repeat records gateway RSRP, RSRQ, and SINR while evaluating both TDD profiles at one stationary location \\
+    Vehicle gateway & Cisco Meraki MG52-HW campaign gateway with Telit FN990A40 modem and internal antenna; GL.iNet GL-X3000 replacement gateway; 1-Gbit/s full-duplex Ethernet & The August 19 GL-X3000 repeat records gateway RSRP, Reference Signal Received Quality (RSRQ), and SINR while evaluating both TDD profiles at one stationary location \\
     Session and endpoint & SIM provisioned on Data Network Name \texttt{cisco5g}; operator-reported default 5G QoS Identifier 9; on-site MX250 and directly connected d1 host & Host captures observed TOS \texttt{0x0} for default and \texttt{5qi-mapped} experiment labels \\
     Field context & Sole experiment UE; separate three-drive survey with a Samsung 22 handset running G-NetTrack Pro; 1,178 valid band-48 records; RSRP $-121$ to $-88$~dBm; recovered NR SINR $-20$ to 30~dB & Drive-survey medians: $-108$~dBm RSRP and 9~dB SINR; August 17: operator-reported $-100$-dBm RSRP and $-13$-dB RSRQ; August 18: $-105$ to $-115$~dBm; August 19 gateway medians: $-99$ and $-98$~dBm RSRP and 20-dB SINR \\
     PC5 hardware & Mocar OBU, HUALI RSU, 2020 vendor J2735 stack, packet type \texttt{0x1b}, 4,080-B installed-interface limit & GNSS-joined application outcomes; no received-power, channel, resource-pool, modulation, or retransmission export \\
@@ -81,8 +86,9 @@ and 40-MHz channel operate in a clean n48 band without ambient contention. The l
 places one to four streams behind it. The client-demand experiment places
 1--100 closed-loop clients behind the same attachment. These workloads
 traverse the gateway, Uu path, private core, transport, and d1 responder. The
-matrix excludes public-network handover and roaming. This controlled
-radio-band context removes ambient users as an explanation for the results.
+matrix excludes public-network handover and roaming. The controlled band
+isolates experimentally introduced load and application demand from ambient
+radio traffic.
 Profile transitions can still change route, cell state, serving cell, signal,
 and transport state, so those fields remain part of each comparison.
 
@@ -99,17 +105,23 @@ coordinates are transformed to a local frame in the analysis artifacts.
 \section{Workload and Experiment Matrix}
 \label{app:matrix}
 
-The PC5 stationary sweep sends 0, 0.25, 0.5, 1, and 2~KiB, normally for
-1,000 requests per size at 100-ms intervals and a 1,000-ms harness timeout.
-Timeout-dominant collections retain every transmitted request. The four route
-collections send 0.25-KiB requests at 200-ms intervals. One stopped route contains
+The July 3--4 PC5 stationary sweep configures complete serialized IPI
+performance frames at 0.25, 0.5, 1, and 2~KiB, normally for 1,000 requests per
+size at 100-ms intervals and a 1,000-ms timeout. The nonzero settings pad both
+the request and response to the configured frame length. A separate zero
+control produces a 51--55-B request because the identity and timing header
+remains present. Each response copies the request's origin, sequence, initial
+send time, and configured length. Timeout-dominant collections retain every transmitted
+request. The four route collections use 0.25-KiB serialized IPI frames at
+200-ms intervals. One stopped route contains
 675 attempts; the other routes contain 1,000 attempts each.
 
 The five stationary uplink-heavy 5G payload campaigns were collected on May 13, 14, 15, 21,
 and 22, 2026. Most completed conditions contain 1,000 requests at 200-ms
 intervals. Every application request uses an IPI cooperative-service frame.
-The requested size denotes its application content; sender logs retain the encoded
-IPI frame size. The dataset manifest contains 22,431 artifacts from
+The requested size denotes the application payload before IPI serialization;
+sender logs retain the encoded IPI frame size. The dataset manifest contains
+22,431 artifacts from
 OpenDAIR-V2X, V2X-Seq, TruckV2X, and V2X-Radar. Images span 25.5--666.9~KiB,
 point clouds span 15~KiB--3.85~MiB, and maps span 22.3--44.9~MiB. These ranges
 motivate the fixed-size sweeps. The 128--512-KiB and 1--2-MiB transfers
@@ -158,10 +170,10 @@ corresponding measurement for every experiment family.
     \toprule
     Question & Controlled conditions & Recorded outcome \\
     \midrule
-    Message and compact exchange & J2735 callback checks; local IPI tests; PC5 echo; Uu 0--4-KiB IPI frames over TCP/MQTT & Decode or callback result, response completion, RTT \\
-    Payload scale & PC5 0--2~KiB; uplink-heavy Uu IPI frames with 0--2~MiB vehicle-originated content; downlink-heavy Uu frames with 1--500~KiB returned content; detector-derived sizes; 58.6-KiB stress payload & $C(D)$ and response p50/p95/p99 \\
+    Message and compact exchange & J2735 callback checks; local IPI tests; decoded PC5 IPI performance frames with sequence-correlated responses; Uu 0--4-KiB IPI frames over TCP/MQTT & Decode or callback result, response completion, RTT \\
+    Payload scale & PC5 minimum-header control and 0.25--2-KiB complete IPI frames; uplink-heavy Uu IPI frames with 0--2~MiB vehicle-originated content; downlink-heavy Uu frames with 1--500~KiB returned content; detector-derived sizes; 58.6-KiB stress payload & $C(D)$ and response p50/p95/p99 \\
     Field and route coverage & PC5 stationary points and four routes; original Uu stationary collections and Samsung 22 continuous-drive survey; matched August 17 location~3; August 18 time-segmented context; August 19 same-location gateway measurements & GNSS-joined response completion, RTT, and separate radio context \\
-    Protocol formation & TCP, MQTT QoS~0 over TCP, raw UDP, and UDP with 1,400-B application fragments & Returned acknowledgment after decode or returned payload after reassembly and validation \\
+    Protocol formation & TCP, MQTT QoS~0 over TCP, raw UDP, and UDP with 1,400-B adapter-level fragments & Returned acknowledgment after decode or returned payload after reassembly and validation \\
     TDD and application direction & August 15--16 uplink-heavy repetitions; August 17 matched downlink-heavy responses and exact transfers; August 18 weak-signal direction repeat; August 19 same-device 1--500-KiB bidirectional and exact-transfer matrix under both profiles & Profile-transition repeatability, response RTT, deadline completion, exact application goodput, device sensitivity, and radio context \\
     Exact directional transfer & Ten exact 50-MiB uploads and downloads per August 17 profile; three per August 19 profile and direction; receiver byte-count and checksum validation & Individual transfer goodput, mean, and 95\% confidence interval \\
     Competing traffic & Separate historical 15-minute offered controls; 1-KiB foreground with one to four offered 25-Mbit/s uplink streams & Achieved background rate and foreground deadline completion \\
@@ -188,7 +200,8 @@ excluded diagnostic roots and never-started bulk repetitions do not enter a
 primary estimate. Operator-shortened conditions use their declared retained
 counts. The request/response experiments carry application-derived workloads
 in IPI cooperative-service frames and measure RTT and deadline completion.
-PC5 uses sequence-matched workload echoes. Exact bulk transfers instead use
+PC5 uses decoded IPI performance requests and responses matched by origin and
+sequence identifiers. Exact bulk transfers instead use
 validated bytes, checksum, receiver duration, and application goodput.
 
 \section{Detailed Results for Additional Conditions}
@@ -197,6 +210,36 @@ validated bytes, checksum, receiver duration, and application goodput.
 Several experiment families include conditions that are not represented by
 dedicated figure panels. This section reports their complete numerical
 outcomes.
+
+\subsection{Direct PC5 Route Results}
+
+Each route used a complete 0.25-KiB serialized IPI request. Routes 1 and
+2 used a 1,000-ms timeout, while Routes 3 and 4 used a 500-ms timeout. The
+response percentiles include only sequence-matched responses; completion uses
+all issued requests as its denominator.
+
+\begin{table*}[t]
+  \caption{Direct PC5 route response completion and RTT.}
+  \label{tab:pc5-route-results}
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{4.0pt}
+  \begin{tabular}{@{}lrrrrrrr@{}}
+    \toprule
+    Route & Attempts & Responses & Completion (\%) & Timeout (ms) & p50 RTT (ms) & p95 RTT (ms) & p99 RTT (ms) \\
+    \midrule
+    R1 & 675 & 515 & 76.3 & 1,000 & 99.610 & 108.421 & 112.436 \\
+    R2 & 1,000 & 731 & 73.1 & 1,000 & 28.326 & 41.887 & 55.880 \\
+    R3 & 1,000 & 591 & 59.1 & 500 & 29.204 & 43.923 & 54.317 \\
+    R4 & 1,000 & 716 & 71.6 & 500 & 28.276 & 41.621 & 50.651 \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+Across the four routes, 59.1--76.3\% of issued requests received a response.
+The p95 RTT among received responses was below 50~ms on three routes even
+though 26.9--40.9\% of all requests on those routes timed out. The GNSS join
+places missing responses in recurring no-response segments.
 
 \subsection{Field-Specific Uplink Payload and Transport Results}
 
@@ -278,7 +321,7 @@ separate 100-client repeat yielded p95 values of 177.053, 283.765, and
 
 The 100-client collection at $-120$~dBm produced a different ordering. MQTT
 and TCP p95 rose to 5,135.984 and 2,908.420~ms. They completed 99.499\% and
-100\% of issued requests before the harness timeout. UDP completed 90,811 of
+100\% of issued requests before timeout. UDP completed 90,811 of
 100,000 requests, with a p95 of 172.500~ms. Its shorter response tail coincides
 with 9,189 missing cycles.
 
@@ -286,4 +329,4 @@ The per-client distributions reveal substantial unfairness within the shared
 attachment. Across 100 clients, the median client p95/p99 was
 3,814.102/13,149.421~ms for MQTT and 2,938.408/6,400.146~ms for TCP. Many flows
 fall outside the 100- and 200-ms application budgets even though most requests
-still receive a response before the harness timeout.
+still receive a response before timeout.

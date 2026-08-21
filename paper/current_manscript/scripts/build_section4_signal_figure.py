@@ -24,8 +24,8 @@ OUT = MANUSCRIPT / "figs/section4_signal_survey.pdf"
 mpl.rcParams.update(
     {
         "font.family": "sans-serif",
-        "font.size": 8.0,
-        "axes.titlesize": 8.4,
+        "font.size": 6.4,
+        "axes.titlesize": 6.8,
         "pdf.fonttype": 42,
         "ps.fonttype": 42,
     }
@@ -62,7 +62,9 @@ def main() -> None:
         ),
     ]
 
-    fig, axes = plt.subplots(1, 2, figsize=(7.15, 2.65))
+    # Figure 5 is a single-column, side-by-side overview.  The maps retain the
+    # same measured interpolation; only the publication layout is compressed.
+    fig, axes = plt.subplots(1, 2, figsize=(3.33, 1.42))
     for ax, (path, title, label, lower, upper, ticks) in zip(axes, panels):
         ax.imshow(map_body(path))
         ax.set_title(title, loc="left", pad=2.5, fontweight="bold")
@@ -75,16 +77,16 @@ def main() -> None:
             scale,
             ax=ax,
             orientation="horizontal",
-            fraction=0.060,
-            pad=0.035,
-            aspect=24,
+            fraction=0.070,
+            pad=0.045,
+            aspect=15,
         )
         colorbar.set_ticks(ticks)
-        colorbar.set_label(label, labelpad=1.5)
-        colorbar.ax.tick_params(labelsize=7.2, pad=1.5)
+        colorbar.set_label(label, labelpad=1.0)
+        colorbar.ax.tick_params(labelsize=5.3, pad=1.0)
 
-    fig.subplots_adjust(left=0.01, right=0.99, top=0.965, bottom=0.08, wspace=0.10)
-    fig.savefig(OUT, bbox_inches="tight", pad_inches=0.01)
+    fig.subplots_adjust(left=0.01, right=0.99, top=0.965, bottom=0.10, wspace=0.08)
+    fig.savefig(OUT, bbox_inches="tight", pad_inches=0.02)
     plt.close(fig)
 
 

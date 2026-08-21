@@ -1,19 +1,17 @@
 \section{Future Research Directions}
 \label{sec:future-directions}
 
-The PC5 results create a coverage-planning problem for connected-vehicle and
-ITS deployments. Future work should determine roadside-unit spacing, antenna
-geometry, and supplemental-path placement from the fraction of compact J2735
+Future CV and ITS deployments should choose RSU spacing, antenna geometry, and
+supplemental coverage from the fraction of compact J2735
 messages completed within the application deadline. The evaluation must include urban intersections,
 high-rise street canyons, highways, and sparsely served roads because distance
 alone does not characterize obstruction or coverage.
 
-The 5G results create a directional representation problem for CAV developers.
 At the matched large-object condition, vehicle-originated content required
-substantially longer than the same-sized edge-returned content. Future CAV
-communication should therefore select, compress, partition, or progressively
-transmit vehicle-originated state according to the available uplink, the
-current radio condition, and the decision deadline. These mechanisms also need
+substantially longer than the same-sized edge-returned content. CAV developers
+should therefore select, compress, partition, or progressively transmit
+vehicle-originated state according to the available uplink, the current radio
+condition, and the decision deadline. These mechanisms also need
 explicit expiration and recovery so that delayed fragments do not consume
 resources after the application can no longer use the complete object.
 
