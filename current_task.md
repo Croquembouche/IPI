@@ -2,6 +2,24 @@
 
 Last updated: 2026-08-20
 
+## 2026-08-20 Main-Branch Consolidation
+
+Complete. At the user's explicit request, the manuscript-reorganization history
+was fast-forwarded into `main` without creating another branch or pull request.
+The earlier `codex/paper-proposal-updates-20260820` branch was already identical
+to `main`, so all work from both non-main branches is retained in the consolidated
+history. The updated `main` was pushed to `origin`, after which both non-main
+branches were deleted locally and from GitHub. `main` is the repository's only
+remaining local and remote branch. The pre-existing Git stash was not changed.
+
+Validation: the tracked worktree and index are clean; local `main`,
+`origin/main`, and GitHub's `refs/heads/main` resolve to the same commit; and the
+three manuscript-publication commits remain consecutive in `main`. The clean
+23-page `paper/current_manscript/main.pdf` retains zero annotations and SHA-256
+`129d5e2fc21bebb24ebaeed33dca2e88646fbdc664c9bd61750205c9d3e7a6d7`.
+The ignored local `main_annotated.pdf` remains outside Git history with all 22
+annotation objects intact. No page-limit work was performed.
+
 ## 2026-08-20 Manuscript Reorganization Publication
 
 Complete. At the user's request, the current manuscript reorganization and
