@@ -1,6 +1,38 @@
 # Current Task
 
-Last updated: 2026-08-21
+Last updated: 2026-08-24
+
+## 2026-08-24 Experiment Collection Closure Decision
+
+Complete. The user accepted the retained experiment corpus as sufficient for
+the current paper and decided not to collect another broad performance matrix
+or a new one-way-latency dataset. The August 19 GL-X3000 runs complete the
+requested private-5G TCP/MQTT uplink-heavy, downlink-heavy, and exact 50-MiB
+directional-goodput work under `70/20/10` and `40/40/20`. The existing direct
+V2X stationary-payload, radio-condition, and mobility runs remain the V2X
+evidence. Do not repeat these experiment families solely to add samples.
+
+This collection decision does not strengthen the claims beyond the retained
+controls. Treat the GL-X3000 TDD result as a sequential, matched-location
+deployment observation rather than a general or isolated causal TDD effect;
+serving-cell state and matched ACP evidence were not retained. The old/new
+gateway comparison remains confounded by signal, day, configuration, session,
+and path state. Private-5G request/response results remain complete application
+RTT measurements. One-way latency is unmeasured and is not required for the
+current paper; direct dissemination latency or information age is future work
+if a later study adds semantically matched V2X and
+vehicle-to-edge-to-vehicle delivery with a defensible common time base.
+
+No further field-performance collection is planned for the current paper.
+Network-enforced QoS remains a documented blocked experiment unless Cisco
+provisions and verifies a second DNN/QFI/5QI treatment. This decision changes
+only the collection plan and task record; no raw data, derived result,
+experiment statistic, manuscript claim, or source file was changed.
+
+Validation: the decision was checked against the current experiment summaries
+and retained claim boundaries. `git diff --check` passes. No experiment or
+software test was run because this is a documentation-only closure decision.
+This record is included in the user's requested publication to `origin/main`.
 
 ## 2026-08-21 Measurement-Primary Manuscript Revision
 

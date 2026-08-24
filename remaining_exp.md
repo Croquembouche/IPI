@@ -1,6 +1,6 @@
 # Remaining Experiment Plan
 
-Last updated: 2026-08-19
+Last updated: 2026-08-24
 
 ## Purpose
 
@@ -9,6 +9,40 @@ before the Edge4AV paper can answer the current coauthor comments. It is a
 runbook and decision record. Use it to prepare each collection, name and
 preserve the artifacts, determine whether a run is valid, and prevent
 unnecessary repetition of experiments that are already complete.
+
+## 2026-08-24 Collection Closure Decision
+
+Status: **the current experiment corpus is sufficient for the paper**. At the
+user's direction, no additional broad private-5G or direct-V2X performance
+sweep and no new one-way-latency collection are planned. The completed corpus
+already covers private-5G payload size, transport, uplink-heavy and
+downlink-heavy transactions, deliberate background load, logical-client
+demand, signal/location, TDD profiles, gateway replacement, exact directional
+goodput, failure/fallback, and deadline analysis. It also covers direct-V2X
+stationary payload, radio-condition, and mobility behavior.
+
+The decision closes collection, not evidentiary uncertainty. The August 19
+GL-X3000 `70/20/10` and `40/40/20` runs are sequential matched-location
+observations with comparable signal, but serving-cell state and matched ACP
+evidence are unavailable. Report their differences as measured deployment
+associations, not an isolated causal TDD effect or a universal property of the
+profile labels. The gateway comparison likewise does not isolate hardware from
+signal, configuration, session, time, and path state.
+
+Do not add a generic one-way metric to the existing private-5G transaction
+matrix. A vehicle-to-d1 request followed by a d1-to-vehicle response is a
+two-way application transaction, so complete same-host monotonic RTT remains
+the appropriate primary metric. Direct-V2X dissemination latency or
+information age and vehicle-to-d1-to-another-vehicle dissemination are future
+experiments only if the paper later adds a semantically matched stateless
+delivery comparison with a defensible common time base.
+
+The remaining historical procedures below are retained as evidence and a
+future runbook, not as authorization for more field traffic in the current
+paper. R5 remains blocked unless Cisco provisions and verifies a real second
+DNN/QFI/5QI treatment. R7 may be closed through an existing export or by
+documenting unavailable fields; it does not justify repeating application
+traffic.
 
 ## 2026-08-19 Fresh-Device TDD 70/20/10 Directional Repeat
 
