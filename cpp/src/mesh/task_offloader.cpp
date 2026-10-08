@@ -52,8 +52,9 @@ void TaskOffloader::request_offload(const OffloadTask& task) {
     if (task.taskId.empty()) {
         throw std::invalid_argument("Offload taskId must not be empty");
     }
-    if (task.payload.size() > 65535) {
-        throw std::invalid_argument("Offload payload exceeds 65535 bytes");
+    if (task.payload.size() >
+        static_cast<std::size_t>(std::numeric_limits<std::uint32_t>::max())) {
+        throw std::invalid_argument("Offload payload exceeds the uint32 length field");
     }
     if (activeTasks_.count(task.taskId) != 0U) {
         throw std::invalid_argument("Offload taskId already pending");

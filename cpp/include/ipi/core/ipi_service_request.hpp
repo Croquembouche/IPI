@@ -8,8 +8,9 @@
 namespace ipi {
 
 /**
- * \brief Enumerates supported service request types carried in the IPI-ServiceRequest
- * regional extension within a J2735 Basic Safety Message (BSM).
+ * \brief Enumerates the historical compact IPI-ServiceRequest types.
+ *
+ * New correlated operations use ServiceClass in CooperativeServiceMessage.
  */
 enum class ServiceType : std::uint8_t {
     LaneKeepingAid = 0,
@@ -22,12 +23,13 @@ enum class ServiceType : std::uint8_t {
 };
 
 /**
- * \brief Represents the payload of the IPI-ServiceRequest regional extension.
+ * \brief Legacy compact IPI-ServiceRequest retained for source compatibility.
  *
- * This structure is transport-agnostic. Real deployments should marshal the
- * values into the J2735 ASN.1 representation. The helper functions provided
- * here implement a simple byte-oriented canonical encoding so integrations can
- * be validated before wiring in a full ASN.1 toolchain.
+ * Its historical byte encoding uses a 16-bit additional-data length. New CAV
+ * operations, especially Uu objects above 65,535 bytes, should use
+ * CooperativeServiceMessage and IpiInterface::submit_cooperative_service().
+ * PC5 deployments should use the formal J2735 regional profile and obey the
+ * selected PC5 binding's smaller operational limit.
  */
 struct IpiServiceRequest {
     ServiceType serviceType{ServiceType::LaneKeepingAid};

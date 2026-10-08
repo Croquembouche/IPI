@@ -94,10 +94,14 @@ python3 scripts/build_v2x_ipi_payload_manifest.py \
   --output results/v2x_benchmarks/latest/v2x_ipi_payload_manifest.json
 ```
 
-IPI's current `IPI-CooperativeService` offload payload section is limited to
-65,535 bytes because optional sections use a 16-bit length field. The manifest
-therefore records both the raw artifact size and the number of IPI chunks needed
-when an image, point cloud, or annotation exceeds the safe per-message payload.
+The current Uu `IPI-CooperativeService` record uses the versioned `IPIO`
+encoding and four-byte section lengths. By default, the manifest selects
+representative objects through 2 MiB, the largest object evaluated in the Uu
+campaigns. This 2-MiB benchmark cap is not the protocol limit: the wire field is
+32 bits, and the measurement receiver separately applies a 16-MiB packet safety
+limit. For a larger image, point cloud, or annotation, the manifest reports how
+many benchmark operations would be needed at the selected cap. Use
+`--benchmark-payload-cap-bytes` to choose a smaller workload envelope.
 
 ## Run The Local IPI Payload Benchmark
 

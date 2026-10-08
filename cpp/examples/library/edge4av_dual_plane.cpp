@@ -4,9 +4,7 @@
 #include <iostream>
 
 int main() {
-    using ipi::IpiServiceRequest;
-    using ipi::ServiceType;
-    using ipi::api::Edge4AvInterface;
+    using ipi::api::IpiInterface;
     using ipi::api::EnvelopeMetadata;
     using ipi::api::ServiceRequestContext;
     using ipi::api::SourceType;
@@ -17,7 +15,7 @@ int main() {
     using ipi::j2735::BasicSafetyMessage;
 
     try {
-        Edge4AvInterface edge4av;
+        IpiInterface ipiInterface;
 
         EnvelopeMetadata radioMetadata;
         radioMetadata.intersectionId = "intersection-101";
@@ -32,10 +30,10 @@ int main() {
         bsm.speedMps = 8.5F;
         bsm.headingDeg = 90.0F;
 
-        auto ingestAck = edge4av.ingest_v2x_message(radioMetadata, bsm, -58, 172);
+        auto ingestAck = ipiInterface.ingest_v2x_message(radioMetadata, bsm, -58, 172);
         std::cout << "radio ingest accepted: " << std::boolalpha << ingestAck.accepted << '\n';
 
-        auto receivedBsms = edge4av.list_v2x_messages<BasicSafetyMessage>();
+        auto receivedBsms = ipiInterface.list_v2x_messages<BasicSafetyMessage>();
         std::cout << "stored BSM count: " << receivedBsms.size() << '\n';
 
         VehicleProfile profile;
@@ -47,20 +45,23 @@ int main() {
         sessionMetadata.intersectionId = "intersection-101";
         sessionMetadata.transport = TransportType::CELLULAR_5G;
 
-        auto session = edge4av.register_vehicle_session(sessionMetadata,
+        auto session = ipiInterface.register_vehicle_session(sessionMetadata,
                                                         profile,
                                                         {"planningAid", "perceptionAid"});
         std::cout << "registered session: " << session.sessionId << '\n';
         sessionMetadata.sessionId = session.sessionId;
 
-        auto heartbeatAck = edge4av.heartbeat(session.sessionId, VehicleTelemetryFrame{});
+        auto heartbeatAck = ipiInterface.heartbeat(session.sessionId, VehicleTelemetryFrame{});
         std::cout << "session heartbeat accepted: " << std::boolalpha << heartbeatAck.accepted << '\n';
 
-        IpiServiceRequest request;
-        request.serviceType = ServiceType::PlanningAid;
-        request.requestId = 7;
-        request.desiredHorizonMs = 3000;
-        request.additionalData = {'f', 'a', 'l', 'l', 'b', 'a', 'c', 'k'};
+        ipi::CooperativeServiceMessage operation;
+        operation.vehicleId = {'v', 'e', 'h', '-', '0', '1'};
+        operation.serviceClass = ipi::ServiceClass::GuidedPlanning;
+        operation.guidanceStatus = ipi::GuidanceStatus::Request;
+        operation.requestedHorizonMs = 3000;
+        operation.offloadPayload =
+            std::vector<std::uint8_t>{'f', 'a', 'l', 'l', 'b', 'a', 'c', 'k'};
+        operation.offloadTaskId = "planning-7";
 
         ServiceRequestContext context;
         context.vehicleId = profile.vehicleId;
@@ -69,18 +70,19 @@ int main() {
         context.speedMps = 8.5;
         context.headingDegrees = 90.0;
 
-        auto requestAck = edge4av.submit_service_request(sessionMetadata, profile, request, context);
+        auto requestAck = ipiInterface.submit_cooperative_service(
+            sessionMetadata, profile, operation, context);
         std::cout << "private service request accepted: " << std::boolalpha << requestAck.accepted << '\n';
 
         VehicleTelemetryFrame telemetry{};
         telemetry.pose.latitude = context.location.latitude;
         telemetry.pose.longitude = context.location.longitude;
-        auto telemetryAck = edge4av.submit_telemetry(session.sessionId, {telemetry});
+        auto telemetryAck = ipiInterface.submit_telemetry(session.sessionId, {telemetry});
         std::cout << "session telemetry accepted: " << std::boolalpha << telemetryAck.accepted << '\n';
 
-        auto sessionResponses = edge4av.list_session_responses(session.sessionId);
+        auto sessionResponses = ipiInterface.list_session_responses(session.sessionId);
         std::cout << "session response count: " << sessionResponses.size() << '\n';
-        auto publications = edge4av.private_session_transport()->list_publications({});
+        auto publications = ipiInterface.private_session_transport()->list_publications({});
         std::cout << "session publication count: " << publications.size() << '\n';
 
         return 0;

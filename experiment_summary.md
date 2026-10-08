@@ -1,6 +1,6 @@
 # Experiment Summary
 
-Last updated: 2026-08-19.
+Last updated: 2026-08-26.
 
 This file summarizes the experiments currently present under `results/`. It is
 based on the current result artifacts, not on prior generated paper prose.
@@ -43,6 +43,13 @@ under `CISCO_AIRSPAN_STATS/`; their sanitized derivatives remain under
   the retained SINR values are nearest-time joins to the NR `ssSinr` field in
   the verbose logs. Route-weighted sample fractions are not area-coverage
   probabilities.
+- For the August 19 GL-X3000 `70/20/10` and `40/40/20` blocks, the operator
+  confirmed that Cell 1 was locked out and not broadcasting, Cell 2 served the
+  gateway throughout, and no handoff occurred. This operator-confirmed context
+  supplements the retained modem histories, whose serving-cell fields are
+  empty. Across runs with both cells enabled and runs with Cell 1 locked,
+  traffic remained on Cell 2; no measurable interference or performance change
+  was attributable to Cell 1's administrative state.
 
 ## Private-5G Experiments
 
@@ -456,9 +463,9 @@ outside the measured interval.
 
 The operator reported `70/20/10`, serving Cell 2 with no handoff, RSRP
 `-100 dBm`, and RSRQ `-13 dB`. The user later clarified that Airspan Cell 1
-and Cell 2 were both administratively unlocked and broadcasting. Administrative
-`locked` means the cell is not broadcasting and is distinct from serving-cell
-attachment. The user corrected the original `-97 dBm` RSRP
+was administratively locked and did not broadcast, whereas Cell 2 remained
+unlocked, broadcast, and served the gateway throughout. The user corrected the
+original `-97 dBm` RSRP
 entry after acquisition. These values remain operator-reported until
 timestamp-aligned ACP/configuration and MG52 exports are stored. The 59.585-
 second ROS 2 bag passed the stationary gate. The explicitly committed raw tree
@@ -541,10 +548,10 @@ the side-by-side comparison are:
 
 | Date/run | TDD | Cell 1 administrative state | Cell 2 administrative state | Serving cell | RSRP | RSRQ |
 |---|---|---|---|---:|---:|---:|
-| 2026-08-15 `70/20/10` | `70/20/10` | Unlocked; broadcasting | Unlocked; broadcasting | 2; MG52-selected/no handoff | -100 dBm | -13 dB |
-| 2026-08-15 `40/40/20` | `40/40/20` | Unlocked; broadcasting | Unlocked; broadcasting | 2; MG52-selected/no handoff | -100 dBm | -13 dB |
-| 2026-08-16 run 1 | `40/40/20` | Locked; not broadcasting | Unlocked; broadcasting (inferred) | 2; MG52-selected/no handoff | -100 dBm | -13 dB |
-| 2026-08-16 run 2 | `40/40/20` | Unlocked; broadcasting | Unlocked; broadcasting | 1; MG52-selected/no handoff | -98 dBm | -13 dB; carried forward |
+| 2026-08-15 `70/20/10` | `70/20/10` | Locked; not broadcasting | Unlocked; broadcasting | 2; no handoff | -100 dBm | -13 dB |
+| 2026-08-15 `40/40/20` | `40/40/20` | Locked; not broadcasting | Unlocked; broadcasting | 2; no handoff | -100 dBm | -13 dB |
+| 2026-08-16 run 1 | `40/40/20` | Locked; not broadcasting | Unlocked; broadcasting | 2; no handoff | -100 dBm | -13 dB |
+| 2026-08-16 run 2 | `40/40/20` | Locked; not broadcasting | Unlocked; broadcasting | 2; no handoff | -98 dBm | -13 dB; carried forward |
 
 | Payload | Attempts | Accepted | Receiver rows | p50 ms | p95 ms | p99 ms | Max ms |
 |---:|---:|---:|---:|---:|---:|---:|---:|
@@ -556,9 +563,9 @@ Relative to the valid 2026-08-15 same-profile TCP subset, p50/p95 changed by
 +0.52%/+3.33% at 1 KiB, +11.38%/+27.97% at 10 KiB, and
 +132.55%/+169.05% at 100 KiB. The new 100 KiB distribution is therefore
 materially slower, but the evidence does not identify the cause: the runs lack
-timestamp-aligned ACP, MG52, scheduler, and cell-load evidence. It also differs
-in Cell 1 administrative state: Cell 1 broadcast on 2026-08-15 but did not
-broadcast on 2026-08-16.
+timestamp-aligned ACP, MG52, scheduler, and cell-load evidence. The current
+operator correction holds Cell 1 locked, Cell 2 serving, and handoff absent
+across these runs.
 
 All 3,000 requests passed exact length, CRC32, sequence, and compact
 application-acknowledgment validation with zero failures. All 21 fetched edge
@@ -575,19 +582,15 @@ Primary folder:
 - `results/real_5g/20260816_airspan_tdd_raw_uplink_40_40_20_location_1_tcp_quick_run_2/`
 
 Purpose: repeat the three-size quick TCP sweep after the user reported RSRP
-`-98 dBm` and both Airspan cells administratively unlocked and broadcasting.
-The user also reported TDD `40/40/20`. RSRQ `-13 dB` was carried forward from
-the latest operator report, not freshly measured. The user later clarified
-that the MG52 was locked onto serving Cell 1 with no reported handoff. The
-earlier carried-forward Cell 2 entry is superseded, but the corrected selection
-is not verified by a timestamp-aligned MG52 export. The other three TCP runs
-in the side-by-side comparison were locked onto Cell 2.
+`-98 dBm`. The user also reported TDD `40/40/20`. RSRQ `-13 dB` was carried
+forward from the latest operator report, not freshly measured. The current
+operator correction confirms Cell 1 locked and not broadcasting, Cell 2
+serving, and no handoff across this run and the other TDD comparison blocks.
 
-The raw and repository-facing trees preserve this clarification in
-`serving_cell_selection_correction.json`. Acquisition-time condition manifests
-retain their original Cell 2 value as provenance; corrected operator context
-and derived analysis rows use Cell 1. No application RTT, sender/receiver row,
-payload, or telemetry sample changed.
+The raw and repository-facing trees preserve the earlier clarification in
+`serving_cell_selection_correction.json`. It is superseded by
+`results/real_5g/tdd_serving_cell_correction_20260824.json`. No application
+RTT, sender/receiver row, payload, or telemetry sample changed.
 
 Each condition used 1,000 sequential exact raw application objects and the
 same 200 ms post-completion interval. All 3,000 requests passed application-
@@ -615,10 +618,9 @@ memory remained stable, and neither interface recorded an error or drop delta.
 
 The run reused the earlier same-day 59.570-second stationary GPS evidence; no
 new bag was collected, and continuity with the application run was not
-independently reverified. The two quick runs differ in reported RSRP and Cell 1
-administrative state, and they used different serving cells. Neither has
+independently reverified. The two quick runs differ in reported RSRP and lack
 aligned ACP/MG52 or cell-load evidence. They therefore do not isolate the
-effect of RSRP, Cell 1 broadcasting, serving-cell selection, or TDD.
+source of the response-tail difference.
 
 All 21 fetched edge files matched their remote copies before access revocation.
 The independent analyzer, raw/public checksums, JSON/CSV parsing, retained-
@@ -650,12 +652,11 @@ broadcasting. Cell 2 was unlocked/broadcasting. RSRP `-98 dBm` and RSRQ
 | 10 KiB | 39.596 | 39.594 | -0.01% | 49.082 | 49.190 | +0.22% |
 | 100 KiB | 101.290 | 99.582 | -1.69% | 111.503 | 112.947 | +1.29% |
 
-Both runs used reported `70/20/10`, serving Cell 2/no handoff, RSRQ `-13 dB`,
-and stationary `location_1`. They are not configuration-matched: the August 15
-run recorded RSRP `-100 dBm` with both cells broadcasting, while the new run
-used carried-forward RSRP `-98 dBm` with Cell 1 not broadcasting. The close
-p50/p95 values are repeat observations, not evidence that Cell 1 state or RSRP
-has no effect. Timestamp-aligned ACP/MG52 and cell-load evidence is absent.
+Both runs used reported `70/20/10`, serving Cell 2/no handoff, Cell 1 locked,
+RSRQ `-13 dB`, and stationary `location_1`. They differ in reported RSRP:
+`-100 dBm` on August 15 and carried-forward `-98 dBm` on August 16. The close
+p50/p95 values are repeat observations; timestamp-aligned ACP/MG52 and
+cell-load evidence is absent.
 
 All 3,000 sender rows match 3,000 edge rows and pass exact length, CRC32,
 sequence, application-acknowledgment, radio/cell-context, and telemetry
@@ -670,12 +671,12 @@ The `40/40/20` allocation assigns 40 percent of the frame to fixed uplink use,
 whereas `70/20/10` assigns 20 percent. The larger fixed uplink share should
 increase uplink capacity when the radio, route, serving cell, application, and
 offered traffic are otherwise stable. The August 15--16 application RTT runs
-did not maintain those controls. The private-5G route required recovery, Cell 1
-changed administrative state, and the second August 16 `40/40/20` TCP run used
-Cell 1 rather than Cell 2. The `40/40/20` TCP p95 changes reached 169.05% across
-days and 189.83% between same-day runs. MQTT p95 changed by 9.22--163.86%
-across the two days. These data therefore cannot rank the profiles by
-application latency.
+did not maintain those controls. The private-5G route required recovery, and
+the `40/40/20` response tails varied substantially across repetitions despite
+the operator-confirmed Cell 2/no-handoff state. TCP p95 changes reached 169.05%
+across days and 189.83% between same-day runs. MQTT p95 changed by
+9.22--163.86% across the two days. These data therefore cannot rank the
+profiles by application latency.
 
 The capacity control follows the expected allocation direction. With a
 25-Mbit/s offered vehicle-to-edge TCP rate, `70/20/10` achieved 13.118 Mbit/s,
@@ -923,8 +924,9 @@ TDD `70/20/10` and stationary placement. The fresh 59.616-second GNSS bag contai
 16,101 messages and places the vehicle 2.98 m from the August 18 location-3
 reference. Credentialed modem history retained 285 unique ten-second 5G-SA
 samples: RSRP `-104` to `-95 dBm` (median `-99 dBm`), RSRQ `-10 dB`, and SINR
-`15` to `23 dB` (median `20 dB`). Serving-cell, cell-administrative, and
-handoff state remain null because they were not freshly reported.
+`15` to `23 dB` (median `20 dB`). The retained modem fields do not record cell
+state. The operator confirmed that Cell 1 was locked out, Cell 2 served the
+gateway throughout, and no handoff occurred in this block or E20.
 
 All 16 TCP/MQTT conditions completed exactly 500 accepted exchanges with zero
 failures. Direction is explicit: uplink means vehicle sends the declared
@@ -994,7 +996,16 @@ device. The fresh GNSS bag spans 59.628 seconds with 16,102 messages and places
 the median 1.85 m from E19. Two modem-logging segments, separated by an
 operator-requested pause, contain 382 unique 5G-SA samples over 3,810 seconds
 of active capture: RSRP `-102` to `-93 dBm` (median `-98 dBm`), RSRQ `-10 dB`,
-and SINR `16` to `24 dB` (median `20 dB`). Cell context remains unreported.
+and SINR `16` to `24 dB` (median `20 dB`). The operator confirmed the same
+radio state as E19: Cell 1 was locked out, Cell 2 served the gateway, and no
+handoff occurred.
+
+Run-order clarification recorded on August 26: the TDD campaign changed the
+profile in the sequence `70/20/10`, `40/40/20`, and `70/20/10`. The retained
+derived folders and comparison figures report selected profile blocks and do
+not encode the complete transition order. Earlier statements that characterized
+the campaign as a one-way, non-reversed sequence are superseded by this
+clarification.
 
 The first uplink TCP 10-KiB attempt was stopped after 142 accepted exchanges.
 It remains diagnostic-only and is not pooled. A clean 500-exchange replacement
@@ -1082,10 +1093,12 @@ The August 15--16 uplink-heavy application runs do not form a clean DU-backed
 TDD pair. The August 15 `70/20/10` run has complete DU coverage, but the
 referenced August 15 `40/40/20` raw run and its timestamps are absent. The
 August 16 `40/40/20` runs have DU coverage, but the August 16 `70/20/10` run
-begins at 15:55:49 EDT, after the retained DU data end at 15:15. Moreover, the
-DU data confirm that the two August 16 `40/40/20` TCP repetitions used
-different serving cells. These uplink-heavy RTT data remain operating-condition
-measurements rather than a TDD ranking.
+begins at 15:55:49 EDT, after the retained DU data end at 15:15. The DU export
+contains counters for both cells and cannot by itself establish the gateway's
+attachment. The operator confirmed that Cell 1 was locked, Cell 2 served every
+run, and no handoff occurred. These uplink-heavy RTT data remain
+operating-condition measurements rather than a TDD ranking because the route
+required recovery and the raw comparison windows are incomplete.
 
 The August 17 downlink-heavy experiment provides the clean matched DU window.
 Both TDD profiles used serving Cell 2 at stationary location 3 and reported
@@ -1211,8 +1224,8 @@ Primary folders:
 - `results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_155120/`
 - `results/mocar_v2x/20260704_exp_01_payload_sweep_0_2kb_164129/`
 
-Purpose: measure Mocar custom radio RTT for serialized `IPI_RTT1` performance
-frames configured from 256 to 2048 B under stationary LOS, NLOS, and
+Purpose: measure Mocar custom radio RTT for serialized IPI Cooperative Service
+request/response frames configured from 256 to 2048 B under stationary LOS, NLOS, and
 obstruction conditions. Every nonzero label is the complete frame length
 submitted to the vendor interface; a separate zero control sends the minimum
 valid 51--55-B IPI header.
@@ -1245,15 +1258,18 @@ Stationary radio-condition sweeps from July 4:
   successful analysis attempts, and the remaining frame sizes were treated as
   timeouts or skipped timeout conditions.
 
-The PC5 results show a joint limit from field condition and complete frame size.
-Across Points 2--4, the 2-KiB frame failure rate increased from 0.2% to 99.2%
-and then to 100%. The 1-KiB frame failure rate increased from 0% to 2.1% and
-82.9%, while 0.25- and 0.5-KiB frames remained available at more points. Point
-1 lost every 1- and 2-KiB response despite its shorter distance because a
-building obstructed the direct path. The installed devices did not export a
-usable PC5 received-power or quality measurement, so these records do not
-support a signal-strength attribution. They show that frame size, obstruction,
-and location jointly bound the measured direct path.
+Together, the stationary results define a joint complete-frame-size and
+coverage envelope for the measured PC5 path. At Point 2, every tested size
+received a response in at least 99.8% of attempts. Across Points 2--4, the
+2-KiB frame failure rate increased from 0.2% to 99.2% and then to 100%. The
+1-KiB frame failure rate increased from 0% to 2.1% and 82.9%, while 0.25- and
+0.5-KiB frames remained available at more points. At Point 5, no tested frame
+received a response, so reducing the frame size did not restore communication.
+Point 1 was closer than Points 2--4 but building-obstructed; neither its 1- nor
+2-KiB requests received a response. Thus, distance alone does not define the
+envelope. The installed devices did not export a usable PC5 received-power or
+quality measurement, so the records do not identify a specific radio-layer
+mechanism behind the field-point differences.
 
 ### M03. OBU Signal Probe
 
@@ -1518,8 +1534,8 @@ These are evidence summaries, not final paper claims:
   40-MHz n48 channel, and no ambient contention.
 - Every application campaign before the August 15--16 TDD diagnostic used
   `70/20/10`. The August 15--16 uplink-heavy RTT runs cannot rank the profiles
-  because the path, cell state, and serving cell changed and no clean matched
-  DU pair exists. The August 17 downlink-heavy blocks provide a matched
+  because the route and response tails did not remain stable and no clean
+  matched DU pair exists. The August 17 downlink-heavy blocks provide a matched
   same-cell comparison: `40/40/20` lowers small-response RTT, but its advantage
   disappears or reverses for the larger MQTT tails. The matched 50-MiB endpoint
   result is separate: `70/20/10` measures 12.000 versus 2.836 Mb/s upload and

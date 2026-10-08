@@ -11,6 +11,9 @@ namespace ipi {
 using SessionId = std::array<std::uint8_t, 16>;
 using ObjectId = std::array<std::uint8_t, 4>;
 
+/** Current self-identifying encoding revision for the Uu operation record. */
+inline constexpr std::uint8_t kIpiOperationEncodingVersion = 2;
+
 struct Position3D {
     double latitude{};   ///< Degrees
     double longitude{};  ///< Degrees
@@ -76,6 +79,8 @@ enum class GuidanceStatus : std::uint8_t {
 };
 
 struct CooperativeServiceMessage {
+    /** Fixed-width application-session identifier carried by the IPIO and PC5
+     * operation profiles. It is not a byte encoding of an outer IPIS sessionId. */
     SessionId sessionId{};
     std::vector<std::uint8_t> vehicleId{}; ///< Raw VehicleReferenceID bytes (4 or 8 bytes per J2735).
     ServiceClass serviceClass{ServiceClass::GuidedPlanning};
@@ -87,7 +92,7 @@ struct CooperativeServiceMessage {
     std::optional<std::vector<std::uint8_t>> offloadPayload{};
     std::optional<std::string> offloadTaskId{};
     std::optional<std::uint8_t> confidence{}; ///< 0..100 percent.
-    std::optional<std::uint32_t> expirationTimeDs{}; ///< Tenths of a second since epoch (J2735 DTime).
+    std::optional<std::uint32_t> expirationTimeDs{}; ///< Tenths of a second in a deployment-defined shared clock domain.
 
     void validate() const;
     void validate_freshness(std::uint32_t currentTimeDs) const;
@@ -95,16 +100,23 @@ struct CooperativeServiceMessage {
     /**
      * Serialises the cooperative message to a canonical byte encoding.
      * Format (big-endian multi-byte fields):
+     * [magic:"IPIO":4][version:1]
      * [sessionId:16][vehicleIdLen:1][vehicleId:N][serviceClass:1][status:1]
      * [flags:1][requestedHorizon?:2][confidence?:1][expirationTime?:4]
      * [planning?][perception?][control?]
      *
-     * Optional payload sections are prefixed with their own length (uint16).
+     * Optional content sections are prefixed with their own length (uint32).
+     * The 32-bit length keeps large Uu application objects in one operation
+     * record; a path binding may impose a smaller operational limit.
      */
     [[nodiscard]] std::vector<std::uint8_t> to_canonical_encoding() const;
 
     /**
-     * Deserialises a canonical buffer produced by to_canonical_encoding().
+     * Deserialises the current self-identifying record. For compatibility with
+     * retained experiment artifacts and pre-versioning deployments, the
+     * decoder also accepts complete unversioned records whose optional-section
+     * lengths use either uint16 or uint32. New encodings always use the current
+     * versioned uint32 form.
      */
     static CooperativeServiceMessage from_canonical_encoding(const std::vector<std::uint8_t>& buffer);
 

@@ -149,6 +149,21 @@ int main() {
                                encode_session_wire_message(responseWire))).data.resultId == "result-1",
                            "service response must round-trip");
 
+        auto fallbackResponse = response;
+        fallbackResponse.metadata.messageId = "fallback-1";
+        fallbackResponse.data.status = VehicleServiceStatus::FALLBACK_COMPLETED;
+        fallbackResponse.data.resultId = "fallback-result-1";
+        fallbackResponse.data.fallbackResult = FallbackResult::SUCCEEDED;
+        const auto fallbackWire = make_service_response_wire_message(
+            SessionTopic{SessionTopicKind::ServiceUpdate, "intersection-1",
+                         descriptor.sessionId, std::nullopt}.to_string(), fallbackResponse);
+        const auto decodedFallback = decode_service_response_payload(
+            decode_session_wire_message(encode_session_wire_message(fallbackWire)));
+        ipi::tests::expect(
+            decodedFallback.data.status == VehicleServiceStatus::FALLBACK_COMPLETED &&
+                decodedFallback.data.fallbackResult == FallbackResult::SUCCEEDED,
+            "terminal fallback result must round-trip in the service-response body");
+
         TelemetrySubmission telemetry{descriptor.sessionId, {VehicleTelemetryFrame{}, VehicleTelemetryFrame{}}};
         const auto telemetryWire = make_telemetry_wire_message(
             SessionTopic{SessionTopicKind::Telemetry, "intersection-1",

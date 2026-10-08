@@ -85,7 +85,9 @@ For paper or experiment-claim changes, validate against current artifacts in
   that structure instead of patching around it.
 - `Mocar` is the company/vendor name for devices or SDK components; do not use
   it as the system name, paper title, or contribution.
-- `Edge4AV` is the title of the paper, not the name of the system.
+- `Edge4AV` is a legacy draft label, not the name of the system. The current
+  paper title is `Can Today's Communication Technologies Support Tomorrow's
+  Connected and Automated Vehicles?`.
 - This paper is not about building a testbed. Avoid testbed-construction
   framing as the main contribution.
 - The target venue is MobiCom. Keep framing at a MobiCom networking/systems
@@ -105,12 +107,15 @@ For paper or experiment-claim changes, validate against current artifacts in
 - Do not compress multi-step reasoning into one sentence when the reader needs
   the steps spelled out. Avoid vague bridge phrases; make the logical link
   between application categories, experiment results, and paper claims explicit.
-- For the abstract specifically, keep the controlling structure as the user
-  stated it: the paper asks whether today's edge communication technologies are
-  ready for tomorrow's CAV applications; it divides the task into stateless
-  applications and stateful/complex collaborative applications; and the results
-  lead to the three user-defined insights about V2X, private 5G, and the need
-  for new networking or communication technology.
+- For the abstract specifically, first distinguish independent CV/ITS message
+  updates from correlated CAV operations and identify the missing cross-path
+  evidence. Close that opening paragraph with the question of whether today's
+  communication technologies support tomorrow's connected and automated
+  vehicles; do not ask the question before establishing the problem and gap.
+  Keep the comparison at one conceptual level: applications are CV/ITS or CAV
+  applications, while independent updates and correlated operations are their
+  communication patterns. End with the three user-defined insights about V2X,
+  private 5G, and future radio and network development.
 - Paper pass condition: the result must be a fully logical MobiCom research
   paper with precise research word choices, readable sentence structure, clear
   paragraph/section links, and claims that fully use the supported experimental
@@ -125,9 +130,10 @@ For paper or experiment-claim changes, validate against current artifacts in
   `5G networks` or `5G network paths`.
 - Treat V2X/Mocar claims as measured device-path results, with signal-strength
   and mobility caveats preserved.
-- The V2X claim is a joint signal-strength and packet-size limit. The moving
-  runs provide normalized signal strength; the separate stationary sweeps show
-  that larger packets fail first as signal weakens. Point 1 is building-
+- The V2X claim is a joint radio-condition and complete-frame-size limit. The
+  moving runs provide route and availability context; the separate stationary
+  sweeps show that larger serialized IPI frames fail first as the path weakens.
+  Point 1 is building-
   obstructed NLOS. These results lead to Insight 1: current direct V2X supports
   compact J2735 messages only within a limited payload and coverage envelope.
 - The private-5G detector replay supports a conservative application-content
@@ -140,12 +146,12 @@ For paper or experiment-claim changes, validate against current artifacts in
   campaigns are superseded; the application results remain valid under the
   corrected profile.
 - Use the August 15--16 runs only for the uplink-heavy TDD latency diagnostic.
-  The path did not remain stable across reconfiguration: route availability,
-  cell administrative state, and serving-cell selection changed, and the
-  `40/40/20` same-profile repeats developed large payload-dependent tail
-  differences. The DU Cell export confirms the serving-cell change but does
-  not provide a clean matched uplink pair. These application RTT data cannot
-  rank `40/40/20` and `70/20/10` or estimate a causal uplink-latency effect.
+  The path did not remain stable across reconfiguration: route availability
+  changed, and the `40/40/20` same-profile repeats developed large
+  payload-dependent tail differences. The latest operator correction holds
+  Cell 1 locked, Cell 2 serving, and handoff absent. The DU Cell export does not
+  provide a clean matched uplink pair. These application RTT data cannot rank
+  `40/40/20` and `70/20/10` or estimate a causal uplink-latency effect.
 - Use the August 17 location-3 runs for the matched downlink-heavy application
   comparison and the separate exact 50-MiB endpoint-goodput comparison. Keep
   uplink-heavy RTT, downlink-heavy RTT, exact upload, and exact download as four
@@ -156,6 +162,14 @@ For paper or experiment-claim changes, validate against current artifacts in
   application-direction result: uplink-heavy p50/p95 RTT is 61.5/41.0 times
   the corresponding downlink-heavy RTT. Do not pool that weak-signal result
   with the August 17 `-100 dBm` TDD comparison.
+- Use the August 19 GL-X3000 blocks for the same-device, near-identical-location
+  bidirectional TDD comparison. The operator confirmed that Cell 1 was locked
+  out, Cell 2 served the gateway throughout both profile blocks, and no handoff
+  occurred. Across runs with both cells enabled and runs with Cell 1 locked,
+  traffic remained on Cell 2; no measurable interference or performance change
+  was attributable to Cell 1's administrative state. The result compares
+  complete deployed configurations; it does not
+  isolate nominal slot allocation from the radio and software implementation.
 - The complete TDD and DU evidence decision is recorded in
   `paper/analysis/tdd_du_cell_comparison.md` and
   `results/real_5g/tdd_comparison_status.json`.
@@ -164,13 +178,19 @@ For paper or experiment-claim changes, validate against current artifacts in
   `70/20/10` achieved 13.118 Mbit/s and the coauthor-reported `40/40/20`
   control achieved 25.000 Mbit/s. The current repository has the raw
   `70/20/10` trace but not the raw `40/40/20` trace.
-- Preserve exactly three top-level insights: 1) the direct-V2X payload-and-
-  coverage envelope; 2) the severe CAV packet-size limit for deadline-compliant
-  5G uplink exchange; and 3) the need for 5G/6G radios to support event-triggered
-  CAV bursts in either direction, sustained directional streams, and concurrent
-  deadline-sensitive traffic. The third insight combines stable TDD operation
-  with scheduling that responds to each workload's direction, deadline, and
-  duration.
+- Preserve exactly three top-level insights: 1) the direct-V2X frame-size and
+  coverage envelope; 2) CAV developers must account for application object
+  size, transfer direction, radio conditions, and network load when designing
+  safety-critical applications because all affect deadline completion; and 3)
+  future radios and networks for CAVs must support bursts and streams in both
+  directions within application deadlines.
+  Resource isolation is a motivated future direction, not an experimentally
+  validated mechanism.
+- Standard SPaT/BSM callbacks validate one-way message interoperability but do
+  not provide synchronized one-way latency. PC5 field sweeps report the
+  fraction of issued requests receiving a valid response before timeout and the
+  RTT among received responses. Stateful request/returned-result operations use
+  RTT as their direct timing boundary.
 
 ## Agent Operating Boundaries
 

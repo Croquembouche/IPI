@@ -106,6 +106,33 @@ Each cooperative-service record carries a 16-byte session identifier, vehicle
 identifier, service class, and one of four lifecycle states: `request`,
 `update`, `complete`, or `reject`. Optional fields describe the requested
 horizon, confidence, expiration time, service payload, and offload content.
+This fixed-width identifier groups application operations in the `IPIO` and
+PC5 profiles. The optional textual `sessionId` in an outer `IPIS` envelope
+instead names the transport session and its lease. When both are present, the
+service invocation carries them together, but they remain separate namespaces
+and are not required to have equal byte representations.
+The current Uu operation record begins with the `IPIO` marker and an explicit
+encoding version. It prefixes each optional content section with a four-byte
+length and therefore carries the evaluated application objects through 2 MiB
+without application-level chunking. Its decoder also accepts both unversioned
+operation encodings retained in earlier field artifacts: the earlier format
+with two-byte section lengths and the later format with four-byte lengths. New
+records are always emitted in the self-identifying four-byte-length form.
+
+A terminal fallback outcome is not an `IPIO` operation-prefix field. It is an
+optional one-byte `fallbackResult` in the `service-response-v1` body carried by
+the `IPIS` envelope. The body stores its presence flag and value after the
+machine-readable failure code and before the detail string.
+
+The common IPI application model does not require every communication path to
+carry identical bytes or admit identical object sizes. The J2735 PC5 binding
+maps the same service, state, identity, and outcome fields into its regional
+UPER profile, whose offload field is bounded at 2,048 bytes. The installed
+vendor interface separately bounds a complete PC5 application packet at 4,080
+bytes. In contrast, the Uu binding uses the versioned operation record and a
+32-bit section-length field. The private-5G measurement receiver separately
+applies a 16-MiB packet safety limit; that implementation guard is not the
+operation record's wire-format limit.
 
 ## J2735 regional profile
 
@@ -137,7 +164,8 @@ sidelink interface.
 | Binding | Purpose | Current implementation |
 | --- | --- | --- |
 | In-memory | Protocol development and deterministic tests | Uses the complete session lifecycle without an external broker. |
-| MQTT session | Stateful CV and CAV operations over an IP path | Uses strict, versioned `IPIS` records and hierarchical IPI topics over MQTT 3.1.1. The bundled client currently uses Quality of Service (QoS) level 0 and plain TCP. |
+| MQTT session | Stateful CV and CAV operations over an IP path | Uses strict, versioned `IPIS` records and hierarchical IPI topics over MQTT 3.1.1. The bundled client currently uses Quality of Service (QoS) level 0 and plain TCP. Current CAV objects are carried as versioned `IPIO` operation records. |
+| Uu measurement | Directional IPI workload measurements over a 5G Uu path | Uses the `I5GP` measurement envelope; cooperative-service payloads contain the versioned `IPIO` operation record. The default receiver safety limit is 16 MiB. |
 | PC5 | Direct V2X request and response exchange | Uses a size-bounded `IP5X` envelope, protected by a cyclic redundancy check (CRC), that contains a complete J2735 IPI `MessageFrame`. |
 | Pre-encoded J2735 pass-through | Integration with generated or vendor J2735 stacks | Preserves complete externally encoded `MessageFrame` payloads through the IPI envelope. |
 
@@ -193,10 +221,15 @@ The public library is organized by responsibility:
 | `ipi::offload` | Deadline- and confidence-aware local or network execution decisions. |
 | `ipi::mesh` | Neighbor state and cooperative task lifecycle helpers. |
 
-The high-level `ipi::api::Edge4AvInterface` class exposes both typed V2X
-message operations and private-session operations. Applications can replace
-the in-memory sender, receiver, and session transport with deployment-specific
-adapters without changing the application data model.
+The preferred high-level `ipi::api::IpiInterface` source alias exposes both
+typed V2X message operations and private-session operations. The underlying
+`Edge4AvInterface` class name remains available for existing integrations. New
+large-object CAV flows use `submit_cooperative_service()` with the current
+versioned operation profile. The older `IpiServiceRequest` helper remains
+available as a compact compatibility adapter with its historical 65,535-byte
+limit. Applications can replace the in-memory sender, receiver, and session
+transport with deployment-specific adapters without changing the application
+data model.
 
 ## Build and test
 
@@ -277,8 +310,34 @@ Additional documentation:
 - [`experiment_summary.md`](experiment_summary.md) summarizes the collected
   evidence.
 - [`remaining_exp.md`](remaining_exp.md) records pending experiment procedures
-  and evidence boundaries.
+  and evidence boundaries, including the decision to close field-performance
+  collection for the current paper. Its historical procedures are retained as
+  a future runbook.
 - [`results/README.md`](results/README.md) describes the result archive.
+- [`current_task.md`](current_task.md) records task outcomes and validation.
+- [`agent_context.md`](agent_context.md) maps the implementation and evidence
+  sources and explains the repository's measurement conventions.
+
+## Experiment evidence and measurement conventions
+
+Start with [`experiment_summary.md`](experiment_summary.md), then follow its
+links to the retained artifacts under `results/`. The archive includes
+private-5G application RTT, directional workloads and endpoint goodput,
+background-load and concurrent-client experiments, failure/fallback behavior,
+and direct-V2X payload, radio-condition, and mobility measurements.
+
+Request/response timing is reported as RTT when endpoint clocks are
+unsynchronized. Preserve the workload direction and payload definition when
+using a result: an uplink-heavy vehicle request with a compact acknowledgement
+is a different experiment from a downlink-heavy returned object. Exact
+endpoint goodput is also a separate measurement from application RTT and
+cell-level counters.
+
+TDD comparisons describe the complete measured deployment configurations.
+Keep their location, radio conditions, serving-cell context, and available
+controls attached to the result; the profile labels alone do not establish a
+causal effect of slot allocation. Direct-V2X request/response results report
+the valid-response fraction and RTT among received responses.
 
 ## Scope and release status
 
@@ -293,9 +352,11 @@ The ROS 2 runtime publishes activation, policy, and offload decisions. It does
 not command vehicle motion or change an automated-driving mode. Local vehicle
 software retains safety authority and must reject stale or unsafe requests.
 
-The Edge4AV material in this repository is the associated research paper and
-experiment campaign. `Edge4AV` is not the protocol name; the protocol and
-reference implementation are IPI.
+The associated research paper is titled **Can Today's Communication
+Technologies Support Tomorrow's Connected and Automated Vehicles?**
+`Edge4AV` is a legacy label retained in some class names and artifacts; the
+protocol and reference implementation are IPI. Mocar identifies the device and
+SDK vendor.
 
 ## License
 

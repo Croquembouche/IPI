@@ -1,0 +1,19 @@
+{
+  "schema": "edge4av-airspan-tdd-serving-cell-correction-v1",
+  "correction_date": "2026-08-24",
+  "source": "user post-acquisition clarification",
+  "scope": "Airspan TDD comparison blocks used by the current manuscript",
+  "confirmed_radio_context": {
+    "cell_1_administrative_state": "locked",
+    "cell_1_broadcasting": false,
+    "serving_cell": 2,
+    "handoff_occurred": false
+  },
+  "supersedes": [
+    "earlier operator-context entries that described Cell 1 as broadcasting",
+    "the 2026-08-16 run-2 entry that selected Cell 1",
+    "derived statements that attributed TDD-run differences to serving-cell changes"
+  ],
+  "measurement_effect": "No application RTT, payload, sequence, response, goodput, GNSS, or modem-radio sample is changed.",
+  "administrative_state_effect": "Across runs with both cells enabled and runs with Cell 1 locked, traffic remained on Cell 2; no measurable interference or performance change was attributable to Cell 1's administrative state."
+}

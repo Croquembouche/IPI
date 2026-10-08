@@ -30,6 +30,20 @@ int main() {
         ipi::tests::expect(sent.size() == 1 && sent.front().sessionId == session,
                            "offload request must bind expected session");
 
+        ipi::mesh::OffloadTask largeTask;
+        largeTask.taskId = "large-task";
+        largeTask.serviceClass = ipi::ServiceClass::GuidedPerception;
+        largeTask.payload = std::vector<std::uint8_t>(128U * 1024U, 0x3cU);
+        largeTask.timeout = 5s;
+        offloader.request_offload(largeTask);
+        ipi::tests::expect(sent.back().offloadPayload == largeTask.payload,
+                           "TaskOffloader should accept operation objects above 65,535 bytes");
+
+        auto largeComplete = sent.back();
+        largeComplete.guidanceStatus = ipi::GuidanceStatus::Complete;
+        ipi::tests::expect(offloader.handle_cooperative_message(largeComplete).accepted,
+                           "large offload operation should complete normally");
+
         ipi::CooperativeServiceMessage update = sent.front();
         update.guidanceStatus = ipi::GuidanceStatus::Update;
         ipi::tests::expect(offloader.handle_cooperative_message(update).accepted,

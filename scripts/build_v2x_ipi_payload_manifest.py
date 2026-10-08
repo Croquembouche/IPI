@@ -15,7 +15,8 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DATA_ROOT = REPO_ROOT / "benchmarks" / "v2x" / "data"
 DEFAULT_OUTPUT = REPO_ROOT / "results" / "v2x_benchmarks" / "latest" / "v2x_ipi_payload_manifest.json"
-IPI_MAX_OFFLOAD_PAYLOAD_BYTES = 60_000
+DEFAULT_BENCHMARK_PAYLOAD_CAP_BYTES = 2 * 1024 * 1024
+DEFAULT_UU_RECEIVER_SAFETY_LIMIT_BYTES = 16 * 1024 * 1024
 
 POINT_CLOUD_EXTENSIONS = {".pcd", ".bin", ".npy", ".npz"}
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png"}
@@ -126,18 +127,18 @@ def detect_dataset_family(rel_path: Path) -> dict:
     }
 
 
-def representative_payloads(sizes: list[int]) -> list[int]:
+def representative_payloads(sizes: list[int], payload_cap_bytes: int) -> list[int]:
     if not sizes:
-        return [0, 256, 1024, 4096, 16_384, IPI_MAX_OFFLOAD_PAYLOAD_BYTES]
+        return [0, 256, 1024, 4096, 16_384, payload_cap_bytes]
     candidates = {
         0,
         256,
         1024,
         4096,
-        min(percentile(sizes, 0.50), IPI_MAX_OFFLOAD_PAYLOAD_BYTES),
-        min(percentile(sizes, 0.95), IPI_MAX_OFFLOAD_PAYLOAD_BYTES),
-        min(percentile(sizes, 0.99), IPI_MAX_OFFLOAD_PAYLOAD_BYTES),
-        min(max(sizes), IPI_MAX_OFFLOAD_PAYLOAD_BYTES),
+        min(percentile(sizes, 0.50), payload_cap_bytes),
+        min(percentile(sizes, 0.95), payload_cap_bytes),
+        min(percentile(sizes, 0.99), payload_cap_bytes),
+        min(max(sizes), payload_cap_bytes),
     }
     return sorted(int(value) for value in candidates if value >= 0)
 
@@ -147,8 +148,25 @@ def main() -> int:
     parser.add_argument("--data-root", type=Path, default=DEFAULT_DATA_ROOT)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--max-files", type=int, default=0, help="Optional scan cap for quick smoke tests.")
+    parser.add_argument(
+        "--benchmark-payload-cap-bytes",
+        type=int,
+        default=DEFAULT_BENCHMARK_PAYLOAD_CAP_BYTES,
+        help=(
+            "Largest object selected for one benchmark operation. This is a workload "
+            "selection cap, not the IPIO wire-format limit."
+        ),
+    )
     parser.add_argument("--allow-empty", action="store_true")
     args = parser.parse_args()
+
+    if args.benchmark_payload_cap_bytes <= 0:
+        raise SystemExit("--benchmark-payload-cap-bytes must be positive")
+    if args.benchmark_payload_cap_bytes >= DEFAULT_UU_RECEIVER_SAFETY_LIMIT_BYTES:
+        raise SystemExit(
+            "--benchmark-payload-cap-bytes must leave room below the 16-MiB "
+            "Uu probe packet safety limit"
+        )
 
     root = args.data_root.resolve()
     if not root.exists():
@@ -163,8 +181,8 @@ def main() -> int:
     )
     extensions: Counter[str] = Counter()
     for index, (path, category, size) in enumerate(iter_dataset_files(root), start=1):
-        chunk_count = max(1, math.ceil(size / IPI_MAX_OFFLOAD_PAYLOAD_BYTES))
-        ipi_payload_bytes = min(size, IPI_MAX_OFFLOAD_PAYLOAD_BYTES)
+        chunk_count = max(1, math.ceil(size / args.benchmark_payload_cap_bytes))
+        ipi_payload_bytes = min(size, args.benchmark_payload_cap_bytes)
         rel_path = path.relative_to(root)
         family = detect_dataset_family(rel_path)
         benchmark = family["benchmark"]
@@ -180,7 +198,7 @@ def main() -> int:
                 "ipi_payload_bytes_per_message": ipi_payload_bytes,
                 "ipi_chunk_count": chunk_count,
                 "ipi_transfer_payload_bytes": chunk_count * ipi_payload_bytes
-                if size >= IPI_MAX_OFFLOAD_PAYLOAD_BYTES
+                if size >= args.benchmark_payload_cap_bytes
                 else size,
             }
         )
@@ -212,13 +230,17 @@ def main() -> int:
                 "file_count": len(sizes),
                 "size_summary": summarize_sizes(sizes),
                 "category_size_summary": category_summary,
-                "representative_ipi_payload_bytes": representative_payloads(sizes),
+                "representative_ipi_payload_bytes": representative_payloads(
+                    sizes, args.benchmark_payload_cap_bytes
+                ),
             }
         )
     manifest = {
         "generated_unix_s": int(time.time()),
         "data_root": str(root),
-        "ipi_max_offload_payload_bytes": IPI_MAX_OFFLOAD_PAYLOAD_BYTES,
+        "ipi_operation_encoding": "IPIO-v2-section32",
+        "ipi_benchmark_payload_cap_bytes": args.benchmark_payload_cap_bytes,
+        "ipi_uu_receiver_safety_limit_bytes": DEFAULT_UU_RECEIVER_SAFETY_LIMIT_BYTES,
         "file_count": len(records),
         "extension_counts": dict(sorted(extensions.items())),
         "overall_size_summary": summarize_sizes(all_sizes),
@@ -229,12 +251,15 @@ def main() -> int:
         "category_size_summary": {
             category: summarize_sizes(sizes) for category, sizes in sorted(by_category.items())
         },
-        "representative_ipi_payload_bytes": representative_payloads(all_sizes),
+        "representative_ipi_payload_bytes": representative_payloads(
+            all_sizes, args.benchmark_payload_cap_bytes
+        ),
         "records": records,
         "notes": [
-            "IPI offload payloads above the per-message limit must be segmented.",
+            "The benchmark cap selects objects through the evaluated 2-MiB Uu envelope by default; it is not the uint32 IPIO wire limit.",
+            "The Uu probe receiver separately enforces a 16-MiB packet safety limit.",
             "ipi_payload_bytes_per_message is suitable for the current IPI loopback sender.",
-            "ipi_chunk_count estimates how many IPI messages a raw artifact would require.",
+            "ipi_chunk_count estimates how many benchmark operations a larger raw artifact would require at the selected cap.",
         ],
     }
 

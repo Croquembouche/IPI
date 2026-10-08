@@ -250,7 +250,7 @@ std::string inspect_private_5g_probe_frame(const MessageFrame& frame, const v2x:
         case MessageType::SSM:
             return codec.decode_ssm(frame.payload).to_string();
         case MessageType::IpiCooperativeService: {
-            auto message = codec.decode_ipi_cooperative_service(frame.payload);
+            auto message = CooperativeServiceMessage::from_canonical_encoding(frame.payload);
             return message.to_string();
         }
         case MessageType::TIM:

@@ -3,10 +3,15 @@
 #include <algorithm>
 #include <cstring>
 #include <iomanip>
+#include <limits>
 #include <sstream>
 #include <stdexcept>
 
 namespace {
+
+constexpr std::size_t kMaximumSectionSize =
+    static_cast<std::size_t>(std::numeric_limits<std::uint32_t>::max());
+constexpr std::array<std::uint8_t, 4> kOperationMagic{{'I', 'P', 'I', 'O'}};
 
 void write_uint16(std::vector<std::uint8_t>& buffer, std::uint16_t value) {
     buffer.push_back(static_cast<std::uint8_t>((value >> 8) & 0xFF));
@@ -84,11 +89,11 @@ void CooperativeServiceMessage::validate() const {
     if (confidence && *confidence > 100) {
         throw std::invalid_argument("confidence must be between 0 and 100");
     }
-    if (offloadTaskId && offloadTaskId->size() > 65535) {
-        throw std::invalid_argument("offloadTaskId exceeds 65535 bytes");
+    if (offloadTaskId && offloadTaskId->size() > kMaximumSectionSize) {
+        throw std::invalid_argument("offloadTaskId exceeds the uint32 length field");
     }
-    if (offloadPayload && offloadPayload->size() > 65535) {
-        throw std::invalid_argument("offloadPayload exceeds 65535 bytes");
+    if (offloadPayload && offloadPayload->size() > kMaximumSectionSize) {
+        throw std::invalid_argument("offloadPayload exceeds the uint32 length field");
     }
 
     if ((serviceClass != ServiceClass::GuidedPlanning && planning) ||
@@ -150,6 +155,8 @@ std::vector<std::uint8_t> CooperativeServiceMessage::to_canonical_encoding() con
 
     std::vector<std::uint8_t> buffer;
     buffer.reserve(64);
+    buffer.insert(buffer.end(), kOperationMagic.begin(), kOperationMagic.end());
+    buffer.push_back(kIpiOperationEncodingVersion);
     buffer.insert(buffer.end(), sessionId.begin(), sessionId.end());
 
     if (vehicleId.size() > 255) {
@@ -183,10 +190,10 @@ std::vector<std::uint8_t> CooperativeServiceMessage::to_canonical_encoding() con
     }
 
     auto write_section = [&](const std::vector<std::uint8_t>& data) {
-        if (data.size() > 65535) {
-            throw std::invalid_argument("Section size exceeds 65535 bytes");
+        if (data.size() > kMaximumSectionSize) {
+            throw std::invalid_argument("Section size exceeds the uint32 length field");
         }
-        write_uint16(buffer, static_cast<std::uint16_t>(data.size()));
+        write_uint32(buffer, static_cast<std::uint32_t>(data.size()));
         buffer.insert(buffer.end(), data.begin(), data.end());
     };
 
@@ -263,14 +270,17 @@ std::vector<std::uint8_t> CooperativeServiceMessage::to_canonical_encoding() con
     return buffer;
 }
 
-CooperativeServiceMessage CooperativeServiceMessage::from_canonical_encoding(const std::vector<std::uint8_t>& buffer) {
-    if (buffer.size() < SessionId{}.size() + 4) {
+static CooperativeServiceMessage decode_operation_record(
+    const std::vector<std::uint8_t>& buffer,
+    std::size_t offset,
+    bool usesFourByteSectionLengths) {
+    if (buffer.size() - offset < SessionId{}.size() + 4) {
         throw std::runtime_error("Buffer too small for CooperativeServiceMessage");
     }
 
     CooperativeServiceMessage msg;
-    std::size_t offset = 0;
-    std::copy_n(buffer.begin(), msg.sessionId.size(), msg.sessionId.begin());
+    std::copy_n(buffer.begin() + static_cast<std::ptrdiff_t>(offset),
+                msg.sessionId.size(), msg.sessionId.begin());
     offset += msg.sessionId.size();
 
     if (offset >= buffer.size()) {
@@ -315,11 +325,10 @@ CooperativeServiceMessage CooperativeServiceMessage::from_canonical_encoding(con
     }
 
     auto read_section = [&](std::vector<std::uint8_t>& out) {
-        if (offset + 2 > buffer.size()) {
-            throw std::runtime_error("Buffer underrun while reading section length");
-        }
-        auto len = read_uint16(buffer, offset);
-        if (offset + len > buffer.size()) {
+        const auto len = usesFourByteSectionLengths
+            ? static_cast<std::size_t>(read_uint32(buffer, offset))
+            : static_cast<std::size_t>(read_uint16(buffer, offset));
+        if (len > buffer.size() - offset) {
             throw std::runtime_error("Section length exceeds buffer");
         }
         out.assign(buffer.begin() + static_cast<std::ptrdiff_t>(offset),
@@ -472,6 +481,31 @@ CooperativeServiceMessage CooperativeServiceMessage::from_canonical_encoding(con
 
     msg.validate();
     return msg;
+}
+
+CooperativeServiceMessage CooperativeServiceMessage::from_canonical_encoding(
+    const std::vector<std::uint8_t>& buffer) {
+    if (buffer.size() >= kOperationMagic.size() &&
+        std::equal(kOperationMagic.begin(), kOperationMagic.end(), buffer.begin())) {
+        if (buffer.size() < kOperationMagic.size() + 1U) {
+            throw std::runtime_error("Versioned CooperativeServiceMessage header is truncated");
+        }
+        const auto version = buffer[kOperationMagic.size()];
+        if (version != kIpiOperationEncodingVersion) {
+            throw std::runtime_error("Unsupported CooperativeServiceMessage encoding version");
+        }
+        return decode_operation_record(
+            buffer, kOperationMagic.size() + 1U, true);
+    }
+
+    // Before the operation record acquired an explicit header, deployments
+    // used both four-byte and two-byte optional-section lengths. Full-record
+    // validation and the no-trailing-bytes rule disambiguate those artifacts.
+    try {
+        return decode_operation_record(buffer, 0, true);
+    } catch (const std::exception&) {
+        return decode_operation_record(buffer, 0, false);
+    }
 }
 
 std::string CooperativeServiceMessage::to_string() const {

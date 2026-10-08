@@ -1,6 +1,1872 @@
 # Current Task
 
-Last updated: 2026-08-24
+Last updated: 2026-10-08
+
+## 2026-10-08 Repository publication and README refresh
+
+The user requested a commit and push of the current changes with a README
+update, then explicitly excluded `paper/` and `proposals/` from publication.
+The publication scope therefore includes the C++ implementation and tests,
+experiment records, manifest script, and repository documentation outside
+those two directories. Their modified and untracked files remain local.
+Temporary render and QA artifacts under `.codex_tmp/` are preserved locally
+and the directory is now ignored by Git.
+
+The README documents the current `IpiInterface` API, versioned `IPIO`
+operation encoding and compatibility behavior, result navigation, measurement
+conventions, and current paper title. It also links the task and context
+records and identifies the closed field-collection scope.
+
+Validation: CMake configuration and the C++ build succeeded; all 18 CTest
+tests passed. The changed payload-manifest Python script parses, both TDD JSON
+records parse, all 24 README local links resolve, and the publication diff
+passes whitespace checks. No physical experiment was rerun. The remote experiment-collection closure commit is preserved, including
+its historical task entry and the updated `remaining_exp.md`. Publication
+target: `origin/main`.
+
+## 2026-09-30 Ausomo Tier IV report PDF conversion
+
+Complete. Converted
+`proposals/Project_Implementation_Report_Ausomo_TIER_IV-UD-IPI_Year2_15_Page.docx`
+to the same-named `.pdf` alongside the source using LibreOffice 7.3.7.2.
+The original DOCX was preserved; its SHA-256 matches the pre-conversion value.
+Validation: PDF metadata reports 15 US-letter pages. All 15 rendered pages
+were visually checked for clipping, overlap, missing figures, table splits,
+and blank pages; no conversion defects were observed. No prose was edited.
+Software tests and physical experiments are not applicable.
+
+
+## 2026-09-30 Tier IV 15-page report rewording
+
+Reworded the prose, figure captions, and descriptive table cells of
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2_15_Page.docx`
+into a new file,
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2_15_Page_reworded.docx`,
+without changing meaning. The original is untouched. Headings, the title block,
+numeric table cells, figures, and styles were kept. The three insights keep
+their claims.
+Validation: every numeric token and key technical term (RTT, p95, TDD, PC5,
+transports, states) matches the original's counts; the LibreOffice render is
+15 pages, with each page ending on the same section as the original.
+Software tests and experiments are not applicable and were not run.
+Follow-up: the reworded report now names CAR Lab instead of the University of
+Delaware. Removed the first-page logo (and its embedded image) and the running
+"UNIVERSITY OF DELAWARE | IPI YEAR 2 / EXPERIMENTAL REPORT" header. Changed the
+footer to "TIER IV–CAR Lab IPI study", "Prepared by" to "CAR Lab", and the
+document author metadata to CAR Lab. No Delaware text remains in the document
+XML or the rendered PDF, which is still 15 pages. The filename still contains
+"UD", and the Figure 2(c) map image still includes a small "STAR Campus Water
+Tower" label.
+Second follow-up: set the report date to "September 2026" and the footer to
+"TIER IV–CAR Lab IPI study | September 2026". The project period is unchanged.
+Downloaded the CAR Lab logo from the thecarlab.org site header (1024x1024
+PNG), cropped it to its circle with a transparent background, and placed it in
+the first-page header, left-aligned, 0.85 in tall. The LibreOffice render is
+still 15 pages with the same page endings.
+Third follow-up (review): the file had been re-saved in LibreOffice at 09:39
+with the project period changed to "September 1, 2025-September 30, 2026"; that
+edit was kept. Fixed wording slips from the rewrite: "its" in the executive
+summary, the policy-rule sentence, "in response to" for downlink, uplink p95
+RTT in Section 8, "farther right", Insight 1 word order, and the P1/P5 table
+cell. Replaced the duplicated text in the unused even-page footer. Numbers still
+match the original; the render is 15 pages. UD in the filename and the STAR
+Campus map label stay, by the user's choice.
+Fourth follow-up: replaced CAR Lab with Ausomo Robotics in "Prepared by", the
+footers ("TIER IV–Ausomo Robotics IPI study"), the author metadata, and the
+logo alt text. Swapped the first-page logo for the AUSOMO horizontal wordmark
+from the ausomo.com site header (`wp-content/uploads/2023/08/Horz-scaled.png`,
+transparent PNG), cropped to its content and set 2.4 in wide. The CAR Lab image
+was removed from the package. The render is still 15 pages with the same page
+endings, and no CAR Lab text remains.
+
+## 2026-09-19 Repository instruction refresh
+
+Rewrote `AGENTS.md` for concise, task-specific routing following the GPT-6
+Astra guidance. Preserved the current manuscript identity, section authority,
+evidence boundaries, raw-result protection, and task handoff convention.
+Detailed measurement and abstract conventions remain in `agent_context.md`.
+Validation: checked instruction paths and retained constraints against current
+repository files. No manuscript, software, or experiment changes were made;
+software tests and physical experiments are not applicable to this edit.
+
+## 2026-09-09 Public-facing observation and insight drafts
+
+Completed local drafts in `paper/outreach/linkedin_draft.md` and
+`paper/outreach/blog_draft.md`, grounded in the current manuscript's three
+insights and current experiment summaries. Private source and publication
+notes are in `paper/outreach/editorial_notes.md`. Checked the MobiCom 2027
+double-blind policy live; the year is inferred from submission timing and
+must be confirmed if another cycle applies. The drafts use general design
+reasoning without identifying names, paper/submission references, measured
+numbers, figures, or deployment details. This reduces attribution cues but
+does not establish policy clearance. Recommend holding paper-derived public
+posting until the applicable anonymity period ends or seeking chair guidance
+on the exact text. Nothing was published or sent externally.
+
+Validation: reviewed prose against current evidence and checked publication
+cues. Software tests and experiments are not applicable and were not run.
+Manuscript and unrelated pre-existing changes were preserved.
+
+## 2026-09-04 Tier IV Report Editorial Review
+
+Complete. Revised the current report in place at
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2_15_Page.docx`.
+The editorial pass improves professional tone, sentence flow, transitions,
+measurement definitions, interpretation, and the concluding implementation
+status. It removes repetitive conclusion labels and clarifies the distinction
+between recorded component tests and the remaining end-to-end execution loop.
+Current ROS source confirms that the offload node publishes decisions without
+consuming policy decisions or dispatching tasks; published rate limits remain
+unenforced. The application-comparison paragraph no longer contradicts the
+completion-rate markers in Figure 11. PCA and matched-comparison interpretations
+remain scoped to the tested conditions.
+
+Validation: the final DOCX renders to exactly 15 nonempty US-letter pages.
+All pages were visually inspected; final changes on pages 3 and 13 were
+re-rendered and inspected, and the other 13 pages were pixel-identical to the
+preceding inspected render. ZIP/Open XML validation passed. All embedded media
+remain byte-identical to the source document, with 13 body figures and 16 tables.
+All numerical tokens in the experimental tables are unchanged. The
+accessibility audit reports zero high-, medium-, or low-severity findings.
+Standalone break paragraphs were replaced with heading page breaks to prevent
+blank pages after text reflow. Fonts, margins, and figure sizes were preserved.
+No software tests or wireless experiments were rerun for this editorial task;
+test results in the report are explicitly presented as recorded validation.
+Final SHA-256: `f2d9c9a1b6943fdf552295aab6ea87bcfbe8df67f054e5338c7d63fed845086a`.
+No commit or push was performed.
+
+## 2026-09-03 CAV Communication Measurement Story Slide Deck
+
+Complete. Created the 10-slide PowerPoint deck
+`paper/presentations/cav_communication_measurement_story_10_slides.pptx`.
+The deck follows the current paper logic from the application-readiness problem
+through the measurement paths, metrics and their rationale, collected data,
+controlled data pairs, PC5 and private-5G results, and the three final insights.
+It uses the current paper title and treats `Edge4AV` only as legacy/user
+shorthand rather than the system name. The visible claims and embedded figures
+come from the current manuscript and the verified PC5/private-5G experiment
+summaries. Every slide contains a `[Sources]` block in its speaker notes.
+
+Validation: the final PPTX contains exactly 10 slides and 10 notes slides;
+all 10 notes slides contain a `[Sources]` block. The artifact-tool overflow test
+passes with no detected overflow. The final PPTX was rendered through
+LibreOffice, and all 10 rendered slides plus the deck montage were visually
+inspected for clipping, wrapping, figure legibility, and narrative consistency.
+The PPTX ZIP structure passes `unzip -t`. Its SHA-256 is
+`230e15ab0655a0d5f4f851c158fffcaed2b83fef42f61564640223b7d5af6ccd`.
+No commit or push was performed.
+
+### TEDx-style revision
+
+Complete. In response to the request for a much less detailed, TEDx-style
+presentation, created a separate revised deck at
+`paper/presentations/cav_communication_measurement_story_tedx_10_slides.pptx`.
+The original detailed deck remains unchanged. The TEDx cut uses one spoken idea
+per slide, larger auditorium-readable type, a problem-first narrative, only the
+few numerical results needed to make the argument memorable, and no visible
+methodology tables. Definitions, measurement boundaries, controlled-pair
+details, caveats, and provenance remain in speaker notes with a `[Sources]`
+block on every slide.
+
+Validation: the revised PPTX contains exactly 10 slides and 10 notes slides;
+all 10 notes slides contain a `[Sources]` block. The artifact-tool overflow test
+passes with no detected overflow, and the template-fidelity checker passes with
+zero issues. All 10 slides were rendered and inspected individually, followed
+by a final montage review. The PPTX ZIP structure passes `unzip -t`. Its
+SHA-256 is
+`d02bc4837045d35737d52a6863cc3fb264b20eb8f7b61547ee03714bb46b82d8`.
+No commit or push was performed.
+
+### 15-slide visual-talk revision
+
+Complete. Expanded the TEDx-style narrative into a separate 15-slide visual
+deck at
+`paper/presentations/cav_communication_measurement_story_visual_talk_15_slides.pptx`.
+The revision adds a three-slide problem opening about line of sight, shared
+awareness, and expiring information; preserves the concise paths, metrics,
+metric rationale, data-scale, paired-comparison, and result sequence; and ends
+with a synthesis plus the design rule to optimize for completion of the driving
+task. Five original AI-generated conceptual illustrations fill the visual story
+slides. Their speaker-note citations explicitly label them as conceptual and
+not experimental evidence. The PC5 result slide uses the measured result chart,
+not generated imagery. The original detailed and 10-slide TEDx decks remain
+unchanged.
+
+Validation: the final PPTX contains exactly 15 slides, and all 15 speaker-note
+pages contain complete `[Sources]` blocks. All 15 slides were rendered and
+inspected individually at full size, followed by a final montage review. The
+artifact-tool overflow test passes with no detected overflow, and the
+template-fidelity checker passes with zero issues. The final image identities,
+crops, source notes, page markers, and chart legibility were checked after the
+last export. Its SHA-256 is
+`1436278dddee7ca3ab87bf8d99e6e91ee457839ae84b2f0761421e82d4984905`.
+No commit or push was performed.
+
+#### Natural-language copy revision
+
+Complete. In response to the feedback that the visible slide copy read as
+choppy fragments, the 15-slide visual-talk deck was revised in place. The
+titles, comparisons, metric explanations, result callouts, and closing design
+rules now use complete, spoken sentences. Redundant micro-labels were removed
+where they interrupted the narrative. The slide count, visual sequence,
+measured values, conceptual images, result chart, and evidence-bearing speaker
+notes were preserved.
+
+Validation: all 15 slides were rendered again and reviewed individually and as
+a montage after the final wording change. The artifact-tool overflow test
+passes with no detected overflow, the template-fidelity checker passes with
+zero issues, and every notes page retains a complete `[Sources]` block. The
+PPTX ZIP structure passes `unzip -t`. Its revised SHA-256 is
+`1a1b29fddf258989e52fab40f8b13105ddc7510919d9e4491e5567b5b1c50d85`.
+No commit or push was performed.
+
+#### Paper-figure and table revision
+
+Complete. In response to the request for substantially more figures, tables,
+and graphs from the paper, created a separate 19-slide evidence-first visual
+talk at
+`paper/presentations/cav_communication_measurement_story_paper_figures_19_slides.pptx`.
+The preceding 15-slide deck remains unchanged.
+
+The new deck keeps the problem-first spoken narrative while using the current
+manuscript's Related Work landscape, IPI architecture, physical deployment,
+measurement paths, n48 signal survey, PC5 payload/coverage result, 5G deadline
+envelope, adapter comparison, signal-effects result, directional workload
+comparison, matched TDD result, continuing-load result, concurrency and
+interruption result, and application-deadline comparison. Slides 6, 8, and 9
+contain editable native tables for the metrics, application requirements, and
+paired experimental comparisons. Only the cover retains a conceptual image.
+Every other visual-data slide uses a current paper figure or graph.
+
+Validation: the presentation finalizer reports 19 slides, three native tables,
+the expected 16:9 dimensions, Arial typography matching the prior deck, zero
+package-integrity findings, and zero layout findings. All 19 slides were
+rendered and inspected individually and as a montage. The changed signal and
+direction slides were rendered and inspected again after the final wording
+revision. The overflow test passes, and all 19 speaker-note pages retain
+complete `[Sources]` blocks. The final SHA-256 is
+`4a7e34bbde897453abf048258d045630957ce28dbf911531ad09edc99aa181a8`.
+No commit or push was performed.
+
+#### User-directed narrative-order revision
+
+Complete. Created a separate 20-slide deck at
+`paper/presentations/cav_communication_measurement_story_ordered_20_slides_v2.pptx`
+in the exact requested sequence. Slides 2--5 establish why connected and
+automated vehicles need communication and separately introduce direct PC5 and
+private 5G. Slide 6 presents the experiment deployment, slide 7 defines the
+two measured request/response paths, slides 8--12 explain the collected data,
+the all-attempt denominator, metrics, application requirements, and controlled
+pairs, slides 13--17 present the experimental results, slides 18--19 state the
+observations, and slide 20 closes with the paper's three insights.
+
+The revision uses complete spoken sentences, four editable native tables, the
+current paper's deployment and measurement diagrams, and seven distinct result
+figures. The direct-PC5 and private-5G motivation slides use purpose-made crops
+of the current measurement-path figure so each communication path is visually
+isolated before the complete figure appears in the setup section. Every slide
+retains a `[Sources]` block in its speaker notes.
+
+Validation: the presentation finalizer reports exactly 20 slides, four native
+tables on slides 9--12, the expected 16:9 dimensions, Arial typography matching
+the preceding deck, zero package-integrity findings, and zero layout findings.
+All 20 slides were rendered and inspected at full size and as montages after
+the final crop revision. The PPTX contains 20 notes slides and 20 `[Sources]`
+blocks, and `unzip -t` reports no compressed-data errors. The final SHA-256 is
+`e2bb42466ff7a6c53d068ff442da59ae5fee988dbd53d9ccb8a0775305d2d911`.
+No commit or push was performed.
+
+#### Paper-data-figure correction
+
+Complete. Created the corrected 20-slide deck at
+`paper/presentations/cav_communication_measurement_story_paper_data_figures_20_slides.pptx`.
+The user's clarified rule is now enforced: generated conceptual imagery may
+support the motivation, while every visual that presents experimental data must
+be a figure that appears in the submitted manuscript.
+
+The generated cover illustration remains and is identified as conceptual in
+its speaker notes. All data-bearing figures were rasterized directly from the
+files referenced by the current submission source: the signal survey, PC5
+frame-size/coverage matrix, 5G deadline matrix, adapter-completion matrix,
+signal-effects plot, matched TDD plot, continuing-load plot, and
+cross-application deadline comparison. The earlier expanded `_full` result
+variants are absent. The direct-PC5 and private-5G explanatory crops come
+directly from the submitted `figure04_measurement_paths_flat.png` figure.
+
+Validation: the finalizer reports 20 slides, four native tables, zero package
+findings, and zero layout findings. All 20 rendered slides and the revised data
+slides were visually inspected. The PPTX contains 20 notes slides and 20
+`[Sources]` blocks, and `unzip -t` reports no compressed-data errors. The final
+SHA-256 is
+`9b184eb2b2b773808eeca2fa23f7efe805229fff83bee0045ea3a470c3aa56e1`.
+No commit or push was performed.
+
+#### Cross-viewer overlap correction
+
+Complete. Created the corrected deck at
+`paper/presentations/Edge4AV.pptx`.
+Several long title boxes had bounding areas that extended into the following
+content region even though one renderer displayed the text without a visible
+collision. The shared title box is now shorter by default, and every title that
+can wrap has an explicit larger box with additional vertical clearance. The
+data, application-requirement, paired-comparison, application-deadline, and
+continuing-load slides also use larger gaps between titles and their figures or
+tables.
+
+Validation: the finalizer reports 20 slides, four native tables, zero package
+findings, and zero layout findings. All 20 slides were rendered and inspected
+through both Artifact Tool and LibreOffice after the spacing revision. Neither
+render shows content collisions or clipping. The PPTX contains 20 notes slides
+and 20 `[Sources]` blocks, and `unzip -t` reports no compressed-data errors.
+The final SHA-256 is
+`c75dbd0fc756decdf20dd6a5bdd47e83ef465f0d8202e57c786e4e392d218787`.
+No commit or push was performed.
+
+#### Presentation-version cleanup
+
+Complete. The `paper/presentations/` folder now contains only
+`Edge4AV.pptx`. The retained layout-corrected deck was renamed at the user's
+request. The nine
+earlier PPTX and inspection-file variants were moved to the system Trash and
+remain recoverable. The retained deck's SHA-256 remains
+`c75dbd0fc756decdf20dd6a5bdd47e83ef465f0d8202e57c786e4e392d218787`.
+
+## 2026-08-31 Paper Title Revision
+
+Complete. The current paper title is now `Can Today's Communication
+Technologies Support Tomorrow's Connected and Automated Vehicles?`. The main
+manuscript, standalone appendix, unified submission, abstract question,
+Introduction question, paper outline, and repository paper-writing guidance use
+the same wording. Historical task entries remain unchanged as records of the
+titles used at those times.
+
+The longer title wraps across two centered lines in the main manuscript. In the
+standalone appendix, `\raggedbottom` now takes effect after `\maketitle`; this
+keeps the complete title and the `Appendix` label visible instead of clipping
+the first title line.
+
+Validation: `make` rebuilt `main.pdf`, `appendix.pdf`, and `submission.pdf`, and
+`make -q` reports that they are current. The PDFs contain 14, four, and 18
+US-letter pages. The main and appendix title pages were rendered and inspected.
+The Conclusion remains on page 12, and References begins at the top of page 13.
+All fonts are embedded. The PDFs contain no annotations, links, forms,
+JavaScript, embedded files, or author metadata. The first 14 rendered pages of
+the unified PDF are pixel-identical to `main.pdf`. The build logs contain no
+overfull boxes, undefined references or citations, multiply defined labels, or
+LaTeX errors. `git diff --check` passes. The SHA-256 values are
+`4ae88770318a836fd62931104742f47177692723af0c560230d0465ab9ecd692`
+for `main.pdf`,
+`2abed9030312dd5398f0294e2baa4a59a60ac963e585befd4fa0aa692eb87240`
+for `appendix.pdf`, and
+`5e470e757e698cf77393da3262e33b2238b7f9bce3c47026367203106b6bae85`
+for `submission.pdf`. No commit or push was performed.
+
+## 2026-08-28 Future Research Directions Expansion
+
+Complete. Section 6 now uses the remaining manuscript space for a concise
+research agenda rather than artificial filler. It identifies three linked
+needs: 1) applications expose object size, direction, deadline, freshness,
+traffic pattern, and completion requirements while networks report admission
+and sustainability; 2) those contracts guide deadline-aware admission and
+directional scheduling for compact messages, bursts, and streams; and 3)
+communication systems preserve operation state or terminate a service in time
+for local fallback, with benchmarks that retain timeouts and measure deadline
+completion, directional goodput, fairness, and recovery. The agenda remains a
+field-level research direction rather than proposed future work for this paper.
+
+The first expansion was intentionally reduced after visual inspection showed
+that it moved the Conclusion onto page 13. The final version fills the available
+page-12 text area without changing font size, figure size, margins, or vertical
+spacing. The Conclusion remains on page 12, and References begins at the top of
+page 13.
+
+Validation: `make` rebuilt `main.pdf`, `appendix.pdf`, and `submission.pdf`, and
+`make -q` reports that they are current. The PDFs contain 14, four, and 18
+US-letter pages. Page 12 and the first reference page were rendered and
+inspected. All fonts are embedded. The PDFs contain no annotations, links,
+forms, JavaScript, embedded files, or author metadata. The first 14 rendered
+pages of the unified PDF are pixel-identical to `main.pdf`. The build logs
+contain no overfull boxes, undefined references or citations, multiply defined
+labels, or LaTeX errors. Scoped `git diff --check` passes. The SHA-256 values
+are `7de3c1397bb24252e57d853276ffd4c23ebd582c70239ab5ac10bce3dbe9a69b`
+for `main.pdf`,
+`05c99f925a3bee399767d5076ba40601bf42a6491c12ea6d0092a94b17c922e4`
+for `appendix.pdf`, and
+`a4004ad5ba7b8c3b0035170dd52586bb142c5921f49980482c2eabbd73097612`
+for `submission.pdf`. No commit or push was performed.
+
+## 2026-08-28 Submission Annotation Revision
+
+Complete. The 19 new highlight comments in
+`paper/current_manscript/submission.pdf` were mapped to their marked text and
+reviewed for technical correctness before editing. The annotated input is
+preserved as
+`paper/current_manscript/tmp/pdfs/submission_with_comments_20260828.pdf`.
+
+The manuscript now italicizes the central research question, attributes the
+three insights to the measurement study and their intended research
+communities, and replaces ambiguous references to radio attachment with the
+physical UE and its communication resources or network connection. Insight 2
+now states what CAV developers must account for and separately states the
+consequence for deadline completion. Related Work identifies this paper's field
+study directly and removes a list-comma ambiguity.
+
+The protocol and experiment descriptions now distinguish two PC5 uses of IPI.
+The IPI-to-SPaT bridge accepts IPI-encoded SPaT at its ingress and delivers
+standard J2735 SPaT over PC5, whereas the packet-size and field sweeps exchange
+serialized IPI Cooperative Service requests and correlated completions through
+the vendor custom-data interface. The profile heading now describes
+independent-message and correlated-operation behavior rather than applying the
+technically inaccurate stateless/stateful binary. The implementation claim now
+states that the reference implementation serializes and parses both profiles.
+
+The setup now defines B, KiB, MiB, and decimal Mbit/s explicitly; no measured
+unit or value changed. Product and standards citations are placed next to the
+Mocar/HUALI, MG52, GL-X3000, AirSpeed 2900, Cisco packet-core, TCP, and MQTT
+claims. The d1 role is consistently named the application endpoint, and the
+Cisco paragraph states the packet-core and local/remote device roles directly.
+Three generalized lessons were added to
+`paper/general_academic_writing_lessons.md`: attribute insights to the evidence
+that produced them, resolve unclear distinctions without introducing an
+inaccurate binary, and place citations beside the exact entity and claim they
+support.
+
+Validation: `make` rebuilt `main.pdf`, `appendix.pdf`, and `submission.pdf`, and
+a second dependency check reports no work. The PDFs contain 14, four, and 18
+US-letter pages. The non-bibliographic manuscript ends on page 12, References
+starts at the top of page 13, and the unified appendix begins on page 15. The
+revised manuscript pages and the final appendix page were rendered and
+inspected. The three PDFs contain no annotations, links, forms, JavaScript,
+embedded files, or author metadata, and all fonts are embedded. The first 14
+rendered pages of the unified PDF are pixel-identical to `main.pdf`; the only
+textual differences between the standalone and unified appendix are the
+standalone title/front matter and page numbering. The build logs contain no overfull boxes,
+undefined references or citations, multiply defined labels, or LaTeX errors.
+Scoped `git diff --check` passes. The final SHA-256 values are
+`94ac680bd428c72a58567f446ba2c1032b7aa41e797f04c24537dfca770b076f`
+for `main.pdf`,
+`7193c5ba449be4096ccad2a19e6f5af1a8d365f0948a53d0b3cee9715e620131`
+for `appendix.pdf`, and
+`d271dc8125dbae12117d1d4944377bba4c3489275bcb8d751e9c081c3a78ddf1`
+for `submission.pdf`. No commit or push was performed.
+
+## 2026-08-27 Abstract Annotation and Recurring-Writing-Error Revision
+
+Complete. The new abstract annotations were found in the unified
+`paper/current_manscript/submission.pdf`; the annotated input is preserved as
+`paper/current_manscript/tmp/pdfs/submission_with_abstract_comments_20260827.pdf`.
+All ten substantive comments were mapped to their highlighted text before the
+PDF was rebuilt.
+
+The abstract now establishes the two application communication patterns and the
+missing cross-path evidence before posing the central question at the end of
+the opening paragraph. It explicitly links CAV operations to the preceding
+CV/ITS message pattern, bounds the prior-work claim to a selected CV or CAV
+application, states that IPI carries both J2735 messages and correlated CAV
+operations, separates complete PC5 IPI frame size from Uu application-object
+size, and uses an active `we measure` construction. Insight 2 now distinguishes
+developer choices in application-object size and transfer direction from
+uncertain radio and load conditions. Insight 3 now states a requirement for
+future radios and networks rather than implying that a CAV-ready implementation
+already exists.
+
+The rejected wording was removed from the introduction, Results synthesis,
+Conclusion, binding paper outline, and agent context. The scientific meaning
+and measured values were preserved. `paper/general_academic_writing_lessons.md`
+now records six explicit recurring failure categories: 1) posing the research
+question before establishing its premises; 2) leaving the relationship or scope
+of application classes implicit; 3) collapsing path-specific units into an
+"X or Y" phrase; 4) replacing concrete claims with invented or aspirational
+labels; 5) mixing controllable choices with uncertain conditions; and 6)
+presenting measurements as a detached noun inventory. The corresponding checks
+were added to the final writing checklist.
+
+Validation: `make` rebuilds `main.pdf`, `appendix.pdf`, and `submission.pdf`, and
+a second dependency check reports no work. The PDFs contain 14, four, and 18
+US-letter pages. The complete non-bibliographic manuscript ends on page 12,
+`References` begins on page 13, and the unified appendix begins on page 15. The
+final abstract, page-12 insight/conclusion boundary, first reference page, and
+first unified-appendix page were rendered and inspected. The three logs contain
+no overfull boxes, undefined references or citations, multiply defined labels,
+or LaTeX errors. All fonts are embedded. The PDFs contain no annotations,
+links, forms, JavaScript, embedded files, or author metadata. The first 14
+rendered pages of the unified PDF are pixel-identical to `main.pdf`. Scoped
+`git diff --check` passes. The SHA-256 values are
+`e8859a695bca7b50c0f46b4e8f2c7f67b6db8d59ec0cb7e3b8370bb4f200fcb0`
+for `main.pdf`,
+`df573288880ca080979e20aebd7c8982367e09c20eab109f8f7200380bd5cf20`
+for `appendix.pdf`, and
+`abb43b76ddc535487066ae4657956bb179a216d3297e5fbc3f2e2fd2c2c5fb9b`
+for `submission.pdf`. No commit or push was performed.
+
+## 2026-08-27 PC5 Claim-Meaning Restoration
+
+Complete. The preceding wording correction improperly replaced the accepted
+PC5 insight with a narrower recommendation about coverage testing. The paper's
+intended claim is restored: the measured direct V2X path has a limited payload
+and coverage envelope. The functional experiments establish standard J2735
+reception, while the complete-frame sweeps establish the joint frame-size and
+coverage boundary. At P2, every tested size received responses in at least
+99.8% of attempts. At P3 and P4, larger frames lost availability before compact
+frames, and P5 returned no response at any size. The shorter,
+building-obstructed P1 remains evidence that distance alone does not define the
+envelope. The manuscript does not assign these outcomes to road geometry or an
+unmeasured radio-layer mechanism.
+
+This meaning is synchronized across the abstract, introduction, contribution,
+PC5 result, Observation 1, Insight 1, conclusion, paper outline, and experiment
+summary. The generalized writing lessons now require a correction to preserve
+the accepted claim's subject, technical relationship, scope, and consequence;
+a disputed clause does not authorize a replacement insight or thesis. No
+measured value changed.
+
+Validation: `make` rebuilt `main.pdf`, `appendix.pdf`, and `submission.pdf`.
+They contain 14, four, and 18 US-letter pages. The complete non-bibliographic
+manuscript ends on page 12, and `References` is the first nonempty text on page
+13. The revised abstract, introduction, PC5 result, insights, conclusion, and
+page boundary were rendered and inspected. Observation 1 remains together in
+one column. The first 14 rendered pages of the unified PDF are pixel-identical
+to `main.pdf`. All fonts are embedded. The PDFs contain no annotations, links,
+forms, JavaScript, embedded files, or author metadata. The three logs contain
+no overfull boxes, undefined references or citations, multiply defined labels,
+or LaTeX errors. Scoped `git diff --check` passes. The SHA-256 values are
+`5755aca2cfe167f846db48004ec3e1942308248ba23e259985ae29e952f9b213`
+for `main.pdf`,
+`2db9a4c04680066298aea298cd99d5e1bd58774353bacc7f9815cd0a5f203365`
+for `appendix.pdf`, and
+`866610c2f1c49780ce43ab74bc5a665cdb26bca4252437499865012cadbe4a36`
+for `submission.pdf`. No commit or push was performed.
+
+## 2026-08-27 Independent Second Manuscript and Rendering Audit
+
+Complete. A second sentence-by-sentence and paragraph-by-paragraph pass was
+performed independently of the first audit. It found and corrected residual
+problems that the earlier pass missed: overly broad treatment of J2735 updates
+as universally stateless, experimental-control language that claimed more
+isolation than the comparisons provide, ambiguity between a complete PC5 IPI
+frame and a Uu application object, repeated adapter explanation, a conclusion
+that gave the protocol grammatical credit for measurement findings, and
+transition words that did not express the actual comparison. The revised text
+now distinguishes standard J2735 reception from complete IPI-frame exchange,
+states the controlled comparison represented by each result, and links the
+PC5, Uu, TDD, mixed-traffic, threshold, insight, and conclusion arguments
+without reviewer-directed commentary.
+
+The logical corrections initially moved the conclusion onto page 13. Repeated
+explanation was then condensed, and Figures 12 and 13 were reduced while
+remaining legible. The complete non-bibliographic manuscript now ends near the
+bottom of page 12, and `References` begins at the top of page 13. No font-size
+reduction, negative vertical spacing, omitted result, or artificial filler was
+used. The appendix fallback-result field order was also rewritten as direct
+normative prose, removing an overfull line without changing the wire contract.
+
+Validation: `make` rebuilt `main.pdf`, `appendix.pdf`, and `submission.pdf`; a
+second `make` produced no output. The PDFs contain 14, four, and 18 US-letter
+pages, respectively. All 18 unified pages were rendered and inspected, and the
+three pages affected by the final wording adjustments were rendered and checked
+again. The first 14 unified pages are pixel-identical to `main.pdf` at 72 dpi,
+and the standalone and unified appendices have identical token multisets; their
+text extraction differs only in float order and continuing page numbers. All
+fonts are embedded. The PDFs contain no annotations, links, forms, JavaScript,
+embedded files, or author metadata. All three LaTeX logs contain no overfull
+boxes, undefined references or citations, multiply defined labels, or LaTeX
+errors. Scoped `git diff --check` passes. The final SHA-256 values are
+`3f923539d5c482746d23f915cc97906e2f846ecac99d0eb5c7779c4c280398ce`
+for `main.pdf`,
+`366c93038535333b8a2fa94e94664a5ce246a43a8df16ff34082746eab64a462`
+for `appendix.pdf`, and
+`cec79211f072ca1175853f0bf6e9cd292eaefdee13f34a57498f289f7758210e`
+for `submission.pdf`. Their file sizes are 4,625,701, 304,675, and 4,656,210
+bytes. The pre-existing dirty worktree was preserved, and no commit or push was
+performed.
+
+## 2026-08-27 Full Manuscript Writing-Lessons Audit
+
+Complete. The core manuscript and compact appendix were reread sentence by
+sentence and paragraph by paragraph against all 61 recorded academic-writing
+lessons and the binding paper outline. The revision reconstructs the abstract,
+introduction, related-work synthesis, IPI contribution, setup argument, results
+handoffs, three insights, future research directions, and conclusion as one
+continuous argument. It removes repeated background, commentary-style claim
+defenses, editorial transitions, multi-purpose sentences, vague causal
+subjects, and list-like paragraphs. The measured values and claim boundaries
+remain unchanged.
+
+Terminology now follows the measured unit and timing boundary throughout. PC5
+uses complete serialized IPI frame size; Uu uses IPI records and application
+objects; request/response results use sender-side RTT; bulk transfers use
+validated directional goodput; and raw UDP remains distinct from fragmented
+UDP. The adapter discussion now synthesizes response loss and RTT-tail behavior
+instead of restating a generic requirement. The TDD result is scoped to the
+measured implementation. Figure 10 uses application-object labels rather than
+the ambiguous payload label. Paragraph and section openings now identify the
+specific logical relationship to the preceding evidence.
+
+Validation: `make` rebuilds `main.pdf`, `appendix.pdf`, and `submission.pdf`,
+and a subsequent dependency check reports all artifacts up to date. `main.pdf`
+has 14 US-letter pages: the complete manuscript occupies pages 1--12 and
+`References` begins at the top of page 13. `appendix.pdf` has four pages, and
+the unified `submission.pdf` has 18 pages and is 4,656,671 bytes. All 18 unified
+pages were rendered and inspected; the first 14 are pixel-identical to
+`main.pdf` at 72 dpi. Appendix token content in the unified and standalone PDFs
+matches, with only their continuing page numbers differing. All fonts are
+embedded. The PDFs contain no annotations, links, form widgets, embedded files,
+JavaScript, or author metadata. The three LaTeX logs contain no overfull boxes,
+undefined references or citations, multiply defined labels, or LaTeX errors.
+`git diff --check` passes. The SHA-256 values are
+`2f54494965d2a7e512b62f328c626b7f3b2f31a09371e9098b6c81049b99a6b3`
+for `main.pdf`,
+`f685c68b792f2b2d6041c97aa7d6c5a1ff111c5b01b94d1038ca09aec8ad7e8f`
+for `appendix.pdf`, and
+`e32d1488584db80a9ea0f9bc73ad52af6fc4b782d9567f6ed61d08fe02491506`
+for `submission.pdf`. The pre-existing dirty worktree was preserved, and no
+commit or push was performed.
+
+## 2026-08-27 MobiCom 2027 Unified Submission PDF
+
+Complete. The ACM venue metadata now names MobiCom 2027, and the current-paper
+Makefile builds `submission.pdf` in addition to the standalone `main.pdf` and
+`appendix.pdf`. The unified document contains the 12-page core manuscript,
+references on pages 13--14, and the complete compact appendix on pages 15--18.
+It omits the standalone appendix title page and continues the submission page
+numbers through page 18. The unified TeX source and PDF are explicitly retained
+by the repository's paper-artifact allowlist.
+
+Validation: all three PDFs rebuild successfully, and a second `make` reports
+that no work is required. `submission.pdf` has 18 US-letter pages and is
+4,656,446 bytes. Its first 14 rendered pages are pixel-identical to the rebuilt
+standalone `main.pdf`; extracted text confirms that page 13 begins with
+`References` and page 15 begins with Appendix A. A token comparison confirms
+that the unified appendix retains all standalone appendix content other than
+its separate title and anonymous-author heading. All 18 pages were rendered
+and inspected. The unified PDF uses embedded fonts and contains no annotations,
+links, form widgets, JavaScript, or author metadata. The main, appendix, and
+submission logs contain no overfull boxes, undefined references or citations,
+multiply defined labels, or LaTeX errors. `git diff --check` passes for the
+touched sources. The SHA-256 values are
+`b757312c5f24726fc7fa8b552ab770a0edebb8133d2fc0cee45b67003948ce57`
+for `main.pdf`,
+`2d8f74e8f4244883ae2863e81c67c2301b335d71e2671369b18fb680d7f4bdeb`
+for `appendix.pdf`, and
+`e2ef5fc43e81f2a6abfc348dcea114d0f188935a3c4b36c7f31afed602eb3d38`
+for `submission.pdf`. No substantive manuscript or appendix content was
+changed, and no commit or push was performed.
+
+## 2026-08-26 Twelve-Page Manuscript Boundary Correction
+
+Complete. The non-bibliographic manuscript now ends on page 12, and the
+bibliography begins with the References heading at the top of page 13. The
+correction condenses repeated explanation in the IPI session contract, mixed
+traffic and recovery synthesis, application-threshold comparison, three
+insights, future directions, and conclusion. It preserves the reported values,
+thresholds, stakeholder implications, and three-insight structure. No figure
+was reduced, and no negative vertical spacing or artificial filler was used.
+
+Validation: `make` rebuilt both standalone PDFs. `main.pdf` is 14 US-letter
+pages: 12 pages of non-bibliographic content followed by two reference pages.
+`appendix.pdf` remains four US-letter pages. Extracted page text confirms that
+the Conclusion is on page 12, the first nonempty text on page 13 is
+`References`, and page 13 contains no manuscript section. Rendered pages 12 and
+13 were inspected for the boundary, column fill, overlap, clipping, and
+readability. Both logs contain no overfull boxes, undefined references or
+citations, multiply defined labels, or LaTeX errors. `git diff --check` passes
+for the revised sources. The SHA-256 values are
+`bb74c996ad15e8dbb2f1357818e677c351e27fb0b7b0db12f111dddc905fca09`
+for `main.pdf` and
+`06d047f8d724bb67f15405eb02aa9372b973b3e12c03fa249f21e61ab9e485e4`
+for `appendix.pdf`. The pre-existing dirty worktree was preserved, and no
+commit or push was performed.
+
+## 2026-08-26 Residual Wire-Contract and TDD Chronology Revision
+
+Complete. The implementation and paper now resolve the three residual IPI
+wire-contract questions. The operation profile is limited to planning,
+perception, and control; MAP remains a J2735 message-profile type rather than an
+undeclared fourth operation service class. The optional terminal fallback value
+is identified as `fallbackResult:u8` in the `service-response-v1` body, after
+its one-byte presence flag and before the detail string. A new codec test
+round-trips this terminal value.
+
+The two serialized fields named `sessionId` now have explicit contracts. The
+optional textual `IPIS` value names the transport session and lease and must
+match a session-bearing IPIS topic. The mandatory 16-byte `IPIO`/PC5 value
+groups application operations. They occupy separate namespaces, are not
+converted or compared byte for byte, and are bound when they occur in the same
+service invocation. The API test now uses deliberately different values and
+confirms that the operation succeeds. The public headers and `README.md`
+describe the same rule.
+
+The manuscript also resolves the associated reporting comments. Table 3 and
+Section 5.1 now report profile-record representation cost and state that the
+common envelope and adapter framing are excluded. The downlink baseline is
+corrected to 2,000 TCP plus 2,000 MQTT returned objects. The 60,000-request
+small-object row is limited to campaigns through July 2; the later weak-signal
+fragmented-UDP repeat in Figure 7 is analyzed separately. The appendix uses the
+same provenance and terminology.
+
+The author-confirmed TDD profile sequence was `70/20/10`, `40/40/20`, then
+`70/20/10`. This sequence is now stated beside Figure 10 and in the appendix,
+while the figure itself remains a profile comparison rather than a chronology
+diagram. `experiment_summary.md` records that this clarification supersedes
+the earlier one-way-order interpretation.
+
+Validation: all 18 C++ tests pass, including the distinct-session-namespace and
+terminal-fallback round trips. `main.pdf` and `appendix.pdf` compile as 15 and
+four US-letter pages. Every page was rendered and inspected. Both PDFs have
+embedded fonts and contain no annotations, links, forms, JavaScript, embedded
+files, author metadata, undefined references, LaTeX errors, or overfull boxes.
+Their SHA-256 values are
+`0a6427e384a86be2cf13e7ebf1eb0ca4a8a6d803cdaab4a3371b1fdefe5ee613`
+and `fbead5cdc491429f2c1a959ddff20ecc5e61340038c2e00f340e27f449893579`,
+respectively. No page-limit optimization was performed; references still begin
+on page 14. `git diff --check` passes. The pre-existing dirty worktree was
+preserved, and no commit or push was performed.
+
+## 2026-08-26 Versioned Uu Large-Object Implementation and Manuscript Alignment
+
+Complete. The current `CooperativeServiceMessage` encoder now emits a
+self-identifying `IPIO` version-2 record. Planning, perception, control,
+application-object, and task-identifier sections use unsigned four-byte
+lengths. The decoder accepts this current form and both complete unversioned
+forms retained in the field artifacts: the May four-byte-section records and
+the July two-byte-section records. Unknown identified versions, truncated
+sections, malformed values, and trailing bytes are rejected. `TaskOffloader`
+also accepts objects above the retired 65,535-B helper limit.
+
+The Uu and PC5 bindings now have explicit, consistent boundaries. Uu uses the
+same `CooperativeServiceMessage` model through the versioned byte-oriented
+operation record. Its wire sections have a 32-bit bound; the private-5G
+measurement receiver separately enforces a 16-MiB packet safety limit. The
+evaluated 2-MiB object round-trips without application-level chunking. PC5 uses
+the same application model through the formal J2735 regional UPER profile,
+whose object field remains limited to 2,048 B. The installed vendor interface
+separately limits the complete submitted PC5 application packet to 4,080 B.
+The two bindings therefore preserve common application semantics without
+claiming identical serialized bytes or identical usable object sizes.
+
+The high-level API now exposes the preferred source name `IpiInterface` and a
+`submit_cooperative_service()` operation path. The legacy-named
+`Edge4AvInterface` remains source-compatible, and the historical
+`IpiServiceRequest` helper is explicitly documented as a compact compatibility
+adapter with a 65,535-B limit. The private-5G inspection path decodes the Uu
+operation record rather than the PC5 UPER profile. The dataset-derived manifest
+tool also no longer treats 65,535 B as the current protocol limit. It defaults
+to the evaluated 2-MiB Uu benchmark envelope, labels that value as a workload
+selection cap, and records the separate 16-MiB measurement-receiver guard.
+
+The manuscript and compact appendix describe this implementation. Section 3
+separates the common IPI contract from the PC5 `IP5X`, Uu `IPIO`, session
+`IPIS`, and measurement `I5GP` encodings. Table 3 reports the current Uu record:
+68 B without an application object and `O+83` to `O+86` B with the evaluated
+fields and task identifiers. The appendix records the exact current field
+order, the two accepted legacy Uu forms, the PC5 and Uu limits, and the
+measurement-receiver safety bound. Figure 6 and its discussion now identify
+698,100 unique issued requests and 752,200 analytical row instances, because
+the 34,000 load/QoS and 20,100 detector requests also enter their applicable
+size rows. Its corrected labels are `Objects <=4 KiB` and
+`Detector/stress, 0--58.6 KiB`. The continuing-load appendix text now refers
+to the comparison at -106 dBm rather than calling it good signal.
+
+Validation: the C++ library and all examples build successfully, and all 18
+registered tests pass. The tests cover a 128-KiB `TaskOffloader` operation, a
+versioned 2-MiB operation and probe-envelope round trip, exact 68-B and
+`O+83`-B current representations, both legacy decoders, unsupported-version
+and truncated-section rejection, and the unchanged PC5/J2735 limits. A
+synthetic dataset-manifest smoke test confirms the 2-MiB benchmark cap and
+16-MiB receiver guard. `main.pdf` and `appendix.pdf` compile as 15 and four
+US-letter pages, respectively. Every rendered page was inspected; no visual
+collision was found. Both PDFs have embedded fonts and contain no annotations,
+links, forms, JavaScript, author metadata, undefined references, LaTeX errors,
+or overfull boxes. Their SHA-256 values are
+`047cb88d2ebd302553793e45a24338195b20b397f125a1ba7d92ced17a664dd6`
+for `main.pdf` and
+`785b72a1e930e1def5e0264a520ddb02a83ae811fad8a66faece78859ad4b2ca`
+for `appendix.pdf`. No page-limit optimization was performed because it was
+not requested; references currently begin on page 14. The preserved 13-page
+`appendix_full.pdf` remains unchanged with SHA-256
+`cae5367e0f854bf998a09326eb26f68b224584c361a98d3c498aa530a9632df4`.
+`git diff --check` passes. The pre-existing dirty worktree was preserved, and
+no commit or push was performed.
+
+## 2026-08-25 Appendix Clarification and Full-Appendix Preservation
+
+Complete. Only the standalone appendix was revised. The main-manuscript source,
+figures, and PDF were not rebuilt or edited. The compact appendix now separates
+the common IPI session envelope from the message and operation profile records;
+states serialized field order, flag bits, record-kind, transport, source,
+service, status, object, control, and fallback mappings; and defines the
+identity and correlation fields. It also reconciles the four-byte object length
+with the 128-KiB--2-MiB Uu workloads and the measured 78--81-B operation-profile
+cost. The expiration field is described at its implemented strength: its unit
+is deciseconds, its epoch is supplied by the binding rather than serialized,
+and it was absent from the measurement workloads.
+
+The capability comparison now identifies its relationship to J2735, V2X Hub,
+CARMA, 3GPP VAE, ETSI MEC, and CAV middleware using the main bibliography's
+numbers. The Uu provenance text distinguishes 752,200 displayed row instances
+from 698,100 unique issued requests without pooling row denominators. The TDD
+sequence is expressed with elapsed intervals instead of wall-clock timestamps.
+The compact output is four US-letter pages and remains within the user-approved
+four-page maximum.
+
+The preserved pre-cut appendix is now also stored at
+`paper/current_manscript/appendix_full.pdf`. It is an exact copy of
+`paper/current_manscript/tmp/pdfs/appendix_13p_20260825_163502.pdf`: both are 13
+US-letter pages with SHA-256
+`cae5367e0f854bf998a09326eb26f68b224584c361a98d3c498aa530a9632df4`.
+The compact `appendix.pdf` has SHA-256
+`ee3619981a301541e2b4ad130ed8a52142631ec09f896379de07bbfc176fbdd1`.
+
+Validation: the appendix-only build passed. Its log contains no overfull box,
+undefined reference or citation, or LaTeX error. All four compact pages and all
+13 preserved full-appendix pages were rendered and visually inspected. Both
+PDFs use US-letter pages and embedded/subset fonts and contain no annotations,
+embedded links, forms, JavaScript, or author metadata. `git diff --check`
+passed. The unchanged `main.pdf` still has SHA-256
+`fbc5f86a33bed95ed2c94fd87e705c620a6108e1d8a50ba1f6dd1ddc58c3811e`.
+No commit or push was performed.
+
+## 2026-08-25 Main-Manuscript Restoration After Appendix-Only Revision
+
+Complete. The first three-page appendix pass had exceeded its requested scope
+by changing three Section 5 passages and two Figure 6 workload labels in the
+main manuscript. Those main-manuscript source changes were reversed exactly:
+Section 5 again describes the Figure 6 rows as distinct evidence families, and
+the small-object row again carries its pre-appendix `idle` label. The separate
+three-page appendix and its source were not reverted or otherwise edited.
+
+The Section 5 figures and `main.pdf` were rebuilt. The result contains 14
+US-letter pages, with the non-bibliographic manuscript ending on page 12 and
+references beginning on page 13. All 14 rendered pages match the preserved
+pre-appendix manuscript render in
+`paper/current_manscript/tmp/final_render/main/` byte for byte. The rebuilt
+`main.pdf` is 4,624,406 bytes and has SHA-256
+`fbc5f86a33bed95ed2c94fd87e705c620a6108e1d8a50ba1f6dd1ddc58c3811e`;
+its PDF hash differs from the earlier build because compilation metadata is
+regenerated, while the page images are identical. The unchanged
+`appendix.pdf` remains three pages with SHA-256
+`1a11d14ec1c7f6503702f6bb80db7a1ae60ec3e135ab231e22f253a9b4b8195d`.
+
+Validation: the explicit LaTeX/BibTeX main-manuscript build passed,
+`git diff --check` passed for the restored sources, and all 14 page-image
+comparisons passed. No commit or push was performed.
+
+## 2026-08-25 Three-Page Evidence-Focused Appendix
+
+Complete. The standalone appendix now uses exactly three US-letter pages. The
+earlier 13-page PDF and source remain available at
+`paper/current_manscript/tmp/pdfs/appendix_13p_20260825_163502.pdf` and
+`paper/current_manscript/tmp/pdfs/08_appendices_13p_20260825_163502.tex`.
+
+Page 1 now gives the exact implemented IPI wire contract. It records field
+order, widths, endian order, flag assignments, required and optional rules,
+validation bounds, the session and correlated-operation state machines, and
+the result of all 18 automated test programs. Page 2 compares IPI with J2735,
+V2X Hub/CARMA, 3GPP VAE/ETSI MEC, and application-specific CAV middleware. It
+then preserves the PC5 and Uu deployment controls, PC5 stationary and moving
+provenance, unavailable PC5 radio telemetry, single-UE boundary, continuous 5G
+radio survey, serving-cell state, and same-location TDD signal context. Page 3
+contains the requested eight-row Uu provenance matrix with issued counts,
+object sizes, adapters, pacing, timeout, repetitions or duration, and field/TDD
+context. It also states the logical-client rate, offered and achieved stream
+rates, stream duration, TDD block order and recovery intervals, validation
+rules, and exclusion rules. Duplicated main-paper result figures were removed.
+
+The provenance audit found that the eight Uu row denominators total 752,200
+entries drawn from 698,100 unique issued requests. The load/QoS and detector
+stress rows also contribute to the matching size rows. The main text and Figure
+6 labels were corrected so that the manuscript no longer calls these analysis
+views disjoint or labels the small-object row as idle.
+
+`make all` rebuilt both standalone outputs. `appendix.pdf` is 294,083 bytes and
+has SHA-256
+`1a11d14ec1c7f6503702f6bb80db7a1ae60ec3e135ab231e22f253a9b4b8195d`.
+`main.pdf` remains 14 pages and 4,624,614 bytes, with the 12-page manuscript
+ending on page 12 and references beginning at the top of page 13. Its SHA-256
+is `a8dff7b7b237880533735a5bf263f8469c3c73963d3127e155170988bf32d6f4`.
+
+Validation: `make all` and `git diff --check` pass. The appendix log contains no
+overfull box, undefined reference, or LaTeX error. All three appendix pages
+were rendered at 170 dpi and inspected for clipping, overlap, legibility,
+continuity, and use of the available page area. Both PDFs use US-letter pages
+and embedded/subset fonts, contain no JavaScript, and preserve anonymous author
+metadata. All 18 C++ test programs pass. No commit or push was performed.
+
+## 2026-08-25 Eleven-Comment Logic, Terminology, and Figure Revision
+
+Complete. The latest annotated `paper/current_manscript/main.pdf` contained 22
+PDF annotation objects: 11 substantive highlighted instructions and 11 popup
+objects across pages 1, 2, 3, 4, 7, 9, 11, and 12. The exact annotated input was
+preserved before rebuilding at
+`paper/current_manscript/tmp/pdfs/main_with_comments_20260825_153940.pdf`; its
+SHA-256 is
+`f72b3c6ebbce2927fb85d0667882ba84a6d1630f43255637226f00247b0f8eb4`.
+
+All 11 instructions were resolved. The abstract now states why IPI is needed to
+represent both measured workload classes across PC5 and Uu, and it uses `this
+paper` rather than the detached phrase `the study`. The Introduction roadmap
+maps each of Sections 2--7 directly to one role. The IPI section now uses
+`message profile`, `operation profile`, and `path binding` consistently; it
+also explains stateless and stateful interactions in parallel paragraphs. The
+appendix and architecture-table caption use the same terminology. The testbed
+description replaces ambiguous `provides` and `terminates` verbs with the
+actual PC5 peer exchange and Uu access relation. The Results opening now states
+the evaluation sequence explicitly.
+
+The PC5 matrix labels P1 as NLOS and P2--P4 as LOS, while P5's zero-response
+outcome remains in the matrix rather than being embedded in its location label.
+The caption distinguishes field conditions from the percentage of issued
+requests answered before timeout. Figure 8 uses larger percentage, tick,
+threshold, and legend labels at final column width. Figure 11 identifies its
+foreground workload as a 1-KiB application object. The future-research agenda
+retains five field-level directions in compact connected prose, and the
+conclusion integrates the two measured path boundaries. This substantive
+revision fills the final manuscript page without artificial spacing.
+
+`paper/general_academic_writing_lessons.md` now generalizes the recurring
+errors. The revised rules cover topology-accurate verbs, explicit transitions
+from measurement scope to an enabling contribution, stable layer-specific
+terminology, condition labels that do not encode outcomes, and substantive use
+of required page space. New Lessons 60 and 61 require parallel development of
+central comparisons and a one-to-one section roadmap. The final checklist now
+also checks fixed workload sizes in captions, symmetric categorical labels,
+and substantive final-page composition.
+
+`make all` rebuilt both standalone outputs. The non-bibliographic manuscript
+occupies pages 1--12, the conclusion ends near the bottom of page 12, and
+`References` begins at the top of page 13. `main.pdf` contains 14 US-letter
+pages, is 4,624,406 bytes, and has SHA-256
+`6b7dfbdceeb14e6aa5b1323b5552181fd817357ee4ca03561fd5897a58a15322`.
+`appendix.pdf` contains 13 US-letter pages, is 940,036 bytes, and has SHA-256
+`cae5367e0f854bf998a09326eb26f68b224584c361a98d3c498aa530a9632df4`.
+
+Validation: both active figure scripts pass `py_compile`, `git diff --check`
+passes, and the final logs contain no overfull box, undefined citation,
+undefined reference, multiply defined label, rerun request, or LaTeX error. All
+14 main pages and all 13 appendix pages were rendered and inspected in contact
+sheets. Main pages 3, 4, 8, 9, 11, and 12 were also inspected at higher
+resolution. Both PDFs have embedded and subset fonts, zero annotations, zero
+hyperlinks, no forms or actions, no embedded files, no JavaScript, and no
+author identity in their metadata. No commit or push was performed.
+
+## 2026-08-25 Organization Paragraph and Observation-to-Insight Revision
+
+Complete. The Introduction now ends with the requested paper-organization
+paragraph. It states the roles of Sections 2--7 immediately before Related
+Work without repeating the section contents in detail.
+
+Section 5 now exposes the evidence-to-insight logic directly. Three concise,
+italicized observations appear at the corresponding analysis boundaries:
+Observation 1 reports response availability across complete IPI frame sizes and
+PC5 field points; Observation 2 identifies the direction- and
+deadline-specific application-object boundary; and Observation 3 identifies
+deadline crossings across traffic directions and under continuing or
+concurrent demand. The Summary and Insights subsection explicitly derives
+Insight 1--3 from those observations. Each insight is short, stakeholder-facing,
+and labeled with an italicized `Insight N:` lead. The earlier repeated result
+summary was removed instead of being duplicated by the new observations.
+
+`make all` rebuilt both standalone outputs. The non-bibliographic manuscript
+occupies pages 1--12, the conclusion ends on page 12, and `References` begins
+at the top of page 13. `main.pdf` contains 14 US-letter pages, is 4,624,112
+bytes, and has SHA-256
+`0dae50d0b99261f9507deef570e0b2ed2b5b87caec83924c413b4f42d386ec7e`.
+`appendix.pdf` contains 13 US-letter pages, is 940,125 bytes, and has SHA-256
+`e46caf5a0441a94221657a93e22d9c8fae1027b4ea9d916936e7713d6eaace18`.
+
+Validation: `git diff --check` passes, and the final logs contain no overfull
+box, undefined citation, undefined reference, multiply defined label, rerun
+request, or LaTeX error. All 14 main pages and all 13 appendix pages were
+rendered and inspected in contact sheets; the revised Introduction, three
+observations, and insight synthesis were also inspected at higher resolution.
+Both PDFs have embedded and subset fonts, zero annotations, zero hyperlinks,
+no forms or actions, no embedded files, no JavaScript, and no author identity
+in their metadata. No commit or push was performed.
+
+## 2026-08-25 Recurring Figure-Annotation Revision
+
+Complete. The newly annotated `paper/current_manscript/main.pdf` contained six
+PDF annotation objects: three substantive highlighted instructions and three
+popup objects on pages 10 and 12. The exact annotated input was preserved before
+the rebuild at
+`paper/current_manscript/tmp/pdfs/main_with_comments_20260825.pdf`; its SHA-256
+is
+`bb04590a7f96466862aac69f3f1fbc0e950e50c86153a72ed588d6caa99725b7`.
+
+The three comments were treated as one recurring visual-design defect rather
+than as isolated coordinates. Figure 10(c) no longer overlays raw-run points,
+mean diamonds, confidence intervals, and numeric labels. It now shows one mean
+diamond per profile and direction, a whisker spanning the three exact 50-MiB
+transfers, and a value immediately beside each mean. Its caption defines the
+diamond and whisker semantics. Figure 12(b) now places its two completion values
+on separate vertical rows below the response-gap series and renders them in
+white with a dark halo, so transport color and hatching do not reduce contrast.
+Figure 13 no longer uses a figure-wide legend for a target reported by only one
+source. It directly marks and labels the 99.9% CAV data-return target; the prose,
+caption, and accessibility description state that the two signal-priority
+sources publish a cycle deadline but not a completion fraction.
+
+Every active main-manuscript figure and the complete appendix views were
+rendered and audited for the same three problems: annotation/marker overlap,
+insufficient text contrast, and a figure-wide legend whose reference applies to
+only some rows. No other active figure required a semantic or layout change.
+Lesson 38 in `paper/general_academic_writing_lessons.md` now includes contrast
+selection for text on filled marks. New Lesson 59 records that a row-specific
+requirement must be annotated on that row rather than presented as a universal
+figure reference, and the final checklist includes both checks.
+
+`make all` rebuilt the synchronized outputs. The non-bibliographic manuscript
+still occupies pages 1--12, the conclusion ends on page 12, and `References`
+begins at the top of page 13. `main.pdf` contains 14 US-letter pages, is
+4,624,482 bytes, and has SHA-256
+`9e8d1593a9c466b99a9209075b569dfdf80f7ef8a565f9cdbea18ef862f25e3b`.
+`appendix.pdf` contains 13 US-letter pages, is 940,125 bytes, and has SHA-256
+`a353746d008415e44ef13a2fc5245c068da0bc718bf6ccb5ce88713eb09439dd`.
+
+Validation: `python3 -m py_compile` passes for the active Section 5 figure
+builder, `git diff --check` passes, and the final logs contain no overfull box,
+undefined citation, undefined reference, multiply defined label, rerun request,
+or LaTeX error. Both PDFs have embedded and subset fonts, zero annotations,
+zero links, no forms, no open or additional actions, no embedded files, no
+JavaScript, and no author identity in their metadata. All pages were rendered
+for visual review; pages 10 and 12 and Appendix page 11 were also inspected at
+high resolution. No commit or push was performed.
+
+## 2026-08-24 Recurring Annotation-Pattern Revision
+
+Complete. The latest annotated manuscript contained 12 PDF annotation objects:
+five substantive highlighted instructions and their popup or split-highlight
+objects across pages 1--2. The exact annotated input was preserved before the
+rebuild at
+`paper/current_manscript/tmp/pdfs/main_with_comments_20260824_164552.pdf`; its
+SHA-256 is
+`1a1f231183208dd3ba22657e39546242b6ff3793c7b400e6783e62ed09df2453`.
+
+The five comments were treated as recurring manuscript-wide defects. The title
+is now `Can Today's Communication Technologies Support Tomorrow's CVs and
+CAVs?`. The abstract and three insight statements now present an observed
+implementation requirement rather than treating a peak-rate evaluation caution
+as an insight. The Introduction separates the PC5 and Uu measurement claims
+instead of compressing reception, latency, completion, and rate into one
+sentence. Related Work now groups cooperative-perception, timing/path-choice,
+direct-PC5, and network-assisted-Uu systems by analytical role and states the
+remaining gap after each comparison.
+
+The ambiguous metric label `response availability` was removed from the main
+manuscript, appendix, captions, tables, figure axes, and active figure code. The
+paper now distinguishes 1) the fraction of all issued requests receiving a
+valid sequence-matched response before the configured timeout, 2) the fraction
+of all issued requests completed within an RTT threshold, and 3) RTT
+percentiles among received responses. Figure 7 was regenerated with the
+publication-width label `Complete before timeout (%)`. Dense prose was audited
+sentence by sentence; sentences with several independent jobs were split, and
+literature inventories were converted into claim--comparison--gap paragraphs.
+
+Lessons 57 and 58 in `paper/general_academic_writing_lessons.md` now record the
+general rules that an evaluation reminder is not a research insight and that
+one broad outcome label must not represent several different completion
+events. The binding outline, `AGENTS.md`, and `agent_context.md` were updated to
+retain the new title, exact metric boundaries, and third insight. The final
+Future Research Directions and Conclusion were tightened without removing the
+three stakeholder-facing implications. The correct detailed Figure 3 remains
+in the main manuscript.
+
+The non-bibliographic manuscript occupies pages 1--12. The conclusion ends at
+the bottom of page 12, and `References` begins at the top of page 13. The
+240-word abstract remains within the requested compact range. `main.pdf`
+contains 14 US-letter pages, is 4,609,841 bytes, and has SHA-256
+`1af4eed9ca6e72563560b3d0824ec62b06bb69f41d75f4fc8e2043482e608c61`.
+The synchronized `appendix.pdf` contains 13 US-letter pages, is 940,121 bytes,
+and has SHA-256
+`5c75b40dedf8626e9381c5d2c033c9f1ebd885706990f6c2129c848c6bf65e4b`.
+
+Validation: `make all` rebuilt both PDFs successfully. The final logs contain
+no overfull box, undefined citation, undefined reference, multiply defined
+label, rerun request, or LaTeX error. All 14 main pages and all 13 appendix
+pages were rendered and inspected in fresh contact sheets; main pages 1--3,
+7--12, and the revised Figure 7 were also inspected at full resolution. Both
+PDFs contain zero annotations, hyperlinks, forms, actions, JavaScript, or
+embedded files. Every page is US letter, all listed fonts are embedded and
+subset, no author identity appears in the metadata, the active figure script
+passes `py_compile`, and `git diff --check` passes. No commit or push was
+performed.
+
+## 2026-08-24 Sentence-Level Audit and Figure 3 Correction
+
+Complete. The main manuscript and standalone appendix were checked sentence by
+sentence against all 57 rules in `paper/general_academic_writing_lessons.md`.
+The revision corrected ambiguous actors, result-as-cause wording, compressed
+multi-step logic, unsupported causal language, vague pronouns, inconsistent
+experiment terminology, repeated threshold statements, and transitions that
+did not name the relationship between adjacent claims. It also defines the
+symbol $P$ in Table 3, replaces the undefined Figure 11 labels ``weak A/B''
+with the experiment identifiers ``field A/B,'' and keeps failed requests in the
+stated completion denominators. No new lesson was added because the identified
+problems were already covered by the existing lessons.
+
+The incorrect compact substitute for Figure 3 was removed. Section 4 now uses
+the intended detailed PC5/Uu path diagram,
+`paper/current_manscript/figs/figure04_measurement_paths_flat.png`, at
+two-column width below the physical-testbed overview. Its caption and the
+surrounding text identify the serialized IPI request/response paths, workload
+directions, and sender-side RTT boundaries. The compact figure generator,
+generated asset, Makefile dependency, and every manuscript reference to that
+substitute were removed, so a later build cannot regenerate it.
+
+The non-bibliographic manuscript remains on pages 1--12. The conclusion ends on
+page 12, and `References` begins at the top of page 13. `main.pdf` contains 14
+US-letter pages and has SHA-256
+`c06c0e684bceecf59ac8b32977a502ce7991ec7913ddc0b50a0195d49e696e90`.
+The synchronized `appendix.pdf` contains 13 US-letter pages and has SHA-256
+`e7fc37af9b35c640a517b826135f965612dc908215827ac069ea7e79d98aa263`.
+
+Validation: `make all` rebuilt both PDFs successfully. The final logs contain
+no overfull box, undefined citation, undefined reference, rerun request, or
+LaTeX error. Every main and appendix page was rendered and inspected, and main
+page 5 was inspected at full resolution to verify the corrected Figure 3 and
+caption. Both PDFs contain zero annotations, hyperlinks, forms, JavaScript, or
+embedded files; all listed fonts are embedded; no author identity appears in
+the metadata; all active figure scripts pass `py_compile`; and
+`git diff --check` passes. No commit or push was performed.
+
+## 2026-08-24 Seven-Comment Abstract and Writing-Lesson Revision
+
+Complete. The latest annotated manuscript contained 14 PDF annotation objects:
+seven highlighted revision instructions and seven associated popups, all on
+page 1. The exact annotated input was preserved before rebuilding at
+`paper/current_manscript/tmp/pdfs/main_with_comments_20260824_145709.pdf`; its
+SHA-256 is
+`7c48f4e421eb271a0cfeb2cab849648aba02d69bb307be5c163c4f372256cdae`.
+
+All seven instructions were resolved. The abstract was reduced to 212 words and
+no longer announces the three stakeholder groups before naming them again in
+the insight list. The Introduction now explains that both workload classes are
+tested on shared communication paths, gives concrete uplink- and downlink-heavy
+CAV examples, states that each J2735 update replaces the prior state in a
+separate sentence, and describes remote teleoperation as requiring sustained
+video and control traffic. The two workload classes now contend for shared
+communication resources rather than merely appearing in unspecified
+``proposals.''
+
+The complete writing-lessons document was reapplied to the manuscript. The same
+vague capability wording was removed from the setup, Results, and future
+directions. Dense protocol lists were split into short sentences. Result
+transitions now name the varied factor and the fixed comparison, adjacent
+paragraphs no longer repeat the same threshold claim, and qualitative wording
+was replaced with the measured completion and RTT differences. The conclusion
+now states its resolved claim once and connects the two path boundaries to the
+three decisions. No new lesson was added because Lessons 4, 5, 8, 10, 18, 23,
+and 57 already cover the identified errors; the binding outline was synchronized
+with the shorter abstract and revised conclusion.
+
+The non-bibliographic manuscript remains on pages 1--12, with the conclusion on
+page 12 and `References` starting at the top of page 13. `main.pdf` contains 14
+US-letter pages and has SHA-256
+`98b73ffcde2292759fd3785a8da623db003f5abb2dea32d1fbfabfdb94264294`.
+The synchronized `appendix.pdf` contains 12 US-letter pages and has SHA-256
+`9baa1e87f608cba230e30315fd0678a907cb752869b9bc69df70b78e9ae7ae2f`.
+
+Validation: `make all` rebuilt both PDFs successfully. The final log contains no
+overfull box, undefined citation, undefined reference, rerun request, or LaTeX
+error. The final changed pages were rendered and inspected at publication size;
+the complete main paper and appendix were also checked in contact sheets. Both
+PDFs contain zero annotations, hyperlinks, actions, forms, JavaScript, or
+embedded files; all listed fonts are embedded; no author identity appears in
+the metadata; and `git diff --check` passes. No commit or push was performed.
+
+## 2026-08-24 Single-Comment and Manuscript-Wide Writing-Lesson Revision
+
+Complete. The latest manuscript contained one highlighted revision instruction:
+the three insights were too specific and did not make their CV/ITS, CAV-
+developer, and radio/network stakeholders clear. The exact annotated input was
+preserved at
+`paper/current_manscript/tmp/pdfs/main_with_comments_20260824_124315.pdf`; its
+SHA-256 is
+`2fe6b4cebc78872d5e294aafb00e1117c901c36ef5081fd35b499aca63af5a7d`.
+
+The abstract, introduction, Results synthesis, and conclusion now express the
+insights as three stakeholder-relevant decisions: complete-exchange coverage
+planning for CV/ITS, direction- and deadline-specific object budgets for CAV
+developers, and mixed-direction demand support for radio and network designers.
+Measured values remain in Results rather than being embedded in the insight
+headlines. The binding outline was synchronized, and Lesson 57 was added to
+`paper/general_academic_writing_lessons.md` to prevent an observation or plot
+label from being repeated as though it were a stakeholder-relevant insight.
+
+The full lessons document was also applied as a manuscript-wide audit. The
+revision adds or repairs logical handoffs between the workload classes, the
+readiness gap, related-work categories, IPI, setup, individual result families,
+the three insights, future directions, and conclusion. It removes repeated
+evidence recitals, distinguishes the disjoint 5G evidence families, orders the
+stream/client/restart experiments by the demand they introduce, and retains the
+TDD comparison as a result of two joint deployed configurations rather than a
+single-factor causal claim. It also removes an invalid cross-direction rate
+comparison and uses response availability, threshold completion, frame size,
+application-object size, RTT, and goodput consistently with their defined
+measurement boundaries.
+
+The main manuscript uses the compact path figure, while the standalone appendix
+retains the complete path diagram and full diagnostic result views. The main
+paper's non-bibliographic content occupies pages 1--12; the conclusion reaches
+the bottom of page 12, and `References` starts at the top of page 13. `main.pdf`
+contains 14 US-letter pages and has SHA-256
+`72da6ef1f808482305b05d6811ddaaedf245cf87554b4851490b79a218ec4b6a`.
+The synchronized `appendix.pdf` contains 12 US-letter pages and has SHA-256
+`f68c0c9c95b07a5e79e3e28e11c0d99c2d9107bf9d5cdeba873f68979be1efb5`.
+
+Validation: `make all` rebuilds both PDFs successfully; `py_compile` passes for
+all three active figure builders; the final logs contain no overfull box,
+undefined citation, undefined reference, rerun request, or LaTeX error. Every
+main and appendix page was inspected in contact sheets, with main pages 1, 6,
+and 12 and dense appendix pages inspected at full resolution. Both PDFs contain
+zero annotations, hyperlinks, actions, forms, JavaScript, or embedded files;
+all listed fonts are embedded and subset; no author identity appears in PDF
+metadata; `git diff --check` passes. No commit or push was performed.
+
+## 2026-08-24 Non-Serving Cell Administrative-State Clarification
+
+Complete. Section 4.1 now states that traffic remained on Cell 2 across runs
+with both cells enabled and runs with Cell 1 locked; no measurable interference
+or performance change was attributable to Cell 1's administrative state. The
+standalone appendix retains the same deployment qualification. The binding
+outline, experiment summary, agent context, TDD summaries, and machine-readable
+status records were updated consistently.
+
+The older TDD/DU analysis no longer treats an aggregate Cell 1 DU counter row
+as evidence that the experiment gateway changed serving cells. DU exports do
+not contain a per-UE identifier and therefore cannot establish attachment. The
+operator-confirmed record controls: Cell 1 was locked during the TDD comparison
+blocks, Cell 2 served every run, and no handoff occurred. The August 15--16
+diagnostic remains non-ranking because of route recovery, incomplete raw timing,
+and unstable response tails rather than a serving-cell change.
+
+The non-bibliographic manuscript remains on pages 1--12, with `References` at
+the top of page 13. `main.pdf` contains 14 US-letter pages and has SHA-256
+`c2e882be0233295b84453e2b35396037239692fd9e00e73efdd21beb0513cbfa`.
+The standalone `appendix.pdf` contains 12 US-letter pages and has SHA-256
+`3ad459cfd208704803834c090ff344a0b36f75d69edf3ea0c3e4aaf1c661eb75`.
+
+Validation: both PDFs rebuilt successfully; their logs contain no overfull box,
+undefined citation, undefined reference, or LaTeX error. Main pages 4 and 12 and
+appendix page 2 were rendered and inspected after the edit. The revised sentence
+is readable, and the conclusion and page boundary remain intact. Both PDFs have
+zero annotations, hyperlinks, actions, forms, embedded files, or identifying
+metadata; every listed font remains embedded. The figure builder passes
+`py_compile`, all revised JSON records parse, and `git diff --check` passes. No
+commit or push was performed.
+
+## 2026-08-24 Claim, Provenance, and Terminology Revision
+
+Complete. The main manuscript now distinguishes stateless J2735 callback
+interoperability, PC5 response availability, and complete-cycle RTT. The
+application comparison contains only workloads whose cited timing value applies
+to the measured request/result cycle. IPI is described as one implemented
+operation contract with PC5 and Uu bindings, without implying live migration.
+Frame-size terminology is reserved for complete serialized PC5 IPI frames;
+application-object size is used for Uu workloads. The third insight now follows
+the measured effect of event-triggered bursts, sustained directional streams,
+and concurrent demand instead of proposing an untested scheduling remedy.
+
+The standalone appendix retains the complete diagnostic views, condition-level
+denominators, evidence-group definitions, row-level application-comparison
+provenance, IPI capability comparison, and TDD configuration/replication detail.
+The same-device TDD result is framed as a comparison of complete deployed
+configurations. The operator-confirmed context is consistent throughout the
+active evidence record: Cell 1 was locked out and did not broadcast, Cell 2
+served every comparison run, and no handoff occurred. The older August 15--16
+diagnostic remains non-ranking because the route required recovery and the raw
+comparison windows are incomplete, not because the serving cell changed.
+
+The main paper's non-bibliographic content occupies pages 1--12, the conclusion
+ends on page 12, and `References` begins at the top of page 13. `main.pdf`
+contains 14 US-letter pages and has SHA-256
+`a021ba1ecd29aa2a0a4efc02b336c2bf4409a022c6c35ad05c32d0433960271c`.
+The separate `appendix.pdf` contains 12 US-letter pages and has SHA-256
+`31542acc08dc2da4fd03b2bfd01b2020246dc3862dd5e9572cdf9f6b3f1f5ad3`.
+The preserved full manuscript remains unchanged with SHA-256
+`0e906c68937b188ead8a9617ce5a266fb09695f10bc683fc093dbbe653be4bd5`.
+
+Validation: `make main.pdf appendix.pdf` rebuilt both entry points; the final
+logs contain no overfull box, undefined citation, undefined reference, LaTeX
+error, emergency stop, or fatal error. The regenerated figure builder passes
+`py_compile`, and `git diff --check` passes. The final main pages 11--12 and all
+12 appendix pages were inspected after rendering; the shortened Figure 13 axis
+label is fully visible. Both PDFs contain zero annotations, hyperlinks,
+actions, forms, or embedded files; every listed font is embedded; neither PDF
+contains author-identifying metadata. No commit or push was performed.
+
+## 2026-08-24 Annotated Five-Comment Layout Revision
+
+Complete. The latest annotated 14-page manuscript contained ten PDF annotation
+objects: five highlighted revision instructions and five associated popups. The
+exact annotated input was preserved before rebuilding at
+`paper/current_manscript/tmp/pdfs/main_with_comments_20260824_101539.pdf`; its
+SHA-256 is
+`9051b3dbedf38d2f4fd344e373418bf0a778ab9d5e40b9154da46b45955c4825`.
+
+All five instructions were resolved. Figures 6, 7, and 8 now use flatter
+single-column versions in the main manuscript. Their complete diagnostic views
+and explanations remain unchanged in the separate appendix. Table 3 no longer
+repeats the same CAV-operation label across three rows. One grouped operation
+row now aligns the 256-B, 1-KiB, and 4-KiB contents with their corresponding IPI
+frame sizes and makes explicit that only the content length changes. The main
+results discussion also records the matched-profile repeatability controls and
+the observed deployment changes that accompanied the unstable 40/40/20 runs.
+
+The large gaps around Tables 3 and Figures 7--8 came from stretchable LaTeX
+float glue during column balancing, not from blank space inside the assets. The
+preamble now uses small fixed float-spacing values, which removes the gaps
+without negative `\vspace` corrections or overlapping neighboring material.
+The binding outline was updated to preserve the grouped Table 3 structure.
+Generalized prevention rules were added as Lessons 53--56 in
+`paper/general_academic_writing_lessons.md`.
+
+The main and appendix builds remain synchronized. The non-bibliographic paper
+occupies pages 1--12, the 128-word conclusion ends on page 12, and `References`
+begins at the top of page 13. `main.pdf` contains 14 US-letter pages and has
+SHA-256
+`90b7a55df616770ddea47105b47a337a2f03b159e4cc33fa1fbb2d73459eda3b`.
+The separate `appendix.pdf` contains eight US-letter pages and has SHA-256
+`b41878bd119b771b1e85522e909f1ade7f04bbbaa22f3fe584e59c12766a42fd`.
+The preserved full manuscript remains unchanged with SHA-256
+`0e906c68937b188ead8a9617ce5a266fb09695f10bc683fc093dbbe653be4bd5`.
+
+Validation: the Section 5 figure builder passes `py_compile` and regeneration;
+`make all` compiles both entry points successfully. The final logs contain no
+overfull box, undefined citation, undefined reference, LaTeX error, emergency
+stop, or fatal error. Every page was inspected in contact sheets; pages 7, 8,
+12, and 13 were also inspected at high resolution. Both output PDFs contain
+zero annotations, hyperlinks, actions, forms, or embedded files; every listed
+font is embedded; neither metadata record contains author identity; and
+`git diff --check` passes. No commit or push was performed.
+
+## 2026-08-24 Annotated Four-Comment Revision
+
+Complete. The newly annotated 14-page manuscript contained eight PDF annotation
+objects: four highlighted revision instructions and four associated popups. The
+exact annotated input was preserved before rebuilding at
+`paper/current_manscript/tmp/pdfs/main_with_comments_20260824_094515.pdf`; its
+SHA-256 is
+`a8ace2dafde2346b4f079d7cad0e863caab98fb854bb1c63a793b1529f51cdb5`.
+
+All four instructions were resolved. First, the private-5G signal discussion now
+uses the current U.S. Federal Communications Commission Broadband Data
+Collection reporting framework. It states the mapped 5G-NR service levels,
+cell-edge probability, loading assumption, and provider-reported RSRP gradients
+without inventing universal qualitative signal bins. Second, the accepted
+detailed measurement-path diagram was restored as Figure 3. The main manuscript
+uses its existing 3000-by-2000-pixel flattened copy with the same crop, which
+preserves the diagram while ensuring that every PDF font is embedded. Third, the
+all-attempt RTT completion metric is now defined inline instead of as a displayed
+equation. Fourth, the uncollected raw-UDP condition at -120 dBm was removed from
+the compact matrix rather than displayed as an unevaluated row. Captions,
+accessibility descriptions, surrounding prose, the appendix, and the binding
+outline were updated consistently. Generalized prevention rules were added as
+Lessons 49--52 in `paper/general_academic_writing_lessons.md`.
+
+The main and appendix builds remain synchronized. The main manuscript occupies
+pages 1--12, the conclusion ends on page 12, and `References` begins at the top
+of page 13. `main.pdf` contains 14 US-letter pages and has SHA-256
+`858e7bead01f47ee38637548c3d1a340164a052d2480c02c3acc17fade6c634c`.
+The separate `appendix.pdf` contains eight US-letter pages and has SHA-256
+`01b6f9884839f624f173ac3c0b369db7550cd2f1099ab84a9c63dc623a9c09db`.
+
+Validation: the Section 5 figure builder passes `py_compile` and regeneration;
+`make all` compiles both entry points successfully. The final logs contain no
+overfull box, undefined citation, undefined reference, LaTeX error, emergency
+stop, or fatal error. Every page was rendered in contact sheets; manuscript
+pages 5, 8, 12, and 13 were also inspected at publication scale. Both PDFs
+contain zero annotations, hyperlinks, actions, forms, or embedded files; every
+listed font is embedded; neither metadata record contains author identity; and
+`git diff --check` passes. No commit or push was performed.
+
+## 2026-08-23 Twelve-Page Manuscript Condensation
+
+Complete. The accepted full manuscript was preserved as
+`paper/current_manscript/edge4av_full.pdf` before page-count edits. It remains
+the original 20-page PDF with SHA-256
+`0e906c68937b188ead8a9617ce5a266fb09695f10bc683fc093dbbe653be4bd5`.
+The obsolete `paper/current_manscript/28p.pdf` was removed; its tracked copy
+remains recoverable from Git history.
+
+The current manuscript was condensed without changing its section order or
+its two-contribution, three-insight argument. Non-bibliographic content now
+occupies pages 1--12, the conclusion fills both columns of page 12, and
+`References` begins at the top of page 13. The resulting `main.pdf` contains
+14 pages because the bibliography continues through page 14. The abstract is
+234 words, the introduction is 456 words, the related-work section is 534
+words, the IPI section is 570 words, the setup is 1,187 words, the results are
+2,947 words, the future-research section is 542 words, and the conclusion is
+258 words according to `detex`.
+
+Evidence removed from the main paper's larger plots remains in the independent
+appendix. The main manuscript now uses compact versions of the path, PC5,
+uplink-envelope, adapter, signal, downlink, TDD, mixed-load, demand, and
+application-threshold figures. The complete path and result views remain in
+`appendix.pdf`; the main paper neither includes nor refers to the appendix.
+The build now regenerates both PDFs together. Global single- and double-column
+float spacing was reduced, and selected dense result figures were scaled to
+their final column or page role. This removes the large post-float gaps while
+preserving readable labels and captions.
+
+Validation: `make all` compiles both entry points successfully. `main.pdf` is
+14 US-letter pages with manuscript content confined to pages 1--12 and the
+bibliography starting on page 13; `appendix.pdf` is a separate eight-page
+US-letter document. The final logs contain no overfull box, undefined citation,
+undefined reference, rerun request, LaTeX error, emergency stop, or fatal
+error. Every main-paper and appendix page was rendered and inspected, including
+publication-scale checks of dense figure pages and the page-12/page-13
+boundary. The PDFs contain zero annotations, hyperlinks, JavaScript actions,
+forms, or embedded files; every listed font is embedded and subset; and no PDF
+metadata record contains author identity. `main.pdf` has SHA-256
+`5a5102e6a31f58b9689ee0661215a5d798a81196d269f8f1278ee7cbc93f5d92`,
+and `appendix.pdf` has SHA-256
+`280733a9e22eace101359db01a20822e9cc33ead80b12c4d411419d226a3f916`.
+`git diff --check` passes. No commit or push was performed.
+
+## 2026-08-23 Fourth Annotated Figure Revision
+
+Complete. The newly annotated 20-page manuscript contained four PDF annotation
+objects: two highlighted revision instructions and two associated popups. The
+exact annotated input was preserved before rebuilding at
+`tmp/pdfs/main_with_comments_20260823_183100.pdf`; its SHA-256 is
+`c4ea447c3f0030b7820fc8a9c7d23c70483e4265425d7bd96a3ce6d8e1695f08`.
+
+Both instructions were resolved. Figure 7 no longer overlays adapter and radio-
+condition lines at the 100% completion ceiling. Its single-column main-paper
+view is now a matrix in which every adapter, reported-RSRP, and payload-size
+combination occupies a separate cell. Each evaluated cell gives complete-
+response percentage, and gray em dashes preserve unevaluated combinations.
+The caption, accessibility description, adjacent explanation, and binding
+outline now describe the matrix. The condition-specific line plots remain in
+the separate appendix.
+
+Figure 11 now gives both panels explicit categorical tick labels and the x-axis
+title `Background traffic and field collection`. The labels spell out `Idle`
+and `Stream` for the measured background-traffic states and associate each
+state with the corresponding reported-RSRP or weak-signal collection. Panel (b)
+is titled `Response p95 RTT range`, and the caption and accessibility
+description use the same terminology.
+
+The generalized causes and prevention rules were added as Lessons 47--48 in
+`paper/general_academic_writing_lessons.md`. They require a non-overlapping
+representation when several series cluster at a ceiling or floor and require
+every independently interpreted panel to name its categorical axis, factor
+state, and collection or group.
+
+Validation: the Section 5 figure builder passes `py_compile`, all generated
+Section 5 figures were refreshed, and both LaTeX entry points compile
+successfully. The clean `main.pdf` contains 20 US-letter pages, and the separate
+`appendix.pdf` contains 9 US-letter pages. The final logs contain no overfull
+box, undefined citation, undefined reference, rerun request, LaTeX error,
+emergency stop, or fatal error. Every page was rendered for a full-document
+contact-sheet check; manuscript pages 12 and 15 and appendix page 5 were also
+inspected at publication scale. Both PDFs contain zero annotations, hyperlinks,
+JavaScript actions, forms, or embedded files; every listed font is embedded;
+and neither metadata record contains author identity. `main.pdf` has SHA-256
+`0e906c68937b188ead8a9617ce5a266fb09695f10bc683fc093dbbe653be4bd5`,
+and `appendix.pdf` has SHA-256
+`ea20d98662d09659bbd120df962c8fe447f0321d0551a8900f9a23d9a2e492d2`.
+`git diff --check` passes. No page-limit optimization, commit, or push was
+performed.
+
+## 2026-08-22 IPI Architecture Figure Replacement
+
+Complete. Figure 1 remains unchanged. The former IPI architecture Figure 2 was
+replaced with a single-column protocol summary table in Section 3. The table
+preserves the original visual's information: one IPI application contract, the
+compact message and correlated-operation modes, common and profile-specific
+protocol information, typed or opaque content, and the direct-PC5 and
+network-assisted-Uu bindings. The surrounding sentence now introduces the
+table without repeating its contents. The binding paper outline was updated to
+specify this table rather than an architecture figure, and the unused Figure 2
+assets were removed from the manuscript build dependencies without deleting the
+source files.
+
+The physical testbed and detailed path figures now resolve automatically as
+Figures 2 and 3. All label-based references remain correct. The replacement
+table appears as Table 2 in one column on page 5 and was inspected at 220 dpi;
+its text, rules, caption, and surrounding content are readable without overlap
+or clipping.
+
+Validation: both LaTeX entry points compile successfully. The clean `main.pdf`
+contains 20 US-letter pages and the separate `appendix.pdf` contains 9
+US-letter pages. The final logs contain no overfull box, undefined citation,
+undefined reference, rerun request, LaTeX error, emergency stop, or fatal error.
+The complete main paper and appendix were rendered and inspected, with pages
+4--5 checked at publication size. Both PDFs contain zero annotations,
+hyperlinks, JavaScript actions, forms, or embedded files; every listed font is
+embedded; and neither metadata record contains author identity. `main.pdf` has
+SHA-256 `80fffafd711203f384f53ba5bdfad8d63b6adf4935c5aa7582a74b7169f3e247`,
+and `appendix.pdf` has SHA-256
+`b5179513c4103e3743e3e5942f21f2999cc0741faea69419ce826275f6e3f672`.
+`git diff --check` passes. No page-limit optimization, commit, or push was
+performed.
+
+## 2026-08-22 Third Annotated Figure Revision
+
+Complete. The newly annotated 20-page manuscript contained eight PDF annotation
+objects: four highlighted comments and four associated popups. The exact
+annotated input was preserved before rebuilding at
+`tmp/pdfs/main_with_comments_20260822_003702.pdf`; its SHA-256 is
+`9729d111a03ff42a6c719630ed9b7bb248ff3e5e9e4f847cdf57982157104a93`.
+
+The Figure 1 comment asked for alternatives rather than selecting a replacement.
+Three original layouts were therefore prepared for comparison while the current
+manuscript figure remains unchanged: 1) a simplified Related Work gap bridge,
+2) an Introduction road scene with compact updates, stateful bursts, and a
+sustained stream, and 3) a measurement-argument pipeline from workloads through
+IPI, PC5/Uu, experimental factors, and application outcomes. The designs use
+structural ideas observed in the motivating scenario of Boban et al.'s 5G V2X
+paper, the labeled intersection scene in OpenIntersection, and the request/
+return pipeline in Tentacles without copying their artwork. The responsive
+comparison is stored outside the repository at
+`/home/william/.codex/visualizations/2026/08/11/019ff16e-c8dc-71a1-9521-b263ffbdb2d9/figure1-alternatives.html`.
+
+The other three comments were applied to the manuscript. Figure 11 now gives
+panels (a--b) one compact row of four legend symbols that exactly reproduce the
+TCP/MQTT color and marker together with each TDD profile's line and fill.
+Panel (c) has its own small legend built from the actual orange diamond,
+whisker, and filled/hollow mean artists. The previous figure-wide proxy symbols
+no longer claim to represent panel (c), and the unused legend space was removed.
+Figure 12 restores RTT-threshold completion as panel (a). Its line segments join
+only each collection's paired idle/load observations. Panel (b) now reports the
+response-p95 range on the requested millisecond y-axis, with 100- and 200-ms
+reference lines. The caption and accessibility description follow the restored
+panel roles. Figure 13(a) no longer uses a circle as the proxy for both radio
+conditions. Marker shape and color identify MQTT, TCP, and UDP, while markerless
+solid and dashed legend handles identify the $-106$- and $-120$-dBm collections.
+
+The generalized causes and prevention rules were added as Lessons 44--46 in
+`paper/general_academic_writing_lessons.md`. They require legend symbols to be
+built from artists that actually occur in the corresponding panel, treat a
+panel revision as a joint change to observations, statistic, unit, encoding,
+and caption, and require each conceptual figure to perform one section-specific
+argumentative role.
+
+Validation: the figure builder passes `py_compile`, all affected figures were
+regenerated, and both LaTeX entry points compile successfully. The clean
+`main.pdf` is 20 US-letter pages and contains no appendix headings; the separate
+`appendix.pdf` is 9 US-letter pages. The final logs contain no overfull box,
+undefined citation, undefined reference, rerun request, LaTeX error, emergency
+stop, or fatal error. Every page was rendered and inspected, including
+publication-size checks of Figures 11--13. Both PDFs contain zero annotations,
+hyperlinks, JavaScript actions, forms, or embedded files; every listed font is
+embedded; and neither metadata record contains author identity. `main.pdf` is
+5,044,178 bytes with SHA-256
+`a0c341a791c8356eaedf4505d96087d3218b07342060243673c57c19e2b208c8`.
+`appendix.pdf` is 397,631 bytes with SHA-256
+`a90df0baedc9414f5d60d817eac297cbe87a0eec6b8941495d5f7a01298532cd`.
+`git diff --check` passes. No page-count optimization, commit, or push was
+performed.
+
+## 2026-08-21 Second Annotated Figure-Design Revision
+
+Complete. The newly annotated 20-page manuscript contained ten PDF annotation
+objects: five highlighted revision instructions and five associated popups. The
+exact annotated input was preserved before rebuilding at
+`tmp/pdfs/main_with_comments_20260821_174735.pdf`; its SHA-256 is
+`4c23ed09271e316cb2d7d3ae3c390fc314af0e2339e95538ecf9566908e0326d`.
+
+All five instructions were resolved. Figure 5 now places the continuous-drive
+RSRP and SINR maps side by side inside one single-column figure; the surrounding
+text, caption, and accessibility description identify this arrangement.
+Figure 9 now connects each adapter's observations in reported-RSRP order so the
+signal-dependent comparison is visible without removing the measured-point
+markers. Figure 10 now uses one stable encoding: blue circles for MQTT, orange
+squares for TCP, and neutral triangle, circle, and square keys for p50, p95, and
+maximum RTT. All data-series lines are solid, and the two legend groups state
+their separate roles. Figure 11 likewise separates adapter color from TDD
+profile fill and line treatment. Its sustained-goodput panel contains TCP only,
+so both profiles remain orange while filled and hollow markers distinguish the
+profiles; the four value labels were repositioned so none covers its marker.
+
+Figure 12 was rebuilt as two aligned panels instead of forcing unlike units
+into one chart. Panel (a) reports response-p95 RTT in milliseconds and marks the
+100- and 200-ms ceilings directly. It shows the observed minimum-to-maximum p95
+range across repeated run blocks, with a point when only one block exists.
+Panel (b) reports the percentage of all issued 1-KiB requests completed within
+the same two ceilings. It pools exactly the run blocks represented in panel
+(a), while preserving each field collection as a separate condition. The
+completion percentages and p95 ranges were independently reproduced from the
+retained sender records before plotting.
+
+The generalized causes and prevention rules were added as Lessons 39--43 in
+`paper/general_academic_writing_lessons.md`. They distinguish manuscript span
+from internal panel orientation, require the minimum necessary visual
+encodings, prohibit a single ambiguous legend across panels with different
+variables, separate latency from completion percentage, and connect points
+only when the x-axis has a defensible order.
+
+Validation: both figure-generation scripts pass `py_compile`, all affected
+figures were regenerated, and both LaTeX entry points compile successfully.
+The clean `main.pdf` is 20 US-letter pages and contains no appendix headings;
+the separate `appendix.pdf` is 9 US-letter pages. The final logs contain no
+overfull box, undefined citation, undefined reference, rerun request, LaTeX
+error, emergency stop, or fatal error. Every page was rendered and inspected,
+including publication-size checks of Figures 5 and 9--12. Both PDFs contain
+zero annotations, hyperlinks, JavaScript actions, forms, or embedded files;
+every listed font is embedded; and neither metadata record contains author
+identity. `main.pdf` is 5,044,019 bytes with SHA-256
+`f1f36d7f729e3fbb0bc5af086cf27c93a6d4d28312666a208df5287523eb04c9`.
+`appendix.pdf` is 397,628 bytes with SHA-256
+`0886f7ef30d7574a582b7a27ee1a282e00a71e5a246ac173b460e1ab66399c5b`.
+`git diff --check` passes. No page-count optimization, commit, or push was
+performed.
+
+## 2026-08-21 Annotated Figure and IPI-Profile Revision
+
+Complete. The annotated 21-page manuscript contained 18 PDF annotation
+objects: nine highlights with explicit revision instructions and nine
+associated popups. The exact annotated input was preserved before rebuilding
+at `tmp/pdfs/main_with_comments_20260821_172238.pdf`; its SHA-256 is
+`cfe3531121277bbd19cb501098e52b10f68f48c7d260e703575ab3a04ae02303`.
+
+All nine instructions were resolved. The PC5 method now identifies the current
+IPI Cooperative Service request/response profile instead of the obsolete
+`IPI_RTT1` label. It states that the vendor custom-data payload contains a
+complete serialized IPI request and that the RSU returns the correlated IPI
+completion. This correction was propagated through the setup and results
+sections, Appendix D, `experiment_summary.md`,
+`paper/analysis/v2x_experiment_summary.md`, and `paper/paper_outline.md`.
+Figure 5 now stacks its continuous-drive RSRP and SINR maps within one column.
+Figures 7 and 8 were redesigned for one-column presentation instead of merely
+being reduced. Figure 10 uses color for TCP versus MQTT and distinct triangle,
+circle, and square markers for p50, p95, and maximum RTT without transparent
+overlays. Figure 11 uses consistent TCP/MQTT colors, distinguishes the two TDD
+profiles with filled/solid and hollow/dashed marks, and staggers the sustained-
+goodput labels so they do not cover their symbols. Figure 12 is now one grouped
+bar chart: color identifies the adapter and hatching identifies the 100-ms
+threshold; the removed packet-marking panel remains described numerically in
+the prose. Figure 13 adds redundant fill, line, and hatch encodings to preserve
+the comparisons in grayscale. Figure 14 is now a compact one-column completion
+comparison in the main manuscript, while its complete timing, RTT-tail, and
+completion diagnostic and explanation appear in the separate appendix.
+
+The generalized causes and prevention rules were added as Lessons 35--38 in
+`paper/general_academic_writing_lessons.md`. They cover stale implementation
+labels, overloaded or inconsistent visual channels, plots that are shrunk
+instead of redesigned for their final column width, and labels that compete
+with data symbols. The final checklist now requires current artifact names,
+stable figure encodings, legend consistency, and overlap inspection at final
+publication size.
+
+Validation: both Python figure builders pass `py_compile`, all affected figures
+were regenerated, and both LaTeX entry points compile successfully. The clean
+`main.pdf` is 20 US-letter pages and contains no appendix headings; the separate
+`appendix.pdf` is 9 US-letter pages. The final logs contain no overfull box,
+undefined citation, undefined reference, rerun request, LaTeX error, emergency
+stop, or fatal error. Every page was rendered and inspected, including
+publication-size checks of Figures 5, 7, 8, and 10--14 and the complete
+Appendix D.5 figure. Both PDFs contain zero annotations, hyperlinks,
+JavaScript actions, forms, or embedded files; every listed font is embedded;
+and neither metadata record contains author identity. `main.pdf` is 5,040,805
+bytes with SHA-256
+`92b439ab2331f0e36ddc4d443d595ebd10b8007a6b58886856dd54be0e6dc27f`.
+`appendix.pdf` is 397,670 bytes with SHA-256
+`0e349cb671d4423039d53be115de133d8531792c942b9dc9ef68d5b51af7acfa`.
+`git diff --check` passes. No page-count optimization, commit, or push was
+performed.
+
+## 2026-08-21 Separate Main and Appendix PDFs
+
+Complete. The current paper now has two independent LaTeX entry points.
+`paper/current_manscript/main.tex` includes the abstract, Sections 1--7, and
+the references; it no longer invokes `\appendix` or includes
+`sections/08_appendices.tex`. `paper/current_manscript/appendix.tex` compiles
+that section file as a separate anonymous document with appendix-local section,
+table, and figure numbering. Both entry points use `paper_preamble.tex`, so
+their MobiCom format, anonymity settings, packages, and document metadata remain
+synchronized. `.gitignore` explicitly exposes the new appendix source, shared
+preamble, and appendix PDF so a later paper commit cannot omit them.
+
+The Makefile treats `main.pdf` and `appendix.pdf` as a synchronized artifact
+pair. Every input that can trigger a source-driven main-paper rebuild is also an
+appendix dependency, and `main.pdf` depends on the refreshed `appendix.pdf`.
+`make -n -W main.tex main.pdf` schedules both appendix LaTeX passes before the
+main LaTeX/BibTeX passes. The final real build shows the same order. The `clean`
+target removes the auxiliary and PDF outputs for both documents.
+
+Float spacing was tightened without scattered negative `\vspace` commands.
+The 12--20-pt class defaults are now 7--9 pt for single- and double-column float
+separation, in-text float separation is 8 pt, and the figure/table-to-caption
+gap is 4 pt. Figure 12 is rendered at 96% column width so that it can share its
+page with Figure 11 without overfilling the column. All main-paper and appendix
+pages were rendered and visually inspected after the change. The figures and
+tables remain readable, the surrounding gaps are smaller, and no overlap,
+clipping, or overfull box remains.
+
+The user reported adding new annotations, but the on-disk 21-page `main.pdf`
+contained zero PDF annotation objects when checked twice before the rebuild. A
+copy of that exact file was preserved at
+`tmp/pdfs/main_with_comments_20260821_170344.pdf`; its SHA-256 is
+`a064af817a2aa95182ae325ab9f2d17437203e0b2b6b567d2ae079f3ea90fded`.
+Because no comment text was stored in that PDF, no additional annotation-
+specific instruction could be extracted in this pass.
+
+Validation: `main.pdf` is 21 US-letter pages and ends with the bibliography;
+text extraction finds none of the appendix section titles. `appendix.pdf` is a
+separate 8-page US-letter document containing Sections A--E. The final logs
+contain no overfull box, undefined citation, undefined reference, rerun request,
+LaTeX error, emergency stop, or fatal error. The PDFs contain zero annotations,
+hyperlinks, JavaScript actions, forms, or embedded files; all 30 main-paper
+fonts and all 11 appendix fonts are embedded; and neither metadata record
+contains author identity. `main.pdf` is 5,054,891 bytes with SHA-256
+`23ab82fb3a9605f2397a383316e85594a9d107c300f2e8620dcfe80eef814b36`.
+`appendix.pdf` is 368,514 bytes with SHA-256
+`37476df636c44948b0038a5a40692ed3ada4ec1d012ca8cf6f3d8a29a2223150`.
+`git diff --check` passes. No page-count optimization, commit, or push was
+performed.
+
+## 2026-08-21 Compact Main Figures and Complete Appendix Views
+
+Complete. The latest annotated manuscript contained ten PDF annotation objects:
+five highlights with revision instructions and five associated popups. The exact
+annotated source was preserved at
+`tmp/pdfs/main_with_comments_20260821_1634.pdf` with SHA-256
+`773acc0b2555fd4540f12f1f33a655979980315a7cebd9b20e43a15935d16f2c`
+before rebuilding the clean manuscript.
+
+The main results section now uses compact synthesis figures without removing
+the corresponding evidence from its prose. Figure 6 combines stationary PC5
+payload and field-point completion in one matrix; the separate 7-m p50, p95,
+and p99 values remain stated in the main text. Figure 7 combines all uplink
+payload groups and RTT thresholds in one completion matrix. Figure 8 combines
+the TCP, MQTT, raw-UDP, fragmented-UDP, and radio-condition comparisons in one
+plot. Figure 9 combines detector-sized p95 RTT and completion within 100 ms by
+placing the completion percentage beside each latency point. Its labels pair
+stationary-campaign RSRP with area-level SINR from the continuous-drive survey.
+The complete disaggregated versions and their numerical explanations now
+appear in Appendix D. The manuscript does not refer readers to the appendix to
+complete the main result argument.
+
+Figure 5 remains a side-by-side RSRP/SINR map and was regenerated at 600 dpi to
+address the reported blur rather than reducing its size. Each embedded map is
+1,605 by 1,808 pixels and renders at approximately 708 pixels per inch at the
+final manuscript size. The caption and setup text identify the Samsung 22
+continuous-drive survey and the shared sampled boundary.
+
+Validation: both figure-generation scripts pass `py_compile`, all figures were
+regenerated, and the complete LaTeX build succeeds at 29 US-letter pages. Per
+the user's standing instruction, no page-count optimization was performed. The
+build log contains no overfull box, undefined citation, undefined reference,
+rerun request, LaTeX error, emergency stop, or fatal error. All 29 pages were
+rendered and inspected through contact sheets, and the revised pages containing
+Figures 5--9 and the complete Appendix D figures were inspected at higher
+resolution. No overlap, clipping, or unreadable label remains. The clean PDF
+contains zero annotations, hyperlinks, JavaScript actions, forms, or embedded
+files; every listed font is embedded; and the metadata contains no author
+identity. Its file size is 5,151,585 bytes and SHA-256 is
+`119ddd6938be2263311b619bdddd098037363d35fceae2819c7a5de568b2e26a`.
+`git diff --check` passes. No commit or push was performed.
+
+## 2026-08-21 Application-Requirement and Claim-Precision Revision
+
+Complete. The accepted review was applied as a manuscript-wide semantic
+revision rather than a local response. Table 3 now maps seven representative
+applications through a row-specific source, communication direction, cadence,
+published timing statistic, required reliability when specified, IPI workload
+probe, measured boundary, and comparison relationship. Emergency-vehicle
+signal priority now uses the approximately 1-s two-way timing value from the
+NHTSA source. The collision/blind-spot row states that the route probe ran at
+5 Hz while the cited application pattern is 10 Hz.
+
+The evaluation now distinguishes two timing relationships. Sender-side RTT and
+`C_RTT(B)` directly measure complete request/returned-result cycles. For a
+published one-way or broader service boundary, the acknowledged cycle is a
+conservative stress screen: completion below `B` bounds the measured forward
+leg, while a longer or missing cycle leaves the responsible direction
+unresolved. Required reliability is compared with all-attempt
+`C_RTT(B)` rather than response-only p95. Figure 14 was regenerated with three
+panels for the source timing value, response p50/p95/maximum, and observed
+`C_RTT(B)`. Solid and hatched bars separate direct full-cycle comparisons from
+stress screens, and source reliability targets appear only when specified.
+
+PC5 claim wording now separates functional standard-message validation from
+quantitative performance. The standard J2735 callbacks validate functional
+carriage, whereas the payload and route experiments measure serialized
+IPI Cooperative Service frames through the vendor custom-data binding. Measured conclusions
+therefore use “compact J2735-scale IPI exchanges.” The TCP/MQTT comparison now
+describes complete adapter realizations: both connections are established
+before RTT timing and reused across successful exchanges; raw TCP uses a
+four-byte length prefix and exact reads without `TCP_NODELAY`; MQTT 3.1.1 QoS 0
+uses a clean session over a reused TCP connection through the colocated d1
+broker, whose accepted sockets use `TCP_NODELAY`. Results are attributed to the
+implemented adapters rather than intrinsic MQTT-versus-TCP behavior.
+
+The concurrent-load result is now stated as an end-to-end isolation failure.
+The manuscript preserves the design requirement for network-wide resource
+isolation while separating that implication from component-level causality.
+Localizing the contribution of radio scheduling, modem behavior, gateway
+queues, QoS mapping, transport behavior, or the core network requires
+lower-layer telemetry unavailable in this deployment. The same boundaries were
+propagated through the abstract, introduction, results, insights, future
+directions, conclusion, appendix, paper outline, and four new generalized
+writing lessons.
+
+Validation: the Figure 14 values were independently reproduced from retained
+raw or analyzed records: 56.7% for the 0.25-KiB PC5 100-ms screen; 100.0% for
+the PC5 and Uu 1-s signal-priority cycles; 100.0% for the Uu SPaT 100-ms
+screen; 0.0% for the 3/10-ms cooperative screens; 96.4% for the 500-KiB Uu
+downlink-heavy 100-ms cycle; and 39.3% for the loaded 1-KiB Uu 100-ms screen.
+The figure script passes `py_compile`, and the complete LaTeX/BibTeX build
+succeeds at 26 US-letter pages. Per the user's standing instruction, no
+page-count optimization was performed. The final log contains no overfull box,
+undefined citation, undefined reference, rerun request, LaTeX error, emergency
+stop, or fatal error. All 26 pages were rendered and visually inspected,
+including full-size checks of Table 3 and Figure 14. The clean PDF contains zero
+annotations, hyperlinks, JavaScript actions, forms, or embedded files; all
+listed fonts are embedded; and its metadata contains no author identity. Its
+file size is 2,717,427 bytes and SHA-256 is
+`b98aa0b07f81a484d4e18e9d63fdf487fba0bf8f71693a8b4aab8fdf83e7ec84`.
+`git diff --check` passes. No commit or push was performed.
+
+## 2026-08-21 Main-PDF Annotation Revision
+
+Complete. The annotated `paper/current_manscript/main.pdf` contained 28 PDF
+annotation objects: 13 highlights with explicit revision instructions, one
+empty highlight on Figure 13, and 14 associated popup objects. The exact
+annotated source was preserved at
+`tmp/pdfs/main_with_comments_20260821.pdf` before the clean manuscript was
+rebuilt. All explicit instructions were implemented and propagated through the
+main text, figures, captions, appendix, outline, and generalized writing
+lessons. The empty Figure 13 highlight had no comment text or identifiable
+requested change; its rendered page was inspected at full size.
+
+The revised manuscript omits experiment collection dates and nonessential
+survey-filtering counts. Table 2 is now a single-column summary of controlled
+dimensions, while the prose explains what each control enables in the analysis
+and the complete control record is retained separately. Figure 5 gives RSRP and
+SINR full-column panels. The signal vocabulary is now strong, typical, weak,
+and no coverage, with weak defined from -121 to below -105 dBm and no coverage
+below -121 dBm. Figure 9 treats the older stationary collections as categorical
+field conditions because simultaneous SINR was not retained; it no longer
+draws an RSRP-only trend. Figure 10 adds the maximum RTT for TCP and MQTT, and
+the TDD subsection uses a configuration-comparison title rather than a causal
+``gateway effects'' title. The last two repetitive IPI table rows were removed.
+
+The timing interpretation was revised manuscript-wide. Published application
+values are labeled as one-way latency references, whereas the experiments use
+one monotonic sender clock to measure full request/response RTT. The setup now
+explains why unsynchronized endpoint clocks cannot provide valid one-way delay.
+The issued-request metric is `C_RTT(B)`, the percentage completed within an
+explicit RTT threshold `B`. Figure 14 places the one-way references and measured
+RTT distributions on separate axes and does not classify RTT as a measured
+one-way pass or failure. All dependent result, insight, future-direction, and
+conclusion language uses the same boundary.
+
+Validation: both figure scripts run successfully, and the complete
+LaTeX/BibTeX build succeeds at 26 US-letter pages. Per the user's instruction,
+no page-count optimization was performed. The final log contains no overfull
+box, undefined citation, undefined reference, rerun request, LaTeX error,
+emergency stop, or fatal error. All 26 pages were rendered and visually
+inspected, including full-size checks of Tables 2--5, Figures 5, 9, 10, 13, and
+14, and the appendix control tables. The clean PDF contains zero annotations,
+hyperlinks, JavaScript actions, forms, or embedded files; all listed fonts are
+embedded; and its metadata contains no author identity. Its file size is
+2,703,274 bytes and SHA-256 is
+`cf5c7cb857e95be376f6bbc9d9466c1a5eea8ca017c2d0ed34d519a491573639`.
+No commit or push was performed.
 
 ## 2026-08-24 Experiment Collection Closure Decision
 
@@ -48,8 +1914,9 @@ the transport-independent wire protocol, the reference runtime, and the lower-
 layer bindings. IPI exposes one application contract through a compact J2735
 message profile and a correlated CAV-operation profile; path-specific bindings
 carry the resulting frames over PC5 custom data, TCP, MQTT, or UDP. Section 4
-states that the July 3--4 PC5 probes are complete serialized `IPI_RTT1` frames,
-that their sequence field resides inside the IPI performance frame, and that
+states that the July 3--4 PC5 probes are complete serialized IPI Cooperative
+Service frames, that their request, correlation, and sequence fields reside
+inside the IPI frame, and that
 the 4,080-B vendor limit applies to the complete serialized packet. The private-
 5G workloads retain their separate application-object size boundary. Section
 5.1 reports measured representation cost without conflating either boundary.
@@ -92,7 +1959,7 @@ Complete. A source-level audit found that the previous Table 4 combined two
 different size definitions. Its May 13 private-5G rows measure a CAV application
 object before IPI serialization and the resulting encoded IPI frame. In
 contrast, the July 3--4 PC5 labels already specify the complete serialized
-`IPI_RTT1` performance frame submitted to the vendor packet-data interface.
+IPI Cooperative Service frame submitted to the vendor packet-data interface.
 The former table incorrectly treated the July 512-B and 2,048-B frame labels as
 application objects and added inferred IPI bytes to them.
 
@@ -792,11 +2659,12 @@ isolate hardware from signal, session, or path state. The same-device August
 19 comparison nevertheless shows that the previous gateway cannot be the sole
 cause, because `40/40/20` still underperforms `70/20/10` on the GL-X3000.
 
-Several observations bound the TDD interpretation. First, `70/20/10` was
-collected before `40/40/20`; the order was not counterbalanced. Second, the
+Several observations bound the TDD interpretation. The author later clarified
+that the complete profile sequence was `70/20/10`, `40/40/20`, then
+`70/20/10`; this supersedes the earlier one-way-order interpretation. The
 `40/40/20` application run was paused after the first 1-KiB TCP condition and
 an excluded 142-exchange partial 10-KiB condition, then resumed approximately
-2 hours and 20 minutes later. Third, the profiles are operator reported; fresh
+2 hours and 20 minutes later. The profiles are operator reported; fresh
 serving-cell, handoff, MCS, PRB, and DU-counter evidence is unavailable. The
 vehicle address also changes from `10.120.121.23` to `10.120.121.20`, which is
 consistent with a new session or reattachment. Finally, the vehicle `eno2`
@@ -813,9 +2681,11 @@ uplink objects, but the data do not establish that its nominal frame allocation
 is inherently or universally worse.** Because `40/40/20` nominally provides
 more fixed uplink opportunity, its lower measured uplink performance points to
 an implementation, scheduler, reconfiguration, interoperability, or session-
-state problem in the tested deployment. A causal TDD result requires balanced
-profile alternation with identical stabilization and warm-up handling, fresh
-profile and serving-cell verification, and block-level statistical analysis.
+state problem in the tested deployment. Attributing that result to the nominal
+frame split rather than the deployed implementation would require additional
+randomized, repeated profile blocks with identical stabilization and warm-up
+handling, fresh profile and serving-cell verification, and block-level
+statistical analysis.
 
 Validation: all ten incoming manifests verify; all 16,000 final sender and
 receiver rows match in sequence, payload size, acceptance, and CRC32; all 44
@@ -6346,3 +8216,479 @@ Validation completed for the 10-page report:
   and
 - the final 10-page DOCX SHA-256 is
   `ba9c3390ee2bbffdf2bac09794ac44a182c3e848437e7255b0ab59a3f283f27f`.
+
+## Active Task Update: MobiCom-Aligned 10-Page Year 2 Report
+
+Task update requested 2026-08-31: read the current MobiCom manuscript and
+revise the 10-page Year 2 proposal report so that its implementation,
+experimental-method, result, and conclusion claims do not contradict the
+paper.
+
+Status: complete. The report at
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2_10_Page.docx`
+has been revised in place. This update supersedes the 2026-08-19 10-page
+report notes above wherever they describe PC5 performance traffic as a
+historical vendor echo rather than serialized IPI traffic.
+
+Substantive alignment completed:
+
+- The evidence scope now states that every evaluated wireless workload was
+  serialized with IPI. PC5 carried complete IPI Cooperative Service frames
+  and correlated completions through vendor packet type `0x1b`; Uu carried
+  application objects inside IPI records.
+- PC5 size labels are defined as complete serialized IPI-frame sizes, including
+  the valid 51--55-B minimum frame and 0.25--2-KiB configured frames. Uu size
+  labels are application-object sizes within IPI records.
+- The obsolete historical route/echo figure was replaced by the current
+  manuscript's PC5 frame-size/coverage and 7-m reference-RTT figure. The PC5
+  result now reports the current P1--P5 and four-route response evidence and
+  the 4,080-B per-submitted-application-packet interface limit.
+- The private-5G section now uses the paper's one-physical-UE, dedicated
+  40-MHz n48 scope. The 100-client condition is described as concurrent
+  closed-loop logical demand behind that UE, with the current 5.136-s MQTT,
+  2.908-s TCP, and 9,189/100,000 fragmented-UDP no-response values.
+- The report now uses the paper's all-issued completion notation
+  `C_RTT(B)` and explicitly separates it from response-only p50/p95/p99.
+  Sender-side monotonic RTT remains the timing boundary because endpoint
+  clocks were not synchronized.
+- The main MobiCom deadline envelope is distinguished from the report-wide
+  supplemental ledger: 698,100 unique paper requests, 752,200 overlapping
+  subgroup-row requests, and 1,785,863 report-ledger attempts used by the
+  supplemental PCA and variance analyses.
+- The controlled TDD section now reports the paper's `70/20/10 -> 40/40/20 ->
+  70/20/10` sequence, same-GL-X3000 path controls, 8,000 responses per profile,
+  exact 500-KiB p95 values, RTT-threshold crossings, and exact 50-MiB goodput.
+  It directly states that the evaluated 40/40/20 implementation produced
+  higher large-object p95 and lower goodput while avoiding a universal TDD
+  ranking beyond those conditions.
+- PCA and successful-response variance are retained but explicitly labeled as
+  supplemental report-only cross-condition analyses. Their interpretation no
+  longer replaces the paper's controlled factor statement or its three
+  insights.
+- The executive summary and final conclusions now preserve the paper's three
+  insights: the direct-V2X complete-frame-size/coverage envelope; the effects
+  of object size, direction, radio condition, and network load on deadline
+  completion; and the requirement to support bursts and streams in both
+  directions within application deadlines.
+
+Validation completed for this revision:
+
+- `make -q -C paper/current_manscript main.pdf appendix.pdf submission.pdf`
+  confirms that the manuscript PDFs are current with their sources.
+- The DOCX passes ZIP/Open XML validation and retains one portrait US-letter
+  section, 117 body paragraphs, 14 tables, seven numbered body figures, 10
+  Heading 1 paragraphs, and 12 Heading 2 paragraphs.
+- LibreOffice 7.3.7.2 renders the report to exactly 10 US-letter pages. All 10
+  final pages were inspected at original detail; no clipping, overlap, split
+  row, missing glyph, unreadable figure, duplicate conclusion, misplaced page
+  break, or unintended blank page is visible.
+- The accessibility audit reports zero high-, medium-, or low-severity
+  findings. The rendered PDF embeds its Carlito, Carlito Bold, and OpenSymbol
+  fonts.
+- A targeted DOCX and rendered-PDF audit found none of the superseded
+  historical-echo framing, zero-byte PC5 label, sequential-client wording,
+  old 3,814/2,938-ms latency pair, `A(B)` notation, or "after vendor framing"
+  limit statement.
+- The unchanged 31-page report remains at SHA-256
+  `22e34628f8fc4339257a0cce9ee830104579e5c36422baac5e244844a45a8988`.
+- The final MobiCom-aligned 10-page DOCX SHA-256 is
+  `e6a320e9847bb18feda64c19d842e7e404d86e1702d3e2c64a19204ef1723d28`.
+
+## Active Task Update: Focused 15-Page Year 2 Report
+
+Task update requested 2026-08-31: expand the MobiCom-aligned proposal report
+to 15 pages, update its figures, and remove confusing or low-value material.
+The user specifically asked that the report not explain Pearson correlation
+for the RSRP/SINR survey because that analysis is not the report objective.
+
+Status: complete. A separate report is retained at
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2_15_Page.docx`.
+The 10-page and 31-page reports remain byte-for-byte unchanged.
+
+Substantive revision completed:
+
+- The separate-handset route-map page, Pearson coefficient, route-sample
+  distribution, and DU-counter exposition were removed. The replacement radio
+  page reports the controlled detector-sized IPI workload across four
+  stationary conditions and explains only the measured p95 and
+  `C_RTT(100 ms)` result.
+- The report now gives separate pages to private-5G object scale and deadline
+  completion, adapter/message formation, stationary field-condition effects,
+  direction/TDD, continuing traffic, logical-client demand, and endpoint
+  interruption. This prevents unrelated experiments and their denominators
+  from being compressed into one results page.
+- Current manuscript figures replace the condensed report figures for the IPI
+  architecture, physical setup, measurement paths, PC5 envelope, 5G deadline
+  envelope, adapter completion, signal effects, TDD, mixed load,
+  concurrency/restarts, and application thresholds.
+- The refreshed 452-condition PCA and 1,765,930-response variance figures are
+  retained as supplemental pages. PCA is described as an outcome summary;
+  matched contrasts identify payload/representation scale as the strongest
+  broad p95 factor at a 6.49x median.
+- A dedicated implementation page explains the Real-Time Policy Engine,
+  Tiered Service Manager, decision model, activation state, TaskOffloader, ROS
+  publication boundary, and retained validation. The closing status table
+  distinguishes WP4-WP6 reference implementation from vehicle-level
+  Autoware acceptance.
+- The final report preserves the MobiCom paper's three insights and the
+  uplink-heavy measurement boundary: a vehicle-originated object followed by
+  a compact correlated acknowledgment.
+
+Validation completed for the 15-page report:
+
+- `make -q -C paper/current_manscript main.pdf appendix.pdf submission.pdf`
+  confirms that the manuscript PDFs and current figure sources are up to date.
+- The DOCX passes ZIP/Open XML validation and contains one portrait US-letter
+  section, 129 body paragraphs, 16 tables, 13 numbered body figures, 15
+  Heading 1 paragraphs, four Heading 2 paragraphs, and approximately 3,678
+  words including table text.
+- LibreOffice 7.3.7.2 renders the document to exactly 15 US-letter pages. All
+  pages were inspected at original detail; no clipping, overlap, split-row
+  defect, missing glyph, unreadable figure, unintended blank page, or page
+  spill remains.
+- The accessibility audit reports zero high-, medium-, or low-severity
+  findings. All 13 body figures are inline and carry alternative text. The
+  rendered PDF embeds Carlito, Carlito Bold, and OpenSymbol.
+- Targeted DOCX and rendered-PDF audits find no `Pearson`, `0.426`,
+  separate-handset, interpolated-RSRP/SINR, old 3.814/2.938-ms pair,
+  zero-byte-PC5, historical-echo, or `A(B)` language. Required current values
+  and the three named software deliverables are present.
+- The unchanged 10-page report remains at SHA-256
+  `e6a320e9847bb18feda64c19d842e7e404d86e1702d3e2c64a19204ef1723d28`;
+  the unchanged 31-page report remains at
+  `22e34628f8fc4339257a0cce9ee830104579e5c36422baac5e244844a45a8988`.
+- The final 15-page DOCX SHA-256 is
+  `108568b47987da1f467734c095e2c3b52a476890d1a59109612eac61a6a1868c`.
+
+## Active Task Update: Standalone 15-Page Year 2 Report
+
+Task update requested 2026-08-31: make the 15-page Year 2 report fully
+standalone by removing its reference to the MobiCom manuscript and the
+August 19 evidence cutoff.
+
+Status: complete. The report at
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2_15_Page.docx`
+has been revised in place.
+
+The visible evidence-scope statement now describes the implemented IPI
+software and the direct-PC5 and private-5G experiments directly. It does not
+refer to another manuscript, a publication venue, or an experiment-evidence
+cutoff date. The obsolete cutoff was also removed from the DOCX package's
+hidden description metadata. Formal proposal metadata on the cover and in the
+footer remains unchanged.
+
+Validation completed for this revision:
+
+- targeted searches across every extracted DOCX package part and the final
+  rendered PDF find no `MobiCom`, `manuscript`, `August 19`, date-coded August
+  19 variant, `field evidence through`, or `follows the current` wording;
+- LibreOffice 7.3.7.2 renders the revised report to exactly 15 US-letter pages;
+  all 15 pages were inspected, and a second render after the metadata cleanup
+  is pixel-identical on every page;
+- the DOCX remains a valid ZIP/Open XML package with 129 body paragraphs, 16
+  tables, 13 inline figures, 19 heading paragraphs, and one section;
+- the accessibility audit reports zero high-, medium-, or low-severity
+  findings, and all 13 inline figures retain alternative text;
+- the rendered PDF embeds Carlito, Carlito Bold, and OpenSymbol; and
+- the final standalone-report DOCX SHA-256 is
+  `30b902d14888a61190d4029f3ccd42fab9f59da4a49c0b31ae6673807ea61ba9`.
+
+## Active Task Update: Remove Cover Page-Count Label
+
+Task update requested 2026-08-31: remove `15-PAGE VERSION` from the cover of
+the standalone Year 2 report.
+
+Status: complete. The cover label in
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2_15_Page.docx`
+now reads only `YEAR 2 TECHNICAL REPORT`. The adjacent separator was removed
+with the page-count wording; no other report content changed.
+
+Validation completed for this revision:
+
+- the DOCX package and rendered PDF contain no `15-PAGE VERSION` variant and
+  contain the retained `YEAR 2 TECHNICAL REPORT` label exactly as intended;
+- LibreOffice 7.3.7.2 renders the report to exactly 15 US-letter pages;
+- the revised cover page was inspected at original detail, and pages 2--15
+  are pixel-identical to the preceding validated standalone report;
+- the DOCX passes ZIP/Open XML validation and the accessibility audit reports
+  zero high-, medium-, or low-severity findings;
+- the rendered PDF continues to embed Carlito, Carlito Bold, and OpenSymbol;
+  and
+- the final DOCX SHA-256 is
+  `a175c7ebfd038e4e80ce043ebc18922379209e78643d539de966507adc491218`.
+
+## Active Task Update: Larger, Roomier Report Tables
+
+Task update requested 2026-08-31: make the tables in the standalone Year 2
+report less compact, provide more space inside cells, and use larger fonts.
+
+Status: complete. All 16 tables in
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2_15_Page.docx`
+have been reformatted without changing their technical content.
+
+The final table system uses:
+
+- 8.5-point text, 75-dxa top/bottom padding, and 120-dxa left/right padding
+  for 14 tables;
+- 8-point text, 60-dxa top/bottom padding, and 110-dxa left/right padding for
+  the two figure-dense tables on the experimental-setup and continuing-traffic
+  pages; these remain larger and roomier than the prior 7-point/45-dxa
+  treatment;
+- increased line spacing, small paragraph breathing room, vertical cell
+  centering, flexible row heights, and row-splitting prevention throughout;
+- rebalanced column widths in the decision-sequence, adapter, and
+  application-threshold tables to eliminate isolated fragments and awkward
+  mid-word or unit wrapping; and
+- a one-point empty layout spacer after the setup table so the larger table
+  retains the intended 15-page pagination without creating a blank spill page.
+
+Validation completed for this revision:
+
+- paragraph text and every table cell are identical to the pre-formatting
+  report; only table and empty-spacer formatting changed;
+- LibreOffice 7.3.7.2 renders the report to exactly 15 nonempty US-letter
+  pages;
+- all 15 pages were inspected at original detail, including the final three
+  pages affected by column-width rebalancing; no clipping, overlap, split-row
+  defect, mid-word table wrap, footer collision, blank page, or page spill is
+  visible;
+- the DOCX remains a valid ZIP/Open XML package with 129 body paragraphs, 16
+  tables, and 13 inline figures;
+- the accessibility audit reports zero high-, medium-, or low-severity
+  findings, and all 13 figures retain alternative text;
+- all text-bearing table runs are explicitly 8 or 8.5 points; no 7-point or
+  unspecified-size table text remains;
+- the rendered PDF embeds Carlito, Carlito Bold, and OpenSymbol and retains the
+  earlier standalone-report exclusions; and
+- the final DOCX SHA-256 is
+  `c13cca414d5eeee00104fdaea27741d1abcc45d3fff56d9adead2b483039ee26`.
+
+## Active Task Update: Direct Implementation-Validation Wording
+
+Task update requested 2026-08-31: revise the implementation-validation
+paragraph so it describes the IPI code directly rather than narrating what a
+retained record reports.
+
+Status: complete. The validation paragraph in
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2_15_Page.docx`
+now states directly that the IPI implementation passes the C++ test suite,
+builds as ROS 2 Humble packages, passes the ROS smoke test, and exhibits the
+specified policy and offload behavior in the launch-contract runs. The test
+counts, build variants, and observed behaviors are unchanged.
+
+Validation completed for this revision:
+
+- the new code-centered wording appears exactly once in the DOCX body and in
+  the rendered PDF;
+- the former `retained validation record`, `reports 18/18`, and `launch
+  contract observed` wording is absent from the DOCX package and rendered PDF;
+- LibreOffice 7.3.7.2 renders the report to exactly 15 US-letter pages;
+- the revised page 3 was inspected at original detail, and pages 1--2 and
+  4--15 are pixel-identical to the preceding validated report;
+- the DOCX remains a valid ZIP/Open XML package with 129 body paragraphs, 16
+  tables, 13 inline figures, 19 heading paragraphs, and one section;
+- the accessibility audit reports zero high-, medium-, or low-severity
+  findings;
+- the rendered PDF embeds Carlito, Carlito Bold, and OpenSymbol and retains the
+  earlier standalone-report exclusions; and
+- the final DOCX SHA-256 is
+  `2cfc57c386229376185403a9d57bb2299f08d6c785201e6a3abbe93de1a5efb5`.
+
+## Active Task Update: Fill Sparse Report Pages With Evidence-Backed Detail
+
+Task update requested 2026-08-31: reduce the large unused areas in the
+standalone 15-page Year 2 report without adding generic filler.
+
+Status: complete. The report at
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2_15_Page.docx`
+remains exactly 15 pages, but the cover and the seven previously sparse
+technical pages now use substantially more of their available body area.
+
+The added material is tied to the current implementation and retained
+experiment evidence:
+
+- the executive summary now includes the scale of the issued-attempt,
+  eligible-condition, and successful-RTT evidence;
+- the implementation section explains the deterministic tier-policy rules,
+  local-versus-edge completion model, correlation checks, expiration, and
+  retained fallback behavior;
+- the PC5 section reports all four mobile-route response rates and
+  successful-response p95 values separately;
+- the adapter section distinguishes stream framing, MQTT message formation,
+  single-datagram UDP, and fragmented-UDP reassembly;
+- the TDD section identifies the same-device, placement, serving-cell,
+  profile-order, validation, and end-to-end interpretation controls;
+- the demand/interruption section connects all-issued deadline completion and
+  response gaps to admission, timeout state, and deterministic fallback;
+- the PCA section states how PC1, PC2, and matched contrasts answer different
+  questions; and
+- the conclusion gives application, policy, offload, and experiment-review
+  stakeholders explicit uses of the results.
+
+Table text and padding were increased only on pages that had sufficient room,
+and the added narrative table cells use left alignment to avoid stretched word
+spacing. Relative to the preceding render, the last body content moved down by
+97--367 pixels on the eight revised pages at the 144-dpi QA resolution.
+
+Validation completed for this revision:
+
+- LibreOffice 7.3.7.2 renders exactly 15 nonempty US-letter pages with no spill
+  or blank continuation page;
+- the eight revised pages were inspected at original detail, and the seven
+  already-dense pages are pixel-identical to the preceding validated report;
+- there is no clipping, overlap, broken table, mid-word wrap, footer collision,
+  or stretched narrative-table spacing in the final render;
+- all 129 original body paragraphs remain in order, 30 evidence-backed
+  paragraphs were added, and all original table content is retained except for
+  the intended adapter-detail expansion and one new executive evidence row;
+- all 29 embedded media files are byte-identical to the preceding report, and
+  the DOCX remains a valid ZIP/Open XML package with 159 body paragraphs, 16
+  tables, 13 inline figures, 26 heading paragraphs, and one section;
+- the accessibility audit reports zero high-, medium-, or low-severity
+  findings;
+- the rendered PDF embeds Carlito, Carlito Bold, and OpenSymbol, and the
+  standalone-report exclusions remain absent; and
+- the final DOCX SHA-256 is
+  `6a8d5ba8cbf4396ee56b76ceb49dfc699ff11d0f7281f54840591b30b3eb10d0`.
+
+## Active Task Update: Plain-Language Revision of the 15-Page Year 2 Report
+
+Task update requested 2026-08-31: revise confusing wording throughout the
+standalone Year 2 report and avoid assistant-created terminology.
+
+Status: complete. The report at
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2_15_Page.docx`
+now uses the implementation names in the repository, established CAV/ITS and
+networking terms, and direct descriptions of the measurements. The numerical
+results, experiment counts, application comparisons, and implementation limits
+are unchanged.
+
+The revision includes:
+
+- a shorter executive summary that states the IPI profiles, tested paths, and
+  three findings directly;
+- direct descriptions of the message profile, operation profile, activation
+  state, tiered-service policy, offload estimate, request lifecycle, and
+  vehicle-control boundary;
+- experiment headings, captions, table labels, and conclusions rewritten to
+  identify the actual test variable and measured result;
+- PC5 results reported as response rate plus RTT among valid responses, and 5G
+  uplink described as a vehicle-originated application object followed by a
+  small correlated acknowledgment;
+- PCA wording tied to p50, p95, p99, p95-to-p50 ratio, and no-response fraction,
+  without treating PCA as proof of which factor caused a result;
+- successful-request variability reported separately from response rate and
+  deadline completion; and
+- revised PCA, variability, and application-comparison figures. Figure 11 now
+  uses published time limits, measured RTT percentiles, and completion by the
+  time limit without the earlier extra comparison categories, and all of its
+  axis labels fit inside the figure.
+
+Validation completed for this revision:
+
+- LibreOffice 7.3.7.2 renders exactly 15 nonempty US-letter pages;
+- all 15 pages were inspected at original detail, and Figure 11 was inspected
+  again at higher resolution after its final revision; no clipping, overlap,
+  blank page, table break, footer collision, or figure-label truncation is
+  visible;
+- the DOCX remains a valid ZIP/Open XML package with 159 body paragraphs, 16
+  tables, 13 inline figures, 26 heading paragraphs, and one section;
+- all 13 figures retain nonempty alternative text, and the accessibility audit
+  reports zero high-, medium-, or low-severity findings;
+- the rendered PDF embeds Carlito, Carlito Bold, and OpenSymbol;
+- the standalone-report exclusions and removed shorthand are absent from the
+  rendered text; and
+- the final DOCX SHA-256 is
+  `2b78eea5520fd4a511368d6579c6f3603cb3a00ae0c6387dcb91d9ad6c76dfed`.
+
+## Active Task Update: Page 1 Scope Callout Spacing
+
+Task update requested 2026-08-31: increase the space between the blue vertical
+rule and the text in the Page 1 Scope callout.
+
+Status: complete. The blue rule remains aligned with the other Page 1 callout
+rules, while the Scope text has six additional points of left inset. No report
+wording, table content, figures, or other layout was changed.
+
+Validation completed for this revision:
+
+- LibreOffice 7.3.7.2 renders exactly 15 nonempty US-letter pages;
+- Page 1 was inspected at original detail and the Scope callout now has a clear
+  gap between the rule and the text, with no clipping or unwanted line wrap;
+- rendered pages 2--15 are pixel-identical to the preceding validated report;
+- all paragraph and table text is byte-for-byte equivalent after extraction;
+- the DOCX passes ZIP/Open XML validation, and the accessibility audit reports
+  zero high-, medium-, or low-severity findings; and
+- the final DOCX SHA-256 is
+  `558a5c99d01ae334557a298b92d5102daac01ad9d2fb781f040c6accb90ed773`.
+
+## Active Task Update: Report Presentation and Claim Consistency
+
+Task update requested 2026-08-31: revert the most recent Scope-callout spacing
+change, use white text on the blue table headers, remove the personal Weisong
+Shi letterhead, and check the report again against the current IPI protocol,
+implementation, and experiment sources without referring to another paper in
+the report.
+
+Status: complete. The report at
+`proposals/Project_Implementation_Report_TIER_IV-UD-IPI_Year2_15_Page.docx`
+has been revised in place.
+
+Presentation changes:
+
+- The Page 1 Scope callout was restored to its preceding 144-dxa left indent
+  and 8-point border spacing.
+- All 16 dark-blue (`00539F`) table header rows now use explicit white
+  (`FFFFFF`) text. The larger table fonts, cell padding, and column widths were
+  preserved.
+- The first-page personal name, title, address, and email block was removed
+  from the embedded header image. The University of Delaware logo remains in
+  its original position, and the image description now identifies only the
+  University logo.
+
+Content review and corrections:
+
+- The executive summary now separates the common-envelope fields from the
+  operation-only session, correlation, status, and expiration fields.
+- The representation-cost callout now states that its byte counts exclude the
+  common envelope and adapter framing.
+- The private-5G setup now distinguishes the absence of ambient users and
+  traffic from the experimental streams and request loops introduced behind
+  the single physical UE.
+- The transport section no longer implies that every historical test used a
+  byte-identical current record; it states that the tests carried IPI operation
+  records through the four evaluated adapters.
+- The radio-condition text identifies the reported values as location labels,
+  not synchronized per-request measurements or a latency model.
+- The continuous-traffic result now refers to the selected 100- and 200-ms
+  thresholds instead of presenting them as application deadlines.
+- The PCA percentage is identified as standardized outcome variation.
+- The final conclusion now states that PC5 and 5G preserve the same IPI
+  semantics through path-specific encodings rather than claiming identical
+  serialized formats.
+- All numerical experiment results, denominators, PCA values, and
+  successful-response variance values were preserved.
+
+Validation completed for this revision:
+
+- the current C++ release build and a fresh AddressSanitizer/
+  UndefinedBehaviorSanitizer build each pass all 18 registered tests, and the
+  current protocol/system/results PDF sources are up to date;
+- the DOCX passes ZIP/Open XML validation and contains 159 body paragraphs,
+  16 tables, 13 body figures, one first-page logo, 26 heading paragraphs, and
+  one portrait US-letter section;
+- LibreOffice 7.3.7.2 renders the report to exactly 15 nonempty US-letter
+  pages, and all 15 pages were inspected at high resolution with no clipping,
+  overlap, split-row defect, unreadable figure, footer collision, blank page,
+  or spill page;
+- every dark-blue table-header text run is explicitly white, and the embedded
+  first-page header asset contains no visible pixels in the removed personal
+  letterhead area;
+- searches across the DOCX text and the rendered PDF find no personal contact
+  name or email, publication-venue/manuscript wording, August 19 reference,
+  Pearson-correlation wording, or identical-PC5/Uu-format claim;
+- the accessibility audit reports zero high-, medium-, or low-severity
+  findings, all body figures and the logo retain alternative text, and the
+  rendered PDF embeds Carlito, Carlito Bold, and OpenSymbol; and
+- the final DOCX SHA-256 is
+  `53072086f0a35959239937fee6ae8915dead828feff70dd2dd7e9310f18349b6`.

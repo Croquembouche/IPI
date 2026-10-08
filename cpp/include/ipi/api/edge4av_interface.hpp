@@ -4,6 +4,7 @@
 #include "ipi/api/private_session_transport.hpp"
 #include "ipi/api/receiver.hpp"
 #include "ipi/api/sender.hpp"
+#include "ipi/core/ipi_cooperative_service.hpp"
 #include "ipi/core/ipi_service_request.hpp"
 
 #include <atomic>
@@ -23,7 +24,7 @@ struct ServiceRequestContext {
 };
 
 /**
- * Edge4AvInterface provides a single high-level entry point for both
+ * This interface provides a single high-level entry point for both
  * broadcast-V2X messages and private connected-session flows. It removes the
  * repetitive packing of typed J2735 messages into payload envelopes and the
  * manual translation from IPI service requests into the private-session API.
@@ -111,6 +112,17 @@ public:
                                const ipi::IpiServiceRequest& request,
                                ServiceRequestContext context) const;
 
+    /**
+     * Submits the current IPI correlated-operation profile through a private
+     * session or directly through the configured receiver. The canonical Uu
+     * encoding supports uint32-length application objects; a selected path may
+     * enforce a smaller operational limit.
+     */
+    Ack submit_cooperative_service(EnvelopeMetadata metadata,
+                                   const VehicleProfile& vehicleProfile,
+                                   const ipi::CooperativeServiceMessage& operation,
+                                   ServiceRequestContext context) const;
+
     Ack submit_telemetry(TelemetrySubmission submission) const;
     Ack submit_telemetry(const std::string& sessionId,
                          std::vector<VehicleTelemetryFrame> frames) const;
@@ -140,5 +152,8 @@ private:
     EnvelopeMetadata normalize_metadata(EnvelopeMetadata metadata) const;
     [[nodiscard]] std::string make_identifier(const char* prefix) const;
 };
+
+/** Preferred public source name for the legacy-named implementation class. */
+using IpiInterface = Edge4AvInterface;
 
 } // namespace ipi::api

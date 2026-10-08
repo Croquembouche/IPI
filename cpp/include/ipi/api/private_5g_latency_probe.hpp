@@ -14,6 +14,10 @@
 
 namespace ipi::api {
 
+/** Default safety limit for one framed measurement packet on the Uu probe path. */
+inline constexpr std::size_t kDefaultPrivate5gProbePacketLimit =
+    16U * 1024U * 1024U;
+
 struct Private5gProbeRequest {
     std::uint64_t sequence{0};
     std::uint64_t clientSendTimeNs{0};
@@ -121,7 +125,7 @@ private:
 
 void send_private_5g_probe_packet(int socketFd, const std::vector<std::uint8_t>& packet);
 [[nodiscard]] std::vector<std::uint8_t> recv_private_5g_probe_packet(int socketFd,
-                                                                     std::size_t maxPayloadBytes = 1024U * 1024U);
+                                                                     std::size_t maxPayloadBytes = kDefaultPrivate5gProbePacketLimit);
 
 [[nodiscard]] std::uint64_t current_unix_time_ns();
 

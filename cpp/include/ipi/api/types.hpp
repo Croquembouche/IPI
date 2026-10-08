@@ -163,6 +163,8 @@ struct EnvelopeMetadata {
     std::string intersectionId{};
     TransportType transport{TransportType::CELLULAR_5G};
     EnvelopeSource source{};
+    /** Textual IPIS transport-session identifier; independent of an inner
+     * CooperativeServiceMessage's fixed-width application-session identifier. */
     std::optional<std::string> sessionId{};
     std::optional<std::string> correlationId{};
     std::optional<std::string> priority{};

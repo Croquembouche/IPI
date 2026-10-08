@@ -85,6 +85,19 @@ std::variant<PCVServiceType, PCAVServiceType> translate_service_type(
     }
 }
 
+PCAVServiceType translate_service_class(const ipi::ServiceClass serviceClass) {
+    switch (serviceClass) {
+        case ipi::ServiceClass::GuidedPlanning:
+            return PCAVServiceType::PLANNING_AID;
+        case ipi::ServiceClass::GuidedPerception:
+            return PCAVServiceType::PERCEPTION_AID;
+        case ipi::ServiceClass::GuidedControl:
+            return PCAVServiceType::CONTROL_AID;
+        default:
+            throw std::invalid_argument("unknown IPI cooperative service class");
+    }
+}
+
 } // namespace
 
 Edge4AvInterface::Edge4AvInterface(std::shared_ptr<ReceiverApi> receiver,
@@ -101,7 +114,7 @@ Edge4AvInterface::Edge4AvInterface(std::shared_ptr<ReceiverApi> receiver,
         sender_ = std::move(pair.sender);
     } else if (!receiver_ || !sender_) {
         throw std::invalid_argument(
-            "Edge4AvInterface requires both ReceiverApi and SenderApi, or neither");
+            "IpiInterface requires both ReceiverApi and SenderApi, or neither");
     }
     if (!privateSessionTransport_) {
         privateSessionTransport_ = make_in_memory_private_session_transport(receiver_, sender_);
@@ -248,6 +261,55 @@ Ack Edge4AvInterface::submit_service_request(EnvelopeMetadata metadata,
     }
 }
 
+Ack Edge4AvInterface::submit_cooperative_service(
+    EnvelopeMetadata metadata,
+    const VehicleProfile& vehicleProfile,
+    const ipi::CooperativeServiceMessage& operation,
+    ServiceRequestContext context) const {
+    try {
+        if (vehicleProfile.role != VehicleRole::PCAV) {
+            return invalid_request("cooperative operations require a CAV vehicle profile");
+        }
+        operation.validate();
+
+        Envelope<VehicleServiceRequest> envelope;
+        envelope.metadata = normalize_metadata(std::move(metadata));
+
+        if (context.vehicleId.empty()) {
+            context.vehicleId = vehicleProfile.vehicleId;
+        }
+        if (context.vehicleId.empty()) {
+            return invalid_request("vehicleId is required for cooperative service submission");
+        }
+
+        if (envelope.metadata.source.id.empty()) {
+            envelope.metadata.source.id = context.vehicleId;
+        }
+        envelope.metadata.source.type = SourceType::PCAV;
+        if (!envelope.metadata.correlationId) {
+            envelope.metadata.correlationId = operation.offloadTaskId
+                ? *operation.offloadTaskId
+                : make_identifier("ipi-operation");
+        }
+
+        envelope.data.serviceType = translate_service_class(operation.serviceClass);
+        envelope.data.vehicleId = std::move(context.vehicleId);
+        envelope.data.vin = context.vin ? std::move(context.vin) : vehicleProfile.vin;
+        envelope.data.location = std::move(context.location);
+        envelope.data.speedMps = context.speedMps;
+        envelope.data.headingDegrees = context.headingDegrees;
+        envelope.data.context = operation.to_canonical_encoding();
+
+        if (envelope.metadata.sessionId) {
+            return privateSessionTransport_->invoke_service(
+                ServiceInvocation{*envelope.metadata.sessionId, std::move(envelope)});
+        }
+        return receiver_->submitPCAVRequest(envelope);
+    } catch (const std::exception& ex) {
+        return invalid_request(ex.what());
+    }
+}
+
 Ack Edge4AvInterface::submit_telemetry(TelemetrySubmission submission) const {
     return privateSessionTransport_->submit_telemetry(submission);
 }
@@ -294,7 +356,7 @@ const std::shared_ptr<PrivateSessionTransport>& Edge4AvInterface::private_sessio
 
 EnvelopeMetadata Edge4AvInterface::normalize_metadata(EnvelopeMetadata metadata) const {
     if (metadata.messageId.empty()) {
-        metadata.messageId = make_identifier("edge4av-msg");
+        metadata.messageId = make_identifier("ipi-msg");
     }
     if (is_default_timestamp(metadata.sentAt)) {
         metadata.sentAt = std::chrono::system_clock::now();

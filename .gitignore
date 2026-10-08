@@ -14,10 +14,15 @@ paper_attempt3/
 paper/*
 !paper/current_manscript/
 paper/current_manscript/*
-!paper/current_manscript/28p.pdf
+!paper/current_manscript/edge4av_full.pdf
 !paper/current_manscript/Makefile
+!paper/current_manscript/appendix.pdf
+!paper/current_manscript/appendix.tex
 !paper/current_manscript/main.pdf
 !paper/current_manscript/main.tex
+!paper/current_manscript/submission.pdf
+!paper/current_manscript/submission.tex
+!paper/current_manscript/paper_preamble.tex
 !paper/current_manscript/proposed_changes.md
 !paper/current_manscript/references.bib
 !paper/current_manscript/figs/
@@ -32,6 +37,7 @@ log/
 proposals/Project_Quotation*.docx
 .agents/
 .codex/
+.codex_tmp/
 .specify/
 
 # Large raw GNSS captures exceed normal GitHub blob limits without Git LFS.

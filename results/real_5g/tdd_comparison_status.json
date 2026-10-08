@@ -1,6 +1,6 @@
 {
-  "schema": "edge4av-tdd-comparison-status-v3",
-  "last_updated": "2026-08-18",
+  "schema": "edge4av-tdd-comparison-status-v4",
+  "last_updated": "2026-08-24",
   "configuration_order": "downlink/uplink/dynamic",
   "analysis_scope": "application and DU Cell evidence collected from 2026-08-15 through 2026-08-18 for 70/20/10 and 40/40/20",
   "grouping_rule": [
@@ -19,6 +19,14 @@
     "correct_profile": "70/20/10",
     "scope": "all application experiments collected before the August 15-16 TDD diagnostic",
     "note": "Earlier records that labeled these campaigns 40/40/20 are incorrect. Their application results remain valid, but they are all 70/20/10 observations and do not form a TDD comparison."
+  },
+  "serving_cell_correction": {
+    "source": "operator post-acquisition clarification",
+    "cell_1_state": "locked; not broadcasting during the TDD comparison blocks",
+    "serving_cell": 2,
+    "handoff_occurred": false,
+    "du_boundary": "Aggregate DU rows for Cell 1 and Cell 2 do not identify the experiment UE's attachment.",
+    "administrative_state_effect": "Across runs with both cells enabled and runs with Cell 1 locked, traffic remained on Cell 2; no measurable interference or performance change was attributable to Cell 1's administrative state."
   },
   "du_cell_alignment": {
     "status": "complete_for_available_august_15_to_18_exports",
@@ -55,7 +63,7 @@
   "uplink_heavy_latency_result": {
     "status": "not_usable_for_cross_profile_ranking",
     "scope": "vehicle-to-d1 IPI workload request plus compact correlated acknowledgment RTT",
-    "reason": "No timestamp-aligned, same-cell DU pair exists across the two TDD profiles. The August 15 40/40/20 raw run and timestamps are absent, and the August 16 70/20/10 run occurs after the retained DU data end. The 40/40/20 repetitions also changed serving cell and cell state.",
+    "reason": "No timestamp-aligned DU comparison window attributable to the experiment UE exists across the two TDD profiles. The August 15 40/40/20 raw run and timestamps are absent, the August 16 70/20/10 run occurs after the retained DU data end, and route recovery accompanied profile transition. Cell 2 served throughout without handoff.",
     "conclusion": "The uplink-heavy observations cannot establish whether 40/40/20 or 70/20/10 provides lower application RTT.",
     "du_context": [
       {
@@ -81,7 +89,10 @@
       },
       {
         "run": "20260816 40/40/20 TCP quick run 2",
-        "serving_cell": 1,
+        "serving_cell": 2,
+        "serving_cell_source": "operator correction",
+        "du_aggregate_cell": 1,
+        "du_attribution_status": "aggregate cell row; not attributable to experiment UE attachment",
         "complete_interior_bins": 4,
         "uplink_active_time_derived_cell_throughput_mbps": 5.638341,
         "reported_unavailability_in_included_bins": 0
@@ -103,12 +114,13 @@
       "report each run as an observation of its recorded operating state",
       "report the close same-profile 70/20/10 repeat values",
       "report the payload-dependent 40/40/20 variation",
-      "use the DU export to confirm the serving traffic cell and cell-unavailability context"
+      "use the DU export for aggregate cell-traffic and cell-unavailability context, not UE attachment"
     ],
     "prohibited_inferences": [
       "rank 40/40/20 and 70/20/10 by uplink-heavy application RTT",
       "attribute the August 15-16 uplink-heavy RTT differences to TDD allocation alone",
-      "pool Cell 1 and Cell 2",
+      "infer UE attachment or handoff from aggregate DU cell rows",
+      "attribute RTT differences to a serving-cell or Cell 1 administrative-state change",
       "pool the August 17 or August 18 direction and signal conditions into the August 15-16 uplink result"
     ]
   },
