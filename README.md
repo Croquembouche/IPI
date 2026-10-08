@@ -339,6 +339,15 @@ controls attached to the result; the profile labels alone do not establish a
 causal effect of slot allocation. Direct-V2X request/response results report
 the valid-response fraction and RTT among received responses.
 
+## Local manuscript and proposal files
+
+The `paper/` and `proposals/` directories are kept only in the local workspace.
+Their contents are excluded from the current GitHub branch and ignored by Git,
+including manuscript sources, figures, PDFs, analysis notes, and proposal or
+report documents. A fresh clone does not include these local files; the
+implementation, experiment archive, and repository-level documentation remain
+versioned.
+
 ## Scope and release status
 
 IPI is a research reference implementation. It is not an SAE or Third

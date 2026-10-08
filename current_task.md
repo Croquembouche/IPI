@@ -2,6 +2,22 @@
 
 Last updated: 2026-10-08
 
+## 2026-10-08 Keep manuscript and proposal directories local only
+
+The user clarified that existing `paper/` and `proposals/` contents must also
+be removed from the current GitHub repository view. These directories are
+removed from the Git index with `git rm --cached`; their existing local files
+are retained. The previous manuscript allowlist is replaced with root-anchored
+ignore rules for both directories, and the README explains that fresh clones
+do not include them.
+
+Validation for this publication checks the staged deletion scope, absence of
+tracked paths under both directories, active ignore rules, and SHA-256
+preservation of every existing local file. This change removes the directories
+from the current branch; historical commits retain earlier versions. No
+software or experiment content is changed, so software tests and physical
+experiments are not applicable.
+
 ## 2026-10-08 Repository publication and README refresh
 
 The user requested a commit and push of the current changes with a README

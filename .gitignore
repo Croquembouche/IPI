@@ -9,32 +9,12 @@ tmp/
 paper_attemp1/
 paper_attempt2/
 paper_attempt3/
-# Keep untracked paper work private by default, while allowing the current
-# manuscript sources and publication figures to be versioned normally.
-paper/*
-!paper/current_manscript/
-paper/current_manscript/*
-!paper/current_manscript/edge4av_full.pdf
-!paper/current_manscript/Makefile
-!paper/current_manscript/appendix.pdf
-!paper/current_manscript/appendix.tex
-!paper/current_manscript/main.pdf
-!paper/current_manscript/main.tex
-!paper/current_manscript/submission.pdf
-!paper/current_manscript/submission.tex
-!paper/current_manscript/paper_preamble.tex
-!paper/current_manscript/proposed_changes.md
-!paper/current_manscript/references.bib
-!paper/current_manscript/figs/
-!paper/current_manscript/figs/**
-!paper/current_manscript/scripts/
-!paper/current_manscript/scripts/*.py
-!paper/current_manscript/sections/
-!paper/current_manscript/sections/*.tex
+# Manuscripts and proposals are local-only; do not publish their contents.
+/paper/
+/proposals/
 __pycache__/
 *.pyc
 log/
-proposals/Project_Quotation*.docx
 .agents/
 .codex/
 .codex_tmp/
